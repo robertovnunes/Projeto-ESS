@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend com NodeJS para comunicação com banco de dados",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
+  "license": "ISC"
+}
