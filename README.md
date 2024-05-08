@@ -3,7 +3,6 @@
 ## Tema: Hotelaria
 
 ## Frameworks
-<details><summary></summary>
 <details><summary>Frontend</summary>
 
  <a href="https://pt-br.legacy.reactjs.org/docs/getting-started.html">
@@ -21,5 +20,11 @@
     Node+express+json
 </a>
 </details>
-</details>
 
+### Algumas boas praticas de programação em NodeJS + Javascript:
+* Usar ponto e virgula `;` no final da linha;
+* Usar *let* ao invés de *var*;
+* Usar *Arrow functions* `() => {}`
+
+## Executar aplicação react
+### `npm start`
