@@ -25,6 +25,3 @@
 * Usar ponto e virgula `;` no final da linha;
 * Usar *let* ao invés de *var*;
 * Usar *Arrow functions* `() => {}`
-
-## Executar aplicação react
-### `npm start`
