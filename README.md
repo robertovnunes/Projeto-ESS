@@ -1,6 +1,6 @@
 # Projeto ESS
 ***
-## Tema: Hotelaria
+## Tema: Reserva de salas
 
 ## Frameworks
 <details><summary>Frontend</summary>
