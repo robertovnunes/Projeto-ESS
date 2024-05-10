@@ -13,12 +13,13 @@
  <details>
  <summary>Backend</summary>
 
- <a href=https://community.revelo.com.br/criando-uma-api-restful-utilizando-node-js-express-js-e-mongoose/>
-  Node+Express+MongoDB
- </a>
- + <a href="https://medium.com/@habbema/node-js-apis-0e3544877f43">
-    Node+express+json
+ <a href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs">
+  NodeJS
+ </a><br>
+<a href="https://expressjs.com/pt-br/">
+    Express
 </a>
+
 </details>
 
 ### Algumas boas praticas de programação em NodeJS + Javascript:

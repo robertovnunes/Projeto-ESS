@@ -21,3 +21,7 @@ MONGO_URI=your_mongo_uri
 - PATCH `/api/v1/:id` - Update data by ID
 - DELETE `/api/v1/:id` - Delete data by ID
 
+## Videoaulas e tutoriais
+* [(videoaula) Como criar uma API CRUD com Node.js, Express e MongoDB](https://www.youtube.com/watch?v=K5QaTfE5ylk&t=33s)
+* [(videoaula) Autenticação com Node.js e MongoDB com JWT](https://www.youtube.com/watch?v=qEBoZ8lJR3k)
+* [(tutorial) Criando uma API RESTful utilizando Node.js, Express.js e Mongoose](https://community.revelo.com.br/criando-uma-api-restful-utilizando-node-js-express-js-e-mongoose/)
