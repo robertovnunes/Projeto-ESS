@@ -5,13 +5,11 @@
 
 /** @type {import('jest').Config} */
 const config = {
-
+  // All imported modules in your tests should be mocked automatically
+  // automock: false,
   "testMatch": [
     "./features/step_definition/*.steps.js"
   ],
-  // All imported modules in your tests should be mocked automatically
-  // automock: false,
-
   // Stop running tests after `n` failures
   // bail: 0,
 
