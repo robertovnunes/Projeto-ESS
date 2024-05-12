@@ -1,0 +1,52 @@
+[
+  {
+  "sala1": [
+    {
+      "nome": "projetor",
+      "modelo": "Epson",
+      "patrimonio": "123456"
+    },
+    {
+      "nome": "notebook",
+      "modelo": "Dell",
+      "patrimonio": "654321"
+    },
+    {
+      "nome": "caixa de som",
+      "modelo": "JBL",
+      "patrimonio": "253741"
+    }
+  ]},
+  {
+  "sala2": [
+    {
+      "nome": "projetor",
+      "modelo": "Epson",
+      "patrimonio": "123456"
+    },
+    {
+      "nome": "notebook",
+      "modelo": "Dell",
+      "patrimonio": "654321"
+    }
+  ]},
+  {
+    "sala3": [
+      {
+        "nome": "projetor",
+        "modelo": "Epson",
+        "patrimonio": "123456"
+      },
+      {
+        "nome": "notebook",
+        "modelo": "Dell",
+        "patrimonio": "654321"
+      },
+      {
+        "nome": "caixa de som",
+        "modelo": "sony",
+        "patrimonio": "253741"
+      }
+    ]
+  }
+]
