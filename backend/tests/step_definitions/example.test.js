@@ -1,11 +1,13 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
+import { passWithNoTests } from '../../jest.config';
 
 const feature = loadFeature('tests/example.feature');
 
 defineFeature(feature, test => {
-    test('titulo do cenario', ({ given, when, then }) => {
-        given('dado que algo acontece', () => {
+    test('Example scenario', ({ given, when, then }) => {
+        given('I have a step', () => {
             // Write code here that turns the phrase above into concrete actions
+            passWithNoTests();
         });
 
         when('quando algo acontece', () => {
