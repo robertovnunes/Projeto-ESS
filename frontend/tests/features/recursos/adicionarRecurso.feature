@@ -4,7 +4,7 @@ Feature: Adicionar recurso a uma sala
   Para que eu possa gerenciar os recursos disponíveis
 
   Scenario: Adicionar recurso a uma sala
-    Given que estou na pagina de "detalhes de uma sala"
+    Given que estou na pagina de "detalhes" na sala "E428"
     And eu não vejo "Projetor" na lista de recursos da sala
     When eu escolho "Adicionar recurso"
     And eu preencho o campo "Nome" com "Projetor"
