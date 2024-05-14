@@ -7,9 +7,6 @@
 const config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
-  "testMatch": [
-    "**/*.steps.js"
-  ],
   // Stop running tests after `n` failures
   // bail: 0,
 
@@ -156,10 +153,10 @@ const config = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    "**/tests/**/*.js?(x)",
+    "**/?(*.)+(steps).js?(x)"
+   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
