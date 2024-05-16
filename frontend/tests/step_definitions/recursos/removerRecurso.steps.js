@@ -1,10 +1,7 @@
-const {When, Given} = require("cucumber");
-When(/^eu clico no botão "([^"]*)" ao lado de um recurso que não existe$/, function () {
+const { defineFeature, loadFeature } = require('jest-cucumber');
 
-});
-Given(/^que eu estou na página de detalhes de uma sala$/, function () {
+const feature = loadFeature('./tests/features/recursos/removerRecurso.feature');
 
-});
-When(/^eu clico no botão "([^"]*)" ao lado de um recurso$/, function () {
+defineFeature(feature, test => {
 
-});
+}
