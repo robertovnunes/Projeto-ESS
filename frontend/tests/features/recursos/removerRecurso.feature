@@ -1,22 +1,25 @@
-Feature: As a Administrador
+Feature: As a user
   I want to remover recursos da lista de recursos de uma sala
   So that eu possa remover recursos que não são mais necessários
 
   Scenario: Remover recurso da lista de recursos de uma sala
-    Given que eu estou na página de "detalhes de uma sala"
-    When eu escolho "Remover" ao lado de um recurso
+    Given que eu estou logado como "Gisely" como "administrador"
+    And que eu estou na página de "detalhes" da sala "E428"
+    When eu escolho "Remover" ao lado do recurso "camera logitech"
+    Then eu devo ver uma mensagem de "confirmação"
+    When eu escolho "sim"
     Then eu devo ver uma mensagem de "sucesso"
-    And o recurso deve ser removido da lista de recursos da sala
+    And eu não vejo o recurso "camera logitech" na lista de "recursos da sala"
 
   Scenario: Remover recurso da lista de recursos de uma sala que não existe
-    Given que eu estou na página de "detalhes de uma sala"
-    When eu escolho "Remover" ao lado de um recurso que não existe
+    Given que eu estou logado como "Gisely" como "administrador"
+    And que eu estou na página de "detalhes" da sala "E438"
     Then eu devo ver uma mensagem de "erro"
-    And o recurso não deve ser removido da lista de recursos da sala
+    And eu vejo que a pagina "detalhes" não existe
 
   Scenario: Remover recurso sem estar na conta administrador
-    Given que eu estou logado como "jrvn" como
-    And que eu estou na página de "detalhes de uma sala"
-    When eu escolho "Remover" ao lado de um recurso
-    Then eu devo ver uma mensagem de "erro"
-    And o recurso não deve ser removido da lista de recursos da sala
+    Given que eu estou logado como "jrvn" como "aluno"
+    And que eu estou na página de "detalhes" da sala "E428"
+    When eu vejo a lista de "recursos da sala"
+    Then eu vejo a opção "remover" "desabilitada" ao lado do recurso "camera logitech"
+    And o recurso não deve ser removido da lista de "recursos da sala"
