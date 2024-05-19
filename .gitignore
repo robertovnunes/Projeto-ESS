@@ -3,3 +3,4 @@
 /.idea/
 /backend/coverage/
 /node_modules/
+/qodana.yaml
