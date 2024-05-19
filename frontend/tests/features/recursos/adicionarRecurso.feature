@@ -5,9 +5,9 @@ Feature: Adicionar recurso a uma sala
 
   Scenario: Adicionar recurso a uma sala
     Given que estou na pagina de "detalhes" da sala "E428"
-    And eu não vejo "Projetor" na lista de recursos da sala
+    And eu não vejo "Projetor" na lista de "recursos da sala"
     When eu escolho "Adicionar recurso"
-    And eu escolho "Equipamento"
+    Then eu devo ser redirecionado para a página de "Adicionar equipamento"
     And eu preencho o campo "Nome" com "Projetor"
     And eu preencho o campo "descricao" com "Projetor Epson"
     And eu preencho o campo "estado_conservacao" com "novo"
@@ -17,7 +17,7 @@ Feature: Adicionar recurso a uma sala
     And eu preencho o campo "quantidade" com "1"
     And eu escolho "Adicionar"
     Then eu vejo a mensagem "Recurso adicionado com sucesso"
-    And eu vejo o recurso "Projetor" na lista de recursos da sala
+    And eu vejo o recurso "Projetor" na lista de "recursos da sala"
 
   Scenario: Adicionar recurso a uma sala com nome em branco
     Given que estou na pagina de "detalhes" da sala "E428"
@@ -123,7 +123,7 @@ Feature: Adicionar recurso a uma sala
     And eu preencho o campo "quantidade" com "1"
     And eu escolho "Adicionar"
     Then eu vejo a mensagem "Recurso já existe, edite ou remova o recurso existente"
-    And eu vejo o recurso "Projetor" na lista de recursos da sala apenas uma vez
+    And eu vejo o recurso "Projetor" na lista de "recursos da sala" apenas uma vez
 
   Scenario: Adicionar recurso a uma sala com quantidade em branco
     Given que estou na pagina de "detalhes" da sala "E428"
