@@ -115,3 +115,18 @@ Feature: Editar recurso de sala
     And eu preencho o campo "patrimonio" com ""
     And eu escolho "Salvar"
     Then eu devo ver a mensagem "Patrimônio não pode ficar em branco"
+
+  Scenario: Editando recurso com patrimonio já existente
+    Given que eu estou na pagina de "detalhes" da sala "D004"
+    And eu vejo o recurso "Projetor" na lista de "recursos"
+    And eu vejo o recurso "Projetor epson" na lista de "recursos"
+    And "patrimonio" do recurso "Projetor" é "123456"
+    And "patrimonio" do recurso "Projetor epson" é "654321"
+    When eu escolho "editar"
+    And eu preencho o campo "patrimonio" com "654321"
+    And eu escolho "Salvar"
+    Then eu devo ver a mensagem "Patrimônio já cadastrado"
+    And eu retorno a pagina "editar" do recurso "Projetor"
+
+
+
