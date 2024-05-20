@@ -3,8 +3,7 @@ Feature: As a user
   So that eu possa remover recursos que não são mais necessários
 
   Scenario: Remover recurso da lista de recursos de uma sala
-    Given que eu estou logado como "Gisely" como "administrador"
-    And que eu estou na página de "detalhes" da sala "E428"
+    Given que eu estou na página de "detalhes" da sala "E428"
     When eu escolho "Remover" ao lado do recurso "camera logitech"
     Then eu devo ver uma mensagem de "confirmação"
     When eu escolho "sim"
