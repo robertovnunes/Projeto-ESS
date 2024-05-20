@@ -1,6 +1,6 @@
 const {defineFeature, loadFeature} = require('jest-cucumber');
 
-const feature = loadFeature('./tests/features/recursos/adicionarRecurso.feature');
+const feature = loadFeature('./tests/features/recursos/adicionarEquipamento.feature');
 
 function pass() {
     return true;

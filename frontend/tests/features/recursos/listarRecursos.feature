@@ -1,7 +1,7 @@
-Feature: Buscar recursos e equipamentos
+Feature: Buscar recursos
   As a usuário administrador
   I want procurar na lista de recursos
-  So that eu possa ver, remover ou editar os recursos disponíveis nas salas]
+  So that eu possa ver, remover ou editar os recursos disponíveis nas salas
 
   Scenario: Listar todos os recursos
     Given que eu estou na página de "listagem de recursos"

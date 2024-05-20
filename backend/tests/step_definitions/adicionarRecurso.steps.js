@@ -1,7 +1,7 @@
 const { defineFeature, loadFeature } = require('jest-cucumber');
 
 
-const feature = loadFeature('./tests/adicionarRecurso.feature');
+const feature = loadFeature('./tests/adicionarEquipamento.feature');
 
 
 defineFeature(feature, test => {
