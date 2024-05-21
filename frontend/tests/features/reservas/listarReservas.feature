@@ -28,5 +28,5 @@ Feature: As a usuário
     When eu seleciono "ver reservas"
     And eu seleciono "filtrar por sala"
     And eu escolho a sala "E428"
-    Then eu vejo 5 reservas listadas
+    Then eu vejo 2 reservas listadas
 

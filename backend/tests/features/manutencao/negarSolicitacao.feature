@@ -8,4 +8,4 @@ Feature: negar manutenção de equipamentono banco de dados
     And a manutenção de equipamento está pendente
     When eu recebo uma solicitação "/PATCH" com o id da manutenção de equipamento
     And "ação" é igual a "negar"
-    Then a manutenção de equipamento de sala é negada no banco de dados
+    Then a manutenção de equipamento de equipamento é negada no banco de dados

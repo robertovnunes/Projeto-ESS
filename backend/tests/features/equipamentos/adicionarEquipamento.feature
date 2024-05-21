@@ -1,9 +1,9 @@
 Feature: As a usuario
-  I want to adicionar um recurso ao banco de dados
+  I want to adicionar um equipamento ao banco de dados
   So that eu posso armazenar todos os recusros de uma sala
 
-  Scenario: Adicionando recurso com sucesso
-    Given não existe o recurso "Ar condicionado midea" com "patrimonio" "1098642"
+  Scenario: Adicionando equipamento com sucesso
+    Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
     When eu recebo uma requisição "/POST"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
@@ -11,9 +11,9 @@ Feature: As a usuario
     And "data de aquisição" "15/03/2023"
     And "valor estimado" "R$ 1.200,00"
     And patrimonio "1098642"
-    Then o recurso "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
+    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
 
-  Scenario: Adicionando recurso com nome vazio
+  Scenario: Adicionando equipamento com nome vazio
     Given eu recebo uma requisição "/POST"
     And "nome" ""
     And "descricao" "Ar condicionado de 12.000 btus"
@@ -24,7 +24,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Nome não pode ser vazio"
 
-  Scenario: Adicionando recurso sem partimonio
+  Scenario: Adicionando equipamento sem partimonio
     Given eu recebo uma requisição "/POST"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
@@ -35,8 +35,8 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Patrimonio não pode ser vazio"
 
-  Scenario: Adicionando recurso com partimonio duplicado
-    Given existe o recurso "Monitor phillips" com "patrimonio" "5583147"
+  Scenario: Adicionando equipamento com partimonio duplicado
+    Given existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
     When eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -47,7 +47,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Patrimonio já cadastrado"
 
-  Scenario: Adicionando recurso com descricao vazia
+  Scenario: Adicionando equipamento com descricao vazia
     Given eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" ""
@@ -58,7 +58,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Descrição não pode ser vazia"
 
-  Scenario: Adicionando recurso com estado de conservação vazio
+  Scenario: Adicionando equipamento com estado de conservação vazio
     Given eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -69,7 +69,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Estado de conservação não pode ser vazio"
 
-  Scenario: Adicionando recurso com data de aquisição vazia
+  Scenario: Adicionando equipamento com data de aquisição vazia
     Given eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -80,7 +80,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Data de aquisição não pode ser vazia"
 
-  Scenario: Adicionando recurso com valor estimado vazio
+  Scenario: Adicionando equipamento com valor estimado vazio
     Given eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -91,7 +91,7 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Valor estimado não pode ser vazio"
 
-  Scenario: Adicionando recurso com estado de conservação não funcional
+  Scenario: Adicionando equipamento com estado de conservação não funcional
     Given eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -102,8 +102,8 @@ Feature: As a usuario
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Estado de conservação inválido"
 
-  Scenario: Adicionando recurso duplicado
-    Given existe o recurso "Monitor phillips" com "patrimonio" "5583147"
+  Scenario: Adicionando equipamento duplicado
+    Given existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
     When eu recebo uma requisição "/POST"
     And "nome" "Monitor phillips"
     And "descricao" "Monitor de 19 polegadas"
@@ -112,10 +112,10 @@ Feature: As a usuario
     And "valor estimado" "R$ 1.200,00"
     And "patrimonio" "5583147"
     Then eu envio uma resposta de "erro" com codigo "404"
-    And mensagem "Recurso já cadastrado"
+    And mensagem "equipamento já cadastrado"
 
-  Scenario: Adicionando recurso com quantidade insuficiente
-    Given que a sala "E248" não possui o recurso "Cadeiras"
+  Scenario: Adicionando equipamento com quantidade insuficiente
+    Given que a sala "E248" não possui o equipamento "Cadeiras"
     And a "capacidade" da sala "E248" é "40"
     When eu recebo uma requisição "/POST" para a sala "E248"
     And "nome" "Cadeiras"
