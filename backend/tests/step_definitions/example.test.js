@@ -1,6 +1,6 @@
 import { defineFeature, loadFeature } from 'jest-cucumber';
 
-const feature = loadFeature('features/example.feature');
+const feature = loadFeature('tests/example.feature');
 
 defineFeature(feature, test => {
     test('titulo do cenario', ({ given, when, then }) => {
