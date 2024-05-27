@@ -46,6 +46,8 @@ And o usuário "aluno" de login "ap9" não está mais na lista de usuários
 
 Scenario: Commit 1 da questão 13
 
+
 Scenario: Commit 2 da questão 13
+
 
 Scenario: Commit de número 3 da questão 13
