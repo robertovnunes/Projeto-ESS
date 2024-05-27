@@ -18,7 +18,7 @@ Feature: Administrador valida os comentários e responde
         When eu vejo o comentário "a sala 1 está com problemas"
         And o comentário está validado
         And eu seleciono a opção "responder"
-        Then eu escrevo a resposta "iremos resolver o problema"
+        Then eu escrevo a resposta "iremos resolver o problema" no campo de resposta
         And a resposta é enviada
     
     Scenario: Vê os comentários e não valida
