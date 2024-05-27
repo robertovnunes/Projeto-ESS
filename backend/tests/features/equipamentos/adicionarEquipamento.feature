@@ -2,7 +2,7 @@ Feature: As a usuario
   I want to adicionar um equipamento ao banco de dados
   So that eu posso armazenar todos os recusros de uma sala
 
-  Scenario: Adicionando equipamento com sucesso
+  Scenario: Adicionando equipamento com patrimonio com sucesso
     Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
     When eu recebo uma requisição "/POST"
     And "nome" "Ar condicionado midea"
@@ -12,6 +12,26 @@ Feature: As a usuario
     And "valor estimado" "R$ 1.200,00"
     And patrimonio "1098642"
     Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
+
+  Scenario: Adicionando equipamento com numero de serie com sucesso
+    Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
+    When eu recebo uma requisição "/POST"
+    And "nome" "Ar condicionado midea"
+    And "descricao" "Ar condicionado de 12.000 btus"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "numero de serie" "1098642"
+    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
+
+  Scenario: Adicionando equipamentos em lote por numero de serie
+    Given eu recebo uma requisição "/POST"
+    And com uma lista de "equipamentos" com "nome" "descricao" "estado de conservação" "data de aquisição" "valor estimado" "numero de serie"
+    | nome | descricao | estado de conservação | data de aquisição | valor estimado | numero de serie |
+    | Ar condicionado midea | Ar condicionado de 12.000 btus | Bom | 15/03/2023 | R$ 1.200,00 | 1098642 |
+    | Monitor phillips | Monitor de 19 polegadas | Bom | 15/03/2023 | R$ 1.200,00 | 5583147 |
+    Then os equipamentos estão no banco de dados
+
 
   Scenario: Adicionando equipamento com nome vazio
     Given eu recebo uma requisição "/POST"
@@ -34,6 +54,17 @@ Feature: As a usuario
     And "patrimonio" ""
     Then eu envio uma resposta de "erro" com codigo "404"
     And mensagem "Patrimonio não pode ser vazio"
+
+  Scenario: Adicionando equipamento sem numero de serie
+    Given eu recebo uma requisição "/POST"
+    And "nome" "Ar condicionado midea"
+    And "descricao" "Ar condicionado de 12.000 btus"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "numero de serie" ""
+    Then eu envio uma resposta de "erro" com codigo "404"
+    And mensagem "Numero de série não pode ser vazio"
 
   Scenario: Adicionando equipamento com partimonio duplicado
     Given existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
