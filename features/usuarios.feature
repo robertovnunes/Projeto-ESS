@@ -15,3 +15,17 @@ When Eu adiciono o professor "Maria Silva" de login "ms7", de matrícula "897935
 Then Eu continuo na pagina "cadastro de professores"
 And Eu vejo uma mensagem de erro "ERRO! Usuário já cadastrado."
 And o "professor" de login "ms7" não foi adicionado novamente
+
+Scenario: Login bem-sucedido de um usuário
+Given Eu estou na página "login"
+And o usuario de login "js3" e senha "senhaCorreta" está cadastrado no sistema
+When Eu tento entrar no sistema com login "js3" e senha "senhaCorreta"
+Then Eu sou redirecionado para "página principal"
+And eu vejo o perfil de "professor"
+
+Scenario : login mal-sucedido devido a credenciais incorretas
+Given Eu estou na página "login"
+And o usuario de login "js3" e senha "senhaCorreta" está cadastrado no sistema
+When Eu tento entrar no sistema com login "js3" e senha "senhaIncorreta"
+Then Eu continuo na página "login"
+And Eu vejo uma mensagem de erro "Invalid username or password"
