@@ -43,3 +43,5 @@ Then o sistema exibe a mensagem "Você tem certeza que deseja remover o usuário
 When Eu escolho a opção "Sim"
 Then Eu vejo a mensagem de confirmação "Usuário removido com sucesso!"
 And o usuário "aluno" de login "ap9" não está mais na lista de usuários
+
+Scenario: Commit de número 3 da questão 13
