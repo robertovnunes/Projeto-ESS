@@ -23,7 +23,7 @@ When Eu tento entrar no sistema com login "js3" e senha "senhaCorreta"
 Then Eu sou redirecionado para "página principal"
 And eu vejo o perfil de "professor"
 
-Scenario: login mal-sucedido devido a credenciais incorretas
+Scenario: Login mal-sucedido devido a credenciais incorretas
 Given Eu estou na página "login"
 And o usuario de login "js3" e senha "senhaCorreta" está cadastrado no sistema
 When Eu tento entrar no sistema com login "js3" e senha "senhaIncorreta"
