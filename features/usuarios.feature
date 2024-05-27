@@ -29,3 +29,4 @@ And o usuario de login "js3" e senha "senhaCorreta" está cadastrado no sistema
 When Eu tento entrar no sistema com login "js3" e senha "senhaIncorreta"
 Then Eu continuo na página "login"
 And Eu vejo uma mensagem de erro "Invalid username or password"
+Then Alteração da questão 7
