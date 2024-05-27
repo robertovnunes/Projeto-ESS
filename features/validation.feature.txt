@@ -1,0 +1,4 @@
+Feature: Administrador valida os comentários e responde
+    As a admin
+    I want to be able to see the comments
+    So that I can validate and respond to them
