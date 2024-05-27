@@ -1,6 +1,6 @@
 Feature: Administrador valida os comentários e responde
     As a admin
-    I want to be able to see the comments of the users
+    I want to be able to see the comments 
     So that I can validate and respond to them
 
  Scenario: Vê os comentários e valida eles
@@ -20,3 +20,11 @@ Feature: Administrador valida os comentários e responde
         And eu seleciono a opção "responder"
         Then eu escrevo a resposta "iremos resolver o problema"
         And a resposta é enviada
+    
+    Scenario: Vê os comentários e não valida
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And eu seleciono a opção "não validar"
+        Then recebo uma mensagem de confirmação "comentário não validado"
+        And o comentário é deletado
