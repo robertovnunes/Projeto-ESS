@@ -8,7 +8,7 @@ const config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
   "testMatch": [
-    "./features/step_definition/*.steps.js"
+    "./tests/step_definition/*.steps.js"
   ],
   // Stop running tests after `n` failures
   // bail: 0,
