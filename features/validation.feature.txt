@@ -1,4 +1,22 @@
 Feature: Administrador valida os comentários e responde
     As a admin
-    I want to be able to see the comments
+    I want to be able to see the comments of the users
     So that I can validate and respond to them
+
+ Scenario: Vê os comentários e valida eles
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And eu seleciono a opção "validar"
+        Then recebo uma mensagem de confirmação "comentário validado"
+        And o comentário é validado
+
+
+    Scenario: Vê os comentários e responde
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And o comentário está validado
+        And eu seleciono a opção "responder"
+        Then eu escrevo a resposta "iremos resolver o problema"
+        And a resposta é enviada
