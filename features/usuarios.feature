@@ -23,7 +23,7 @@ When Eu tento entrar no sistema com login "js3" e senha "senhaCorreta"
 Then Eu sou redirecionado para "página principal"
 And eu vejo o perfil de "professor"
 
-Scenario: Login mal-sucedido devido a credenciais incorretas
+Scenario: login mal-sucedido devido a credenciais incorretas
 Given Eu estou na página "login"
 And o usuario de login "js3" e senha "senhaCorreta" está cadastrado no sistema
 When Eu tento entrar no sistema com login "js3" e senha "senhaIncorreta"
@@ -43,5 +43,9 @@ Then o sistema exibe a mensagem "Você tem certeza que deseja remover o usuário
 When Eu escolho a opção "Sim"
 Then Eu vejo a mensagem de confirmação "Usuário removido com sucesso!"
 And o usuário "aluno" de login "ap9" não está mais na lista de usuários
+
+Scenario: Commit 1 da questão 13
+
+Scenario: Commit 2 da questão 13
 
 Scenario: Commit de número 3 da questão 13
