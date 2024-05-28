@@ -4,7 +4,7 @@ Feature: As a usuario
 
   Scenario: Adicionando equipamento com patrimonio com sucesso
     Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/POST"
+    When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "Bom"
@@ -15,7 +15,7 @@ Feature: As a usuario
 
   Scenario: Adicionando equipamento com numero de serie com sucesso
     Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/POST"
+    When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "Bom"
@@ -24,13 +24,23 @@ Feature: As a usuario
     And "numero de serie" "1098642"
     Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
 
-  Scenario: Adicionando equipamentos em lote por numero de serie
-    Given eu recebo uma requisição "/POST"
-    And com uma lista de "equipamentos" com "nome" "descricao" "estado de conservação" "data de aquisição" "valor estimado" "numero de serie"
-    | nome | descricao | estado de conservação | data de aquisição | valor estimado | numero de serie |
-    | Ar condicionado midea | Ar condicionado de 12.000 btus | Bom | 15/03/2023 | R$ 1.200,00 | 1098642 |
-    | Monitor phillips | Monitor de 19 polegadas | Bom | 15/03/2023 | R$ 1.200,00 | 5583147 |
-    Then os equipamentos estão no banco de dados
+  Scenario outline: Adicionando equipamentos em lote por numero de serie
+    Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    And a requisição possui uma lista de numeros de série
+    When os dados são verificados como "nome" "arduino uno"
+    And "descricao" "Placa de prototipagem"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "quantidade" "5"
+    And "numeros de serie" "numero de serie"
+    |numero de serie|
+    |1098642|
+    |1098643|
+    |1098644|
+    |1098645|
+    |1098646|
+    Then os equipamentos "arduino uno" com numeros de serie "1098642, 1098643, 1098644, 1098645, 1098646" estão no banco de dados
 
 
   Scenario: Adicionando equipamento com nome vazio
