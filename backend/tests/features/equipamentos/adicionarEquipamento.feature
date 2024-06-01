@@ -2,7 +2,7 @@ Feature: As a usuario
   I want to adicionar um equipamento ao banco de dados
   So that eu posso armazenar todos os recusros de uma sala
 
-  Scenario: Adicionando equipamento com patrimonio com sucesso
+  Scenario: Adicionando equipamento usando patrimonio com sucesso
     Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
     When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
     And "nome" "Ar condicionado midea"
@@ -13,27 +13,29 @@ Feature: As a usuario
     And patrimonio "1098642"
     Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
 
-  Scenario: Adicionando equipamento com numero de serie com sucesso
-    Given não existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
+  Scenario: Adicionando equipamento usando numero de serie com sucesso
+    Given não existe o equipamento "Ar condicionado midea" com "numero de serie" "1098643"
     When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    And a requisição possui uma "inserção unica"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "Bom"
     And "data de aquisição" "15/03/2023"
     And "valor estimado" "R$ 1.200,00"
     And "numero de serie" "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" está no banco de dados
+    Then o equipamento "Ar condicionado midea" com numero de serie "1098642" está no banco de dados
 
-  Scenario outline: Adicionando equipamentos em lote por numero de serie
+  Scenario Outline: Adicionando equipamentos em lote por numero de serie
     Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
-    And a requisição possui uma lista de numeros de série
+    And a requisição possui uma "inserção em lote"
     When os dados são verificados como "nome" "arduino uno"
     And "descricao" "Placa de prototipagem"
     And "estado de conservação" "Bom"
     And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
+    And "valor total estimado" "R$ 1.200,00"
     And "quantidade" "5"
-    And "numeros de serie" "numero de serie"
+    And "numeros de serie" <numero de serie>
+    Examples:
     |numero de serie|
     |1098642|
     |1098643|
@@ -42,6 +44,44 @@ Feature: As a usuario
     |1098646|
     Then os equipamentos "arduino uno" com numeros de serie "1098642, 1098643, 1098644, 1098645, 1098646" estão no banco de dados
 
+  Scenario: Adicionar equipamento em lote com numero de série vazio
+    Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    And a requisição possui uma lista de numeros de série
+    When os dados são verificados como "nome" "arduino uno"
+    And "descricao" "Placa de prototipagem"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "quantidade" "5"
+    And "numeros de serie" ""
+    Then eu envio uma resposta de "erro" com codigo "404"
+    And mensagem "Lista de numeros de serie vazia"
+
+  Scenario: adicionando equipamento em lote com numero de serie faltando
+    Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    And a requisição possui uma lista de numeros de série
+    When os dados são verificados como "nome" "arduino uno"
+    And "descricao" "Placa de prototipagem"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "quantidade" "5"
+    And "numeros de serie" "1098642, 1098643, 1098644, 1098645"
+    Then eu envio uma resposta de "erro" com codigo "404"
+    And mensagem "Quantidade de numeros de serie diferente da quantidade de equipamentos"
+
+  Scenario: adicionando equipamento em lote com numero de serie duplicado
+    Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    And a requisição possui uma lista de numeros de série
+    When os dados são verificados como "nome" "arduino uno"
+    And "descricao" "Placa de prototipagem"
+    And "estado de conservação" "Bom"
+    And "data de aquisição" "15/03/2023"
+    And "valor estimado" "R$ 1.200,00"
+    And "quantidade" "5"
+    And "numeros de serie" "1098642, 1098643, 1098644, 1098645, 1098642"
+    Then eu envio uma resposta de "erro" com codigo "404"
+    And mensagem "Numero de serie duplicado"
 
   Scenario: Adicionando equipamento com nome vazio
     Given eu recebo uma requisição "/POST"

@@ -1,16 +1,25 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
+const jest = require('jest');
 const fs = require('fs');
+const {Given} = require("cucumber");
 
 const feature = loadFeature('./tests/features/equipamentos/adicionarEquipamento.feature');
 let equipamentos = []
 
-function equipmentExists(equipamentos, nome, patrimonio) {
+function equipmentExists(equipamentos, nome, campo, identificador) {
+    let found = false;
     equipamentos.forEach(equipamento => {
-        if ((equipamento.nome === nome && equipamento.patrimonio === patrimonio) || equipamento.patrimonio === patrimonio) {
-            return true;
+        switch (equipamento){
+            case campo === 'serial' && equipamento.hasOwnProperty('serial') && equipamento.serial === identificador:
+                found = true;
+                break;
+            case campo === 'patrimonio' && equipamento.hasOwnProperty('patrimonio') && equipamento.patrimonio === identificador:
+                found = true;
+                break;
+            default: found = false;
         }
     });
-    return false;
+    return found;
 }
 
 defineFeature(feature, (test) => {
@@ -25,14 +34,23 @@ defineFeature(feature, (test) => {
             console.error(err);
         }
     });
-
-    test('Adicionando equipamento com sucesso', ({given, when, then, and}) => {
-        given(/^não existe o equipamento "(.*)" com patrimonio (\d+)$/, async (nome, campo, valor) => {
-            expect(equipmentExists(equipamentos, nome, valor)).not.toBe(false);
+    const givenEquipmentExist = (given) => {
+        given(/^não existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
+            expect(equipmentExists(equipamentos, nome, campo, identificador)).not.toBe(true);
         });
+    };
+    const whenRequest = (when) => {
         when(/^eu recebo uma requisição "(.*)"$/, async (req) => {
             expect(req).toBe('POST');
         });
+    };
+    const andFieldMatch = (and) => {
+
+    }
+
+    test('Adicionando equipamento com sucesso', ({given, when, then, and}) => {
+        givenEquipmentExist(given);
+        whenRequest(when);
         and(/^nome "(.*)"$/, async (nome, valor) => {
             expect(nome).toHaveValue(valor);
         });
@@ -177,4 +195,7 @@ defineFeature(feature, (test) => {
             expect(mensagem).toBe('Estado de conservação inválido');
         });
     });
+});
+Given(/^não existe o equipamento "([^"]*)" com "([^"]*)" "([^"]*)"$/, function () {
+
 });
