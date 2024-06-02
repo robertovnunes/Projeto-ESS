@@ -41,37 +41,25 @@ defineFeature(feature, (test) => {
     };
     const whenRequest = (when) => {
         when(/^eu recebo uma requisição "(.*)"$/, async (req) => {
-            expect(req).toBe('POST');
+            expect(req).toBe('/POST');
         });
     };
     const andFieldMatch = (and) => {
-
+        and(/^(.*) "(.*)"$/, async (equipamento, campo, valor) => {
+            expect(equipamento[campo]).toBe(valor);
+        });
+    };
+    const thenPatrimonioIsOnDatabase = (then) => {
+        then(/^o equipamento (.*) com patrimonio (.*) está no banco de dados$/, async (nome, patrimonio) => {
+            expect(equipamentos).toContainEqual({nome: nome, patrimonio: patrimonio});
+        });
     }
 
     test('Adicionando equipamento com sucesso', ({given, when, then, and}) => {
         givenEquipmentExist(given);
         whenRequest(when);
-        and(/^nome "(.*)"$/, async (nome, valor) => {
-            expect(nome).toHaveValue(valor);
-        });
-        and(/^descricao "(.*|\d+)"$/, async (descricao, valor) => {
-            expect(descricao).toHaveValue(valor);
-        });
-        and(/^estado de conservação "(.*)"$/, async (estado, valor) => {
-            expect(estado).toHaveValue(valor);
-        });
-        and(/^data de aquisição "(.*)"$/, async (dataaquisicao, valor) => {
-            expect(dataaquisicao).toHaveValue(valor);
-        });
-        and(/^valor estimado "(.*)"$/, async (valorestimado, valor) => {
-            expect(valorestimado).toHaveValue(valor);
-        });
-        and(/^patrimonio (\d+)$/, async (patrimonio, valor) => {
-            expect(patrimonio).toHaveValue(valor);
-        });
-        then(/^o equipamento "(.*)" com patrimonio (\d+) está no banco de dados$/, async (nome, patrimonio) => {
-            expect(equipamentos).toContainEqual({nome: nome, patrimonio: patrimonio});
-        });
+        andFieldMatch(and);
+        thenPatrimonioIsOnDatabase(then);
     });
     test('Adicionando equipamento duplicado', ({given, when, then, and}) => {
         given(/^existe o equipamento "(.*)" com patrimonio (\d+)$/, async (nome, patrimonio) => {
