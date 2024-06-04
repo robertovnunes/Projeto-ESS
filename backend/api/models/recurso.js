@@ -1,26 +1,15 @@
 const mongoose = require('mongoose');
 
-// Função de validação para garantir que apenas um dos campos (patrimonio ou numeroSerie) esteja presente
-function xorValidator(value) {
-    return (this.patrimonio && !this.sn) || (!this.patrimonio && this.sn);
-  }
-
 const recursoSchema =  new mongoose.Schema({
     patrimonio: {
         type: String,
         trim: true,
-        validate: {
-          validator: xorValidator,
-          message: 'Apenas um dos campos patrimonio ou numeroSerie deve ser fornecido, não ambos.'
-        }
+        required: false
       },
       numeroSerie: {
         type: String,
         trim: true,
-        validate: {
-          validator: xorValidator,
-          message: 'Apenas um dos campos patrimonio ou numeroSerie deve ser fornecido, não ambos.'
-        }
+        required: false
       },
     nome: {
         type: String,
@@ -44,4 +33,4 @@ const recursoSchema =  new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Recurso', recursoSchema);
+module.exports = mongoose.model('recurso', recursoSchema);

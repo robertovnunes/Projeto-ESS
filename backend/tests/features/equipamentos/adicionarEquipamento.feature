@@ -35,6 +35,7 @@ Feature: As a usuario
     And "valor total estimado" "R$ 1.200,00"
     And "quantidade" "5"
     And "numeros de serie" <numero de serie>
+    Then os equipamentos "arduino uno" com numeros de serie "1098642, 1098643, 1098644, 1098645, 1098646" estão no banco de dados
     Examples:
     |numero de serie|
     |1098642|
@@ -42,7 +43,6 @@ Feature: As a usuario
     |1098644|
     |1098645|
     |1098646|
-    Then os equipamentos "arduino uno" com numeros de serie "1098642, 1098643, 1098644, 1098645, 1098646" estão no banco de dados
 
   Scenario: Adicionar equipamento em lote com numero de série vazio
     Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"

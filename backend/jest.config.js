@@ -153,10 +153,13 @@ const config = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/?(*.)+(steps|test).[jt]s?(x)'],
-  transform: {
-    '^.+\\.[tj]sx?$': 'babel-jest',
-  },
+  testEnvironment: 'node',
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: '',
+  testRegex: '.steps.js$',
+  transform: {"\\.[jt]sx?$": "babel-jest"},
+
+setupFilesAfterEnv: ['./setupTests.js'],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [

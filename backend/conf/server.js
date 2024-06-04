@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-
+const path = require('path');
 const mongoose = require('mongoose');
 
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '../conf/.env') });
 
 const port = 3000;
 
@@ -13,7 +13,7 @@ server.use(cors());
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
-const url = process.env.MONGO_URL;
+const url = encodeURI(process.env.MONGO_URL);
 
 function connect() {
     mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -27,7 +27,6 @@ function connect() {
         )
     })
 }
-
 
 
 module.exports = {server, connect};
