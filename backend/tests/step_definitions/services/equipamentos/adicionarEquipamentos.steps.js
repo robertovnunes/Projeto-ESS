@@ -152,14 +152,8 @@ defineFeature(feature, (test) => {
         steps.andFieldMatch(and);
         steps.andFieldMatch(and);
         steps.andFieldMatch(and);
-        then(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (res, code) => {
-            expect(res).toBe('erro');
-            expect(code).toBe(404);
-        });
-        and(/^mensagem "(.*)"/, async (mensagem) => {
-            expect(mensagem).toBe('Equipamento já cadastrado');
-        });
-
+        steps.thenResponseError(then);
+        steps.andMessageError(and, 'Equipamento já cadastrado');
     });
     test('Adicionando equipamento com nome vazio', ({given, when, then, and}) => {
         steps.givenRequest(given)
@@ -169,31 +163,22 @@ defineFeature(feature, (test) => {
         steps.andFieldMatch(and);
         steps.andFieldMatch(and);
         steps.andFieldMatch(and);
-
-        then(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (res, code) => {
-            expect(res).toBe('erro');
-            expect(code).toBe(404);
-        });
-        and(/^mensagem "(.*)"/, async (mensagem) => {
-            expect(mensagem).toBe('Nome não pode ser vazio');
-        });
+        steps.thenResponseError(then);
+        steps.andMessageError(and, 'Nome não pode ser vazio');
     });
     test('Adicionando equipamento com patrimonio vazio', ({given, when, then, and}) => {
-        and(/^patrimonio (.*)/, async (valor) => {
-            expect(valor).toBe('');
-        });
-        and(/^mensagem "(.*)"/, async (mensagem) => {
-            expect(mensagem).toBe('Patrimonio não pode ser vazio');
-        });
+        steps.givenRequest(given);
+        steps.andFieldMatch(and);
+        steps.andFieldEmpty(and); //test to check if the field is empty
+        steps.andFieldMatch(and);
+        steps.andFieldMatch(and);
+        steps.andFieldMatch(and);
+        steps.andFieldMatch(and);
+        steps.thenResponseError(then);
+        steps.andMessageError(and, 'Patrimonio não pode ser vazio');
     });
     test('Adicionando equipamento com patrimonio duplicado', ({given, when, then, and}) => {
-        given(/^existe o equipamento "(.*)" com patrimonio (\d+)$/, async (nome, patrimonio) => {
-            expect(equipmentExists(equipamentos, nome, patrimonio)).toBe(true);
-        });
-
-        and(/^mensagem "(.*)"/, async (mensagem) => {
-            expect(mensagem).toBe('Patrimonio já cadastrado');
-        });
+        
     });
     test('Adicionando equipamento com descrição vazia', ({given, when, then, and}) => {
         and(/^descricao (.*)/, async (valor) => {
