@@ -4,121 +4,12 @@ const defineFeature = jc.defineFeature;
 const fs = require('fs');
 const request = require('supertest');
 const app = require('../../../../app');
+const steps = require('./steps');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
-let equipamentos = []
-
-function equipmentExists(equipamentos, nome, campo, identificador) {
-    let found = false;
-    equipamentos.forEach(equipamento => {
-        switch (equipamento) {
-            case campo === 'serial' && equipamento.hasOwnProperty('serial') && equipamento.serial === identificador:
-                found = true;
-                break;
-            case campo === 'patrimonio' && equipamento.hasOwnProperty('patrimonio') && equipamento.patrimonio === identificador:
-                found = true;
-                break;
-            default:
-                found = false;
-        }
-    });
-    return found;
-}
+let equipamentos = [];
 
 defineFeature(feature, (test) => {
-    fs.readFile('./tests/mocks/equipamentos.json', 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        try {
-            equipamentos = JSON.parse(data);
-        } catch (err) {
-            console.error(err);
-        }
-    });
-
-    //Steps to reuse
-    class steps  {
-        //Given steps
-        static givenNotEquipmentExist = (given) => {
-            given(/^não existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-                expect(equipmentExists(equipamentos, nome, campo, identificador)).not.toBe(true);
-            });
-        };
-        static givenEquipmentExist = (given) => {
-            given(/^existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-                expect(equipmentExists(equipamentos, nome, campo, identificador)).toBe(true);
-            });
-        };
-        static givenRequest = (given) => {
-            given(/^eu recebo uma requisição "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (nome, campo, valor) => {
-                expect(nome).toBe('POST');
-            });
-        };
-        //When steps
-        static whenRequest = (when) => {
-            when(/^eu recebo uma requisição "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req) => {
-                expect(req).toBe('/POST');
-            });
-        };
-        static whenverifyEquipment = (when) => {
-            when(/^os dados são verificados como "(.*)" "(.*)"$/, (nome, valor) => {
-                expect(nome).toBe(valor);
-            });
-        }
-        //Then steps
-        static thenPatrimonioIsOnDatabase = (then) => {
-            then(/^o equipamento (.*) com patrimonio (.*) está no banco de dados$/, async (nome, patrimonio) => {
-                expect(equipamentos).toContainEqual({nome: nome, patrimonio: patrimonio});
-            });
-        };
-        static thenResponseError = (then) => {
-            then(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/), async (type, code) => {
-                expect(type).toBe('error');
-                expect(code).toBe('404');
-            }
-        };
-        static thenSerialNumbersAreOnDatabase = (then) => {
-            then(/^os equipamentos (.*) com numeros de serie (\d+) estão no banco de dados$/, async (numeros) => {
-                expect(equipamentos).toContainEqual({serial: numeros});
-            });
-        };
-        static andMessageError = (and, message) => {
-            and(/^mensagem "(.*)"$/, async (mensagem) => {
-                expect(mensagem).toBe(message);
-            });
-        }
-        //And steps
-        static andFieldMatch = (and) => {
-            and(/^(.*) "(.*)"$/, async (equipamento, campo, valor) => {
-                expect(equipamento[campo]).toBe(valor);
-            });
-        };
-        static andFieldEmpty = (and) => {
-            and(/^(.*) "(.*)"$/, async (equipamento, campo) => {
-                expect(equipamento[campo]).toBe('');
-            });
-        };
-        static andReqIsBatch = (and) => {
-            and(/^a requisição possui uma "(.*)"$/, async (campo) => {
-                expect(campo).toBe('inserção em lote');
-            });
-        };
-        static andReqIsNotBatch = (and) => {
-            and(/^a requisição possui uma "(.*)"$/, async (campo) => {
-                expect(campo).toBe('inserção unica');
-            });
-        };
-        static andVerifySerialNumbers = (and) => {
-            and(/^os numeros de serie (\d+)$/, async (numeros) => {
-
-            })
-        };
-
-    };
-
-
     //Scenarios tests
     test('Adicionando equipamento usando patrimonio com sucesso', ({given, when, then, and}) => {
         steps.givenNotEquipmentExist(given);
