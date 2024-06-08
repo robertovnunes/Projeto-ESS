@@ -5,8 +5,8 @@ Feature: As a usuario
   Scenario Outline: Editar estado de conservação de um equipamento
     Given existe o equipamento <nome> com "patrimonio" <patrimonio>
     And descricao <descricao>
-    And "estado de conservação" <estado de conservação>
-    And "data de aquisição" <data de aquisição>
+    And "estado de conservacao" <estado de conservacao>
+    And "data de aquisicao" <data de aquisicao>
     And "valor estimado" <valor estimado>
     When eu recebo uma requisição "/PATCH"
     And "nome" "Ar condicionado midea"
@@ -19,7 +19,7 @@ Feature: As a usuario
     And eu envio uma resposta de "sucesso" com codigo "200"
     And json atualizado do equipamentos "Ar condicionado midea" com patrimonio "1098642" é retornado
     Examples:
-      |nome  |descricao|estado de conservação|data de aquisição|valor estimado| patrimonio|
+      |nome  |descricao|estado de conservacao|data de aquisicao|valor estimado| patrimonio|
       |Ar condicionado midea|Ar condicionado de 12.000 btus|novo|15/03/2023|R$ 1.200,00|1098642|
 
   Scenario: Editar um equipamento com nome vazio
