@@ -1,0 +1,37 @@
+[
+  {
+    "eventName": "Reunião Geral-RobôCIn",
+    "description": "Reunião Semanal",
+    "responsibleTeacher": "Edna Barros",
+    "eventDate": "2024-07-10",
+    "eventTime": "06:00 PM"
+  },
+  {
+    "eventName": "Monitoria de ESS",
+    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
+    "responsibleTeacher": "Breno Miranda",
+    "eventDate": "2024-07-10",
+    "eventTime": "10:00 AM"
+  },
+  {
+    "eventName": "Prova de Estatística",
+    "description": "",
+    "responsibleTeacher": "Tsang Ing Ren",
+    "eventDate": "2024-07-18",
+    "eventTime": "08:00 AM"
+  },
+  {
+    "eventName": "Reunião Geral-RobôCIn",
+    "description": "Reunião Semanal",
+    "responsibleTeacher": "Edna Barros",
+    "eventDate": "2024-07-17",
+    "eventTime": "06:00 PM"
+  },
+  {
+    "eventName": "Semana dos Calouros",
+    "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
+    "responsibleTeacher": "Sérgio Soares",
+    "eventDate": "2024-07-20",
+    "eventTime": "04:00 PM"
+  }
+]
