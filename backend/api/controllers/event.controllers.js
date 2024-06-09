@@ -21,8 +21,8 @@ export const getAllEventsJson = (req,res) => {
 
 export const eventSignUpJson = async(req, res) => {
     try{
-        const {eventName,description,responsibleTeacher,eventDate,eventTime} = req.body;
-        const missingInfo = !eventName || !responsibleTeacher || !eventDate || !eventTime;
+        const {eventName,description,responsibleTeacher,eventDateAndTime} = req.body;
+        const missingInfo = !eventName || !responsibleTeacher || !eventDateAndTime;
         if(missingInfo){
             console.log("Informações obrigatórias não preenchidas");
             return res.status(400).json({
@@ -32,8 +32,7 @@ export const eventSignUpJson = async(req, res) => {
         let data = JSON.parse(fs.readFileSync(path.resolve("../api/mock/eventos.json"),'utf-8'));
         const eventExists = data.some(element => 
             element.eventName === eventName && 
-            element.eventDate === eventDate && 
-            element.eventTime === eventTime
+            element.eventDateAndTime === eventDateAndTime 
         );
         if(eventExists){
             console.log("Event already exists");
@@ -45,9 +44,8 @@ export const eventSignUpJson = async(req, res) => {
             const newEvent = {
                 eventName,
                 description: "",
-                responsableTeacher,
-                eventDate,
-                eventTime
+                responsIbleTeacher,
+                eventDateAndTime,
             }
             data.push(newEvent);
             res.status(201).json(newEvent);
@@ -56,8 +54,7 @@ export const eventSignUpJson = async(req, res) => {
                 eventName,
                 description,
                 responsibleTeacher,
-                eventDate,
-                eventTime
+                eventDateAndTime
             }
             data.push(newEvent);
             res.status(201).json(newEvent);
