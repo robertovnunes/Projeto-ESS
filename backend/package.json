@@ -20,5 +20,6 @@
     "cucumber": "^6.0.7",
     "jest": "^29.7.0",
     "jest-cucumber": "^4.2.0"
-  }
+  },
+  "type" : "module"
 }
