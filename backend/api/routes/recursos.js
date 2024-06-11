@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Recurso = require('../models/recurso');
+const Recurso = require('../models/equipamento');
 
 const fs = require('fs/promises'); // Se estiver usando Node.js v18 ou superior
 // OU
@@ -18,6 +18,53 @@ function getJson() {
             return [];
         });
 }
+/**
+ * @Swagger
+ * tags:
+ *  name: Recursos
+ *  description: Recursos disponíveis no sistema
+ * 
+ */
+/**
+ * @Swagger
+ * /recursos:
+ *  get: 
+ *   summary: Retorna todos os recursos cadastrados
+ *   tags: [Recursos]
+ *   responses:
+ *    '200':
+ *     description: Recursos retornados com sucesso
+ *     content:
+ *     application/json:
+ *      schema:
+ *       type: array
+ *       items:
+ *       
+ *  post:
+ *   summary: Cadastra um novo recurso
+ *   tags: [Recursos]
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *     schema:
+ *     type: object
+ *    properties:
+ *    nome:
+ *     type: string
+ *    descricao:
+ *     type: string
+ *    patrimonio:
+ *     type: string
+ *    serial:
+ *     type: string
+ *    estado_conservacao:
+ *     type: string
+ *    data_aquisicao:
+ *     type: string
+ *    valor_estimado:
+ *     type: string
+ */
 
 module.exports = app => {
     app.use('/recursos', router);
