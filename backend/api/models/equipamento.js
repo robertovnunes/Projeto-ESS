@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const recursoSchema =  new mongoose.Schema({
+const equipamentoSchema =  new mongoose.Schema({
     patrimonio: {
         type: String,
         trim: true,
@@ -33,4 +33,4 @@ const recursoSchema =  new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('recurso', recursoSchema);
+module.exports = mongoose.model('recurso', equipamentoSchema);

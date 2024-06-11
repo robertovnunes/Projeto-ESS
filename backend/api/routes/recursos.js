@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Recurso = require('../models/recurso');
+const Recurso = require('../models/equipamento');
 
 const fs = require('fs/promises'); // Se estiver usando Node.js v18 ou superior
 // OU

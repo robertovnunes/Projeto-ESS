@@ -23,7 +23,7 @@ Feature: As a usuario
     And "data de aquisição" "15/03/2023"
     And "valor estimado" "R$ 1.200,00"
     And "numero de serie" "1098642"
-    Then o equipamento "Ar condicionado midea" com numero de serie "1098642" está no banco de dados
+    Then o equipamento "Ar condicionado midea" com "numero de serie" "1098642" está no banco de dados
 
   Scenario Outline: Adicionando equipamentos em lote por numero de serie
     Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
@@ -119,8 +119,8 @@ Feature: As a usuario
   Scenario: Adicionando equipamento com partimonio duplicado
     Given existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
     When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
-    And "nome" "Monitor phillips"
-    And "descricao" "Monitor de 19 polegadas"
+    And "nome" "Projetor epson"
+    And "descricao" "projetor full hd"
     And "estado de conservação" "Bom"
     And "data de aquisição" "15/03/2023"
     And "valor estimado" "R$ 1.200,00"
@@ -129,7 +129,8 @@ Feature: As a usuario
     And mensagem "Patrimonio já cadastrado"
 
   Scenario: Adicionando equipamento com descricao vazia
-    Given eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
+    Given não existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
+    When eu recebo uma requisição "/POST" do usuario "joao" logado como "admistrador"
     And "nome" "Monitor phillips"
     And "descricao" ""
     And "estado de conservação" "Bom"
