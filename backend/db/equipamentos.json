@@ -5,6 +5,23 @@
     "estado_conservacao": "Bom",
     "data_aquisicao": "15/03/2023",
     "valor_estimado": "1200.00",
+    "single": true,
     "patrimonio": "1098642"
+  },
+  {
+    "nome": "arduino uno",
+    "descricao": "placa de prototipação",
+    "estado_conservacao": "Bom",
+    "data_aquisicao": "15/03/2023",
+    "quantidade": "5",
+    "valor_estimado": "1200.00",
+    "single": false,
+    "numero_serie": [
+      "1099642",
+      "1099643",
+      "1099644",
+      "1099645",
+      "1099646"
+    ]
   }
 ]

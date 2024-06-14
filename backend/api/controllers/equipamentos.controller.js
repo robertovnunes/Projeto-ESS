@@ -113,13 +113,14 @@ exports.createMultipleEquipments = (req, res) => {
             return;
         } else {
             if(identificador.type === 'patrimonio') {
-                let newEquipment = {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado};
+                newEquipment = {nome, descricao, estado_conservacao, data_aquisicao, quantidade, valor_estimado};
+                newEquipment.single = false;
                 equipments.forEach(equipment => {
-                    if(equipment.patrimonio.lenght > 1){
-                        equipment.patrimonio.forEach(patrimonio => {
-                            if(identificador.value.find(pat => patrimonio === pat)){
+                    if(equipment.single === false){
+                        identificador.value.forEach(pat => {
+                            if(equipment.patrimonio.find(patrimonio => pat === patrimonio)){
                                 console.log(`POST /equipamentos/lote [400] BAD REQUEST`);
-                                return res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
+                                return res.status(400).send({message: 'Já existe um equipamento com este patrimonio'});
                             }
                         });
                     }
