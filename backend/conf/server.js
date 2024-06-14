@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const dotenv = require('dotenv').config({ path: path.resolve(__dirname, '../conf/.env') });
 
-const port = 3000;
+const port = 3001;
 
 const server = express();
 

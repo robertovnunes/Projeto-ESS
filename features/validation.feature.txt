@@ -1,0 +1,60 @@
+Feature: Administrador valida os comentários e responde
+    As a admin
+    I want to be able to see the comments 
+    So that I can validate and respond to them
+
+ Scenario: Vê os comentários e valida eles
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And eu seleciono a opção "validar"
+        Then recebo uma mensagem de confirmação "comentário validado"
+        And o comentário é validado
+
+
+    Scenario: Vê os comentários e responde
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And o comentário está validado
+        And eu seleciono a opção "responder"
+        Then eu escrevo a resposta "iremos resolver o problema"
+        And a resposta é enviada
+    
+    Scenario: Vê os comentários e não valida
+        Given estou na página "comentários"
+        And estou logado como "administrador" com login "cz" e senha "123"
+        When eu vejo o comentário "a sala 1 está com problemas"
+        And eu seleciono a opção "não validar"
+        Then recebo uma mensagem de confirmação "comentário não validado"
+        And o comentário é deletado
+
+    Feature: Professor cria um comentário sobre a sala e envia para a ADM
+    As a professor
+    I want to be able to create a comment
+    So that I can send it to the ADM
+
+
+    Scenario: Cria um comentário e envia para a ADM
+        Given estou na página "comentários"
+        And estou logado como "professor" com login "acm" e senha "456"
+        When eu escrevo o comentário "o computador da sala 3 não liga"
+        And eu seleciono "enviar para ADM"
+        Then aparece uma mensagem de confirmação "comentário enviado para ADM"
+        And o comentário é enviado para a Administração
+
+    Feature: Aluno cria um comentário sobre o equipamento
+    As a student
+    I want to be able to create a comment
+    So that I can send it to the responsible SEC
+
+
+    Scenario: Envia comentário sobre o equipamento para a SEC responsável
+        Given estou na página "comentários"
+        And estou logado como "aluno" com login "tns" e senha "789"
+        When eu vejo a opção "comentar sobre equipamento"
+        And eu escrevo o comentário "a impressora da sala 2 está com problemas"
+        And eu seleciono "enviar para SEC"
+        And eu seleciono "secretaria de pos-grad", a SEC responsável pelo equipamento
+        Then aparece uma mensagem de confirmação "comentário enviado para SEC"
+        And o comentário é enviado para a SEC responsável
