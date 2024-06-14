@@ -4,6 +4,7 @@
   "description": "Backend com NodeJS para comunicação com banco de dados",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "jest"
   },
   "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",

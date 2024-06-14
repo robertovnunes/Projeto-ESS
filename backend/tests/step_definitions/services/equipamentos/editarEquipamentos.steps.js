@@ -7,7 +7,7 @@ const steps = require('./steps');
 const feature = loadFeature('backend/tests/features/equipamentos/editarEquipamentos.feature');
 
 let equipamentos = [];
-fs.readFile('./tests/mocks/equipamentos.json', 'utf8', (err, data) => {
+fs.readFile('./tests/mocks/oldEquipments.json', 'utf8', (err, data) => {
     if (err) {
         console.error(err);
         return;

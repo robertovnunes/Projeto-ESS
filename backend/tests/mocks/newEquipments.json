@@ -1,0 +1,84 @@
+{
+  "equipamentos": [
+    {
+      "nome": "Computador",
+      "descricao": "Computador desktop com monitor de 21 polegadas",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "2021-03-15",
+      "valor_estimado": 2500.00,
+      "patrimonio": "1234567"
+    },
+    {
+      "nome": "Impressora",
+      "descricao": "Impressora a laser multifuncional",
+      "estado_de_conservacao": "Regular",
+      "data_de_aquisicao": "2019-07-22",
+      "valor_estimado": 1500.00,
+      "patrimonio": "2345678"
+    },
+    {
+      "nome": "Projetor",
+      "descricao": "Projetor Full HD com 3000 lumens",
+      "estado_de_conservacao": "Excelente",
+      "data_de_aquisicao": "2022-01-10",
+      "valor_estimado": 3000.00,
+      "patrimonio": "3456789"
+    },
+    {
+      "nome": "Scanner",
+      "descricao": "Scanner de alta resolucao",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "2020-11-05",
+      "valor_estimado": 800.00,
+      "patrimonio": "4567890"
+    },
+    {
+      "nome": "Notebook",
+      "descricao": "Notebook ultrafino com 16GB de RAM",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "2021-09-18",
+      "valor_estimado": 4500.00,
+      "patrimonio": "5678901"
+    },
+    {
+      "nome": "Roteador",
+      "descricao": "Roteador Wi-Fi de alta velocidade",
+      "estado_de_conservacao": "Regular",
+      "data_de_aquisicao": "2018-02-25",
+      "valor_estimado": 200.00,
+      "serial": "6789012"
+    },
+    {
+      "nome": "Mesa Digitalizadora",
+      "descricao": "Mesa digitalizadora para design gráfico",
+      "estado_de_conservacao": "Excelente",
+      "data_de_aquisicao": "2023-04-10",
+      "valor_estimado": 1200.00,
+      "patrimonio": "7890123"
+    },
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado split de 12.000 btus",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "15/03/2023",
+      "valor_estimado": 1200.00,
+      "patrimonio": "1098642"
+    },
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado split de 12.000 btus",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "15/03/2023",
+      "valor_estimado": 1200.00,
+      "sn": "1098642"
+    },
+    {
+      "nome": "arduino uno",
+      "descricao": "Placa de prototipagem",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "15/03/2023",
+      "valor_estimado": 1200.00,
+      "sn": ["1098642", "1098643", "098644", "1098645", "1098646"]
+    }
+  ]
+}
