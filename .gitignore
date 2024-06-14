@@ -2,3 +2,6 @@
 /backend/node_modules/
 /.idea/
 /backend/coverage/
+/node_modules/
+/qodana.yaml
+/backend/conf/.env
