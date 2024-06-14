@@ -1,10 +1,15 @@
-const server = require('./conf/server');
+const app = require('./conf/server');
 const consign = require('consign');
 
-server.get('/', (req, res) => {
+const docs = require('./docs/swagger');
+
+app.use('/', docs);
+
+app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
 consign({ cwd: 'api'})
     .include('routes')
-    .into(server);
+    .then('controllers')
+    .into(app);

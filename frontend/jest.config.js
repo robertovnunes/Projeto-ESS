@@ -7,7 +7,7 @@
 const config = {
 
   "testMatch": [
-    "./features/step_definition/*.steps.js"
+    "./tests/step_definition/*.steps.js"
   ],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -200,3 +200,4 @@ const config = {
 };
 
 module.exports = config;
+
