@@ -63,6 +63,22 @@
       "data_de_aquisicao": "15/03/2023",
       "valor_estimado": 1200.00,
       "patrimonio": "1098642"
+    },
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado split de 12.000 btus",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "15/03/2023",
+      "valor_estimado": 1200.00,
+      "sn": "1098642"
+    },
+    {
+      "nome": "arduino uno",
+      "descricao": "Placa de prototipagem",
+      "estado_de_conservacao": "Bom",
+      "data_de_aquisicao": "15/03/2023",
+      "valor_estimado": 1200.00,
+      "sn": ["1098642", "1098643", "098644", "1098645", "1098646"]
     }
   ]
 }
