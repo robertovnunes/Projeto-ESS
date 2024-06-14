@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'equipamentos.json');
+const filePath = path.join(__dirname, '../../db/equipamentos.json');
 
 const loadDatabase = () => {
 

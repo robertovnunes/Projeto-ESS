@@ -1,3 +1,10 @@
-{
-
-}
+[
+  {
+    "nome": "Ar condicionado midea",
+    "descricao": "Ar condicionado split 12000 btus",
+    "estado_conservacao": "Bom",
+    "data_aquisicao": "15/03/2023",
+    "valor_estimado": "1200.00",
+    "patrimonio": "1098642"
+  }
+]
