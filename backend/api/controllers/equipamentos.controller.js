@@ -1,4 +1,4 @@
-const e = require('express');
+const shortid = require('shortid');
 const equipamentosModel = require('../models/equipamento.model');
 
 //Documentação da API
@@ -27,7 +27,6 @@ const equipamentosModel = require('../models/equipamento.model');
  * 
 */
 
-
 exports.getAllEquipments = (req, res) => {
     try{
         const equipments = equipamentosModel.loadDatabase();
@@ -38,19 +37,55 @@ exports.getAllEquipments = (req, res) => {
     }
 };
 
-exports.getEquipmentByPatrimonio = (req, res) => {
+exports.getEquipmentById = (req, res) => {
     try{
         const equipments = equipamentosModel.loadDatabase();
-        const equipment = equipments.find(equipment => equipment.patrimonio === req.params.patrimonio);
+        const id = req.params.id;
+        const equipment = equipments.find(equipment => equipment.id === id);
         if(equipment){
-            console.log(`GET /equipamentos/:${equipment.patrimonio} [200] OK`);
+            console.log(`GET /equipamentos/:${id} by ID [200] OK`);
             res.status(200).send(equipment);
         } else {
-            console.log(`GET /equipamentos/:${equipment.patrimonio} [404] NOT FOUND`);
+            console.log(`GET /equipamentos/:${id} by ID [404] NOT FOUND`);
             res.status(404).send({message: 'Equipamento não encontrado'});
         }
     } catch (error) {
-        console.log(`GET /equipamentos/:${equipment.patrimonio} [500] INTERNAL SERVER ERROR`);
+        console.log(`GET /equipamentos/:${id} [500] INTERNAL SERVER ERROR\n ${error.message}`);
+        res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
+    }
+};
+
+exports.getEquipmentByPatrimonio = (req, res) => {
+    try{
+        const equipments = equipamentosModel.loadDatabase();
+        const patrimonio = req.params.patrimonio;
+        const equipment = equipments.find(equipment => equipment.patrimonio === patrimonio);
+        if(equipment){
+            console.log(`GET /equipamentos/patrimonio/:${patrimonio} [200] OK`);
+            res.status(200).send(equipment);
+        } else {
+            console.log(`GET /equipamentos/patrimonio/:${patrimonio} [404] NOT FOUND`);
+            res.status(404).send({message: 'Equipamento não encontrado'});
+        }
+    } catch (error) {
+        console.log(`GET /equipamentos/patrimonio/:${req.params.patrimonio} [500] INTERNAL SERVER ERROR\n ${error.message}`);
+        res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
+    }
+};
+
+exports.getEquipmentBySN = (req, res) => {
+    try{
+        const equipments = equipamentosModel.loadDatabase();
+        const equipment = equipments.find(equipment => equipment.numero_serie === req.params.numero_serie);
+        if(equipment){
+            console.log(`GET /equipamentos/:${equipment.numero_serie} [200] OK`);
+            res.status(200).send(equipment);
+        } else {
+            console.log(`GET /equipamentos/:${equipment.numero_serie} [404] NOT FOUND`);
+            res.status(404).send({message: 'Equipamento não encontrado'});
+        }
+    } catch (error) {
+        console.log(`GET /equipamentos/:${equipment.numero_serie} [500] INTERNAL SERVER ERROR\n ${error.message}`);
         res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
     }
 };
@@ -64,8 +99,10 @@ exports.createSingleEquipment = (req, res) => {
             res.status(400).send({message: 'Campos obrigatórios não preenchidos'});
             return;
         } else {
+            id = '04'+shortid.generate();
+            if(equipments.find(equipment => equipment.id === id)) id = '04'+shortid.generate();
              if(identificador.type === 'patrimonio') {
-                newEquipment = {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio: identificador.value};
+                newEquipment = {id, nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio: identificador.value};
                 newEquipment.single = true;
                 if (equipments.lenght === 0) {
                     equipments = newEquipment;
@@ -79,7 +116,9 @@ exports.createSingleEquipment = (req, res) => {
                     }
                 }
             } else if(identificador.type === 'numero_serie') {
-                newEquipments = {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie: identificador.value};
+                id = '04'+shortid.generate();
+                if(equipments.find(equipment => equipment.id === id)) id = '04'+shortid.generate();
+                newEquipments = {id, nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie: identificador.value};
                 newEquipment.single = true;
                 if (equipments.lenght === 0) {
                     equipments = newEquipments;
@@ -112,8 +151,10 @@ exports.createMultipleEquipments = (req, res) => {
             res.status(400).send({message: 'Campos obrigatórios não preenchidos'});
             return;
         } else {
+            id = '04'+shortid.generate();
+            if(equipments.find(equipment => equipment.id === id)) id = '04'+shortid.generate();
             if(identificador === 'patrimonio') {
-                newEquipment = {nome, descricao, estado_conservacao, data_aquisicao, quantidade, valor_total_estimado};
+                newEquipment = {id, nome, descricao, estado_conservacao, data_aquisicao, quantidade, valor_total_estimado};
                 newEquipment.single = false;
                 equipments.forEach(equipment => {
                     if(equipment.single === false){
@@ -133,7 +174,9 @@ exports.createMultipleEquipments = (req, res) => {
                 newEquipment.equipamentos = equipamentos;
                 equipments.push(newEquipment);
             } else if(identificador.type === 'numero_serie') {
-                newEquipment = {nome, descricao, estado_conservacao, data_aquisicao, quantidade, valor_total_estimado};
+                id = '04'+shortid.generate();
+                if(equipments.find(equipment => equipment.id === id)) id = '04'+shortid.generate();
+                newEquipment = {id, nome, descricao, estado_conservacao, data_aquisicao, quantidade, valor_total_estimado};
                 newEquipment.single = false;
                 equipments.forEach(equipment => {
                     if(equipment.single === false){
@@ -165,31 +208,38 @@ exports.createMultipleEquipments = (req, res) => {
 exports.patchEquipment = (req, res) => {
     try{
         const equipments = equipamentosModel.loadDatabase();
-        const index = equipments.findIndex(equipment => equipment.patrimonio === req.params.patrimonio);
+        const index = equipments.findIndex(equipment => equipment.id === req.params.id);
         if(index !== -1){
-            equipments[index] = req.body;
-            writeDatabase(equipments);
-            res.status(200).send(req.body);
+            data = req.body;
+            equipments[index] = {...equipments[index], ...data};
+            equipamentosModel.writeDatabase(equipments);
+            console.log(`PATCH /equipamentos/:${req.params.id} [200] PATCHED`);
+            res.status(200).send(equipments[index]);
         } else {
+            console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
             res.status(404).send({message: 'Equipamento não encontrado'});
         }
     } catch (error) {
-        res.status(500).send({message: error.message});
+        console.log(`PATCH /equipamentos/:${req.params.id} [500] INTERNAL SERVER ERROR\n ${error.message}`);
+        res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
     }
 };
 
 exports.deleteEquipment = (req, res) => {
     try{
         const equipments = equipamentosModel.loadDatabase();
-        const index = equipments.findIndex(equipment => equipment.patrimonio === req.params.patrimonio);
+        const index = equipments.findIndex(equipment => equipment.id === req.params.id);
         if(index !== -1){
             equipments.splice(index, 1);
-            writeDatabase(equipments);
-            res.status(204).send();
+            equipamentosModel.writeDatabase(equipments);
+            console.log(`DELETE /equipamentos/${req.params.id} [204] DELETED`);
+            res.status(204).send(equipments);
         } else {
+            console.log(`DELETE /equipamentos/${req.params.id} [204] NOT FOUND`);
             res.status(404).send({message: 'Equipamento não encontrado'});
         }
     } catch (error) {
-        res.status(500).send({message: error.message});
+        console.log(`DELETE /equipamentos/${req.params.id} [500] INTERNAL SERVER ERROR\n ${error.message}`);
+        res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
     }
 };
