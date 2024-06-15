@@ -137,15 +137,19 @@ exports.createMultipleEquipments = (req, res) => {
                 newEquipment.single = false;
                 equipments.forEach(equipment => {
                     if(equipment.single === false){
-                        identificador.value.forEach(numero_serie => {
-                            if (equipment.hasOwnProperty('numero_serie') && (equipment.numero_serie.find(serie => numero_serie === serie))){
-                                console.log(`POST /equipamentos/lote [400] BAD REQUEST`);
-                                return res.status(400).send({message: 'Já existe um equipamento com este número de série'});
+                        equipment.equipamentos.forEach(eq => {
+                            if(eq.hasOwnProperty('numero_serie')){
+                                equipamentos.forEach(e => {
+                                    if(e.numero_serie === eq.numero_serie){
+                                        console.log(`POST /equipamentos/lote [400] BAD REQUEST`);
+                                        return res.status(400).send({message: 'Já existe um equipamento com este número de série'});
+                                    }
+                                });
                             }
                         });
                     }
                 });
-                
+                newEquipment.equipamentos = equipamentos;
                 equipments.push(newEquipment);
             }
         }
