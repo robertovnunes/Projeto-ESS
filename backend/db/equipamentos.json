@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "nome": "Ar condicionado midea",
     "descricao": "Ar condicionado split 12000 btus",
     "estado_conservacao": "Bom",
@@ -9,19 +10,75 @@
     "patrimonio": "1098642"
   },
   {
+    "id": 3,
+    "nome": "arduino uno",
+    "descricao": "placa de prototipação",
+    "data_aquisicao": "15/03/2023",
+    "quantidade": "5",
+    "valor_total_estimado": "1200.00",
+    "single": false,
+    "equipamentos": [
+      {
+        "numero_serie": "1099642",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "numero_serie": "1099643",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "numero_serie": "1099644",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "numero_serie": "1099645",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "numero_serie": "1099646",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      }
+    ]
+  },
+  {
     "nome": "arduino uno",
     "descricao": "placa de prototipação",
     "estado_conservacao": "Bom",
     "data_aquisicao": "15/03/2023",
     "quantidade": "5",
-    "valor_estimado": "1200.00",
+    "valor_total_estimado": "1200.00",
     "single": false,
-    "numero_serie": [
-      "1099642",
-      "1099643",
-      "1099644",
-      "1099645",
-      "1099646"
+    "equipamentos": [
+      {
+        "patrimonio": "1099642",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "patrimonio": "1099643",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "patrimonio": "1099644",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "patrimonio": "1099645",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      },
+      {
+        "patrimonio": "1099646",
+        "estado_conservacao": "Bom",
+        "valor_estimado": "240.00"
+      }
     ]
   }
 ]
