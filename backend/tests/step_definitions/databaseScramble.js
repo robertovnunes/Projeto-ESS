@@ -31,5 +31,14 @@ const getFirstEvent = () => {
         return [];
     }
 }
+const getSecondEvent = () => {
+    try{
+        const events = fs.readFileSync(newEventsPath, 'utf8');
+        return JSON.parse(events)[1];
+    } catch(error){
+        console.error('Erro ao ler o arquivo JSON', error);
+        return [];
+    }
+}
 
-module.exports = {readOldEvents, readNewEvents,getFirstEvent};
+module.exports = {readOldEvents, readNewEvents,getFirstEvent,getSecondEvent};
