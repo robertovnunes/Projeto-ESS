@@ -1,0 +1,20 @@
+[{
+    "eventName": "Monitoria de ESS",
+    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
+    "responsibleTeacher": "Breno Miranda",
+    "eventDateAndTime": "2024-07-10 10:00 AM"
+
+  },
+  {
+    "eventName": "Prova de Estatística",
+    "description": "",
+    "responsibleTeacher": "Tsang Ing Ren",
+    "eventDateAndTime": "2024-07-18 08:00 AM"
+  },
+  {
+    "eventName": "Semana dos Calouros",
+    "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
+    "responsibleTeacher": "Sérgio Soares",
+    "eventDateAndTime": "2024-07-20 04:00 PM"
+  }
+]
