@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const oldEventsPath = path.resolve(__dirname, '../../api/mock/oldEvents.json');
-const newEventsPath = path.resolve(__dirname, '../../api/mock/eventos.json');
+const newEventsPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/newEvents.json');
 
 const readOldEvents = () => {
     try{
-        const data = fs.readFileSync(oldEquipmentsPath, 'utf8');
-        return JSON.parse(data).equipamentos;
+        const data = fs.readFileSync(oldEventsPath, 'utf8');
+        return JSON.parse(data);
     } catch (error) {
         console.error('Erro ao ler o arquivo JSON', error);
         return [];
@@ -15,8 +15,8 @@ const readOldEvents = () => {
 }
 const readNewEvents= () => {
     try{
-        const data = fs.readFileSync(newEquipmentsPath, 'utf8')
-        return JSON.parse(data).equipamentos;
+        const data = fs.readFileSync(newEventsPath, 'utf8')
+        return JSON.parse(data);
     } catch (error) {
         console.error('Erro ao ler o arquivo JSON', error);
         return [];
@@ -25,7 +25,7 @@ const readNewEvents= () => {
 const getFirstEvent = () => {
     try{
         const events = fs.readFileSync(newEventsPath, 'utf8');
-        return JSON.parse(events).eventos[0];
+        return JSON.parse(events)[0];
     } catch(error){
         console.error('Erro ao ler o arquivo JSON', error);
         return [];

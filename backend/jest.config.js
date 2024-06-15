@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '',
-  testRegex: '.steps.ts$',
+  testRegex: '.steps.js$',
   transform: {
   
   '^.+\\.(t|j)s$': 'ts-jest',

@@ -1,5 +1,5 @@
-import express from 'express';
-import {getAllEventsJson,eventSignUpJson} from '../controllers/event.controllers.js';
+const express = require('express');
+const { getAllEventsJson, eventSignUpJson } = require('../controllers/event.controllers.js');
 const router = express.Router();
 
 
@@ -11,4 +11,4 @@ router.post('/signup', eventSignUpJson);
 
 // router.delete('/:id', deleteEventJson);
 
-export default router
+module.exports = router;

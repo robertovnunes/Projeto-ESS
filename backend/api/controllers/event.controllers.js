@@ -1,8 +1,8 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 
-export const getAllEventsJson = (req,res) => {
+const getAllEventsJson = (req,res) => {
     try{ 
         const data = JSON.parse(fs.readFileSync(path.resolve("../api/mock/eventos.json"),'utf-8'))
         if(!data){
@@ -19,7 +19,7 @@ export const getAllEventsJson = (req,res) => {
 
 }
 
-export const eventSignUpJson = async(req, res) => {
+const eventSignUpJson = async(req, res) => {
     try{
         const {eventName,description,responsibleTeacher,eventDateAndTime} = req.body;
         const missingInfo = !eventName || !responsibleTeacher || !eventDateAndTime;
@@ -29,7 +29,7 @@ export const eventSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("../api/mock/eventos.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/eventos.json"),'utf-8'));
         const eventExists = data.some(element => 
             element.eventName === eventName && 
             element.eventDateAndTime === eventDateAndTime 
@@ -48,6 +48,7 @@ export const eventSignUpJson = async(req, res) => {
                 eventDateAndTime,
             }
             data.push(newEvent);
+            console.log("Evento cadastrado com sucesso");
             res.status(201).json(newEvent);
         } else{
             const newEvent = {
@@ -60,7 +61,7 @@ export const eventSignUpJson = async(req, res) => {
             res.status(201).json(newEvent);
 
         }
-        fs.writeFileSync(path.resolve("../api/mock/eventos.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/eventos.json"),JSON.stringify(data,null,2));
        
 
         
@@ -120,3 +121,5 @@ export const eventSignUpJson = async(req, res) => {
 
 
 // }
+
+module.exports = {getAllEventsJson,eventSignUpJson};

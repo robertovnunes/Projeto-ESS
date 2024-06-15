@@ -1,13 +1,12 @@
-import express from 'express';
+const express = require('express');
 
 const port = 3001;
 
 const server = express();
 server.use(express.json())
 
-import eventRoutes from '../api/routes/event.routes.js';
+const eventRoutes = require('../api/routes/event.routes.js');
 server.use('/events', eventRoutes);
-
 
 // server.use(cors());
 
@@ -21,4 +20,4 @@ server.listen(port, (req, res) => {
     }
 )
 
-//module.exports = server;
+module.exports = server;
