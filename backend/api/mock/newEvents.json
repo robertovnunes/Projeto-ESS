@@ -1,5 +1,7 @@
 [
-    { "eventName": "Reunião Geral - RobôCIn",
+    {
+      "eventName": "Reunião Geral - RobôCIn",
+      "description": "",
       "responsibleTeacher": "Edna Barros",
       "eventDateAndTime": "20-05-2024 05:00 PM"
     },

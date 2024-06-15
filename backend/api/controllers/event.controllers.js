@@ -58,6 +58,7 @@ const eventSignUpJson = async(req, res) => {
                 eventDateAndTime
             }
             data.push(newEvent);
+            console.log("Evento cadastrado com sucesso");
             res.status(201).json(newEvent);
 
         }

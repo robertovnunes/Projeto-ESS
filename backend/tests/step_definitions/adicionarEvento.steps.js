@@ -17,20 +17,15 @@ const eventExists = (eventsList, name, dateAndTime) => {
     return found;
 }
 defineFeature(feature, test => {
-    let eventos = database.readOldEvents();
-    let newEventos = database.readNewEvents();
-    let newEvent = database.getFirstEvent();
-
-    const givenEventDoestNotExist = (eventName, eventDateAndTime) => {
-        given(/^não existe o evento "(.*)" na data e hora "(.*)"$/, async(eventName, eventDateAndTime) => {
-            expect(eventExists(eventos, eventName, eventDateAndTime)).toBe(false);
+    const consoleOutput = [];
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation((output) => {
+        consoleOutput.push(output); // Armazena a saída em consoleOutput
         });
-        given(/^existe o evento "(.*)" na data e hora "(.*)"$/, async(eventName, eventDateAndTime) => {
-            expect(eventExists(eventos, eventName, eventDateAndTime)).toBe(true);
-        });
-    }
 
     test('Cadastro de um Evento com sucesso pelo Usuário Professor com descrição vazia',({ given, when, then,and }) => {
+        let eventos = database.readOldEvents();
+        let newEventos = database.readNewEvents();
+        let newEvent = database.getFirstEvent();
         given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
             expect(userName).toBe('bafm');
             expect(userType).toBe('professor');
@@ -40,7 +35,7 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({eventName:newEvent.eventName, description:'', responsibleTeacher:newEvent.responsibleTeacher, eventDateAndTime:newEvent.eventDateAndTime});
+            response = await request.post(url).send({eventName:newEvent.eventName, description:"", responsibleTeacher:newEvent.responsibleTeacher, eventDateAndTime:newEvent.eventDateAndTime});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('eventName');
@@ -48,7 +43,7 @@ defineFeature(feature, test => {
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('description');
-            expect(value).toBe('');
+            expect(value).toBe("");
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -62,11 +57,51 @@ defineFeature(feature, test => {
            expect(response.status).toBe(parseInt(statusCode,10));
         });
         and(/^A mensagem "(.*)" é exibida$/, async(message) => {
-            expect("Evento criado com sucesso").toBe(message);
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
         });
         and(/^O evento "(.*)" na data "(.*)" está no banco de dados$/, async(eventName,eventDateAndTime) => {
             expect(eventExists(newEventos, eventName, eventDateAndTime)).toBe(true);
         });
     });
-
+    test('Cadastro de um evento sem sucesso pelo Usuário Professor (já está cadastrado no sistema)',({ given, when, then,and }) => {
+        let eventos = database.readOldEvents();
+        let newEventos = database.readNewEvents();
+        let newEvent = database.getFirstEvent();
+    
+        given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
+            expect(userName).toBe('bafm');
+            expect(userType).toBe('professor');
+        });
+        and(/^O evento "(.*)" na data "(.*)" já está presente no sistema$/, async(eventName,eventDateAndTime)=> {
+            expect(eventExists(newEventos, eventName, eventDateAndTime)).toBe(true);
+        });
+        when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
+            expect(userName).toBe('bafm');
+            response2 = await request.post(url).send({eventName:newEvent.eventName, description:"", responsibleTeacher:newEvent.responsibleTeacher, eventDateAndTime:newEvent.eventDateAndTime});
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('eventName');
+            expect(newEvent.eventName).toBe(value);
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('description');
+            expect(value).toBe("");
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('responsibleTeacher');
+            expect(newEvent.responsibleTeacher).toBe(value);
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('eventDateAndTime');
+            expect(newEvent.eventDateAndTime).toBe(value);
+        });
+        then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
+           expect(response2.status).toBe(parseInt(statusCode,10));
+        });
+        and(/^A mensagem "(.*)" é exibida$/, async(message) => {
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
+        });
+    });
 });
