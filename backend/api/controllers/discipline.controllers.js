@@ -25,8 +25,10 @@ const getDisciplinebyID = (req,res) => {
 
 const disciplinesSignUpJson = async(req, res) => {
     try{
-        const {nome,id,responsibleTeacher,horario,description,curso,periodo} = req.body;
+        const {nome,id,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
+        // Checks if any of the required fields are missing
         const missingInfo = !nome || !responsibleTeacher || !horario || !id;
+        //If any of the required fields are missing, error message
         if(missingInfo){
             console.log("Informações obrigatórias não preenchidas");
             return res.status(400).json({
@@ -34,33 +36,36 @@ const disciplinesSignUpJson = async(req, res) => {
             })
         }
         let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json"),'utf-8'));
+        // Checks if discipline exists with boolean variable
         const disciplineExists = data.some(element => 
             element.nome === nome && 
             element.id === id
         );
+        //If it does, error message
         if(disciplineExists){
             console.log("Discipline already exists");
             return res.status(400).json({
                 error: "Discipline already exists"
             })
         };
-        
+        // Build new discipline object
         const newDiscipline = {
             nome,
             id,
             responsibleTeacher,
             horario,
             description,
-            curso,
-            periodo
+            disciplineCurso,
+            disciplinePeriodo
         };
+        //Treat missings fields
         if(description === undefined ) newDiscipline.description = "";
         else newDiscipline.description = description;
-        if(curso === undefined ) newDiscipline.disciplineCurso = "";
-        else newDiscipline.disciplineCurso = curso;
-        if(periodo === undefined ) newDiscipline.disciplinePeriodo = "";
-        else newDiscipline.disciplinePeriodo = periodo;
-            
+        if(disciplineCurso === undefined ) newDiscipline.disciplineCurso = "";
+        else newDiscipline.disciplineCurso = disciplineCurso;
+        if(disciplinePeriodo === undefined ) newDiscipline.disciplinePeriodo = "";
+        else newDiscipline.disciplinePeriodo = disciplinePeriodo;
+        //Save new discipline in the data array
         data.push(newDiscipline);
         console.log("Disciplina cadastrada com sucesso");
         res.status(201).json(newDiscipline);
