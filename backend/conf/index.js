@@ -6,7 +6,9 @@ const server = express();
 server.use(express.json())
 
 const eventRoutes = require('../api/routes/event.routes.js');
+const disciplineRoutes = require('../api/routes/discipline.routes.js');
 server.use('/events', eventRoutes);
+server.use('/disciplines', disciplineRoutes);
 
 // server.use(cors());
 
