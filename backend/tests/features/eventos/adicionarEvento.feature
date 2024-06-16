@@ -1,6 +1,7 @@
-Feature: As a usuario administrador
-  I want to adicionar um equipamento ao banco de dados
-  So that eu posso armazenar todos os recusros de uma sala
+Feature: Cadastro de um Evento
+As a Professor
+I want to Cadastrar um Evento
+So that Eu possa usar esse Evento para reservar uma sala
     
     Scenario: Cadastro de um Evento com sucesso pelo Usuário Professor com descrição vazia
     Given O usuário "bafm" está logado como "professor"
