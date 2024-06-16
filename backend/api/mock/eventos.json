@@ -4,5 +4,17 @@
     "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
     "responsibleTeacher": "Sérgio Soares",
     "eventDateAndTime": "2024-07-20 04:00 PM"
+  },
+  {
+    "eventName": "Reunião Geral - RobôCIn",
+    "description": "",
+    "responsibleTeacher": "Edna Barros",
+    "eventDateAndTime": "20-05-2024 05:00 PM"
+  },
+  {
+    "eventName": "Monitoria de ESS",
+    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
+    "responsibleTeacher": "Breno Miranda",
+    "eventDateAndTime": "10-07-2024 10:00 AM"
   }
 ]

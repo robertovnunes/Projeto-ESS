@@ -1,0 +1,50 @@
+[
+    {
+      "nome": "Engenharia de Software e Sistemas",
+      "id": "IF686",
+      "responsibleTeacher": "Breno Miranda",
+      "horario": "20/05/2024 a 28/05/2024 13:00 TUE THU",
+      "description": "",
+      "disciplineCurso": "",
+      "disciplinePeriodo": ""
+    },
+    {
+      "nome": "Paradigmas e Linguagens Computacionais",
+      "id": "IF690",
+      "responsibleTeacher": "Andre Luis",
+      "horario": "20/05/2024 a 28/05/2024 08:00 MON WED",
+      "description": "",
+      "disciplineCurso": "Engenharia da Computação",
+      "disciplinePeriodo": ""
+    },
+    {
+      "nome": "História e Futuro da Computação",
+      "id": "IF691",
+      "responsibleTeacher": "Germano Crispim",
+      "horario": "20/05/2024 a 28/05/2024 10:00 TUE",
+      "description": "Materia com seminário",
+      "disciplineCurso": "",
+      "disciplinePeriodo": ""
+
+    },
+    {
+      "nome": "Sistemas Digitais",
+      "id": "IF640",
+      "responsibleTeacher": "Abel",
+      "horario": "21/08/2024 a 31/12/2024 10:00 MON FRI",
+      "description": "",
+      "disciplineCurso": "",
+      "disciplinePeriodo": "4"
+    },
+    {
+      "nome": "Introdução a Computação",
+      "id": "IF323",
+      "responsibleTeacher": "Kleber Vieira",
+      "horario": "21/08/2024 a 31/12/2024 13:00 MON",
+      "description": "IC",
+      "disciplineCurso": "Engenharia da Computação",
+      "disciplinePeriodo": "1"
+
+    }
+]
+  
