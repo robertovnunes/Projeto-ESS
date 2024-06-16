@@ -4,7 +4,7 @@ const path = require('path');
 const getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
-        const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json"),'utf-8'));
+        const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json"),'utf-8'));
         const discipline = data.find(element => element.id === id);
         if(!discipline){
             console.log("Discipline not found");
@@ -35,7 +35,7 @@ const disciplinesSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json"),'utf-8'));
         // Checks if discipline exists with boolean variable
         const disciplineExists = data.some(element => 
             element.nome === nome && 
@@ -69,7 +69,7 @@ const disciplinesSignUpJson = async(req, res) => {
         data.push(newDiscipline);
         console.log("Disciplina cadastrada com sucesso");
         res.status(201).json(newDiscipline);
-        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json"),JSON.stringify(data,null,2));
     }catch(error){
         console.log("Error in signUp:",error.message);
         res.status(500).json({
@@ -80,7 +80,7 @@ const disciplinesSignUpJson = async(req, res) => {
 
 }
 const deleteDisciplineJson = (req, res) => {
-    const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json");
+    const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json");
     try {
         const { id } = req.params;
         let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));

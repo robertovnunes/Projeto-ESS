@@ -3,9 +3,9 @@ const path = require('path');
 
 const oldEventsPath = path.resolve(__dirname, '../../api/mock/oldEvents.json');
 const newEventsPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/newEvents.json');
-const databaseEvents = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/eventos.json');
+const databaseEvents = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json');
 
-const databaseDisciplines = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json');
+const databaseDisciplines = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json');
 const oldDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/oldDisciplines.json');
 const newDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/newDisciplines.json');
 
