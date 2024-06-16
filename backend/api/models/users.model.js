@@ -69,21 +69,62 @@ async function findUser(login) {
     let professores = await readProfessores();
     professores = Array.isArray(professores) ? professores : []; // Converte para array se necessário
     let user = professores.find(user => user.login === login);
-    if (user) return { user, type: 'professor' };
+    if (user) return { user, type: 'professores' };
 
 
     let alunos = await readAlunos();
     alunos = Array.isArray(alunos) ? alunos : []; // Converte para array se necessário
     user = alunos.find(user => user.login === login);
-    if (user) return { user, type: 'aluno' };
+    if (user) return { user, type: 'alunos' };
 
     let admins = await readAdmins(); // Correção: esqueceu de chamar a função
     admins = Array.isArray(admins) ? admins : []; // Converte para array se necessário
     user = admins.find(user => user.login === login);
-    if (user) return { user, type: 'admin' };
+    if (user) return { user, type: 'admins' };
 
     return null;
 }
+
+function getFilePath(userType) {
+    let filePath;
+
+    if (userType === 'professores') {
+        filePath = professores; // Deve apontar para o caminho de professores.json
+    } else if (userType === 'alunos') {
+        filePath = alunos; // Deve apontar para o caminho de alunos.json
+    } else if (userType === 'admins') {
+        filePath = admins; // Deve apontar para o caminho de admins.json
+    } else {
+        throw new Error('Tipo de usuário inválido.');
+    }
+
+    return filePath;
+}
+
+async function readJsonFile(filePath) {
+    try {
+        const data = await fs.readFile(filePath, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error(`Erro ao ler o arquivo ${filePath}:`, error);
+        return [];
+    }
+}
+
+async function writeJsonFile(filePath, data) {
+    try {
+        if (!filePath || !data) {
+            throw new Error('Parâmetros inválidos: filePath e data são obrigatórios.');
+        }
+
+        await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+        console.log(`Dados escritos com sucesso no arquivo ${filePath}`);
+    } catch (error) {
+        console.error(`Erro ao escrever no arquivo ${filePath}:`, error.message);
+        throw error; // Rejeita a promessa para propagar o erro para quem chamou essa função
+    }
+}
+
 
 module.exports = {
     readAdmins,
@@ -92,5 +133,8 @@ module.exports = {
     writeAdmins,
     writeAlunos,
     writeProfessores,
-    findUser
+    findUser,
+    getFilePath,
+    readJsonFile,
+    writeJsonFile
 };
