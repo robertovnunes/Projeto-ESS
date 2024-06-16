@@ -17,9 +17,14 @@ server.use('/disciplines', disciplineRoutes);
 // import eventRoutes from './routes/event.routes.js';
 // server.use('/events', eventRoutes);
 
-server.listen(port, (req, res) => {
-    console.log(`Listening on port ${port}`);
-    }
-)
+
+if (process.env.NODE_ENV !== 'test') {
+    server.listen(port, (req, res) => {
+        console.log(`Listening on port ${port}`)});
+}
+
+
+
+  
 
 module.exports = server;

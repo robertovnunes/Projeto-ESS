@@ -11,27 +11,27 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
     And preenche no corpo "id" : "IF686"
     And preenche no corpo "responsibleTeacher" : "Breno Miranda"
     And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
-    # And preenche no corpo "description" : ""
-    # And preenche no corpo "disciplineCurso" : ""
-    # And preenche no corpo "disciplinePeriodo" : ""
+    And preenche no corpo "description" : ""
+    And preenche no corpo "disciplineCurso" : ""
+    And preenche no corpo "disciplinePeriodo" : ""
     Then O sistema retorna "201"
     And A mensagem "Disciplina cadastrada com sucesso" é exibida
     And A disciplina "Engenharia de Software e Sistemas" de id "IF686" está no banco de dados
 
-    # Scenario: Cadastro de uma Disciplina com sucesso pelo Usuário Professor com descrição e periódo vazios
-    #     Given O usuário "bafm" está logado como "professor"
-    #     And A disciplina "Paradigmas e Linguagens Computacionais" de id "IF690" não está no sistema
-    #     When O usuário "bafm" manda uma requisição POST para "/disciplines/signup"
-    #     And preenche no corpo "nome" : "Paradigmas e Linguagens Computacionais"
-    #     And preenche no corpo "id" : "IF690"
-    #     And preenche no corpo "responsibleTeacher" : "Andre Luis"
-    #     And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 08:00 MON WED"
-    #     And preenche no corpo "description" : ""
-    #     And preenche no corpo "disciplineCurso" : "Engenharia da Computação"
-    #     And preenche no corpo "disciplinePeriodo" : ""
-    #     Then O sistema retorna "201"
-    #     And A mensagem "Disciplina cadastrada com sucesso" é exibida
-    #     And A disciplina "Paradigmas e Linguagens Computacionais" de id "IF690" está no banco de dados
+    Scenario: Cadastro de uma Disciplina com sucesso pelo Usuário Professor com descrição e periódo vazios
+        Given O usuário "bafm" está logado como "professor"
+        And A disciplina "Paradigmas e Linguagens Computacionais" de id "IF690" não está no sistema
+        When O usuário "bafm" manda uma requisição POST para "/disciplines/signup"
+        And preenche no corpo "nome" : "Paradigmas e Linguagens Computacionais"
+        And preenche no corpo "id" : "IF690"
+        And preenche no corpo "responsibleTeacher" : "Andre Luis"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 08:00 MON WED"
+        And preenche no corpo "description" : ""
+        And preenche no corpo "disciplineCurso" : "Engenharia da Computação"
+        And preenche no corpo "disciplinePeriodo" : ""
+        Then O sistema retorna "201"
+        And A mensagem "Disciplina cadastrada com sucesso" é exibida
+        And A disciplina "Paradigmas e Linguagens Computacionais" de id "IF690" está no banco de dados
 
     # Scenario: Cadastro de uma Disciplina com sucesso pelo Usuário Professor com curso e periódo vazios
     #     Given O usuário "bafm" está logado como "professor"
