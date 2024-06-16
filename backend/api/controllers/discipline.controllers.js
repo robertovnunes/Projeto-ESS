@@ -86,8 +86,8 @@ const deleteDisciplineJson = (req, res) => {
         let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
         const disciplineIndex = data.findIndex(element => element.id === id);
         if (disciplineIndex === -1) {
-            console.log("Discipline not found");
-            return res.status(404).json({ error: "Discipline not found" });
+            console.log("Discipline Not Found");
+            return res.status(404).json({ error: "Discipline Not Found" });
         }
         data.splice(disciplineIndex, 1);
         console.log("Disciplina removida com sucesso");

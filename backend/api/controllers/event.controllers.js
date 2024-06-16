@@ -86,8 +86,8 @@ const deleteEventJson = (req, res) => {
         let data = JSON.parse(fs.readFileSync(eventsPath ,'utf-8'));
         const eventIndex = data.findIndex(element => element.id === idConverted);
         if (eventIndex === -1) {
-            console.log("Event not found");
-            return res.status(404).json({ error: "Event not found" });
+            console.log("Event Not Found");
+            return res.status(404).json({ error: "Event Not Found" });
         }
         data.splice(eventIndex, 1);
         data.forEach((event, index) => {

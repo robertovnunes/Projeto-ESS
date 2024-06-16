@@ -20,6 +20,7 @@
     },
     {
       "eventName": "Semana dos Calouros",
+      "id": 1,
       "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
       "responsibleTeacher": "Sérgio Soares",
       "eventDateAndTime": "2024-07-20 04:00 PM"
