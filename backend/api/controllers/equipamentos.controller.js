@@ -1,4 +1,3 @@
-const shortid = require('shortid');
 const equipamentosModel = require('../models/equipamento.model');
 
 //Documentação da API

@@ -14,3 +14,5 @@ server.get('/', (req, res) => {
 consign({ cwd: 'api'})
     .include('routes')
     .into(server);
+
+module.exports = server

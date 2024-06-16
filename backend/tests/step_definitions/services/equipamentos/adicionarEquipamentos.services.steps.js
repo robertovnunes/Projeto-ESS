@@ -1,7 +1,8 @@
-const jc = require('jest-cucumber');
-const loadFeature = jc.loadFeature;
-const defineFeature = jc.defineFeature;
-const database = require('./readDatabase');
+import {loadFeature, defineFeature} from "jest-cucumber";
+import supertest from "supertest";
+import app from "../../../../app.js"
+
+import {readOldEquipments, readNewEquipments, clearDatabase} from './readDatabase.js'
 //const request = require('supertest');
 //const app = require('../../../../app');
 
@@ -46,8 +47,7 @@ const equipmentBatchExists = (equipmentList, nome, serialNumbers) => {
 };
 
 defineFeature(feature, (test) => {
-    let equipamentos = database.readOldEquipments();
-    let newEquipamentos = database.readNewEquipments();
+    const request = supertest(app);
 //Steps to reuse
 //Given steps
     const givenNotEquipmentExist = (given) => {
@@ -142,6 +142,9 @@ defineFeature(feature, (test) => {
             expect(equipamentos).toContainEqual(equipamento);
         });
     };
+    const andResponseSuccess = async (and) => {
+        const response = await request.post()
+    }
     //Scenarios tests
     test('Adicionando equipamento usando patrimonio com sucesso', ({given, when, then, and}) => {
         givenNotEquipmentExist(given);
@@ -154,6 +157,7 @@ defineFeature(feature, (test) => {
         andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
         andFieldMatch(and, 'patrimonio', '1098642');
         thenPatrimonioIsOnDatabase(then);
+        andResponseSuccess(and);
     });
     test('Adicionando equipamento usando numero de serie com sucesso', ({given, when, then, and}) => {
         givenNotEquipmentExist(given);
