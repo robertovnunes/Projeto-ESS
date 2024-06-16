@@ -40,9 +40,11 @@ const eventSignUpJson = async(req, res) => {
                 error: "Event already exists"
             })
         };
+        let getID = data.length + 1;
         if(description === undefined) {
             const newEvent = {
                 eventName,
+                id: getID,
                 description: "",
                 responsIbleTeacher,
                 eventDateAndTime,
@@ -53,6 +55,7 @@ const eventSignUpJson = async(req, res) => {
         } else{
             const newEvent = {
                 eventName,
+                id: getID,
                 description,
                 responsibleTeacher,
                 eventDateAndTime
@@ -75,6 +78,30 @@ const eventSignUpJson = async(req, res) => {
 
 
 }
+const deleteEventJson = (req, res) => {
+    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/eventos.json");
+    try {
+        const { id } = req.params;
+        const idConverted = Number(id);
+        let data = JSON.parse(fs.readFileSync(eventsPath ,'utf-8'));
+        const eventIndex = data.findIndex(element => element.id === idConverted);
+        if (eventIndex === -1) {
+            console.log("Event not found");
+            return res.status(404).json({ error: "Event not found" });
+        }
+        data.splice(eventIndex, 1);
+        data.forEach((event, index) => {
+            event.id = index + 1; // Ajusta o id para começar de 1
+        });
+        console.log("Evento removido com sucesso");
+        res.status(200).json({ message: "Evento removido com sucesso" });
+        fs.writeFileSync(eventsPath, JSON.stringify(data, null, 2));
+
+    } catch (error) {
+        console.log("Error in deleteEvent:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 // export const loginJson = async(req, res) => {
 //     try{
 //         const {username,password} = req.body;
@@ -123,4 +150,4 @@ const eventSignUpJson = async(req, res) => {
 
 // }
 
-module.exports = {getAllEventsJson,eventSignUpJson};
+module.exports = {getAllEventsJson,eventSignUpJson,deleteEventJson};

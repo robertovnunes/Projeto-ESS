@@ -79,6 +79,25 @@ const disciplinesSignUpJson = async(req, res) => {
 
 
 }
+const deleteDisciplineJson = (req, res) => {
+    const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/mock/disciplines.json");
+    try {
+        const { id } = req.params;
+        let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
+        const disciplineIndex = data.findIndex(element => element.id === id);
+        if (disciplineIndex === -1) {
+            console.log("Discipline not found");
+            return res.status(404).json({ error: "Discipline not found" });
+        }
+        data.splice(disciplineIndex, 1);
+        console.log("Disciplina removida com sucesso");
+        res.status(200).json({ message: "Disciplina removida com sucesso" });
+        fs.writeFileSync(disciplinesPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.log("Error in deleteDiscipline:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 // export const loginJson = async(req, res) => {
 //     try{
 //         const {username,password} = req.body;
@@ -127,4 +146,4 @@ const disciplinesSignUpJson = async(req, res) => {
 
 // }
 
-module.exports = {getDisciplinebyID,disciplinesSignUpJson};
+module.exports = {getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson};
