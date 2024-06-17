@@ -8,6 +8,7 @@ equipamentosRepository = new EquipamentosRepository();
 equipamentosService = new EquipamentosService(equipamentosRepository);
 equipamentosController = new EquipamentosController(equipamentosService);
 
+
 module.exports = app => {
     app.use('/equipamentos', router);
     router.get('/', equipamentosController.getAllEquipments);

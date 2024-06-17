@@ -1,6 +1,6 @@
 [
   {
-    "id": 4,
+    "id": "4",
     "nome": "Ar condicionado split 12000 btus",
     "descricao": "Bom",
     "estado_conservacao": "15/03/2023",
@@ -9,6 +9,14 @@
   },
   {
     "id": "04L7_jQfFxq",
+    "nome": "Ar condicionado split 12000 btus",
+    "descricao": "Bom",
+    "estado_conservacao": "15/03/2023",
+    "valor_estimado": "1200.00",
+    "numero_serie": "1098642"
+  },
+  {
+    "id": "04WAS2ZA2lA",
     "nome": "Ar condicionado split 12000 btus",
     "descricao": "Bom",
     "estado_conservacao": "15/03/2023",

@@ -17,6 +17,10 @@ class EquipamentosService {
         return this.equipamentoRepository.getEquipmentByPatrimonio(value);
     }
 
+    getEquipmentBySerie(value) {
+        return this.equipamentoRepository.getEquipmentBySerie(value);
+    }
+
     createEquipmentPatrimonio(newEquipamento) {
         return this.equipamentoRepository.createEquipmentPatrimonio(newEquipamento);
     }

@@ -10,14 +10,15 @@ function isJsonEmpty(obj) {
 class EquipamentosRepository {
     constructor(dbPath){
         this.filePath = dbPath || path.join(__dirname, '../../db/equipamentos.json');
+        this._readFile(this.filePath).then(r => r);
     }
     async _readFile() {
-        const data = fs.readFileSync(this.filePath);
+        const data = await fs.promises.readFile(this.filePath);
         return JSON.parse(data);
     }
 
     async _writeFile(data) {
-        fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2));
+        await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 2));
     }
 
     async getAllEquipments() {

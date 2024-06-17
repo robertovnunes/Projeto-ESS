@@ -1,4 +1,3 @@
-const { init } = require('../../app');
 const equipamentosModel = require('../models/equipamentosModel');
 const EquipamentosService = require('../services/equipamentosService');
 
@@ -6,6 +5,13 @@ class EquipamentosController {
 
     constructor(equipamentosService){
         this.equipamentosService = equipamentosService;
+        this.getAllEquipments = this.getAllEquipments.bind(this);
+        this.getEquipmentById = this.getEquipmentById.bind(this);
+        this.getEquipmentByPatrimonio = this.getEquipmentByPatrimonio.bind(this);
+        this.getEquipmentBySN = this.getEquipmentBySN.bind(this);
+        this.createEquipment = this.createEquipment.bind(this);
+        this.patchEquipment = this.patchEquipment.bind(this);
+        this.deleteEquipment = this.deleteEquipment.bind(this);
     }
 
      async getAllEquipments(req, res) {
@@ -100,8 +106,8 @@ class EquipamentosController {
                 }
             } else {
                 if(identificador.type === 'patrimonio') {
-                    newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {patrimonio: identificador.value});
-                    equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
+                    let newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {patrimonio: identificador.value});
+                    let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
                     if(equipmentCreated === 'Patrimonio já existe') {
                             console.log(`POST /equipamentos [400] BAD REQUEST`);
                             res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
@@ -111,8 +117,8 @@ class EquipamentosController {
                         res.status(201).send(equipmentCreated);
                     }
                 } else if(identificador.type === 'numero_serie') {
-                    newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {numero_serie: identificador.value});
-                    equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
+                    let newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {numero_serie: identificador.value});
+                    let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
                     if(equipmentCreated === 'Numero de série já existe') {
                         console.log(`POST /equipamentos [400] BAD REQUEST`);
                             res.status(400).send({message: 'Já existe um equipamento com este numero de série'});
@@ -131,7 +137,7 @@ class EquipamentosController {
 
     async patchEquipment(req, res) {
         try{
-            updated = await this.equipamentosService.updateEquipment(req.params.id, req.body);
+            let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
             if(updated === 'Equipamento não encontrado') {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
                 res.status(404).send({message: 'Equipamento não encontrado'});
