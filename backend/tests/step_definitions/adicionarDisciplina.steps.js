@@ -2,7 +2,6 @@ const supertest = require('supertest');
 const index = require('/home/mariana/Documents/Projeto-ESS/backend/conf/index.js');
 const { defineFeature, loadFeature } = require('jest-cucumber');
 const database = require('./databaseScramble');
-//const { response } = require('express');
 const request = supertest(index);
 
 const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/eventos/adicionarDisciplina.feature');
@@ -10,7 +9,7 @@ const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/f
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;
     disciplineList.forEach(discipline => {
-        if(discipline.nome === name && discipline.id === disciplineID) {
+        if(discipline.nome === name && discipline.disciplineID === disciplineID) {
             found = true;
         }
     });
@@ -36,15 +35,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, description:"", disciplineCurso:"", disciplinePeriodo:""});
+            response = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, description: newDiscipline.description, disciplineCurso:newDiscipline.disciplineCurso, disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(response.body.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(response.body.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(response.body.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -92,15 +91,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(response.body.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(response.body.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(response.body.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -147,15 +146,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(response.body.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(response.body.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(response.body.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -202,15 +201,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(response.body.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(response.body.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(response.body.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -257,15 +256,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(response.body.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(response.body.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(response.body.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -312,15 +311,15 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response2 = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response2 = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('nome');
             expect(newDiscipline.nome).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-            expect(field).toBe('id');
-            expect(value).toBe(newDiscipline.id);
+            expect(field).toBe('disciplineID');
+            expect(value).toBe(newDiscipline.disciplineID);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -349,15 +348,15 @@ defineFeature(feature, test => {
                 });
                 when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
                     expect(userName).toBe('bafm');
-                    response2 = await request.post(url).send({nome:"", id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+                    response2 = await request.post(url).send({nome:"", disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                     expect(field).toBe('nome');
                     expect("").toBe(value);
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-                    expect(field).toBe('id');
-                    expect(value).toBe(newDiscipline.id);
+                    expect(field).toBe('disciplineID');
+                    expect(value).toBe(newDiscipline.disciplineID);
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                     expect(field).toBe('responsibleTeacher');
@@ -375,7 +374,7 @@ defineFeature(feature, test => {
                     expect(messageFound).toBe(true);
                 });
             });
-        test('Cadastro de uma Disciplina sem sucesso pelo Usuário Professor(faltam informações obrigatórias - campo id)',({ given, when, then,and }) => {
+        test('Cadastro de uma Disciplina sem sucesso pelo Usuário Professor(faltam informações obrigatórias - campo disciplineID)',({ given, when, then,and }) => {
             let disciplines = database.readOldDisciplines();
             let newDisciplines = database.readNewDisciplines();
             let newDiscipline = newDisciplines[0];
@@ -386,14 +385,14 @@ defineFeature(feature, test => {
                 });
                 when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
                     expect(userName).toBe('bafm');
-                    response2 = await request.post(url).send({nome:newDiscipline.nome, id:"",responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+                    response2 = await request.post(url).send({nome:newDiscipline.nome, disciplineID:"",responsibleTeacher:newDiscipline.responsibleTeacher,horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                     expect(field).toBe('nome');
                     expect(newDiscipline.nome).toBe(value);
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-                    expect(field).toBe('id');
+                    expect(field).toBe('disciplineID');
                     expect(value).toBe("");
                 });
                 and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
@@ -423,15 +422,15 @@ defineFeature(feature, test => {
                     });
                     when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
                         expect(userName).toBe('bafm');
-                        response2 = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:newDiscipline.responsibleTeacher,horario: "", disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+                        response2 = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario: "", disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
                     });
                     and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                         expect(field).toBe('nome');
                         expect(newDiscipline.nome).toBe(value);
                     });
                     and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-                        expect(field).toBe('id');
-                        expect(value).toBe(newDiscipline.id);
+                        expect(field).toBe('disciplineID');
+                        expect(value).toBe(newDiscipline.disciplineID);
                     });
                     and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                         expect(field).toBe('responsibleTeacher');
@@ -460,15 +459,15 @@ defineFeature(feature, test => {
                         });
                         when(/^O usuário "(.*)" manda uma requisição POST para "(.*)"$/, async(userName, url) => {
                             expect(userName).toBe('bafm');
-                            response2 = await request.post(url).send({nome:newDiscipline.nome, id:newDiscipline.id,responsibleTeacher:"",horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+                            response2 = await request.post(url).send({nome:newDiscipline.nome, disciplineID:newDiscipline.disciplineID,responsibleTeacher:"",horario: newDiscipline.horario, disciplineCurso: newDiscipline.disciplineCurso,description:newDiscipline.description,disciplinePeriodo:newDiscipline.disciplinePeriodo});
                         });
                         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                             expect(field).toBe('nome');
                             expect(newDiscipline.nome).toBe(value);
                         });
                         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
-                            expect(field).toBe('id');
-                            expect(value).toBe(newDiscipline.id);
+                            expect(field).toBe('disciplineID');
+                            expect(value).toBe(newDiscipline.disciplineID);
                         });
                         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
                             expect(field).toBe('responsibleTeacher');

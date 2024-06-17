@@ -25,9 +25,9 @@ const getDisciplinebyID = (req,res) => {
 
 const disciplinesSignUpJson = async(req, res) => {
     try{
-        const {nome,id,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
+        const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
         // Checks if any of the required fields are missing
-        const missingInfo = !nome || !responsibleTeacher || !horario || !id;
+        const missingInfo = !nome || !responsibleTeacher || !horario || !disciplineID;
         //If any of the required fields are missing, error message
         if(missingInfo){
             console.log("Informações obrigatórias não preenchidas");
@@ -39,7 +39,7 @@ const disciplinesSignUpJson = async(req, res) => {
         // Checks if discipline exists with boolean variable
         const disciplineExists = data.some(element => 
             element.nome === nome && 
-            element.id === id
+            element.disciplineID === disciplineID
         );
         //If it does, error message
         if(disciplineExists){
@@ -51,7 +51,7 @@ const disciplinesSignUpJson = async(req, res) => {
         // Build new discipline object
         const newDiscipline = {
             nome,
-            id,
+            disciplineID,
             responsibleTeacher,
             horario,
             description,
@@ -84,7 +84,7 @@ const deleteDisciplineJson = (req, res) => {
     try {
         const { id } = req.params;
         let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
-        const disciplineIndex = data.findIndex(element => element.id === id);
+        const disciplineIndex = data.findIndex(element => element.disciplineID === id);
         if (disciplineIndex === -1) {
             console.log("Discipline Not Found");
             return res.status(404).json({ error: "Discipline Not Found" });
@@ -98,52 +98,37 @@ const deleteDisciplineJson = (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-// export const loginJson = async(req, res) => {
-//     try{
-//         const {username,password} = req.body;
-//         let data = JSON.parse(fs.readFileSync(path.resolve("./samples/users.json"),'utf-8'));
-//         let user = data.find(({username}) => username === req.body.username);
-//         const isPasswordCorrect = await bcrypt.compare(password,user.password);
+const updateDisciplineJson = async (req, res) => {
+    const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json");
+    try {
+        const { id } = req.params;
+        const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
+        let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
+        const disciplineIndex = data.findIndex(element => element.disciplineID === id);
 
-//         if(!user || !isPasswordCorrect){
-//             console.log("Invalid credentials");
-//             return res.status(400).json({
-//                 error: "Invalid credentials"
-//             })
-//         }
-//         generateTokenAndSetCookie(user.id,res);
-//         res.status(200).json({
-//             id: user.id,
-//             username,
-//             fullName: user.fullName,
-//             gender: user.gender
-//         });
-        
-//     }catch(error){
-//         console.log("Error in signUp:",error.message);
-//         res.status(500).json({
-//             error: "Internal Server Error"
-//         })
-//     }
+        if (disciplineIndex === -1) {
+            console.log("Discipline Not Found");
+            return res.status(404).json({ error: "Discipline Not Found" });
+        }
 
+        data[disciplineIndex] = {
+            ...data[disciplineIndex],
+            nome: nome || data[disciplineIndex].nome,
+            id: id || data[disciplineIndex].id,
+            responsibleTeacher: responsibleTeacher || data[disciplineIndex].responsibleTeacher,
+            horario: horario || data[disciplineIndex].horario,
+            description: description || data[disciplineIndex].description,
+            disciplineCurso: disciplineCurso || data[disciplineIndex].disciplineCurso,
+            disciplinePeriodo: disciplinePeriodo || data[disciplineIndex].disciplinePeriodo
+        };
 
-// }
-// export const logoutJson = (req, res) => {
-//     try{
-//         res.cookie("jwt","",{maxAge: 0});
-//         res.status(200).json({
-//             message: "User logged out"
-//         })
+        console.log("Disciplina atualizada com sucesso");
+        res.status(200).json(data[disciplineIndex]);
+        fs.writeFileSync(disciplinesPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.log("Error in updateDiscipline:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 
-        
-//     }catch(error){
-//         console.log("Error in signUp:",error.message);
-//         res.status(500).json({
-//             error: "Internal Server Error"
-//         })
-//     }
-
-
-// }
-
-module.exports = {getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson};
+module.exports = {getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson,updateDisciplineJson};

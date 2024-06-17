@@ -102,52 +102,35 @@ const deleteEventJson = (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-// export const loginJson = async(req, res) => {
-//     try{
-//         const {username,password} = req.body;
-//         let data = JSON.parse(fs.readFileSync(path.resolve("./samples/users.json"),'utf-8'));
-//         let user = data.find(({username}) => username === req.body.username);
-//         const isPasswordCorrect = await bcrypt.compare(password,user.password);
+const updateEventJson = async (req, res) => {
+    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json");
+    try {
+        const { id } = req.params;
+        const idConverted = Number(id);
+        const {eventName,description,responsibleTeacher,eventDateAndTime} = req.body;
+        let data = JSON.parse(fs.readFileSync(eventsPath, 'utf-8'));
+        const eventIndex = data.findIndex(element => element.id === idConverted);
 
-//         if(!user || !isPasswordCorrect){
-//             console.log("Invalid credentials");
-//             return res.status(400).json({
-//                 error: "Invalid credentials"
-//             })
-//         }
-//         generateTokenAndSetCookie(user.id,res);
-//         res.status(200).json({
-//             id: user.id,
-//             username,
-//             fullName: user.fullName,
-//             gender: user.gender
-//         });
-        
-//     }catch(error){
-//         console.log("Error in signUp:",error.message);
-//         res.status(500).json({
-//             error: "Internal Server Error"
-//         })
-//     }
+        if (eventIndex === -1) {
+            console.log("Event Not Found");
+            return res.status(404).json({ error: "Event Not Found" });
+        }
 
+        data[eventIndex] = {
+            ...data[eventIndex],
+            eventName: eventName || data[eventIndex].eventName,
+            description: description || data[eventIndex].description,
+            responsibleTeacher: responsibleTeacher || data[eventIndex].responsibleTeacher,
+            eventDateAndTime: eventDateAndTime || data[eventIndex].eventDateAndTime
+        };
 
-// }
-// export const logoutJson = (req, res) => {
-//     try{
-//         res.cookie("jwt","",{maxAge: 0});
-//         res.status(200).json({
-//             message: "User logged out"
-//         })
+        console.log("Evento atualizado com sucesso");
+        res.status(200).json(data[eventIndex]);
+        fs.writeFileSync(eventsPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.log("Error in updateEvent:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
 
-        
-//     }catch(error){
-//         console.log("Error in signUp:",error.message);
-//         res.status(500).json({
-//             error: "Internal Server Error"
-//         })
-//     }
-
-
-// }
-
-module.exports = {getAllEventsJson,eventSignUpJson,deleteEventJson};
+module.exports = {getAllEventsJson,eventSignUpJson,deleteEventJson,updateEventJson};

@@ -10,7 +10,7 @@ const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/f
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;
     disciplineList.forEach(discipline => {
-        if(discipline.nome === name && discipline.id === disciplineID) {
+        if(discipline.nome === name && discipline.disciplineID === disciplineID) {
             found = true;
         }
     });
