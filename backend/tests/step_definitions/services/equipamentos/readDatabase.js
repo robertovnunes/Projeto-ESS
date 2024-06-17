@@ -46,4 +46,4 @@ const clearDatabase = () => {
         console.log('Erro ao limpar banco de dados')
     }
 }
-module.exports = {readEquipments, writeEquipments, clearDatabase};
+export default{readEquipments, writeEquipments, clearDatabase};
