@@ -1,9 +1,10 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
 const app = require('../../../../app.js');
-const equipamentosService = require('../../../../api/services/equipamentos.service');
-const model = require('../../../../api/models/equipamentos.model');
-const { get } = require('mongoose');
+const equipamentoService = require('../../../../api/services/equipamentosService');
+const equipamentoController = require('../../../../api/controllers/equipamentosController');
+const modelSN = require('../../../../api/models/equipamentoSNModel');
+const modelPatrimonio = require('../../../../api/models/equipamentoPatrimonioModel');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
 
@@ -48,7 +49,7 @@ defineFeature(feature, (test) => {
             updateEquipment: jest.fn(),
             deleteEquipment: jest.fn()
         };
-        service = equipamentosService(mockEquipamentos);
+        service = new equipamentoService(mockEquipamentos);
     });
 
     afterEach(() => {
@@ -70,6 +71,7 @@ defineFeature(feature, (test) => {
 //Given steps
     const givenNotEquipmentExist = (given) => {
         given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
+            console.log('1');
             const response = await request.get(`/equipamentos/${campo}/${identificador}`);
             expect(response.status).toBe(404);
             expect(response.body.message).toBe('Equipamento nao encontrado');
@@ -96,6 +98,7 @@ defineFeature(feature, (test) => {
 //When steps
     const whenRequest = (when) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
+            console.log('2');
             const response = sendSucessfullRequest();
             const responseMethod = response.req.method;
             expect(responseMethod).toBe(req);
@@ -133,6 +136,7 @@ defineFeature(feature, (test) => {
 //And steps
     const andFieldMatch = (and, fCampo, fValor) => {
         and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
+            console.log('3');
             expect(campo).toBe(fCampo);
             expect(valor).toBe(fValor);
         });
@@ -164,8 +168,18 @@ defineFeature(feature, (test) => {
         });
     };
     const thenResponseSuccess = async (and) => {
-        const response = sendSucessfullRequest();
-        expect(response.status).toBe(201);
+        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
+            expect(type).toBe('success');
+            expect(code).toBe('201');
+        });
+        
+    };
+       const andResponseSuccess = async (and) => {
+        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
+            expect(type).toBe('success');
+            expect(code).toBe('201');
+        });
+        
     };
     const andPatrimonioIsOnDatabase = (and) => {
         and(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, patrimonio) => {

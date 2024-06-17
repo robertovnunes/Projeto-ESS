@@ -1,5 +1,7 @@
-const equipamentosModel = require('../models/equipamentosModel');
+const equipamentoSNModel = require('../models/equipamentoSNModel');
+const equipamentoPatrimonioModel = require('../models/equipamentoPatrimonioModel');
 const EquipamentosService = require('../services/equipamentosService');
+const shortid = require('shortid');
 
 class EquipamentosController {
 
@@ -106,24 +108,26 @@ class EquipamentosController {
                 }
             } else {
                 if(identificador.type === 'patrimonio') {
-                    let newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {patrimonio: identificador.value});
-                    let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
-                    if(equipmentCreated === 'Patrimonio já existe') {
-                            console.log(`POST /equipamentos [400] BAD REQUEST`);
-                            res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
-                            return;
+                    const equipmentExist = await this.equipamentosService.getEquipmentByPatrimonio(identificador.value);
+                    if(equipmentExist !== undefined) {
+                        console.log(`POST /equipamentos [400] BAD REQUEST`);
+                        res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
+                        return;
                     } else {
+                        let newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, identificador.value);
+                        let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
                         console.log(`POST /equipamentos [201] CREATED`);
                         res.status(201).send(equipmentCreated);
                     }
                 } else if(identificador.type === 'numero_serie') {
-                    let newEquipment = new equipamentosModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, {numero_serie: identificador.value});
-                    let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
-                    if(equipmentCreated === 'Numero de série já existe') {
+                    const equipmentExist = await this.equipamentosService.getEquipmentBySerie(identificador.value);
+                    if(equipmentExist !== undefined) {
                         console.log(`POST /equipamentos [400] BAD REQUEST`);
-                            res.status(400).send({message: 'Já existe um equipamento com este numero de série'});
-                            return;
+                        res.status(400).send({message: 'Já existe um equipamento com este numero de série'});
+                        return;
                     } else {
+                        let newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, identificador.value);
+                        let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
                         console.log(`POST /equipamentos [201] CREATED`);
                         res.status(201).send(equipmentCreated);
                     }

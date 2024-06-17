@@ -38,22 +38,13 @@ class EquipamentosRepository {
     }
     async createEquipmentPatrimonio(newEquipamento) {
         let db = await this.getAllEquipments();
-        let id = '04'+shortid.generate();
         if(!isJsonEmpty(db)){
-            db.forEach(equipamento => {
-                if(equipamento.patrimonio === newEquipamento.patrimonio){
-                    return 'Patrimonio já existe';
-                }
-            });
-            db.forEach(equipamento => {
-                if(equipamento.id === id){
-                    id = '04'+shortid.generate();
-                }
-            });
-            newEquipamento.id = id;
+            if(db.find(equipamento => equipamento.patrimonio === newEquipamento.patrimonio)){
+                return 'Patrimonio já existe';
+            }
+
             db.push(newEquipamento);
         } else {
-            newEquipamento.id = id;
             db = [newEquipamento];
 
         }
@@ -63,23 +54,14 @@ class EquipamentosRepository {
 
     async createEquipmentSN(newEquipamento){
         let db = await this.getAllEquipments();
-        let id = '04'+shortid.generate();
-        console.log(isJsonEmpty(db));
         if(!isJsonEmpty(db)){
             db.forEach(equipamento => {
                 if(equipamento.numero_serie === newEquipamento.numero_serie){
                     return 'Numero de serie já existe';
                 }
             });
-            db.forEach(equipamento => {
-                if(equipamento.id === id){
-                    id = '04'+shortid.generate();
-                }
-            });
-            newEquipamento.id = id;
             db.push(newEquipamento);
         } else {
-            newEquipamento.id = id;
             db = [newEquipamento];
         }
         await this._writeFile(db);
