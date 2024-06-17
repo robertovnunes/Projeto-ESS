@@ -16,5 +16,11 @@
     "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
     "responsibleTeacher": "Sérgio Soares",
     "eventDateAndTime": "2024-07-20 04:00 PM"
+  },
+  {
+    "eventName": "Hackathon",
+    "description": "Uma competição de programação que dura 24 horas.",
+    "responsibleTeacher": "Sérgio Soares",
+    "eventDateAndTime": "2024-07-21 04:00 PM"
   }
 ]

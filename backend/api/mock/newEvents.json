@@ -24,5 +24,13 @@
       "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
       "responsibleTeacher": "Sérgio Soares",
       "eventDateAndTime": "2024-07-20 04:00 PM"
+    },
+    {
+      "eventName": "Hackton C++",
+      "description": "Uma competição de programação que dura 24 horas, usando a linguagem C++.",
+      "responsibleTeacher": "Ricardo Martins",
+      "eventDateAndTime": "21-07-2024 03:00 PM"
     }
+
+    
   ]
