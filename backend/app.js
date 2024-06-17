@@ -17,7 +17,7 @@ consign({ cwd: 'api'})
     .into(server);
 */
 
-/*
+
 const express = require('express');
 const app = express();
 const comentariosRoutes = require('./api/routes/comentarios.routes');
@@ -29,8 +29,9 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-*/
 
+
+/*
 const app = require('./conf/server');
 const consign = require('consign');
 
@@ -46,3 +47,5 @@ consign({ cwd: 'api'})
     .include('routes')
     .then('controllers')
     .into(app);
+
+*/

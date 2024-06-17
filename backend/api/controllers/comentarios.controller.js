@@ -4,7 +4,7 @@ const Comentarios = require('../models/comentarios.model');
 const createComentario = (req, res) => {
     const { autor, sala, comentario } = req.body;
     if (!autor || !sala || !comentario) {
-        return res.status(400).send('Todos os campos são obrigatórios');
+        return res.status(400).send('Todos os campos(autor,sala e comentário) são obrigatórios');
     }
 
     const novoComentario = {
