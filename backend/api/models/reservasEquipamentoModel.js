@@ -1,6 +1,8 @@
-class reservaEquipamentoModel {
-    constructor(reservaEquipamento) {
-        this.id = reservaEquipamento.id;
+const BaseModel = require('./baseModel');
+const shortid = require('shortid');
+class reservaEquipamentoModel extends BaseModel{
+    constructor(reservaEquipamento){
+        super('04'+shortid.generate() || '');
         this.id_equipamento = reservaEquipamento.id_equipamento;
         this.id_utilizador = reservaEquipamento.id_utilizador;
         this.data = reservaEquipamento.data;
@@ -8,3 +10,4 @@ class reservaEquipamentoModel {
         this.hora_fim = reservaEquipamento.hora_fim;
     }
 }   
+module.exports = reservaEquipamentoModel;

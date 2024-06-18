@@ -1,8 +1,9 @@
 const shortid = require('shortid');
+const BaseModel = require('./baseModel');
 
-class equipamento {
+class equipamento extends BaseModel{
     constructor(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie) {
-        this.id = '04'+shortid.generate();
+        super('04'+shortid.generate() || '');
         this.nome = nome;
         this.descricao = descricao;
         this.estado_conservacao = estado_conservacao;

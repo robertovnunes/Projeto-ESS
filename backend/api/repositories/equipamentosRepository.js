@@ -24,6 +24,7 @@ class EquipamentosRepository {
 
     async getAllEquipments() {
         const db = await this._readFile();
+        console.log(db);
         return db === undefined ? 'Nenhum equipamento cadastrado' : db;
     }
     async getEquipmentById(id) {
