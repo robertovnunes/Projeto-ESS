@@ -1,3 +1,11 @@
 [
-   
+    {
+        "nome": "Matemática Discreta",
+        "disciplineID": "MD101",
+        "responsibleTeacher": "Patrícia Alves Dias",
+        "horario": "15/05/2024 a 30/05/2024 09:30 TUE THU",
+        "description": "Estudo dos fundamentos matemáticos para a computação.",
+        "disciplineCurso": "Engenharia da Computação",
+        "disciplinePeriodo": "1"
+    }
   ]

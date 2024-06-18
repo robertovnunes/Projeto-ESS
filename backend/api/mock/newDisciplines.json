@@ -54,6 +54,15 @@
       "description": "",
       "disciplineCurso": "Engenharia da Computação",
       "disciplinePeriodo": "1"
-    }
+    },
+    {
+      "nome": "Matemática Discreta para Computação",
+      "disciplineID": "MD102",
+      "responsibleTeacher": "Anjolina Grisi",
+      "horario": "23/05/2024 a 31/12/2024 08:00 MON WED",
+      "description": "Estudo dos fundamentos matemáticos discretos para a computação.",
+      "disciplineCurso": "Ciências da Computação",
+      "disciplinePeriodo": "4"
+  }
 ]
   
