@@ -4,3 +4,4 @@
 /backend/coverage/
 /node_modules/
 /qodana.yaml
+/backend/conf/.env
