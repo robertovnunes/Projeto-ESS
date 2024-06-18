@@ -35,12 +35,12 @@ class EquipamentosController {
         try{
             const id = req.params.id;
             const equipment = await this.equipamentosService.getEquipmentById(id);
-            if(equipment){
+            if(equipment !== 'Equipamento nao encontrado'){
                 console.log(`GET /equipamentos/:${id} by ID [200] OK`);
                 res.status(200).send(equipment);
             } else {
                 console.log(`GET /equipamentos/:${id} by ID [404] NOT FOUND`);
-                res.status(404).send({message: 'Equipamento não encontrado'});
+                res.status(404).send({message: 'Equipamento nao encontrado'});
             }
         } catch (error) {
             console.log(`GET /equipamentos/:${id} [500] INTERNAL SERVER ERROR\n ${error.message}`);
@@ -52,12 +52,12 @@ class EquipamentosController {
         try{
             const patrimonio = req.params.patrimonio;
             const equipment = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-            if(equipment){
+            if(equipment !== 'Equipamento nao encontrado'){
                 console.log(`GET /equipamentos/patrimonio/:${patrimonio} [200] OK`);
                 res.status(200).send(equipment);
             } else {
                 console.log(`GET /equipamentos/patrimonio/:${patrimonio} [404] NOT FOUND`);
-                res.status(404).send({message: 'Equipamento não encontrado'});
+                res.status(404).send({message: 'Equipamento nao encontrado'});
             }
         } catch (error) {
             console.log(`GET /equipamentos/patrimonio/:${req.params.patrimonio} [500] INTERNAL SERVER ERROR\n ${error.message}`);
@@ -69,12 +69,12 @@ class EquipamentosController {
         try{
             const sn = req.params.numero_serie;
             const equipment = await this.equipamentosService.getEquipmentBySerie(sn);
-            if(equipment){
+            if(equipment !== 'Equipamento nao encontrado'){
                 console.log(`GET /equipamentos/:${equipment.numero_serie} [200] OK`);
                 res.status(200).send(equipment);
             } else {
                 console.log(`GET /equipamentos/:${equipment.numero_serie} [404] NOT FOUND`);
-                res.status(404).send({message: 'Equipamento não encontrado'});
+                res.status(404).send({message: 'Equipamento nao encontrado'});
             }
         } catch (error) {
             console.log(`GET /equipamentos/:${equipment.numero_serie} [500] INTERNAL SERVER ERROR\n ${error.message}`);
@@ -88,22 +88,22 @@ class EquipamentosController {
             if (!nome || !descricao || !estado_conservacao || !data_aquisicao || !valor_estimado || !identificador.type || !identificador.value) {
                 console.log(`POST /equipamentos [400] BAD REQUEST`);
                 if (!nome) {
-                    res.status(400).send({message: 'Nome não informado'});
+                    res.status(400).send({message: 'Nome nao informado'});
                 } else if (!descricao) {
-                    res.status(400).send({message: 'Descrição não informada'});
+                    res.status(400).send({message: 'Descriçao nao informada'});
                 } else if (!estado_conservacao) {
-                    res.status(400).send({message: 'Estado de conservação não informado'});
+                    res.status(400).send({message: 'Estado de conservaçao nao informado'});
                 } else if (!data_aquisicao) {
-                    res.status(400).send({message: 'Data de aquisição não informada'});
+                    res.status(400).send({message: 'Data de aquisiçao nao informada'});
                 } else if (!valor_estimado ) {
-                    res.status(400).send({message: 'Valor estimado não informado'});
+                    res.status(400).send({message: 'Valor estimado nao informado'});
                 } else if (!identificador.type) {
-                    res.status(400).send({message: 'Tipo de identificador não informado'});
+                    res.status(400).send({message: 'Tipo de identificador nao informado'});
                 } else if (!identificador.value) {
                     if (identificador.type === 'patrimonio') {
-                        res.status(400).send({message: 'Patrimônio não informado'});
+                        res.status(400).send({message: 'Patrimônio nao informado'});
                     } else if (identificador.type === 'numero_serie') {
-                        res.status(400).send({message: 'Número de série não informado'});
+                        res.status(400).send({message: 'Número de série nao informado'});
                     }
                 }
             } else {
@@ -142,9 +142,9 @@ class EquipamentosController {
     async patchEquipment(req, res) {
         try{
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
-            if(updated === 'Equipamento não encontrado') {
+            if(updated === 'Equipamento nao encontrado') {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
-                res.status(404).send({message: 'Equipamento não encontrado'});
+                res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
                 console.log(`PATCH /equipamentos/:${req.params.id} [200] OK`);
                 res.status(200).send(updated);
@@ -158,9 +158,9 @@ class EquipamentosController {
     async deleteEquipment(req, res) {
         try{
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
-            if(deleted === 'Equipamento não encontrado') {
+            if(deleted === 'Equipamento nao encontrado') {
                 console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
-                res.status(404).send({message: 'Equipamento não encontrado'});
+                res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
                 console.log(`DELETE /equipamentos/${req.params.id} [200] OK`);
                 res.status(200).send(deleted);

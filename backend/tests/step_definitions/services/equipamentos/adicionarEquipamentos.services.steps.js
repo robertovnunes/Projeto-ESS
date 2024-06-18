@@ -36,8 +36,10 @@ const equipmentExists = (equipmentList, nome, campo, identificador) => {
 defineFeature(feature, (test) => {
     const request = supertest(app);
     request.headers = {username: 'joao', role: 'admin'};
+    request.method = '/POST';
     let mockEquipamentos;
     let service;
+    let controller;
 
     beforeEach(() => {
         mockEquipamentos = {
@@ -71,7 +73,6 @@ defineFeature(feature, (test) => {
 //Given steps
     const givenNotEquipmentExist = (given) => {
         given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-            console.log('1');
             const response = await request.get(`/equipamentos/${campo}/${identificador}`);
             expect(response.status).toBe(404);
             expect(response.body.message).toBe('Equipamento nao encontrado');
@@ -98,12 +99,10 @@ defineFeature(feature, (test) => {
 //When steps
     const whenRequest = (when) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
-            console.log('2');
             const response = sendSucessfullRequest();
-            const responseMethod = response.req.method;
-            expect(responseMethod).toBe(req);
-            expect(request.headers.username).toBe(username);
-            expect(request.headers.role).toBe(userRole);
+            expect(request.method).toBe(req);
+            expect(request.headers.username).toBe(user);
+            expect(request.headers.role).toBe(role);
         });
     };
     const whenverifyEquipment = (when, campo, valor) => {
@@ -167,16 +166,16 @@ defineFeature(feature, (test) => {
             expect(equipamentos).toContainEqual(equipamento);
         });
     };
-    const thenResponseSuccess = async (and) => {
+    const thenResponsesucesso = async (and) => {
         and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
-            expect(type).toBe('success');
+            expect(type).toBe('sucesso');
             expect(code).toBe('201');
         });
         
     };
-       const andResponseSuccess = async (and) => {
+       const andResponsesucesso = async (and) => {
         and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
-            expect(type).toBe('success');
+            expect(type).toBe('sucesso');
             expect(code).toBe('201');
         });
         
@@ -199,7 +198,7 @@ defineFeature(feature, (test) => {
         andFieldMatch(and, 'data de aquisicao', '15/03/2023');
         andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
         andFieldMatch(and, 'patrimonio', '1098642');
-        thenResponseSuccess(and);
+        thenResponsesucesso(and);
         andPatrimonioIsOnDatabase(then);
     });
     test('Adicionando equipamento usando numero de serie com sucesso', ({given, when, then, and}) => {
@@ -212,7 +211,7 @@ defineFeature(feature, (test) => {
         andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
         andFieldMatch(and, 'numero de serie', '1098642');
         thenSNIsOnDatabase(then);
-        andResponseSuccess(and);
+        andResponsesucesso(and);
     });
       /*
     test('Adicionando equipamento duplicado', ({given, when, then, and}) => {

@@ -4,7 +4,7 @@ Feature: As a usuario administrador
 
   Scenario: Adicionando equipamento usando patrimonio com sucesso
     Given nao existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admistrador"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
     And "nome" com "Ar condicionado midea"
     And "descricao" com "Ar condicionado split de 12.000 btus"
     And "estado de conservacao" com "Bom"
@@ -16,7 +16,7 @@ Feature: As a usuario administrador
 
   Scenario: Adicionando equipamento usando numero de serie com sucesso
     Given nao existe o equipamento "Ar condicionado midea" com "numero de serie" "1098643"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admistrador"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
     And "nome" com "Ar condicionado midea"
     And "descricao" com "Ar condicionado de 12.000 btus"
     And "estado de conservacao" com "Bom"

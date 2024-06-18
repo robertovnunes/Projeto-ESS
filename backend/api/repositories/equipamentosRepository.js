@@ -26,15 +26,15 @@ class EquipamentosRepository {
     }
     async getEquipmentById(id) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento.id === id);
+        return db.find(equipamento => equipamento.id === id) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento.id === id);
     }
     async getEquipmentByPatrimonio(value) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento['patrimonio'] === value);
+        return db.find(equipamento => equipamento['patrimonio'] === value) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento['patrimonio'] === value);
     }
     async getEquipmentBySerie(value) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento['numero_serie'] === value);
+        return db.find(equipamento => equipamento['numero_serie'] === value) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento['numero_serie'] === value);
     }
     async createEquipmentPatrimonio(newEquipamento) {
         let db = await this.getAllEquipments();
@@ -71,7 +71,7 @@ class EquipamentosRepository {
     async updateEquipment(id, data) {
         let db = this.getAllEquipments();
         const index = db.findIndex(equipamento => equipamento.id === id);
-        if(index === -1) return 'Equipamento não encontrado';
+        if(index === -1) return 'Equipamento nao encontrado';
         db[index] = {...db[index], ...data};
         await this._writeFile(db);
         return db[index];
@@ -80,7 +80,7 @@ class EquipamentosRepository {
     async deleteEquipment(id) {
         let db = this.getAllEquipments();
         const index = db.findIndex(equipamento => equipamento.id === id);
-        if(index === -1) return 'Equipamento não encontrado';
+        if(index === -1) return 'Equipamento nao encontrado';
         const deleted = db.splice(index, 1);
         await this._writeFile(db);
         return deleted;

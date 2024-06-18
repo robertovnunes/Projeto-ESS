@@ -2,23 +2,34 @@ const EquipamentoRepository = require('../repositories/equipamentosRepository');
 
 class EquipamentosService {
     constructor(equipamentoRepository){
-        this.equipamentoRepository = equipamentoRepository || new EquipamentoRepository();
+        this.equipamentoRepository = equipamentoRepository;
     }
 
     getAllEquipments() {
-        return this.equipamentoRepository.getAllEquipments();
+        let equipamentos = this.equipamentoRepository.getAllEquipments();
     }
 
     getEquipmentById(id) {
-        return this.equipamentoRepository.getEquipmentById(id);
+        let equipamento = this.equipamentoRepository.getEquipmentById(id);
+        if(equipamento === undefined){
+            return 'Equipamento nao encontrado';
+        } else {
+            return equipamento;
+        }
     }
 
     getEquipmentByPatrimonio(value) {
-        return this.equipamentoRepository.getEquipmentByPatrimonio(value);
+        let equipamento = this.equipamentoRepository.getEquipmentByPatrimonio(value);
+        if(equipamento === undefined){
+            return 'Equipamento nao encontrado';
+        } else{
+            return equipamento;
+        }
     }
 
     getEquipmentBySerie(value) {
-        return this.equipamentoRepository.getEquipmentBySerie(value);
+        let equipamento = this.equipamentoRepository.getEquipmentBySerie(value);
+        return equipamento;   
     }
 
     createEquipmentPatrimonio(newEquipamento) {
