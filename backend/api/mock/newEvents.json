@@ -37,6 +37,12 @@
       "description": "Uma competição de programação que dura 24 horas para o público LGBT",
       "responsibleTeacher": "Paulo Marcos",
       "eventDateAndTime": "22-07-2024 04:00 PM"
+    },
+    {
+      "eventName": "Workshop Machine Learning",
+      "description": "Um workshop sobre Machine Learning.",
+      "responsibleTeacher": "Marcelo Vidal",
+      "eventDateAndTime": "05-08-2024 05:00 PM"
     }
 
     

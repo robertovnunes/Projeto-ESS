@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const dateRegex = /^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\d{4} (0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/;
+
+const isValidDateFormat = (dateStr) => {
+    return dateRegex.test(dateStr);
+};
+
 
 const getAllEventsJson = (req,res) => {
     try{ 
@@ -40,6 +46,12 @@ const eventSignUpJson = async(req, res) => {
                 error: "Event already exists"
             })
         };
+        if(!isValidDateFormat(eventDateAndTime)){
+            console.log("Formato de data inválido");
+            return res.status(400).json({
+                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
+            });
+        }
         let getID = data.length + 1;
         if(description === undefined) {
             const newEvent = {
@@ -114,6 +126,12 @@ const updateEventJson = async (req, res) => {
         if (eventIndex === -1) {
             console.log("Event Not Found");
             return res.status(404).json({ error: "Event Not Found" });
+        }
+        if(!isValidDateFormat(eventDateAndTime)){
+            console.log("Formato de data inválido");
+            return res.status(400).json({
+                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
+            });
         }
 
         data[eventIndex] = {
