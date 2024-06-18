@@ -2,8 +2,8 @@ Feature: Edição de funcionalidades de uma Disciplina pelo Professor
 
 Scenario: Edição de todas as funcionalidades de uma Disciplina com sucesso pelo Professor 
     Given O usuário "bafm" está logado como "professor"
-   And A disciplina "Matemática Discreta" de id "MD101" já está presente no sistema
-    When O usuário "bafm" manda uma requisição PUT para "/events/MD101"
+    And A disciplina "Matemática Discreta" de id "MD101" já está presente no sistema
+    When O usuário "bafm" manda uma requisição PUT para "/disciplines/MD101"
     And preenche no corpo "nome" : "Matemática Discreta para Computação"
     And preenche no corpo "disciplineID" : "MD102"
     And preenche no corpo "responsibleTeacher" : "Anjolina Grisi"
@@ -14,6 +14,16 @@ Scenario: Edição de todas as funcionalidades de uma Disciplina com sucesso pel
     Then O sistema retorna "200"
     And A mensagem "Salvo com Sucesso!" é exibida
     And As informações sobre a disciplina "Matemática Discreta para Computação" de id "MD102" foram salvas no banco de dados
+
+Scenario: Edição de algumas funcionalidades de uma Disciplina com sucesso pelo Professor -- campo description e disciplineCurso
+    Given O usuário "bafm" está logado como "professor"
+    And A disciplina "Algoritmos e Estruturas de Dados" de id "AE301" já está presente no sistema
+    When O usuário "bafm" manda uma requisição PUT para "/disciplines/AE301"
+    And preenche no corpo "description" : "Estudo de algoritmos clássicos e estruturas de dados fundamentais, agora para ciências da computação."
+    And preenche no corpo "disciplineCurso" : "Ciências da Computação"
+    Then O sistema retorna "200"
+    And A mensagem "Salvo com Sucesso!" é exibida
+    And As informações sobre a disciplina "Algoritmos e Estruturas de Dados" de id "AE301" foram salvas no banco de dados
 
 # Scenario: Edição de algumas funcionalidades de um Evento com sucesso pelo Professor - eventName e responsibleTeacher
 #     Given O usuário "bafm" está logado como "professor"

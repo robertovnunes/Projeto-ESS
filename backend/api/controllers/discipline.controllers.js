@@ -114,7 +114,7 @@ const updateDisciplineJson = async (req, res) => {
         data[disciplineIndex] = {
             ...data[disciplineIndex],
             nome: nome || data[disciplineIndex].nome,
-            id: id || data[disciplineIndex].id,
+            disciplineID: disciplineID || data[disciplineIndex].disciplineID,
             responsibleTeacher: responsibleTeacher || data[disciplineIndex].responsibleTeacher,
             horario: horario || data[disciplineIndex].horario,
             description: description || data[disciplineIndex].description,
@@ -122,7 +122,7 @@ const updateDisciplineJson = async (req, res) => {
             disciplinePeriodo: disciplinePeriodo || data[disciplineIndex].disciplinePeriodo
         };
 
-        console.log("Disciplina atualizada com sucesso");
+        console.log("Salvo com Sucesso!");
         res.status(200).json(data[disciplineIndex]);
         fs.writeFileSync(disciplinesPath, JSON.stringify(data, null, 2));
     } catch (error) {
