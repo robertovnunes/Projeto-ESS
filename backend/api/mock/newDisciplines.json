@@ -72,6 +72,12 @@
     "description": "Estudo de algoritmos clássicos e estruturas de dados fundamentais, agora para ciências da computação.",
     "disciplineCurso": "Ciências da Computação",
     "disciplinePeriodo": "2"
+},
+{
+  "nome": "Sistemas Operacionais",
+  "disciplineID": "SO401",
+  "responsibleTeacher": "Carlos Eduardo Rodrigues",
+  "horario": "23/05/2024 a 30/06/2024 10:00 AM MON WED FRI"
 }
 ]
   
