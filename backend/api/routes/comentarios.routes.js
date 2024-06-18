@@ -1,7 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const comentariosController = require('../controllers/comentarios.controller');
+const ComentariosController = require('../controllers/comentarios.controller');
+const ComentariosRepository = require('../repositories/comentariosRepository');
+const ComentariosService = require('../services/comentariosService');
 
-router.post('/comentarios', comentariosController.createComentario);
+const comentariosRepository = new ComentariosRepository();
+const comentariosService = new ComentariosService(comentariosRepository);
+const comentariosController = new ComentariosController(comentariosService);
 
-module.exports = router;
+
+
+module.exports = app => {
+    console.log('entrou no router');
+    app.use('/comentarios', router);
+    router.get('/', comentariosController.getAllComentarios);
+    router.get('/:id', comentariosController.getComentarioById);
+    router.post('/', comentariosController.createComentario);
+    router.patch('/:id', comentariosController.patchComentario);
+    router.delete('/:id', comentariosController.deleteComentario);
+}
+
+
+//module.exports = router;

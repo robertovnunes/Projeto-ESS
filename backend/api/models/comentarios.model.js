@@ -1,25 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+class Comentario {
+    constructor(id, id_post, id_usuario, texto, data) {
+        this.id = id;
+        this.id_post = id_post;
+        this.id_usuario = id_usuario;
+        this.texto = texto;
+        this.data = data;
+    }
+}
 
-const filePath = path.join(__dirname, '../../data/comentarios.json');
-
-const getComentarios = () => {
-    const data = fs.readFileSync(filePath);
-    return JSON.parse(data);
-};
-
-const saveComentarios = (comentarios) => {
-    fs.writeFileSync(filePath, JSON.stringify(comentarios, null, 2));
-};
-
-const addComentario = (comentario) => {
-    const comentarios = getComentarios();
-    comentarios.push(comentario);
-    saveComentarios(comentarios);
-    return comentario;
-};
-
-module.exports = {
-    getComentarios,
-    addComentario
-};
+module.exports = Comentario;
