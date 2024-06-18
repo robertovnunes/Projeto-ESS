@@ -1,10 +1,10 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../../app.js');
-const equipamentoService = require('../../../../api/services/equipamentosService');
-const equipamentoController = require('../../../../api/controllers/equipamentosController');
-const modelSN = require('../../../../api/models/equipamentoSNModel');
-const modelPatrimonio = require('../../../../api/models/equipamentoPatrimonioModel');
+const app = require('../../../../src/app.js');
+const equipamentoService = require('../../../../src/api/services/equipamentosService');
+const equipamentoController = require('../../../../src/api/controllers/equipamentosController');
+const modelSN = require('../../../../src/api/models/equipamentoSNModel');
+const modelPatrimonio = require('../../../../src/api/models/equipamentoPatrimonioModel');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
 

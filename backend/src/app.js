@@ -1,7 +1,7 @@
 const server = require('./conf/server.js');
 const consign = require('consign');
 const swaggerUi = require('swagger-ui-express');
-const specs = require('./docs/swagger.js');
+const specs = require('../docs/swagger.js');
 
 //server.use('/', swaggerUi.serve, swaggerUi.setup(specs));
 
