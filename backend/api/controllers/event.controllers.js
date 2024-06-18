@@ -127,7 +127,7 @@ const updateEventJson = async (req, res) => {
             console.log("Event Not Found");
             return res.status(404).json({ error: "Event Not Found" });
         }
-        if(!isValidDateFormat(eventDateAndTime)){
+        if(!isValidDateFormat(eventDateAndTime) && eventDateAndTime !== undefined){
             console.log("Formato de data inválido");
             return res.status(400).json({
                 error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
@@ -137,6 +137,7 @@ const updateEventJson = async (req, res) => {
         data[eventIndex] = {
             ...data[eventIndex],
             eventName: eventName || data[eventIndex].eventName,
+            id: idConverted,
             description: description || data[eventIndex].description,
             responsibleTeacher: responsibleTeacher || data[eventIndex].responsibleTeacher,
             eventDateAndTime: eventDateAndTime || data[eventIndex].eventDateAndTime

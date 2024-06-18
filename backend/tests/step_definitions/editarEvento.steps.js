@@ -93,7 +93,7 @@ defineFeature(feature, test => {
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('eventName');
-            expect(response.body.eventName).toContain(value);
+            expect(response.body.eventName).toBe(value);
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('responsibleTeacher');
@@ -108,6 +108,66 @@ defineFeature(feature, test => {
         });
         and(/^As informações sobre o evento "(.*)" de data "(.*)" foram salvas no banco de dados$/, async(name,time) => {
             expect(infoSaved(database.readNewEvents(),name,time,newEvento)).toBe(true);
+        });
+    });
+    test('Edição de apenas uma funcionalidade de um Evento com sucesso pelo Professor - eventDateAndTime',({ given, when, then,and }) => {
+        let eventos = database.readOldEvents();
+        let newEventos = database.readNewEvents();
+        let newEvento = newEventos[6];
+
+        given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
+            expect(userName).toBe('bafm');
+            expect(userType).toBe('professor');
+        });
+        and(/^O evento "(.*)" na data "(.*)" já está presente no sistema$/, async(name,time)=> {
+            expect(eventExists(eventos,name,time)).toBe(true);
+        });
+        when(/^O usuário "(.*)" manda uma requisição PUT para "(.*)"$/, async(userName, url) => {
+            expect(userName).toBe('bafm');
+            response = await request.put(url).send({eventDateAndTime:newEvento.eventDateAndTime});
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('eventDateAndTime');
+            expect(response.body.eventDateAndTime).toContain(value);
+        });
+        then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
+        expect(response.status).toBe(parseInt(statusCode,10));
+        });
+        and(/^A mensagem "(.*)" é exibida$/, async(message) => {
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
+        });
+        and(/^As informações sobre o evento "(.*)" de data "(.*)" foram salvas no banco de dados$/, async(name,time) => {
+            expect(infoSaved(database.readNewEvents(),name,time,newEvento)).toBe(true);
+        });
+    });
+    test('Edição de apenas uma funcionalidade de um Evento sem sucesso pelo Professor - eventDateAndTime',({ given, when, then,and }) => {
+        let eventos = database.readOldEvents();
+        let newEventos = database.readNewEvents();
+        let newEvento = newEventos[6];
+        let wrongString = "06-08-2024 17:00";
+
+        given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
+            expect(userName).toBe('bafm');
+            expect(userType).toBe('professor');
+        });
+        and(/^O evento "(.*)" na data "(.*)" já está presente no sistema$/, async(name,time)=> {
+            expect(eventExists(eventos,name,time)).toBe(true);
+        });
+        when(/^O usuário "(.*)" manda uma requisição PUT para "(.*)"$/, async(userName, url) => {
+            expect(userName).toBe('bafm');
+            response = await request.put(url).send({eventDateAndTime:wrongString});
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('eventDateAndTime');
+            expect(wrongString).toContain(value);
+        });
+        then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
+        expect(response.status).toBe(parseInt(statusCode,10));
+        });
+        and(/^A mensagem "(.*)" é exibida$/, async(message) => {
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
         });
     });
 });
