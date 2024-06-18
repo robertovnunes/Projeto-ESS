@@ -4,5 +4,13 @@
     "sala": "Sala 101",
     "comentario": "Ótima sala, mas precisa de mais ventilação.",
     "id": "04CDxcpIcFM"
+  },
+  {
+    "id_post": "123",
+    "id_usuario": "456",
+    "texto": "Comentário sobre a sala.",
+    "data": "2023-06-15T12:00:00Z",
+    "destinatario": "administrador",
+    "id": "047hIWOo3pd"
   }
 ]
