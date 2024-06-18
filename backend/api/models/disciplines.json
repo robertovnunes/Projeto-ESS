@@ -3,7 +3,7 @@
         "nome": "Introdução a Programação",
         "disciplineID": "IF232",
         "responsibleTeacher": "Alexandre Cabral Mota",
-        "horario": "20/05/2024 a 28/05/2024 08:00 MON WED FRI",
+        "horario": "20/05/2024 a 28/05/2024 08:00 AM MON WED FRI",
         "description": "",
         "disciplineCurso": "Engenharia da Computação",
         "disciplinePeriodo": "1"
@@ -12,7 +12,7 @@
         "nome": "Matemática Discreta",
         "disciplineID": "MD101",
         "responsibleTeacher": "Patrícia Alves Dias",
-        "horario": "15/05/2024 a 30/05/2024 09:30 TUE THU",
+        "horario": "15/05/2024 a 30/05/2024 09:30 AM TUE THU",
         "description": "Estudo dos fundamentos matemáticos para a computação.",
         "disciplineCurso": "Engenharia da Computação",
         "disciplinePeriodo": "1"
@@ -21,7 +21,7 @@
         "nome": "Algoritmos e Estruturas de Dados",
         "disciplineID": "AE301",
         "responsibleTeacher": "Fernando Lima Carvalho",
-        "horario": "18/05/2024 a 25/05/2024 14:00 MON WED FRI",
+        "horario": "18/05/2024 a 25/05/2024 02:00 PM MON WED FRI",
         "description": "Estudo de algoritmos clássicos e estruturas de dados fundamentais.",
         "disciplineCurso": "Engenharia da Computação",
         "disciplinePeriodo": "2"

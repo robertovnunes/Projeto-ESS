@@ -10,7 +10,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
     And preenche no corpo "nome" : "Engenharia de Software e Sistemas"
     And preenche no corpo "disciplineID" : "IF686"
     And preenche no corpo "responsibleTeacher" : "Breno Miranda"
-    And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
+    And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU"
     And preenche no corpo "description" : ""
     And preenche no corpo "disciplineCurso" : ""
     And preenche no corpo "disciplinePeriodo" : ""
@@ -25,7 +25,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Paradigmas e Linguagens Computacionais"
         And preenche no corpo "disciplineID" : "IF690"
         And preenche no corpo "responsibleTeacher" : "Andre Luis"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 08:00 MON WED"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 08:00 AM MON WED"
         And preenche no corpo "description" : ""
         And preenche no corpo "disciplineCurso" : "Engenharia da Computação"
         And preenche no corpo "disciplinePeriodo" : ""
@@ -40,7 +40,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "História e Futuro da Computação"
         And preenche no corpo "disciplineID" : "IF691"
         And preenche no corpo "responsibleTeacher" : "Germano Crispim"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 10:00 TUE"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 10:00 AM TUE"
         And preenche no corpo "description" : "Materia com seminário"
         And preenche no corpo "disciplineCurso" : ""
         And preenche no corpo "disciplinePeriodo" : ""
@@ -55,7 +55,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Sistemas Digitais"
         And preenche no corpo "disciplineID" : "IF640"
         And preenche no corpo "responsibleTeacher" : "Abel"
-        And preenche no corpo "horario" : "21/08/2024 a 31/12/2024 10:00 MON FRI"
+        And preenche no corpo "horario" : "21/08/2024 a 31/12/2024 10:00 AM MON FRI"
         And preenche no corpo "description" : ""
         And preenche no corpo "disciplineCurso" : ""
         And preenche no corpo "disciplinePeriodo" : "4"
@@ -70,7 +70,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Introdução a Computação"
         And preenche no corpo "disciplineID" : "IF323"
         And preenche no corpo "responsibleTeacher" : "Kleber Vieira"
-        And preenche no corpo "horario" : "21/08/2024 a 31/12/2024 13:00 MON"
+        And preenche no corpo "horario" : "21/08/2024 a 31/12/2024 01:00 PM MON"
         And preenche no corpo "description" : "IC"
         And preenche no corpo "disciplineCurso" : "Engenharia da Computação"
         And preenche no corpo "disciplinePeriodo" : "1"
@@ -85,7 +85,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Engenharia de Software e Sistemas"
         And preenche no corpo "disciplineID" : "IF686"
         And preenche no corpo "responsibleTeacher" : "Breno Miranda"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU"
         Then O sistema retorna "400"
         And A mensagem "Discipline already exists" é exibida
 
@@ -95,7 +95,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : ""
         And preenche no corpo "disciplineID" : "IF686"
         And preenche no corpo "responsibleTeacher" : "Breno Miranda"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU
         Then O sistema retorna "400 Bad Request"
         And A mensagem "Informações obrigatórias não preenchidas" é exibida
 
@@ -105,7 +105,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Engenharia de Software e Sistemas"
         And preenche no corpo "disciplineID" : ""
         And preenche no corpo "responsibleTeacher" : "Breno Miranda"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU"
         Then O sistema retorna "400 Bad Request"
         And A mensagem "Informações obrigatórias não preenchidas" é exibida
 
@@ -125,7 +125,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Engenharia de Software e Sistemas"
         And preenche no corpo "disciplineID" : "IF686"
         And preenche no corpo "responsibleTeacher" : ""
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 13:00 TUE THU"
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU"
         Then O sistema retorna "400 Bad Request"
         And A mensagem "Informações obrigatórias não preenchidas" é exibida
 
