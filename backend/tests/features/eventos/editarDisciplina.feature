@@ -25,6 +25,15 @@ Scenario: Edição de algumas funcionalidades de uma Disciplina com sucesso pelo
     And A mensagem "Salvo com Sucesso!" é exibida
     And As informações sobre a disciplina "Algoritmos e Estruturas de Dados" de id "AE301" foram salvas no banco de dados
 
+Scenario: Edição de uma funcionalidade de uma Disciplina com sucesso pelo Professor -- campo horario
+    Given O usuário "bafm" está logado como "professor"
+    And A disciplina "Sistemas Operacionais" de id "IF943" já está presente no sistema
+    When O usuário "bafm" manda uma requisição PUT para "/disciplines/IF943"
+    And preenche no corpo "horario" : "23/05/2024 a 30/06/2024 10:00 AM MON WED FRI"
+    Then O sistema retorna "200"
+    And A mensagem "Salvo com Sucesso!" é exibida
+    And As informações sobre a disciplina "Sistemas Operacionais" de id "IF943" foram salvas no banco de dados
+
 # Scenario: Edição de algumas funcionalidades de um Evento com sucesso pelo Professor - eventName e responsibleTeacher
 #     Given O usuário "bafm" está logado como "professor"
 #     And O evento "Hackathon Pride" na data "22-07-2024 04:00 PM" já está presente no sistema

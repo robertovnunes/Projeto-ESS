@@ -100,7 +100,7 @@ defineFeature(feature, test => {
         });
         when(/^O usuário "(.*)" manda uma requisição PUT para "(.*)"$/, async(userName, url) => {
             expect(userName).toBe('bafm');
-            response = await request.put(url).send({nome:newDiscipline.nome,disciplineID:newDiscipline.disciplineID,responsibleTeacher:newDiscipline.responsibleTeacher,horario:newDiscipline.horario,description:newDiscipline.description,disciplineCurso:newDiscipline.disciplineCurso,disciplinePeriodo:newDiscipline.disciplinePeriodo});
+            response = await request.put(url).send({description:newDiscipline.description,disciplineCurso:newDiscipline.disciplineCurso});
         });
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('description');
@@ -109,6 +109,37 @@ defineFeature(feature, test => {
         and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
             expect(field).toBe('disciplineCurso');
             expect(response.body.disciplineCurso).toBe(value);
+        });
+        then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
+           expect(response.status).toBe(parseInt(statusCode,10));
+        });
+        and(/^A mensagem "(.*)" é exibida$/, async(message) => {
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
+        });
+        and(/^As informações sobre a disciplina "(.*)" de id "(.*)" foram salvas no banco de dados$/, async(name,id) => {
+            expect(infoSaved(database.readNewDisciplines(),name,id,newDiscipline)).toBe(true);
+        });
+    });
+    test('Edição de uma funcionalidade de uma Disciplina com sucesso pelo Professor -- campo horario',({ given, when, then,and }) => {
+        let disciplines = database.readOldDisciplines();
+        let newDisciplines = database.readNewDisciplines();
+        let newDiscipline = newDisciplines[8];
+
+        given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
+            expect(userName).toBe('bafm');
+            expect(userType).toBe('professor');
+        });
+        and(/^A disciplina "(.*)" de id "(.*)" já está presente no sistema$/, async(name,disciplinesID)=> {
+            expect(disciplineExists(disciplines,name,disciplinesID)).toBe(true);
+        });
+        when(/^O usuário "(.*)" manda uma requisição PUT para "(.*)"$/, async(userName, url) => {
+            expect(userName).toBe('bafm');
+            response = await request.put(url).send({horario:newDiscipline.horario});
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('horario');
+            expect(response.body.horario).toBe(value);
         });
         then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
            expect(response.status).toBe(parseInt(statusCode,10));
