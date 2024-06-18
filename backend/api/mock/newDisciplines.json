@@ -87,6 +87,20 @@
   "description": "Este curso aborda os fundamentos e aplicações básicas de inteligência artificial.",
   "disciplineCurso": "Engenharia da Computação",
   "disciplinePeriodo": "4"
+},
+{
+  "nome": "Redes de Computadores",
+  "disciplineID": "IF944",
+  "responsibleTeacher": "Carlos Eduardo Mota",
+  "horario": "23/05/2024 a 30/06/2024 11:00 AM MON WED FRI"
+},
+{
+  "nome": "Banco de Dados",
+  "disciplineID": "IF945",
+  "responsibleTeacher": "Carlos Eduardo Rodrigues",
+  "horario": "24/05/2024 a 31/06/2024 09:00 AM MON WED FRI",
+  "description": "Estudo de banco de dados relacionais e não relacionais",
+  "disciplineCurso": "Ciências da Computação"
 }
 ]
   
