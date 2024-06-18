@@ -5,7 +5,7 @@ const database = require('./databaseScramble');
 //const { response } = require('express');
 const request = supertest(index);
 
-const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/eventos/editarDisciplina.feature');
+const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/professor/editarDisciplina.feature');
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;

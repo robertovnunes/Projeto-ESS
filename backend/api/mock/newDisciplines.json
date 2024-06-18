@@ -78,6 +78,15 @@
   "disciplineID": "IF943",
   "responsibleTeacher": "Carlos Eduardo Rodrigues",
   "horario": "23/05/2024 a 30/06/2024 10:00 AM MON WED FRI"
+},
+{
+  "nome": "Introdução à Inteligência Artificial",
+  "disciplineID": "IF401",
+  "responsibleTeacher": "Prof. Marcos Oliveira",
+  "horario": "15/09/2024 a 30/11/2024 09:00 AM TUE THU",
+  "description": "Este curso aborda os fundamentos e aplicações básicas de inteligência artificial.",
+  "disciplineCurso": "Engenharia de Computação",
+  "disciplinePeriodo": "4"
 }
 ]
   

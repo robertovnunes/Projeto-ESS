@@ -4,7 +4,7 @@ const { defineFeature, loadFeature } = require('jest-cucumber');
 const database = require('./databaseScramble');
 const request = supertest(index);
 
-const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/eventos/adicionarDisciplina.feature');
+const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/professor/adicionarDisciplina.feature');
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;

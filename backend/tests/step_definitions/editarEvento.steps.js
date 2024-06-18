@@ -5,7 +5,7 @@ const database = require('./databaseScramble');
 //const { response } = require('express');
 const request = supertest(index);
 
-const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/eventos/editarEvento.feature');
+const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/professor/editarEvento.feature');
 
 const eventExists = (eventsList, name, eventDateAndTime) => {
     let found = false;
