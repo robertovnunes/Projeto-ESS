@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-const port = 3001;
+const port = 3000;
 
 const server = express();
 
