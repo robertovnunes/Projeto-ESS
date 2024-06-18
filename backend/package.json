@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend com NodeJS para comunicação com banco de dados",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon src/app.js",
     "test": "jest"
   },
   "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
@@ -20,8 +20,6 @@
     "shortid": "^2.2.16",
     "supertest": "^7.0.0",
     "nodemon": "^3.1.0",
-    "shortid": "^2.2.16",
-    "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
