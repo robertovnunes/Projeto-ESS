@@ -1,15 +1,16 @@
-const app = require('./conf/server');
+const server = require('./conf/server.js');
 const consign = require('consign');
+const swaggerUi = require('swagger-ui-express');
+const specs = require('./docs/swagger.js');
 
-const docs = require('./docs/swagger');
+//server.use('/', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use('/', docs);
-
-app.get('/', (req, res) => {
+server.get('/', (req, res) => {
     res.send('Hello World');
 });
 
 consign({ cwd: 'api'})
     .include('routes')
-    .then('controllers')
-    .into(app);
+    .into(server);
+
+module.exports = server;

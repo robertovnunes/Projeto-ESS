@@ -35,7 +35,6 @@ const equipmentBatchExists = (equipmentList, nome, serialNumbers) => {
     let found = false;
     equipmentList.forEach(equipamento => {
         if (equipamento.nome === nome) {
-            console.log(equipamento);
            equipamento.sn.forEach(sn => {
                if (serialNumbers.includes(sn)) {
                    found = true;
@@ -117,9 +116,10 @@ defineFeature(feature, (test) => {
             expect(valor).toBe(fValor);
         });
     };
-    const andFieldEmpty = (and) => {
-        and(/^(.*) "(.*)"$/, async (equipamento, campo) => {
-            expect(campo).toBe('');
+    const andFieldEmpty = (and, field) => {
+        and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
+            expect(campo).toBe(field);
+            expect(valor).toBe(' ');
         });
     };
     const andReqIsBatch = (and) => {
@@ -179,6 +179,20 @@ defineFeature(feature, (test) => {
         andFieldMatch(and, 'quantidade', '5');
         andVerifySerialNumbers(and);
         thenSerialNumbersAreOnDatabase(then);
+    });
+    test('Adicionar equipamento em lote com numero de série vazio', ({ given, and, when, then }) => {
+        givenNotEquipmentListExist(given);
+        whenRequest(when);
+        andReqIsBatch(and);
+        andFieldMatch(and, 'nome', 'arduino uno');
+        andFieldMatch(and, 'descricao', 'Placa de prototipagem');
+        andFieldMatch(and, 'estado de conservacao', 'Bom');
+        andFieldMatch(and, 'data de aquisicao', '15/03/2023');
+        andFieldMatch(and, 'valor total estimado', 'R$ 1.200,00');
+        andFieldMatch(and, 'quantidade', '5');
+        andFieldEmpty(and, 'numeros de serie');
+        thenResponseError(then);
+        andMessageError(and, 'Numero de serie não pode ser vazio');
     });
       /*
     test('Adicionando equipamento duplicado', ({given, when, then, and}) => {
