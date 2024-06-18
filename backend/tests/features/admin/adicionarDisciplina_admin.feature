@@ -20,8 +20,6 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
 
     Scenario: Cadastro de uma Disciplina sem sucesso pelo Usuário Administrador (já está cadastrado no sistema)
         Given O usuário "secgrad" está logado como "admin"
-        And A disciplina "Engenharia de Software e Sistemas" de id "IF686" já está presente no sistema
-        When O usuário "secgrad" manda uma requisição POST para "/disciplines/signup"
         And A disciplina "Introdução à Inteligência Artificial" de id "IF401" não está no sistema
         When O usuário "secgrad" manda uma requisição POST para "/disciplines/signup"
         And preenche no corpo "nome" : "Introdução à Inteligência Artificial"
@@ -36,7 +34,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
 
     Scenario: Cadastro de uma Disciplina sem sucesso pelo Usuário Administrador(faltam informações obrigatórias - campo nome) 
         Given O usuário "secgrad" está logado como "admin"
-        When O usuário "admin" manda uma requisição POST para "/disciplines/signup"
+        When O usuário "secgrad" manda uma requisição POST para "/disciplines/signup"
         And preenche no corpo "nome" : ""
         And preenche no corpo "disciplineID" : "IF401"
         And preenche no corpo "responsibleTeacher" : "Marcos Oliveira"
@@ -49,7 +47,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
 
     Scenario: Cadastro de uma Disciplina sem sucesso pelo Usuário Administrador(faltam informações obrigatórias - campo disciplineID) 
         Given O usuário "secgrad" está logado como "admin"
-        When O usuário "admin" manda uma requisição POST para "/disciplines/signup"
+        When O usuário "secgrad" manda uma requisição POST para "/disciplines/signup"
         And preenche no corpo "nome" : "Introdução à Inteligência Artificial"
         And preenche no corpo "disciplineID" : ""
         And preenche no corpo "responsibleTeacher" : "Marcos Oliveira"
@@ -66,7 +64,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : "Introdução à Inteligência Artificial"
         And preenche no corpo "disciplineID" : "IF401"
         And preenche no corpo "responsibleTeacher" : "Marcos Oliveira"
-        And preenche no corpo "horario" : "15/09/2024 a 30/11/2024 09:00 TUE THU"
+        And preenche no corpo "horario" : "15/09/2024 a 30/11/2024 09:00"
         And preenche no corpo "description" : "Este curso aborda os fundamentos e aplicações básicas de inteligência artificial."
         And preenche no corpo "disciplineCurso" : "Engenharia da Computação"
         And preenche no corpo "disciplinePeriodo" : "4"

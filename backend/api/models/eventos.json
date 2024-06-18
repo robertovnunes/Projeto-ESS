@@ -9,15 +9,22 @@
   {
     "eventName": "Hackathon Pride <3",
     "id": 2,
-    "description": "Uma competição de programação que dura 24 horas para o público LGBT",
+    "description": "Um workshop sobre Machine Learning.",
     "responsibleTeacher": "Paulo Marcos",
-    "eventDateAndTime": "22-07-2024 04:00 PM"
+    "eventDateAndTime": "05-08-2024 05:00 PM"
   },
   {
-    "eventName": "Workshop Machine Learning",
+    "eventName": "Reunião Geral - RobôCIn",
     "id": 3,
-    "description": "Um workshop sobre Machine Learning.",
-    "responsibleTeacher": "Marcelo Vidal",
+    "description": "",
+    "responsibleTeacher": "Edna Barros",
     "eventDateAndTime": "05-08-2024 05:00 PM"
+  },
+  {
+    "eventName": "Monitoria de ESS",
+    "id": 4,
+    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
+    "responsibleTeacher": "Breno Miranda",
+    "eventDateAndTime": "10-07-2024 10:00 AM"
   }
 ]

@@ -46,6 +46,12 @@ const disciplinesSignUpJson = async(req, res) => {
             element.nome === nome && 
             element.disciplineID === disciplineID
         );
+        if(!isValidDateFormat(horario)){
+            console.log("Formato de data inválido");
+            return res.status(400).json({
+                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
+            });
+        }
         //If it does, error message
         if(disciplineExists){
             console.log("Discipline already exists");
@@ -53,12 +59,7 @@ const disciplinesSignUpJson = async(req, res) => {
                 error: "Discipline already exists"
             })
         };
-        if(!isValidDateFormat(horario)){
-            console.log("Formato de data inválido");
-            return res.status(400).json({
-                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
-            });
-        }
+    
         // Build new discipline object
         const newDiscipline = {
             nome,

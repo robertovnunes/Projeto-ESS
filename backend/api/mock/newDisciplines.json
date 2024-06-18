@@ -82,10 +82,10 @@
 {
   "nome": "Introdução à Inteligência Artificial",
   "disciplineID": "IF401",
-  "responsibleTeacher": "Prof. Marcos Oliveira",
+  "responsibleTeacher": "Marcos Oliveira",
   "horario": "15/09/2024 a 30/11/2024 09:00 AM TUE THU",
   "description": "Este curso aborda os fundamentos e aplicações básicas de inteligência artificial.",
-  "disciplineCurso": "Engenharia de Computação",
+  "disciplineCurso": "Engenharia da Computação",
   "disciplinePeriodo": "4"
 }
 ]
