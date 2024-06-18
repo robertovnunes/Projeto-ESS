@@ -19,7 +19,8 @@ class EquipamentosController {
      async getAllEquipments(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments.length === 0){
+            console.log(equipments);
+            if(equipments === 'Nenhum equipamento cadastrado'){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             }
@@ -109,7 +110,7 @@ class EquipamentosController {
             } else {
                 if(identificador.type === 'patrimonio') {
                     const equipmentExist = await this.equipamentosService.getEquipmentByPatrimonio(identificador.value);
-                    if(equipmentExist !== undefined) {
+                    if(equipmentExist !== 'Equipamento nao encontrado') {
                         console.log(`POST /equipamentos [400] BAD REQUEST`);
                         res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
                         return;
@@ -121,7 +122,7 @@ class EquipamentosController {
                     }
                 } else if(identificador.type === 'numero_serie') {
                     const equipmentExist = await this.equipamentosService.getEquipmentBySerie(identificador.value);
-                    if(equipmentExist !== undefined) {
+                    if(equipmentExist !== 'Equipamento nao encontrado') {
                         console.log(`POST /equipamentos [400] BAD REQUEST`);
                         res.status(400).send({message: 'Já existe um equipamento com este numero de série'});
                         return;

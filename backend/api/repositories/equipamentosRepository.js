@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const shortid = require('shortid');
+const equipamento = require('../models/equipamentoSNModel');
 
 function isJsonEmpty(obj) {
     return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -22,19 +23,26 @@ class EquipamentosRepository {
     }
 
     async getAllEquipments() {
-        return this._readFile();
+        const db = await this._readFile();
+        return db === undefined ? 'Nenhum equipamento cadastrado' : db;
     }
     async getEquipmentById(id) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento.id === id) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento.id === id);
+        let equipamento = db.find(equipamento => equipamento.id === id);
+        console.log(equipamento);
+        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
     }
     async getEquipmentByPatrimonio(value) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento['patrimonio'] === value) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento['patrimonio'] === value);
+        let equipamento = db.find(equipamento => equipamento.patrimonio === value);
+        console.log(equipamento);
+        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
     }
     async getEquipmentBySerie(value) {
         const db = await this.getAllEquipments();
-        return db.find(equipamento => equipamento['numero_serie'] === value) === undefined ? 'Equipamento nao encontrado' : db.find(equipamento => equipamento['numero_serie'] === value);
+        let equipamento = db.find(equipamento => equipamento.numero_serie === value);
+        console.log(equipamento);
+        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
     }
     async createEquipmentPatrimonio(newEquipamento) {
         let db = await this.getAllEquipments();

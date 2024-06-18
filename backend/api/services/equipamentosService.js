@@ -7,6 +7,11 @@ class EquipamentosService {
 
     getAllEquipments() {
         let equipamentos = this.equipamentoRepository.getAllEquipments();
+        if(equipamentos === 'Nenhum equipamento cadastrado'){
+            return 'Nenhum equipamento cadastrado';
+        } else {
+            return equipamentos;
+        }
     }
 
     getEquipmentById(id) {
@@ -29,7 +34,11 @@ class EquipamentosService {
 
     getEquipmentBySerie(value) {
         let equipamento = this.equipamentoRepository.getEquipmentBySerie(value);
-        return equipamento;   
+        if(equipamento === undefined){
+            return 'Equipamento nao encontrado';
+        } else{
+            return equipamento;
+        }   
     }
 
     createEquipmentPatrimonio(newEquipamento) {

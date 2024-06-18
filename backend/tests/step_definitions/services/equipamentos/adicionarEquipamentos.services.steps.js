@@ -52,6 +52,7 @@ defineFeature(feature, (test) => {
             deleteEquipment: jest.fn()
         };
         service = new equipamentoService(mockEquipamentos);
+        console.log(service);
     });
 
     afterEach(() => {
