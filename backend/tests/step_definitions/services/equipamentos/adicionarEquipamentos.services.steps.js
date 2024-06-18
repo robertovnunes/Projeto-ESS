@@ -39,7 +39,6 @@ defineFeature(feature, (test) => {
     request.method = '/POST';
     let mockEquipamentos;
     let service;
-    let controller;
 
     beforeEach(() => {
         mockEquipamentos = {
@@ -52,7 +51,6 @@ defineFeature(feature, (test) => {
             deleteEquipment: jest.fn()
         };
         service = new equipamentoService(mockEquipamentos);
-        console.log(service);
     });
 
     afterEach(() => {
