@@ -9,6 +9,8 @@ class equipamento {
         this.data_aquisicao = data_aquisicao;
         this.valor_estimado = valor_estimado;
         this.numero_serie = numero_serie;
+        this.reservas = [];
+        this.manutencao = [];
     }
 }
 
