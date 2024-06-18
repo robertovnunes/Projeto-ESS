@@ -10,11 +10,11 @@ equipamentosController = new EquipamentosController(equipamentosService);
 
 
 module.exports = app => {
-    app.use('/equipamentos/reservas', router);
-    router.get('/', equipamentosController.getAllEquipments);
-    router.get('/id/:id', equipamentosController.getEquipmentById);
-    router.get('/sn/:numero_serie', equipamentosController.getEquipmentBySN);
-    router.post('/', equipamentosController.createEquipment);
-    router.patch('/:id', equipamentosController.patchEquipment);
-    router.delete('/:id', equipamentosController.deleteEquipment);
+    app.use('/equipamentos', router);
+    router.get('/reservas', equipamentosController.getAllEquipments);
+    router.get('/id/:id/reservas', equipamentosController.getEquipmentById);
+    router.post('/reservas', equipamentosController.createEquipment);
+    router.patch('/reservas/:id', equipamentosController.patchEquipment);
+    router.delete('/reservas/:id', equipamentosController.deleteEquipment);
 }
+ 

@@ -24,26 +24,34 @@ class EquipamentosRepository {
 
     async getAllEquipments() {
         const db = await this._readFile();
-        console.log(db);
-        return db === undefined ? 'Nenhum equipamento cadastrado' : db;
+        return db.length === 0  ? 'Nenhum equipamento cadastrado' : db;
     }
     async getEquipmentById(id) {
         const db = await this.getAllEquipments();
-        let equipamento = db.find(equipamento => equipamento.id === id);
-        console.log(equipamento);
-        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.id === id)
+            return equipamento;
+        }
     }
     async getEquipmentByPatrimonio(value) {
         const db = await this.getAllEquipments();
-        let equipamento = db.find(equipamento => equipamento.patrimonio === value);
-        console.log(equipamento);
-        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.patrimonio === value)
+            return equipamento;
+        }
     }
     async getEquipmentBySerie(value) {
         const db = await this.getAllEquipments();
-        let equipamento = db.find(equipamento => equipamento.numero_serie === value);
-        console.log(equipamento);
-        return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.numero_serie === value)
+            return equipamento;
+        }
     }
     async createEquipmentPatrimonio(newEquipamento) {
         let db = await this.getAllEquipments();

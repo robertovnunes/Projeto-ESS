@@ -7,38 +7,22 @@ class EquipamentosService {
 
     getAllEquipments() {
         let equipamentos = this.equipamentoRepository.getAllEquipments();
-        if(equipamentos === 'Nenhum equipamento cadastrado'){
-            return 'Nenhum equipamento cadastrado';
-        } else {
-            return equipamentos;
-        }
+        return equipamentos
     }
 
     getEquipmentById(id) {
         let equipamento = this.equipamentoRepository.getEquipmentById(id);
-        if(equipamento === undefined){
-            return 'Equipamento nao encontrado';
-        } else {
-            return equipamento;
-        }
+        return equipamento;
     }
 
     getEquipmentByPatrimonio(value) {
         let equipamento = this.equipamentoRepository.getEquipmentByPatrimonio(value);
-        if(equipamento === undefined){
-            return 'Equipamento nao encontrado';
-        } else{
-            return equipamento;
-        }
+        return equipamento;
     }
 
     getEquipmentBySerie(value) {
         let equipamento = this.equipamentoRepository.getEquipmentBySerie(value);
-        if(equipamento === undefined){
-            return 'Equipamento nao encontrado';
-        } else{
-            return equipamento;
-        }   
+        return equipamento;
     }
 
     createEquipmentPatrimonio(newEquipamento) {
