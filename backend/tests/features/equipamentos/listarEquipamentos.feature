@@ -5,28 +5,31 @@ Feature: Buscar equipamentos
 
   Scenario: Listar todos os equipamentos
     Given que exitem equipamentos cadastrados no sistema
-    When eu recebo uma requisição "/GET"
+    When eu recebo uma requisição "/GET" do usuario "joao" logado como "admin"
     Then eu retorno uma lista de equipamentos disponíveis
 
-  Scenario: Listar todos os equipamentos de uma sala
-    Given que exitem equipamentos cadastrados na sala "E428"
-    When eu recebo uma requisição "/GET/E428"
-    Then eu retorno uma lista de equipamentos disponíveis
+  Scenario: buscar equipamento específico por id
+    Given que exite o equipamento com "id" "123456" e "patrimonio" "1098765" cadastrado
+    When eu recebo uma requisição "/GET/123456" do usuario "joao" logado como "admin"
+    Then eu envio uma resposta de "sucesso" com codigo "200"
+    And json com os dados do equipamento "Projetor epson"
 
-  Scenario: buscar equipamento específico
-    Given que exite o equipamento com id "123456" cadastrado na sala "E428"
-    When eu recebo uma requisição "/GET/E428/123456"
+  Scenario: buscar equipamento específico por patrimonio
+    Given que exite o equipamento com "id" "123456" e "numero_serie" "1098765" cadastrado
+    When eu recebo uma requisição "/GET/123456" do usuario "joao" logado como "admin"
+    Then eu envio uma resposta de "sucesso" com codigo "200"
+    And json com os dados do equipamento "Projetor epson"
+
+  Scenario: buscar equipamento específico por numero de serie
+    Given que exite o equipamento com "id" "123456" e "numero_serie" "1098765" cadastrado
+    When eu recebo uma requisição "/GET/123456" do usuario "joao" logado como "admin"
     Then eu envio uma resposta de "sucesso" com codigo "200"
     And json com os dados do equipamento "Projetor epson"
 
   Scenario: Buscar equipamento inexistente
-    Given que não existe o equipamento com id "654321" cadastrado na sala "E428"
-    When eu recebo uma requisição "/GET/E428/654321"
+    Given que não existe o equipamento com id "654321"
+    When eu recebo uma requisição "/GET/654321" do usuario "joao" logado como "admin"
     Then eu envio uma resposta de "erro" com codigo "404"
     And json com a mensagem "equipamento não encontrado"
 
-  Scenario: Listar equipamentos de uma sala sem equipamentos
-    Given que não existem equipamentos cadastrados na sala "E428"
-    When eu recebo uma requisição "/GET/E428"
-    Then eu retorno uma lista vazia
 

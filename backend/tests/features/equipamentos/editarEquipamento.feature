@@ -2,9 +2,13 @@ Feature: As a usuario
   I want to editar um equipamento no banco de dados
   So that eu posso modificar todos os recusros de uma sala
 
-  Scenario: Editar um equipamento
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+  Scenario Outline: Editar estado de conservação de um equipamento
+    Given existe o equipamento <nome> com "patrimonio" <patrimonio>
+    And descricao <descricao>
+    And "estado de conservacao" <estado de conservacao>
+    And "data de aquisicao" <data de aquisicao>
+    And "valor estimado" <valor estimado>
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "reformado"
@@ -14,10 +18,13 @@ Feature: As a usuario
     Then o equipamento "Ar condicionado midea" com patrimonio "1098642" é modificado no banco de dados
     And eu envio uma resposta de "sucesso" com codigo "200"
     And json atualizado do equipamentos "Ar condicionado midea" com patrimonio "1098642" é retornado
+    Examples:
+      |nome  |descricao|estado de conservacao|data de aquisicao|valor estimado| patrimonio|
+      |Ar condicionado midea|Ar condicionado de 12.000 btus|novo|15/03/2023|R$ 1.200,00|1098642|
 
   Scenario: Editar um equipamento com nome vazio
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" ""
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "reformado"
@@ -30,7 +37,7 @@ Feature: As a usuario
 
   Scenario: Editar um equipamento com patrimonio vazio
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "reformado"
@@ -43,7 +50,7 @@ Feature: As a usuario
 
   Scenario: Editar um equipamento com descricao vazia
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" ""
     And "estado de conservação" "reformado"
@@ -56,7 +63,7 @@ Feature: As a usuario
 
   Scenario: Editar um equipamento com estado de conservação vazio
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" ""
@@ -69,7 +76,7 @@ Feature: As a usuario
 
   Scenario: Editar um equipamento com data de aquisição vazia
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "reformado"
@@ -82,7 +89,7 @@ Feature: As a usuario
 
   Scenario: Editar um equipamento com valor estimado vazio
     Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH"
+    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
     And "nome" "Ar condicionado midea"
     And "descricao" "Ar condicionado de 12.000 btus"
     And "estado de conservação" "reformado"
