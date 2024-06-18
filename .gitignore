@@ -3,5 +3,5 @@
 /.idea/
 /backend/coverage/
 /node_modules/
-/qodana.yaml
+/backend/qodana.yaml
 /backend/conf/.env
