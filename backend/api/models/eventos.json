@@ -1,30 +1,22 @@
-[
+[  {
+  "eventName": "Semana dos Calouros",
+  "id": 1,
+  "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
+  "responsibleTeacher": "Sérgio Soares",
+  "eventDateAndTime": "2024-07-20 04:00 PM"
+},
   {
     "eventName": "Hackton C++",
-    "id": 1,
+    "id": 2,
     "description": "Uma competição de programação que dura 24 horas, usando a linguagem C++.",
     "responsibleTeacher": "Ricardo Martins",
     "eventDateAndTime": "21-07-2024 03:00 PM"
   },
   {
     "eventName": "Hackathon Pride <3",
-    "id": 2,
+    "id": 3,
     "description": "Um workshop sobre Machine Learning.",
     "responsibleTeacher": "Paulo Marcos",
     "eventDateAndTime": "05-08-2024 05:00 PM"
-  },
-  {
-    "eventName": "Reunião Geral - RobôCIn",
-    "id": 3,
-    "description": "",
-    "responsibleTeacher": "Edna Barros",
-    "eventDateAndTime": "05-08-2024 05:00 PM"
-  },
-  {
-    "eventName": "Monitoria de ESS",
-    "id": 4,
-    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
-    "responsibleTeacher": "Breno Miranda",
-    "eventDateAndTime": "10-07-2024 10:00 AM"
   }
 ]
