@@ -4,7 +4,7 @@
   "description": "Backend com NodeJS para comunicação com banco de dados",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
   "license": "ISC",

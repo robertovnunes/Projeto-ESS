@@ -1,8 +1,8 @@
 Feature: Remoção de uma disciplina ou evento
     Scenario: Remoção de uma disciplina sem sucesso pelo Professor 
         Given O usuário "bafm" está logado como "professor"
-        And A disciplina "Introdução a Computação" de id "IF323" não está no sistema
-        When O usuário "bafm" manda uma requisição DELETE para "/disciplines/IF323"
+        And A disciplina "Introdução a Computação" de id "IF3234" não está no sistema
+        When O usuário "bafm" manda uma requisição DELETE para "/disciplines/IF3234"
         Then O sistema retorna "404"
         And A mensagem "Discipline Not Found" é exibida
 
@@ -16,8 +16,8 @@ Feature: Remoção de uma disciplina ou evento
 
     Scenario: Remoção de um evento sem sucesso pelo Professor 
         Given O usuário "bafm" está logado como "professor"
-        And O evento "Prova de Estatística" de id "5" não está no sistema
-        When O usuário "bafm" manda uma requisição DELETE para "/events/5"
+        And O evento "Prova de Estatística" de id "15" não está no sistema
+        When O usuário "bafm" manda uma requisição DELETE para "/events/15"
         Then O sistema retorna "404"
         And A mensagem "Event Not Found" é exibida
 

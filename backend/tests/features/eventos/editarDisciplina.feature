@@ -7,7 +7,7 @@ Scenario: Edição de todas as funcionalidades de uma Disciplina com sucesso pel
     And preenche no corpo "nome" : "Matemática Discreta para Computação"
     And preenche no corpo "disciplineID" : "MD102"
     And preenche no corpo "responsibleTeacher" : "Anjolina Grisi"
-    And preenche no corpo "horario" : "23/05/2024 a 31/12/2024 08:00 MON WED"
+    And preenche no corpo "horario" : "23/05/2024 a 31/12/2024 08:00 AM MON WED"
     And preenche no corpo "description" : "Estudo dos fundamentos matemáticos discretos para a computação."
     And preenche no corpo "disciplineCurso" : "Ciências da Computação"
     And preenche no corpo "disciplinePeriodo" : "4"
@@ -33,6 +33,14 @@ Scenario: Edição de uma funcionalidade de uma Disciplina com sucesso pelo Prof
     Then O sistema retorna "200"
     And A mensagem "Salvo com Sucesso!" é exibida
     And As informações sobre a disciplina "Sistemas Operacionais" de id "IF943" foram salvas no banco de dados
+
+Scenario: Edição de uma funcionalidade de uma Disciplina sem sucesso pelo Professor -- campo horario
+    Given O usuário "bafm" está logado como "professor"
+    And A disciplina "Sistemas Operacionais" de id "IF943" já está presente no sistema
+    When O usuário "bafm" manda uma requisição PUT para "/disciplines/IF943"
+    And preenche no corpo "horario" : "23/05/2024 a 30/06/2024 22:00"
+    Then O sistema retorna "400"
+    And A mensagem "Formato de data inválido" é exibida
 
 # Scenario: Edição de algumas funcionalidades de um Evento com sucesso pelo Professor - eventName e responsibleTeacher
 #     Given O usuário "bafm" está logado como "professor"

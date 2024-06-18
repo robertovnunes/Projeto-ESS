@@ -95,7 +95,7 @@ So that Eu possa usar essa Disciplina e/ou Assunto para reservar uma sala
         And preenche no corpo "nome" : ""
         And preenche no corpo "disciplineID" : "IF686"
         And preenche no corpo "responsibleTeacher" : "Breno Miranda"
-        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU
+        And preenche no corpo "horario" : "20/05/2024 a 28/05/2024 01:00 PM TUE THU"
         Then O sistema retorna "400 Bad Request"
         And A mensagem "Informações obrigatórias não preenchidas" é exibida
 

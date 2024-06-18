@@ -152,7 +152,35 @@ defineFeature(feature, test => {
             expect(infoSaved(database.readNewDisciplines(),name,id,newDiscipline)).toBe(true);
         });
     });
+    test('Edição de uma funcionalidade de uma Disciplina sem sucesso pelo Professor -- campo horario',({ given, when, then,and }) => {
+        let disciplines = database.readOldDisciplines();
+        let newDisciplines = database.readNewDisciplines();
+        let newDiscipline = newDisciplines[8];
+        let wrongString = "23/05/2024 a 30/06/2024 22:00"
+        given(/^O usuário "(.*)" está logado como "(.*)"$/, async(userName, userType) => {
+            expect(userName).toBe('bafm');
+            expect(userType).toBe('professor');
+        });
+        and(/^A disciplina "(.*)" de id "(.*)" já está presente no sistema$/, async(name,disciplinesID)=> {
+            expect(disciplineExists(disciplines,name,disciplinesID)).toBe(true);
+        });
+        when(/^O usuário "(.*)" manda uma requisição PUT para "(.*)"$/, async(userName, url) => {
+            expect(userName).toBe('bafm');
+            response = await request.put(url).send({horario:wrongString});
+        });
+        and(/^preenche no corpo "(.*)" : "(.*)"$/, async(field,value)=> {
+            expect(field).toBe('horario');
+            expect(wrongString).toBe(value);
+        });
+        then(/^O sistema retorna "(.*)"$/, async(statusCode) => {
+           expect(response.status).toBe(parseInt(statusCode,10));
+        });
+        and(/^A mensagem "(.*)" é exibida$/, async(message) => {
+            const messageFound = consoleOutput.some(output => output.includes(message));
+            expect(messageFound).toBe(true);
+        });
 
+    });
     // test('Edição de algumas funcionalidades de um Evento com sucesso pelo Professor - eventName e responsibleTeacher',({ given, when, then,and }) => {
     //     let eventos = database.readOldEvents();
     //     let newEventos = database.readNewEvents();

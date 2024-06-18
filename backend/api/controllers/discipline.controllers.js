@@ -1,6 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const dateRegex = /^\d{2}\/\d{2}\/\d{4} a \d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM)( (MON|TUE|WED|THU|FRI|SAT|SUN)){0,3}$/;
 
+
+const isValidDateFormat = (dateStr) => {
+    return dateRegex.test(dateStr);
+};
 const getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
@@ -48,6 +53,12 @@ const disciplinesSignUpJson = async(req, res) => {
                 error: "Discipline already exists"
             })
         };
+        if(!isValidDateFormat(horario)){
+            console.log("Formato de data inválido");
+            return res.status(400).json({
+                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
+            });
+        }
         // Build new discipline object
         const newDiscipline = {
             nome,
@@ -110,7 +121,12 @@ const updateDisciplineJson = async (req, res) => {
             console.log("Discipline Not Found");
             return res.status(404).json({ error: "Discipline Not Found" });
         }
-
+        if(!isValidDateFormat(horario) && horario !== undefined){
+            console.log("Formato de data inválido");
+            return res.status(400).json({
+                error: "Formato de data inválido. Use o formato DD-MM-AAAA hh:mm AM/PM"
+            });
+        }
         data[disciplineIndex] = {
             ...data[disciplineIndex],
             nome: nome || data[disciplineIndex].nome,
