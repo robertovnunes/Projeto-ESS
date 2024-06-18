@@ -9,7 +9,7 @@ server.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-consign({ cwd: 'api'})
+consign({ cwd: 'src/api'})
     .include('routes')
     .into(server);
 
