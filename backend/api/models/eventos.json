@@ -5,18 +5,26 @@
   "responsibleTeacher": "Sérgio Soares",
   "eventDateAndTime": "2024-07-20 04:00 PM"
 },
+{
+  "eventName": "Hackathon",
+  "id": 2,
+  "description": "Uma competição de programação que dura 24 horas.",
+  "responsibleTeacher": "Sérgio Soares",
+  "eventDateAndTime": "21-07-2024 04:00 PM"
+},
+{
+  "eventName": "Hackathon Pride",
+  "id": 3,
+  "description": "Uma competição de programação que dura 24 horas para o público LGBT",
+  "responsibleTeacher": "Sérgio Soares",
+  "eventDateAndTime": "22-07-2024 04:00 PM"
+},
+
   {
-    "eventName": "Hackton C++",
-    "id": 2,
-    "description": "Uma competição de programação que dura 24 horas, usando a linguagem C++.",
-    "responsibleTeacher": "Ricardo Martins",
-    "eventDateAndTime": "21-07-2024 03:00 PM"
-  },
-  {
-    "eventName": "Hackathon Pride <3",
-    "id": 3,
+    "eventName": "Workshop Machine Learning",
+    "id": 4,
     "description": "Um workshop sobre Machine Learning.",
-    "responsibleTeacher": "Paulo Marcos",
-    "eventDateAndTime": "05-08-2024 05:00 PM"
+    "responsibleTeacher": "Marcelo Vidal",
+    "eventDateAndTime": "05-08-2024 04:00 PM"
   }
 ]
