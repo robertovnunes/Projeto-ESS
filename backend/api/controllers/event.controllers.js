@@ -124,7 +124,7 @@ const updateEventJson = async (req, res) => {
             eventDateAndTime: eventDateAndTime || data[eventIndex].eventDateAndTime
         };
 
-        console.log("Evento atualizado com sucesso");
+        console.log("Salvo com Sucesso!");
         res.status(200).json(data[eventIndex]);
         fs.writeFileSync(eventsPath, JSON.stringify(data, null, 2));
     } catch (error) {
