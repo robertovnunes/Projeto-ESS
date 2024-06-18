@@ -19,19 +19,5 @@
     "description": "Um workshop sobre Machine Learning.",
     "responsibleTeacher": "Marcelo Vidal",
     "eventDateAndTime": "05-08-2024 05:00 PM"
-  },
-  {
-    "eventName": "Reunião Geral - RobôCIn",
-    "id": 4,
-    "description": "",
-    "responsibleTeacher": "Edna Barros",
-    "eventDateAndTime": "20-05-2024 05:00 PM"
-  },
-  {
-    "eventName": "Monitoria de ESS",
-    "id": 5,
-    "description": "Monitoria da disciplina Engenharia de Software e Sistemas",
-    "responsibleTeacher": "Breno Miranda",
-    "eventDateAndTime": "10-07-2024 10:00 AM"
   }
 ]

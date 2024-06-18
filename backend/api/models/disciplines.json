@@ -1,12 +1,21 @@
-[
+[  
   {
-    "nome": "Matemática Discreta para Computação",
-    "disciplineID": "MD102",
-    "responsibleTeacher": "Anjolina Grisi",
-    "horario": "23/05/2024 a 31/12/2024 08:00 AM MON WED",
-    "description": "Estudo dos fundamentos matemáticos discretos para a computação.",
-    "disciplineCurso": "Ciências da Computação",
-    "disciplinePeriodo": "4"
+    "nome": "Introdução a Programação",
+    "disciplineID": "IF232",
+    "responsibleTeacher": "Alexandre Cabral Mota",
+    "horario": "20/05/2024 a 28/05/2024 08:00 AM MON WED FRI",
+    "description": "",
+    "disciplineCurso": "Engenharia da Computação",
+    "disciplinePeriodo": "1"
+  },
+  {
+    "nome": "Matemática Discreta",
+    "disciplineID": "MD101",
+    "responsibleTeacher": "Patrícia Alves Dias",
+    "horario": "15/05/2024 a 30/05/2024 09:30 AM TUE THU",
+    "description": "Estudo dos fundamentos matemáticos para a computação.",
+    "disciplineCurso": "Engenharia da Computação",
+    "disciplinePeriodo": "1"
   },
   {
     "nome": "Algoritmos e Estruturas de Dados",
@@ -22,50 +31,5 @@
     "disciplineID": "IF943",
     "responsibleTeacher": "Carlos Eduardo Rodrigues",
     "horario": "23/05/2024 a 30/06/2024 10:00 AM MON WED FRI"
-  },
-  {
-    "nome": "Engenharia de Software e Sistemas",
-    "disciplineID": "IF686",
-    "responsibleTeacher": "Breno Miranda",
-    "horario": "20/05/2024 a 28/05/2024 01:00 PM TUE THU",
-    "description": "",
-    "disciplineCurso": "",
-    "disciplinePeriodo": ""
-  },
-  {
-    "nome": "Paradigmas e Linguagens Computacionais",
-    "disciplineID": "IF690",
-    "responsibleTeacher": "Andre Luis",
-    "horario": "20/05/2024 a 28/05/2024 08:00 AM MON WED",
-    "description": "",
-    "disciplineCurso": "Engenharia da Computação",
-    "disciplinePeriodo": ""
-  },
-  {
-    "nome": "História e Futuro da Computação",
-    "disciplineID": "IF691",
-    "responsibleTeacher": "Germano Crispim",
-    "horario": "20/05/2024 a 28/05/2024 10:00 AM TUE",
-    "description": "Materia com seminário",
-    "disciplineCurso": "",
-    "disciplinePeriodo": ""
-  },
-  {
-    "nome": "Sistemas Digitais",
-    "disciplineID": "IF640",
-    "responsibleTeacher": "Abel",
-    "horario": "21/08/2024 a 31/12/2024 10:00 AM MON FRI",
-    "description": "",
-    "disciplineCurso": "",
-    "disciplinePeriodo": "4"
-  },
-  {
-    "nome": "Introdução a Computação",
-    "disciplineID": "IF323",
-    "responsibleTeacher": "Kleber Vieira",
-    "horario": "21/08/2024 a 31/12/2024 01:00 PM MON",
-    "description": "IC",
-    "disciplineCurso": "Engenharia da Computação",
-    "disciplinePeriodo": "1"
   }
 ]
