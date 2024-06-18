@@ -10,7 +10,7 @@ const getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
         const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/disciplines.json"),'utf-8'));
-        const discipline = data.find(element => element.id === id);
+        const discipline = data.find(element => element.disciplineID === id);
         if(!discipline){
             console.log("Discipline not found");
             return res.status(404).json({
@@ -18,7 +18,12 @@ const getDisciplinebyID = (req,res) => {
             })
         }
         console.log("Discipline found");
-        return res.status(200).json(discipline);
+        let length = discipline.salas.length;
+        if(length === 0){
+            console.log("Discipline has no salas");
+        return res.status(400).json({error: "Discipline has no salas"});
+        }
+        return res.status(200).json(discipline.salas);
     }catch(error){
         console.log("Error in getDisciplineById",error.message);
         res.status(500).json({
@@ -59,12 +64,13 @@ const disciplinesSignUpJson = async(req, res) => {
                 error: "Discipline already exists"
             })
         };
-    
+        let salas = [];
         // Build new discipline object
         const newDiscipline = {
             nome,
             disciplineID,
             responsibleTeacher,
+            salas,
             horario,
             description,
             disciplineCurso,
