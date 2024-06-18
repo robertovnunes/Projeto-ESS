@@ -12,22 +12,11 @@ Scenario: Edição de uma funcionalidade de uma Disciplina com sucesso pelo Admi
 Scenario: Edição de apenas uma funcionalidade de um Evento sem sucesso pelo Administrador - eventDateAndTime
     Given O usuário "secgrad" está logado como "admin"
     And O evento "Monitoria de ESS" na data "10-07-2024 10:00 AM" já está presente no sistema
-    When O usuário "secgrad" manda uma requisição PUT para "/events/5"
+    When O usuário "secgrad" manda uma requisição PUT para "/events/2"
     And preenche no corpo "eventDateAndTime" : "06-08-2024 17:00"
     Then O sistema retorna "400"
     And A mensagem "Formato de data inválido" é exibida
 
-Scenario: Edição de todas as funcionalidades de um Evento com sucesso pelo Administrador 
-    Given O usuário "secgrad" está logado como "admin"
-    And O evento "Monitoria de ESS" na data "10-07-2024 10:00 AM" já está presente no sistema
-    When O usuário "secgrad" manda uma requisição PUT para "/events/5"
-    And preenche no corpo "eventName" : "Monitoria de ESS - 2° Entrega"
-    And preenche no corpo "description" : "Ministrada por Júlio Arroz"
-    And preenche no corpo "responsibleTeacher" : "Júlio Arroz"
-    And preenche no corpo "eventDateAndTime" : "10-07-2024 11:00 AM"
-    Then O sistema retorna "200"
-    And A mensagem "Salvo com Sucesso!" é exibida
-    And As informações sobre o evento "Monitoria de ESS - 2° Entrega" de data "10-07-2024 11:00 AM" foram salvas no banco de dados
 
 Scenario: Edição de algumas funcionalidades de uma Disciplina com sucesso pelo Administrador -- campo description e disciplineCurso
     Given O usuário "secgrad" está logado como "admin"

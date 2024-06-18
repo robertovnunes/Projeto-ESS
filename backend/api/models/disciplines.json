@@ -30,5 +30,17 @@
     "disciplineID": "IF943",
     "responsibleTeacher": "Carlos Eduardo Rodrigues",
     "horario": "23/05/2024 a 30/06/2024 10:00 AM MON WED FRI"
+  },
+  {
+    "nome": "Redes de Computadores",
+    "disciplineID": "IF944",
+    "responsibleTeacher": "Carlos Eduardo Mota",
+    "horario": "23/05/2024 a 30/06/2024 10:00 PM MON WED FRI"
+  },
+  {
+    "nome": "Banco de Dados",
+    "disciplineID": "IF945",
+    "responsibleTeacher": "Carlos Eduardo Rodrigues",
+    "horario": "24/05/2024 a 31/06/2024 09:00 AM MON WED FRI"
   }
 ]
