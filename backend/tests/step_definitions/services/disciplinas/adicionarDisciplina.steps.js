@@ -1,11 +1,12 @@
 const supertest = require('supertest');
+const path = require('path');
 const server = require('../../../../../backend/app.js');
 const { defineFeature, loadFeature } = require('jest-cucumber');
 const database = require('../../databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
-
-const feature = loadFeature('../../../features/professor/adicionarDisciplina.feature');
+let featurePath = path.resolve('./tests/features/professor/adicionarDisciplina.feature');
+const feature = loadFeature(featurePath);
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;

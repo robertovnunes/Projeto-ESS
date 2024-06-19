@@ -5,7 +5,7 @@ const database = require('../../databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
 
-const feature = loadFeature('../../../features/professor/adicionarEvento.feature');
+const feature = loadFeature('./tests/features/professor/adicionarEvento.feature');
 
 const eventExists = (eventsList, name, dateAndTime) => {
     let found = false;
