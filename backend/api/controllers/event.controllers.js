@@ -35,7 +35,7 @@ const eventSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),'utf-8'));
         const eventExists = data.some(element => 
             element.eventName === eventName && 
             element.eventDateAndTime === eventDateAndTime 
@@ -77,7 +77,7 @@ const eventSignUpJson = async(req, res) => {
             res.status(201).json(newEvent);
 
         }
-        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),JSON.stringify(data,null,2));
        
 
         
@@ -91,7 +91,7 @@ const eventSignUpJson = async(req, res) => {
 
 }
 const deleteEventJson = (req, res) => {
-    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json");
+    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
     try {
         const { id } = req.params;
         const idConverted = Number(id);
@@ -115,7 +115,7 @@ const deleteEventJson = (req, res) => {
     }
 };
 const updateEventJson = async (req, res) => {
-    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/api/models/eventos.json");
+    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
     try {
         const { id } = req.params;
         const idConverted = Number(id);
