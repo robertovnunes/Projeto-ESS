@@ -6,7 +6,7 @@ const dateRegex = /^\d{2}\/\d{2}\/\d{4} a \d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
 };
-const getDisciplinebyID = (req,res) => {
+exports.getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
         const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/disciplines.json"),'utf-8'));

@@ -4,8 +4,8 @@ const disciplineRoutes = require('/home/mariana/Documents/Projeto-ESS/backend/ap
 
 module.exports = app => {
     app.use('/disciplines', router);
-    router.get('/:id', disciplineRoutes.getDisciplinebyID);
-    router.post('/signup', disciplineRoutes.disciplinesSignUpJson);
-    router.delete('/:id', disciplineRoutes.deleteDisciplineJson);
-    router.put('/:id', disciplineRoutes.updateDisciplineJson);
+    router.get('/disciplines/:id', disciplineRoutes.getDisciplinebyID);
+    router.post('/disciplines/signup', disciplineRoutes.disciplinesSignUpJson);
+    router.delete('/disciplines/:id', disciplineRoutes.deleteDisciplineJson);
+    router.put('/disciplines/:id', disciplineRoutes.updateDisciplineJson);
 }
