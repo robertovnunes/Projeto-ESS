@@ -1,14 +1,11 @@
-const express = require('express');
-const { getAllEventsJson, eventSignUpJson,deleteEventJson,updateEventJson } = require('../controllers/event.controllers.js');
-const router = express.Router();
+const router = require('express').Router();
 
+const eventRoutes = require('/home/mariana/Documents/Projeto-ESS/backend/api/controllers/event.controllers.js');
 
-router.get('/', getAllEventsJson);
-
-router.post('/signup', eventSignUpJson);
-
-router.put('/:id', updateEventJson);
-
-router.delete('/:id', deleteEventJson);
-
-module.exports = router;
+module.exports = app => {
+    app.use('/events', router);
+    router.get('/:id', eventRoutes.getAllEventsJson);
+    router.post('/signup', eventRoutes.eventSignUpJson);
+    router.delete('/:id', eventRoutes.deleteEventJson);
+    router.put('/:id', eventRoutes.updateEventJson);
+}

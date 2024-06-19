@@ -33,7 +33,7 @@ const getDisciplinebyID = (req,res) => {
 }
 
 
-const disciplinesSignUpJson = async(req, res) => {
+exports.disciplinesSignUpJson = async(req, res) => {
     try{
         const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
         // Checks if any of the required fields are missing
@@ -97,7 +97,7 @@ const disciplinesSignUpJson = async(req, res) => {
 
 
 }
-const deleteDisciplineJson = (req, res) => {
+exports.deleteDisciplineJson = (req, res) => {
     const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/disciplines.json");
     try {
         const { id } = req.params;
@@ -116,7 +116,7 @@ const deleteDisciplineJson = (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const updateDisciplineJson = async (req, res) => {
+exports.updateDisciplineJson = async (req, res) => {
     const disciplinesPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/disciplines.json");
     try {
         const { id } = req.params;
@@ -154,4 +154,3 @@ const updateDisciplineJson = async (req, res) => {
     }
 };
 
-module.exports = {getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson,updateDisciplineJson};

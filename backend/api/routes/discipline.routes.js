@@ -1,15 +1,11 @@
-const express = require('express');
-const {getDisciplinebyID, disciplinesSignUpJson, deleteDisciplineJson, updateDisciplineJson } = require('/home/mariana/Documents/Projeto-ESS/backend/api/controllers/discipline.controllers.js');
-const router = express.Router();
+const router = require('express').Router();
 
-router.get('/:id', getDisciplinebyID);
+const disciplineRoutes = require('/home/mariana/Documents/Projeto-ESS/backend/api/controllers/discipline.controllers.js');
 
-router.post('/signup', disciplinesSignUpJson);
-
-router.delete('/:id', deleteDisciplineJson);
-
-router.put('/:id', updateDisciplineJson)
-
-
-
-module.exports = router;
+module.exports = app => {
+    app.use('/disciplines', router);
+    router.get('/:id', disciplineRoutes.getDisciplinebyID);
+    router.post('/signup', disciplineRoutes.disciplinesSignUpJson);
+    router.delete('/:id', disciplineRoutes.deleteDisciplineJson);
+    router.put('/:id', disciplineRoutes.updateDisciplineJson);
+}
