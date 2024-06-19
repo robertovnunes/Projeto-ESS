@@ -6,11 +6,12 @@ const dateRegex = /^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\d{4} (0[1-9]|1[0
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
 };
+//console.log("Entrou no event.controllers");
 
-
-const getAllEventsJson = (req,res) => {
+exports.getAllEventsJson = (req,res) => {
+    console.log("Entrou no getAllEventsJson");
     try{ 
-        const data = JSON.parse(fs.readFileSync(path.resolve("../api/mock/eventos.json"),'utf-8'))
+        const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),'utf-8'))
         if(!data){
             console.log("Empty");
             return res.status(200).json({})
@@ -25,7 +26,7 @@ const getAllEventsJson = (req,res) => {
 
 }
 
-const eventSignUpJson = async(req, res) => {
+exports.eventSignUpJson = async(req, res) => {
     try{
         const {eventName,description,responsibleTeacher,eventDateAndTime} = req.body;
         const missingInfo = !eventName || !responsibleTeacher || !eventDateAndTime;
@@ -90,7 +91,7 @@ const eventSignUpJson = async(req, res) => {
 
 
 }
-const deleteEventJson = (req, res) => {
+exports.deleteEventJson = (req, res) => {
     const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
     try {
         const { id } = req.params;
@@ -114,7 +115,7 @@ const deleteEventJson = (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const updateEventJson = async (req, res) => {
+exports.updateEventJson = async (req, res) => {
     const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
     try {
         const { id } = req.params;
@@ -152,4 +153,3 @@ const updateEventJson = async (req, res) => {
     }
 };
 
-module.exports = {getAllEventsJson,eventSignUpJson,deleteEventJson,updateEventJson};
