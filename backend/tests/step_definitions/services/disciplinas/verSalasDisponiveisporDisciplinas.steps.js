@@ -5,7 +5,8 @@ const database = require('../../databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
 
-const feature = loadFeature('../../../features/aluno/verSalasDisponiveisporDisciplinas.feature');
+const feature = loadFeature('./tests/features/aluno/verSalasDisponiveisporDisciplina.feature');
+
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;

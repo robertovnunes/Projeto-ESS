@@ -5,7 +5,7 @@ const database = require('../../databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
 
-const feature = loadFeature('../../../features/professor/deletarDisciplinaEvento.feature');
+const feature = loadFeature('./tests/features/professor/deletarDisciplinaeEvento.feature');
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;
