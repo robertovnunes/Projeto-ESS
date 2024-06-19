@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dateRegex = /^\d{2}\/\d{2}\/\d{4} a \d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM)( (MON|TUE|WED|THU|FRI|SAT|SUN)){0,3}$/;
-
+const disciplinesPath = path.resolve("./db/disciplines.json");
 
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
@@ -99,7 +99,6 @@ exports.disciplinesSignUpJson = async(req, res) => {
 
 }
 exports.deleteDisciplineJson = (req, res) => {
-    const disciplinesPath = path.resolve("./db/disciplines.json");
     try {
         const { id } = req.params;
         let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
@@ -118,7 +117,6 @@ exports.deleteDisciplineJson = (req, res) => {
     }
 };
 exports.updateDisciplineJson = async (req, res) => {
-    const disciplinesPath = path.resolve("./db/disciplines.json");
     try {
         const { id } = req.params;
         const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
