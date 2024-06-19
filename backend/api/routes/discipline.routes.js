@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const disciplineRoutes = require('/home/mariana/Documents/Projeto-ESS/backend/api/controllers/discipline.controllers.js');
+const disciplineRoutes = require('../controllers/discipline.controllers.js');
 
 module.exports = app => {
     app.use('/disciplines', router);

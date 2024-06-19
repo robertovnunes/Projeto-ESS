@@ -11,7 +11,7 @@ const isValidDateFormat = (dateStr) => {
 exports.getAllEventsJson = (req,res) => {
     console.log("Entrou no getAllEventsJson");
     try{ 
-        const data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),'utf-8'))
+        const data = JSON.parse(fs.readFileSync(path.resolve("./db/eventos.json"),'utf-8'))
         if(!data){
             console.log("Empty");
             return res.status(200).json({})
@@ -36,7 +36,7 @@ exports.eventSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve("./db/eventos.json"),'utf-8'));
         const eventExists = data.some(element => 
             element.eventName === eventName && 
             element.eventDateAndTime === eventDateAndTime 
@@ -78,7 +78,7 @@ exports.eventSignUpJson = async(req, res) => {
             res.status(201).json(newEvent);
 
         }
-        fs.writeFileSync(path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve("./db/eventos.json"),JSON.stringify(data,null,2));
        
 
         
@@ -92,7 +92,7 @@ exports.eventSignUpJson = async(req, res) => {
 
 }
 exports.deleteEventJson = (req, res) => {
-    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
+    const eventsPath = path.resolve("./db/eventos.json");
     try {
         const { id } = req.params;
         const idConverted = Number(id);
@@ -116,7 +116,7 @@ exports.deleteEventJson = (req, res) => {
     }
 };
 exports.updateEventJson = async (req, res) => {
-    const eventsPath = path.resolve("/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json");
+    const eventsPath = path.resolve("./db/eventos.json");
     try {
         const { id } = req.params;
         const idConverted = Number(id);
