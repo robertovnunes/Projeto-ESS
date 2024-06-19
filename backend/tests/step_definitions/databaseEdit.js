@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const oldEventsPath = path.resolve(__dirname, '../../api/mock/oldEvents.json');
-const newEventsPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/newEvents.json');
+const oldEventsPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/tests/mocks/oldEvents.json');
+const newEventsPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/tests/mocks/newEvents.json');
 const databaseEvents = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/db/eventos.json');
 
 const databaseDisciplines = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/db/disciplines.json');
-const oldDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/oldDisciplines.json');
-const newDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/api/mock/newDisciplines.json');
+const oldDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/tests/mocks/oldDisciplines.json');
+const newDisciplinesPath = path.resolve(__dirname, '/home/mariana/Documents/Projeto-ESS/backend/tests/mocks/newDisciplines.json');
 
 const setupForTestEvents = () => {
     try{
