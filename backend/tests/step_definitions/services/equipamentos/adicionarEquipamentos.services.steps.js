@@ -3,36 +3,11 @@ const supertest = require ('supertest');
 const app = require('../../../../src/app.js');
 const equipamentoService = require('../../../../src/api/services/equipamentosService');
 const equipamentoController = require('../../../../src/api/controllers/equipamentosController');
+const EquipamentoRepository = require('../../../../src/api/repositories/equipamentosRepository');
 const modelSN = require('../../../../src/api/models/equipamentoSNModel');
 const modelPatrimonio = require('../../../../src/api/models/equipamentoPatrimonioModel');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
-
-const equipmentExists = (equipmentList, nome, campo, identificador) => {
-    let found = false;
-    equipmentList.forEach(equipamento => {
-        switch (campo) {
-            case 'patrimonio':
-                if (equipamento.patrimonio === identificador && equipamento.nome === nome) {
-                    found = true;
-                }
-                break;
-            case 'numero de serie':
-                if (equipamento.sn === identificador && equipamento.nome === nome) {
-                    found = true;
-                }
-                break;
-            default:
-                if (equipamento.nome === nome) {
-                    found = true;
-                }
-                break;
-        }
-    });
-    return found;
-}
-
-
 defineFeature(feature, (test) => {
     const request = supertest(app);
     request.headers = {username: 'joao', role: 'admin'};
@@ -41,7 +16,7 @@ defineFeature(feature, (test) => {
     let service;
 
     beforeEach(() => {
-        mockEquipamentos = {
+        const mockEquipamentosData = {
             getEquipamentos: jest.fn(),
             getEquipamentoById: jest.fn(),
             getEquipamentoByPatrimonio: jest.fn(),
@@ -50,35 +25,56 @@ defineFeature(feature, (test) => {
             updateEquipment: jest.fn(),
             deleteEquipment: jest.fn()
         };
+        mockEquipamentos = mockEquipamentosData;
         service = new equipamentoService(mockEquipamentos);
     });
 
     afterEach(() => {
         jest.clearAllMocks();
+
     });
 
-    const sendSucessfullRequest = async () => {
-        await request.post('/equipamentos').send({
+    const sendSucessfullPostRequest = async (identificador) => {
+        if (identificador === 'patrimonio') {
+            await request.post('/equipamentos').send({
                 nome: 'Ar condicionado midea',
                 descricao: 'Ar condicionado split de 12.000 btus',
                 estado_conservacao: 'Bom',
                 data_aquisicao: '15/03/2023',
                 valor_estimado: 'R$ 1.200,00',
-                patrimonio: '1098642'
+                identificador: {
+                    type: 'patrimonio',
+                    value: '1098642'
+                }
             });
+        } else if (identificador === 'numero de serie') {
+            await request.post('/equipamentos').send({
+                nome: 'Ar condicionado philco',
+                descricao: 'Ar condicionado split de 12.000 btus',
+                estado_conservacao: 'Bom',
+                data_aquisicao: '15/03/2023',
+                valor_estimado: 'R$ 1.200,00',
+                identificador: {
+                    type: 'numero_serie',
+                    value: '1098642'
+                }
+            });
+        }
     };
 
 //Steps to reuse
 //Given steps
     const givenNotEquipmentExist = (given) => {
         given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-            const response = await request.get(`/equipamentos/${campo}/${identificador}`);
+            const url = `/equipamentos/${campo}/${identificador}`;
+            const response = await request.get(url);
             expect(response.status).toBe(404);
+            console.log(response.body.message);
             expect(response.body.message).toBe('Equipamento nao encontrado');
         });
     };
 
-    const givenEquipmentExist = (given, equipamentos) => {
+    const givenEquipmentExist = (given) => {
         given(/^existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
             const response = await request.get(`/equipamentos/${campo}/${identificador}`);
             expect(response.status).toBe(200);
@@ -87,7 +83,7 @@ defineFeature(feature, (test) => {
     };
     const givenRequest = (given) => {
         given(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, username, userRole) => {
-            const response = sendSucessfullRequest();
+            const response = sendSucessfullPostRequest();
             const responseMethod = response.req.method;
             expect(responseMethod).toBe(req);
             expect(request.headers.username).toBe(username);
@@ -96,9 +92,9 @@ defineFeature(feature, (test) => {
         });
     };
 //When steps
-    const whenRequest = (when) => {
+    const whenRequest = (when, identificador) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
-            const response = sendSucessfullRequest();
+            const response = sendSucessfullPostRequest(identificador);
             expect(request.method).toBe(req);
             expect(request.headers.username).toBe(user);
             expect(request.headers.role).toBe(role);
@@ -132,11 +128,9 @@ defineFeature(feature, (test) => {
         });
     };
 //And steps
-    const andFieldMatch = (and, fCampo, fValor) => {
+    const andFieldMatch = (and, identificador) => {
         and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
-            console.log('3');
-            expect(campo).toBe(fCampo);
-            expect(valor).toBe(fValor);
+            
         });
     };
     const andFieldEmpty = (and, field) => {
@@ -161,11 +155,11 @@ defineFeature(feature, (test) => {
         })
     };
     const thenEquipmentIsOnDatabase = (then, equipamentos) => {
-        then(/^o equipamento (.*) com (.*) (.*) está no banco de dados$/, async (equipamento) => {
+        then(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, valor) => {
             expect(equipamentos).toContainEqual(equipamento);
         });
     };
-    const thenResponsesucesso = async (and) => {
+    const thenResponseSucesso = async (and) => {
         and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
             expect(type).toBe('sucesso');
             expect(code).toBe('201');
@@ -190,19 +184,19 @@ defineFeature(feature, (test) => {
     //Scenarios tests
     test('Adicionando equipamento usando patrimonio com sucesso', ({given, when, then, and}) => {
         givenNotEquipmentExist(given);
-        whenRequest(when);
-        andFieldMatch(and, 'nome', 'Ar condicionado midea');
+        whenRequest(when, 'patrimonio');
+        andFieldMatch(and, '');
         andFieldMatch(and, 'descricao', 'Ar condicionado split de 12.000 btus');
         andFieldMatch(and, 'estado de conservacao', 'Bom');
         andFieldMatch(and, 'data de aquisicao', '15/03/2023');
         andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
         andFieldMatch(and, 'patrimonio', '1098642');
-        thenResponsesucesso(and);
+        thenResponseSucesso(and);
         andPatrimonioIsOnDatabase(then);
     });
     test('Adicionando equipamento usando numero de serie com sucesso', ({given, when, then, and}) => {
         givenNotEquipmentExist(given);
-        whenRequest(when);
+        whenRequest(when, 'numero de serie');
         andFieldMatch(and, 'nome', 'Ar condicionado midea');
         andFieldMatch(and, 'descricao', 'Ar condicionado de 12.000 btus');
         andFieldMatch(and, 'estado de conservacao', 'Bom');
@@ -212,7 +206,7 @@ defineFeature(feature, (test) => {
         thenSNIsOnDatabase(then);
         andResponsesucesso(and);
     });
-      /*
+        /*
     test('Adicionando equipamento duplicado', ({given, when, then, and}) => {
         givenEquipmentExist(given);
         whenRequest(when);

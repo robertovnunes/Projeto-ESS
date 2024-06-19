@@ -1,13 +1,13 @@
 const equipamentosRepository = require('../api/repositories/equipamentosRepository');
 const equipamentosService = require('../api/services/equipamentosService');
-const EquipamentoInjector = require('./di/equipamentoInjector');
+const EquipamentoInjector = require('./equipamentoInjector');
 
 const equipamentoInjector = new EquipamentoInjector();
 
-equipamentoInjector.registerRepository('equipamentosRepository', new equipamentosRepository());
-equipamentoInjector.registerService('equipamentosService',
+equipamentoInjector.registerEquipmentRepository('equipamentosRepository', new equipamentosRepository());
+equipamentoInjector.registerEquipmentRepository('equipamentosService',
     new equipamentosService(
-        equipamentoInjector.getRepository('equipamentosRepository')
+        equipamentoInjector.getEquipmentRepository('equipamentosRepository')
     )
 );
 
