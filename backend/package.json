@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "nodemon src/app.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
   "license": "ISC",
