@@ -92,13 +92,15 @@ class Comentarios {
             res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
         }
     };
-
+    
     async validarComentario(req, res) {
         try {
             const id = req.params.id;
-            const validacao = { validado: true };
-            const comentario = await this.comentariosService.patchComentario(id, validacao);
+            //const validacao = { validado: true };
+            const comentario = await this.comentariosService.getComentarioById(id);
             if (comentario) {
+                //ALTERAÇÃO PRA VALIDAÇÃO FUNCIONAR
+                const updatedComentario = await this.comentariosService.patchComentario(id, { validado: true });
                 console.log(`PATCH-VALIDE /comentarios/:${id} [200] OK`);
                 res.status(200).send(comentario);
             } else {

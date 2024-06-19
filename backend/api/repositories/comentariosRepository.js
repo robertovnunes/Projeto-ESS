@@ -47,16 +47,21 @@ class ComentariosRepository{
         await this._writeFile(db);
         return newComentario;
     }
-    async patchComentario(id, newComentario) {
+   
+    async patchComentario(id, updates) {
         let db = await this.getAllComentarios();
         const index = db.findIndex(comentario => comentario.id === id);
         if(index === -1){
             return null;
         }
-        db[index] = newComentario;
+        //ALTERAÇÃO NECESSARIA PRA VALIDACAO FUNCIONAR NA LINHA ABAIXO
+        console.log(db)
+        const updatedComentario = { ...db[index], ...updates };
+        db[index] = updatedComentario;
         await this._writeFile(db);
-        return newComentario;
+        return updatedComentario;
     }
+    
     async deleteComentario(id) {
         let db = await this.getAllComentarios();
         const index = db.findIndex(comentario => comentario.id === id);
