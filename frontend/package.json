@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "",
+    "test": "mocha ./testes/backend/step_definitions/**/*.test.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
