@@ -6,15 +6,15 @@
     "SIAPE": "8888812"
   },
   {
-    "nome": "Walter Hartwell White",
-    "login": "whw",
-    "senha": "$2a$10$xGwRhxSenhRuEh8u4XSkW.ERjLC5qHdx/xYSR4qLsU4INjheVjuyW",
-    "SIAPE": "8888801"
-  },
-  {
     "nome": "Charles Francis Xavier",
     "login": "cfx",
     "senha": "$2a$10$3L0vNQxzspi7XQc1SNLer.v3CLqOorMJGT2tM.od7yJTm7sLvQ1ve",
     "SIAPE": "8888811"
+  },
+  {
+    "nome": "Caio Santos",
+    "login": "cs8",
+    "senha": "$2a$10$vJZUz1aelN8rsYy4qLfjIeqe70ddnr18XJAU7KxFAPMNpSvFUDC5W",
+    "SIAPE": "8979462"
   }
 ]
