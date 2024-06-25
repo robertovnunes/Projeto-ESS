@@ -4,16 +4,16 @@ class EquipamentoInjector {
     this.repositories = new Map();
   }
 
-    registerEquipmentService(name, service) {
-        this.service.set(name, service);
+    registerEquipmentService(type, service) {
+        this.service.set(type, service);
     }
 
     getEquipmentService(service) {
         return this.service.get(service);
     }
 
-    registerEquipmentRepository(name, repository) {
-        this.repositories.set(name, repository);
+    registerEquipmentRepository(type, repository) {
+        this.repositories.set(type, repository);
     }
 
     getEquipmentRepository(name) {

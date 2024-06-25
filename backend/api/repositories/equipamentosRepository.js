@@ -1,27 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 
-const shortid = require('shortid');
-const equipamento = require('../models/equipamentoSNModel');
-
-function isJsonEmpty(obj) {
-    return obj && Object.keys(obj).length === 0 && obj.constructor === Object;
-}
 
 class EquipamentosRepository {
-    constructor(dbPath){
-        this.db = dbPath || this._readFile(path.join(__dirname, '../../db/equipamentos.json'));
+    constructor(db) {
+        this.filePath = path.join(__dirname, '../../db/equipamentos.json');
+        this.isMock = db !== undefined;
+        this.db = db || [];
+        this._init();
     }
+
+    async _init() {
+        if(!this.isMock) this.db = await this._readFile(this.filePath);
+        else this.db = [];
+    }
+
     async _readFile(filePath) {
         const data = await fs.promises.readFile(filePath, 'utf8');
         return JSON.parse(data);
     }
 
     async _writeFile(data) {
-        await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 2));
+        if (!this.isMock) await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 2));
     }
 
     async getAllEquipments() {
+        //parei aqui
         return this.db.length === 0  ? 'Nenhum equipamento cadastrado' : this.db;
     }
     async getEquipmentById(id) {
@@ -64,7 +68,7 @@ class EquipamentosRepository {
             db = [newEquipamento];
 
         }
-        await this._writeFile(db);
+        if (!this.isMock) await this._writeFile(db);
         return newEquipamento;
     }
 
@@ -80,7 +84,7 @@ class EquipamentosRepository {
         } else {
             db = [newEquipamento];
         }
-        await this._writeFile(db);
+        if (!this.isMock) await this._writeFile(db);
         return newEquipamento;
     }
 
@@ -93,7 +97,7 @@ class EquipamentosRepository {
             const index = db.findIndex(equipamento => equipamento.id === id);
             if(index === -1) return 'Equipamento nao encontrado';
             db[index] = {...db[index], ...data};
-            await this._writeFile(db);
+            if (!this.isMock) await this._writeFile(db);
             return db[index];
         }
     }
@@ -107,7 +111,7 @@ class EquipamentosRepository {
             let index = db.findIndex(equipamento => equipamento.id === id);
             if(index === -1) return 'Equipamento nao encontrado';
             const deleted = db.splice(index, 1);
-            await this._writeFile(db);
+            if (!this.isMock) await this._writeFile(db);
             return deleted;
         }
     }
