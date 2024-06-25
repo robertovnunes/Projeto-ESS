@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend com NodeJS para comunicação com banco de dados",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon app.js",
     "test": "jest --detectOpenHandles"
   },
   "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
