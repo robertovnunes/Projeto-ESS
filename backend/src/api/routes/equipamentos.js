@@ -22,7 +22,8 @@ module.exports = app => {
     router.get('/id/:id', equipamentosController.getEquipmentById);
     router.get('/patrimonio/:patrimonio', equipamentosController.getEquipmentByPatrimonio);
     router.get('/numero_serie/:numero_serie', equipamentosController.getEquipmentBySN);
-    router.post('/', equipamentosController.createEquipment);
+    router.post('/patrimonio/', equipamentosController.createEquipmentPatrimonio);
+    router.post('/numero_serie/', equipamentosController.createEquipmentSN);
     router.patch('/:id', equipamentosController.patchEquipment);
     router.delete('/:id', equipamentosController.deleteEquipment);
 }

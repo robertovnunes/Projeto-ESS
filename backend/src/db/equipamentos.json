@@ -1,3 +1,13 @@
 [
-
+  {
+    "id": "041Lu6fq0-Jr",
+    "nome": "Projetor epson",
+    "descricao": "projetor full hd",
+    "estado_conservacao": "Bom",
+    "data_aquisicao": "15/03/2023",
+    "valor_estimado": "R$ 1.200,00",
+    "patrimonio": "1098643",
+    "reservas": [],
+    "manutencao": []
+  }
 ]

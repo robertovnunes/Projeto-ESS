@@ -2,210 +2,200 @@ const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
 const app = require('../../../../src/app.js');
 const equipamentoService = require('../../../../src/api/services/equipamentosService');
-const equipamentoController = require('../../../../src/api/controllers/equipamentosController');
-const EquipamentoRepository = require('../../../../src/api/repositories/equipamentosRepository');
+const equipamentoInjector = require('../../../../src/di/equipamentoInjector');
 const modelSN = require('../../../../src/api/models/equipamentoSNModel');
 const modelPatrimonio = require('../../../../src/api/models/equipamentoPatrimonioModel');
+const EquipamentosRepository = require('../../../../src/api/repositories/equipamentosRepository.js');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
 defineFeature(feature, (test) => {
-    const request = supertest(app);
+    let request, mockEquipamentos, service, injector;
+    request = supertest(app);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/POST';
-    let mockEquipamentos;
-    let service;
 
     beforeEach(() => {
+        injector = new equipamentoInjector([]);
         const mockEquipamentosData = {
             getEquipamentos: jest.fn(),
-            getEquipamentoById: jest.fn(),
-            getEquipamentoByPatrimonio: jest.fn(),
-            getEquipamentoBySN: jest.fn(),
-            addEquipamento: jest.fn(),
+            getEquipmentById: jest.fn(),
+            getEquipmentByPatrimonio: jest.fn(),
+            getEquipmentBySerie: jest.fn(),
+            createEquipmentPatrimonio: jest.fn(),
+            createEquipmentSN: jest.fn(),
             updateEquipment: jest.fn(),
             deleteEquipment: jest.fn()
         };
         mockEquipamentos = mockEquipamentosData;
+        injector.registerEquipmentRepository(EquipamentosRepository, mockEquipamentos);
         service = new equipamentoService(mockEquipamentos);
     });
 
-    afterEach(() => {
+    afterAll( async () => {
         jest.clearAllMocks();
-
-    });
-
-    const sendSucessfullPostRequest = async (identificador) => {
-        if (identificador === 'patrimonio') {
-            await request.post('/equipamentos').send({
-                nome: 'Ar condicionado midea',
-                descricao: 'Ar condicionado split de 12.000 btus',
-                estado_conservacao: 'Bom',
-                data_aquisicao: '15/03/2023',
-                valor_estimado: 'R$ 1.200,00',
-                identificador: {
-                    type: 'patrimonio',
-                    value: '1098642'
-                }
-            });
-        } else if (identificador === 'numero de serie') {
-            await request.post('/equipamentos').send({
-                nome: 'Ar condicionado philco',
-                descricao: 'Ar condicionado split de 12.000 btus',
-                estado_conservacao: 'Bom',
-                data_aquisicao: '15/03/2023',
-                valor_estimado: 'R$ 1.200,00',
-                identificador: {
-                    type: 'numero_serie',
-                    value: '1098642'
-                }
+        response = await request.get('/equipamentos');
+        if(response.status === 200) {
+            response.body.forEach( async (equipamento) => {
+                await request.delete(`/equipamentos/${equipamento.id}`);
             });
         }
-    };
+    });
 
 //Steps to reuse
 //Given steps
-    const givenNotEquipmentExist = (given) => {
+    const givenNotEquipmentExist = async (given) => {
         given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
             const url = `/equipamentos/${campo}/${identificador}`;
-            const response = await request.get(url);
+            let response;
+            response = await request.get(url);
             expect(response.status).toBe(404);
-            console.log(response.body.message);
             expect(response.body.message).toBe('Equipamento nao encontrado');
         });
     };
-
-    const givenEquipmentExist = (given) => {
-        given(/^existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-            const response = await request.get(`/equipamentos/${campo}/${identificador}`);
-            expect(response.status).toBe(200);
-            expect(response.body[campo]).toBe(identificador);
+    const givenNotPatrimonioExist = async (given) => {
+        given(/^nao existe o equipamento com "(.*)" "(.*)"$/, async (patrimonio) => {
+            const url = `/equipamentos/patrimonio/${patrimonio}`;
+            const response = await request.get(url);
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe('Equipamento nao encontrado');
         });
     };
     const givenRequest = (given) => {
-        given(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, username, userRole) => {
-            const response = sendSucessfullPostRequest();
-            const responseMethod = response.req.method;
-            expect(responseMethod).toBe(req);
-            expect(request.headers.username).toBe(username);
-            expect(request.headers.role).toBe(userRole);
-            //testar se usuario está no banco e se é admin
-        });
-    };
-//When steps
-    const whenRequest = (when, identificador) => {
-        when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
-            const response = sendSucessfullPostRequest(identificador);
+        given(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
             expect(request.method).toBe(req);
             expect(request.headers.username).toBe(user);
             expect(request.headers.role).toBe(role);
         });
     };
-    const whenverifyEquipment = (when, campo, valor) => {
-        when(/^os dados sao verificados como "(.*)" "(.*)"$/, (nome, valor) => {
-            expect(nome).toBe(valor);
+    const givenEquipmentExist = async (given) => {
+        given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
+            let response;
+            let data;
+            if(campo === 'patrimonio'){
+                data = new modelPatrimonio('Monitor phillips', 'monitor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', patrimonio=identificador);
+            } else if (campo === 'numero_serie'){
+                data = new modelSN('Ar condicionado philco', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', numero_serie=identificador);
+            }
+            response = await request.post(`/equipamentos/${campo}`).send(data);
+            console.log(response.body);
+            expect(response.status).toBe(201);
+        });
+    }
+//When steps
+    const whenRequest = async (when) => {
+        when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
+            expect(request.method).toBe(req);
+            expect(request.headers.username).toBe(user);
+            expect(request.headers.role).toBe(role);
         });
     };
 //Then steps
-
-    const thenSNIsOnDatabase = (then) => {
-        then(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, snumber) => {
-            const response = await request.get(`/equipamentos/${campo}/${snumber}`);
-            expect(response.status).toBe(200);
-            expect(response.body['nome']).toBe(nome);
-            expect(response.body[campo]).toBe(snumber);
-
-        });
-    };
-    const thenResponseError = (then) => {
-        then(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/), async (type, code) => {
-            expect(type).toBe('error');
-            expect(code).toBe('404');
-        }
-    };
-    const andMessageError = (and, message) => {
-        and(/^mensagem "(.*)"$/, async (mensagem) => {
-            expect(mensagem).toBe(message);
-        });
-    };
-//And steps
-    const andFieldMatch = (and, identificador) => {
-        and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
-            
-        });
-    };
-    const andFieldEmpty = (and, field) => {
-        and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
-            expect(campo).toBe(field);
-            expect(valor).toBe(' ');
-        });
-    };
-    const andReqIsBatch = (and) => {
-        and(/^a requisicao possui uma "(.*)"$/, async (campo) => {
-            expect(campo).toBe('insercao em lote');
-        });
-    };
-    const andReqIsNotBatch = (and) => {
-        and(/^a requisicao possui uma "(.*)"$/, async (campo) => {
-            expect(campo).toBe('insercao unica');
-        });
-    };
-    const andVerifySerialNumbers = (and) => {
-        and(/^os numeros de serie "(\d+)"$/, async (numeros) => {
-
-        })
-    };
-    const thenEquipmentIsOnDatabase = (then, equipamentos) => {
+    const thenEquipmentIsOnDatabase = async (then, data) => {
         then(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, valor) => {
-            expect(equipamentos).toContainEqual(equipamento);
-        });
-    };
-    const thenResponseSucesso = async (and) => {
-        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
-            expect(type).toBe('sucesso');
-            expect(code).toBe('201');
-        });
-        
-    };
-       const andResponsesucesso = async (and) => {
-        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
-            expect(type).toBe('sucesso');
-            expect(code).toBe('201');
-        });
-        
-    };
-    const andPatrimonioIsOnDatabase = (and) => {
-        and(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, patrimonio) => {
-            const response = await request.get(`/equipamentos/${campo}/${patrimonio}`);
-            expect(response.status).toBe(200);
+            //jest.spyOn(mockEquipamentos, 'addEquipamento').mockResolvedValue(data);
+            const response = await request.post(`/equipamentos/${campo}`).send(data);
+            expect(response.status).toBe(201);
             expect(response.body['nome']).toBe(nome);
-            expect(response.body[campo]).toBe(patrimonio);
+            expect(response.body[campo]).toBe(valor);
         });
     };
+    const thenResponseError = async (then, data, identificador) => {
+        then(/^eu envio uma resposta de "(.*)" com codigo "(.*)" e mensagem "(.*)"$/, async (type, code, message) => {
+            const response = await request.post(`/equipamentos/${identificador}`).send(data);
+            expect(type).toBe('erro');
+            expect(response.statusCode).toBe(parseInt(code));
+            expect(response.body.message).toBe(message);
+        });
+    }
+//And steps
+    const andFieldMatch = async (and, data) => {
+        and(/^"(.*)" com "(.*)"$/, async (campo, valor) => {
+            expect(data[campo]).toBe(valor);
+        });
+    };
+    const andResponseSucesso = async (and) => {
+        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
+            expect(type).toBe('sucesso');
+            expect(code).toBe('201');
+        });
+    };
+
     //Scenarios tests
     test('Adicionando equipamento usando patrimonio com sucesso', ({given, when, then, and}) => {
+        const data = new modelPatrimonio('Ar condicionado midea', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', '1098642');
         givenNotEquipmentExist(given);
-        whenRequest(when, 'patrimonio');
-        andFieldMatch(and, '');
-        andFieldMatch(and, 'descricao', 'Ar condicionado split de 12.000 btus');
-        andFieldMatch(and, 'estado de conservacao', 'Bom');
-        andFieldMatch(and, 'data de aquisicao', '15/03/2023');
-        andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
-        andFieldMatch(and, 'patrimonio', '1098642');
-        thenResponseSucesso(and);
-        andPatrimonioIsOnDatabase(then);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenEquipmentIsOnDatabase(and, data);
+        andResponseSucesso(then);
     });
     test('Adicionando equipamento usando numero de serie com sucesso', ({given, when, then, and}) => {
+        const data = new modelSN('Ar condicionado philco', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', '1098643');
         givenNotEquipmentExist(given);
-        whenRequest(when, 'numero de serie');
-        andFieldMatch(and, 'nome', 'Ar condicionado midea');
-        andFieldMatch(and, 'descricao', 'Ar condicionado de 12.000 btus');
-        andFieldMatch(and, 'estado de conservacao', 'Bom');
-        andFieldMatch(and, 'data de aquisicao', '15/03/2023');
-        andFieldMatch(and, 'valor estimado', 'R$ 1.200,00');
-        andFieldMatch(and, 'numero de serie', '1098642');
-        thenSNIsOnDatabase(then);
-        andResponsesucesso(and);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenEquipmentIsOnDatabase(then, data);
+        andResponseSucesso(and);
     });
+    test('Adicionando equipamento com nome vazio', ({given, when, then, and}) => {
+        const data = new modelPatrimonio(nome='', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', '1098642');
+        givenNotPatrimonioExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
+    });
+    test('Adicionando equipamento com patrimonio vazio', ({given, when, then, and}) => {
+        const data = new modelPatrimonio('Ar condicionado midea', 'Ar condicionado de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', patrimonio='');
+        givenRequest(given);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
+    });
+    test('Adicionando equipamento com numero de serie vazio', ({given, when, then, and}) => {
+        const data = new modelSN('Ar condicionado philco', 'Ar condicionado de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', '');
+        givenRequest(given);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'numero_serie');
+    });
+    test('Adicionando equipamento com patrimonio duplicado', ({given, when, then, and}) => {
+        const data = new modelPatrimonio('Projetor epson', 'projetor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', '1098643');
+        givenEquipmentExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
+    });
+});
+    
+
         /*
     test('Adicionando equipamento duplicado', ({given, when, then, and}) => {
         givenEquipmentExist(given);
@@ -218,40 +208,6 @@ defineFeature(feature, (test) => {
         andFieldMatch(and);
         thenResponseError(then);
         andMessageError(and, 'Equipamento já cadastrado');
-    });
-    test('Adicionando equipamento com nome vazio', ({given, when, then, and}) => {
-        givenRequest(given)
-        andFieldEmpty(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Nome nao pode ser vazio');
-    });
-    test('Adicionando equipamento com patrimonio vazio', ({given, when, then, and}) => {
-        givenRequest(given);
-        andFieldMatch(and);
-        andFieldEmpty(and); //test to check if the field is empty
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Patrimonio nao pode ser vazio');
-    });
-    test('Adicionando equipamento com patrimonio duplicado', ({given, when, then, and}) => {
-        givenEquipmentExist(given);
-        whenRequest(when);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Patrimonio já cadastrado');
     });
     test('Adicionando equipamento com descricao vazia', ({given, when, then, and}) => {
         givenNotEquipmentExist(given);
@@ -311,4 +267,3 @@ defineFeature(feature, (test) => {
 
     });
 */
-});
