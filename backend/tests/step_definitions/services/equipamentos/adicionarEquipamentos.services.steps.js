@@ -39,6 +39,7 @@ defineFeature(feature, (test) => {
                 await request.delete(`/equipamentos/${equipamento.id}`);
             });
         }
+        app.off();
     });
 
 //Steps to reuse
