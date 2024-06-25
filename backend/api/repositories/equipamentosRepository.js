@@ -116,6 +116,71 @@ class EquipamentosRepository {
         }
     }
 
+    async getReservaById(id) {
+        const db = await this.getAllEquipments();
+        let reserva;
+        if (db === 'Nenhum equipamento cadastrado') return 'Reserva nao encontrada';
+        else {
+            reserva = db.find(equipamento => equipamento.reservas.id === id);
+            return reserva === undefined ? 'Reserva nao encontrada' : reserva;
+        }
+    }
+
+    async getReservaManutencaoById(id) {
+        const db = await this.getAllEquipments();
+        let reserva;
+        if (db === 'Nenhum equipamento cadastrado') return 'Reserva nao encontrada';
+        else {
+            reserva = db.find(equipamento => equipamento.manutencao.id === id);
+            return reserva === undefined ? 'Reserva nao encontrada' : reserva;
+        }
+    }
+
+    async createReservaManutencao(newReserva) {
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+            db.forEach(equipamento => {
+                if(equipamento.manutencao.id === newReserva.id){
+                    return 'Reserva já existe';
+                }
+            });
+            db.push(newReserva);
+        } else {
+            db = [newReserva];
+        }
+        if (!this.isMock) await this._writeFile(db);
+        return newReserva;
+    }
+
+    async createReserva(newReserva) {
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+            db.forEach(equipamento => {
+                if(equipamento.reservas.id === newReserva.id){
+                    return 'Reserva já existe';
+                }
+            });
+            db.push(newReserva);
+        } else {
+            db = [newReserva];
+        }
+        if (!this.isMock) await this._writeFile(db);
+        return newReserva;
+    }
+
+    async updateReserva(id, data) {
+        let db = await this.getAllEquipments();
+        let equipamento = this.getEquipmentById(id);
+        if(equipamento === 'Equipamento nao encontrado' || db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            const index = db.findIndex(equipamento => equipamento.id === id);
+            if(index === -1) return 'Equipamento nao encontrado';
+            db[index] = {...db[index], ...data};
+            if (!this.isMock) await this._writeFile(db);
+            return db[index];
+        }
+    }
+
 }
 
 module.exports = EquipamentosRepository;
