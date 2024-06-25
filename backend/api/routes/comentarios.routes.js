@@ -18,7 +18,8 @@ module.exports = app => {
     router.post('/', comentariosController.createComentario);
     router.patch('/:id', comentariosController.patchComentario);
     router.delete('/:id', comentariosController.deleteComentario);
-}
-
+    router.patch('/:id/validar', comentariosController.validarComentario);
+    router.patch('/:id/responder', comentariosController.responderComentario);
+};
 
 //module.exports = router;

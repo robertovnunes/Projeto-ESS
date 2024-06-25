@@ -1,16 +1,11 @@
-const express = require('express');
-const {getDisciplinebyID, disciplinesSignUpJson, deleteDisciplineJson, updateDisciplineJson } = require('../controllers/discipline.controllers');
-const router = express.Router();
+const router = require('express').Router();
 
+const disciplineRoutes = require('../controllers/discipline.controllers.js');
 
-module.exports = (app) => {
-    app.use('/discipline', router);
-
-    router.get('/:id', getDisciplinebyID);
-
-    router.post('/signup', disciplinesSignUpJson);
-
-    router.delete('/:id', deleteDisciplineJson);
-
-    router.put('/:id', updateDisciplineJson);
+module.exports = app => {
+    app.use('/disciplines', router);
+    router.get('/:id', disciplineRoutes.getDisciplinebyID);
+    router.post('/signup', disciplineRoutes.disciplinesSignUpJson);
+    router.delete('/:id', disciplineRoutes.deleteDisciplineJson);
+    router.put('/:id', disciplineRoutes.updateDisciplineJson);
 }

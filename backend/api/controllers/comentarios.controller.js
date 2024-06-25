@@ -9,6 +9,8 @@ class Comentarios {
         this.createComentario = this.createComentario.bind(this);
         this.patchComentario = this.patchComentario.bind(this);
         this.deleteComentario = this.deleteComentario.bind(this);
+        this.validarComentario = this.validarComentario.bind(this);
+        this.responderComentario = this.responderComentario.bind(this);
     }
 
     async getAllComentarios(req, res) {
@@ -88,6 +90,45 @@ class Comentarios {
         } catch (error) {
             console.log(`DELETE /comentarios/:${id} [500] INTERNAL SERVER ERROR\n ${error}`);
             res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
+        }
+    };
+    
+    async validarComentario(req, res) {
+        try {
+            const id = req.params.id;
+            //const validacao = { validado: true };
+            const comentario = await this.comentariosService.getComentarioById(id);
+            if (comentario) {
+                //ALTERAÇÃO PRA VALIDAÇÃO FUNCIONAR
+                const updatedComentario = await this.comentariosService.patchComentario(id, { validado: true });
+                console.log(`PATCH-VALIDE /comentarios/:${id} [200] OK`);
+                res.status(200).send(comentario);
+            } else {
+                console.log(`PATCH-VALIDE /comentarios/:${id} [404] NOT FOUND`);
+                res.status(404).send({ message: 'Comentario não encontrado' });
+            }
+        } catch (error) {
+            console.log(`PATCH-VALIDE /comentarios/:${id} [500] INTERNAL SERVER ERROR\n ${error}`);
+            res.status(500).send({ message: '[500] INTERNAL SERVER ERROR' });
+        }
+    };
+
+    async responderComentario(req, res) {
+        try {
+            const id = req.params.id;
+            const { resposta } = req.body;
+            const comentario = await this.comentariosService.getComentarioById(id);
+            if (comentario && comentario.validado) {
+                console.log(`PATCH-RESPONDE /comentarios/:${id} [200] OK`);
+                const updatedComentario = await this.comentariosService.patchComentario(id, { resposta });
+                res.status(200).send(updatedComentario);
+            } else {
+                console.log(`PATCH-RESPONDE /comentarios/:${id} [404] NOT FOUND`);
+                res.status(400).send({ message: 'Comentario não validado ou não encontrado' });
+            }
+        } catch (error) {
+            console.log(`PATCH-RESPONDE /comentarios/:${id} [500] INTERNAL SERVER ERROR\n ${error}`);
+            res.status(500).send({ message: '[500] INTERNAL SERVER ERROR' });
         }
     };
 
