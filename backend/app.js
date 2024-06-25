@@ -1,4 +1,4 @@
-const server = require('./src/conf/server.js');
+const server = require('./conf/server.js');
 const consign = require('consign');
 const swaggerUi = require('swagger-ui-express');
 const specs = require('./docs/swagger.js');
@@ -9,7 +9,7 @@ server.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-consign({ cwd: 'src/api'})
+consign({ cwd: 'api'})
     .include('routes')
     .into(server);
 
