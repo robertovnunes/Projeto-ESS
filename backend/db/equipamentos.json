@@ -1,28 +1,6 @@
 [
   {
-    "id": "04YJvuaaLE8j",
-    "nome": "Ar condicionado midea",
-    "descricao": "Ar condicionado split de 12.000 btus",
-    "estado_conservacao": "Bom",
-    "data_aquisicao": "15/03/2023",
-    "valor_estimado": "R$ 1.200,00",
-    "patrimonio": "1098642",
-    "reservas": [],
-    "manutencao": []
-  },
-  {
-    "id": "04mqoTPziDPH",
-    "nome": "Ar condicionado philco",
-    "descricao": "Ar condicionado split de 12.000 btus",
-    "estado_conservacao": "Bom",
-    "data_aquisicao": "15/03/2023",
-    "valor_estimado": "R$ 1.200,00",
-    "numero_serie": "1098643",
-    "reservas": [],
-    "manutencao": []
-  },
-  {
-    "id": "04AY32lfzJN4",
+    "id": "04Yyf3w0ma1x",
     "nome": "Monitor phillips",
     "descricao": "monitor full hd",
     "estado_conservacao": "Bom",

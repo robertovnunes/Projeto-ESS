@@ -13,4 +13,10 @@ consign({ cwd: 'api'})
     .include('routes')
     .into(server);
 
+server.listen(3001, () => {
+    console.log('Server running on port 3001');
+});
+
+
+
 module.exports = server;

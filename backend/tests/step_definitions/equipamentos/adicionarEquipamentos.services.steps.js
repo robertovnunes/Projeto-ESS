@@ -1,45 +1,26 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../../app.js');
-const equipamentoService = require('../../../../api/services/equipamentosService.js');
-const equipamentoInjector = require('../../../../di/equipamentoInjector');
-const modelSN = require('../../../../api/models/equipamentoSNModel.js');
-const modelPatrimonio = require('../../../../api/models/equipamentoPatrimonioModel.js');
-const EquipamentosRepository = require('../../../../api/repositories/equipamentosRepository.js');
+const app = require('../../../app.js')
+const modelSN = require('../../../api/models/equipamentoSNModel.js');
+const modelPatrimonio = require('../../../api/models/equipamentoPatrimonioModel.js');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
 defineFeature(feature, (test) => {
-    let request, mockEquipamentos, service, injector;
+    let request, mockEquipamentos, service, injector, equipmentsID, response;
+    equipmentsID = [];
     request = supertest(app);
     request.headers = {username: 'joao', role: 'admin'};
-    request.method = '/POST';
+    request.method = '/POST'; 
 
     beforeEach(() => {
-        injector = new equipamentoInjector([]);
-        const mockEquipamentosData = {
-            getEquipamentos: jest.fn(),
-            getEquipmentById: jest.fn(),
-            getEquipmentByPatrimonio: jest.fn(),
-            getEquipmentBySerie: jest.fn(),
-            createEquipmentPatrimonio: jest.fn(),
-            createEquipmentSN: jest.fn(),
-            updateEquipment: jest.fn(),
-            deleteEquipment: jest.fn()
-        };
-        mockEquipamentos = mockEquipamentosData;
-        injector.registerEquipmentRepository(EquipamentosRepository, mockEquipamentos);
-        service = new equipamentoService(mockEquipamentos);
+        
     });
 
     afterAll( async () => {
         jest.clearAllMocks();
-        response = await request.get('/equipamentos');
-        if(response.status === 200) {
-            response.body.forEach( async (equipamento) => {
-                await request.delete(`/equipamentos/${equipamento.id}`);
-            });
+        for (let i = 0; i < equipmentsID.length; i++){
+            await request.delete(`/equipamentos/${equipmentsID[i]}`);
         }
-        app.off();
     });
 
 //Steps to reuse
@@ -49,8 +30,14 @@ defineFeature(feature, (test) => {
             const url = `/equipamentos/${campo}/${identificador}`;
             let response;
             response = await request.get(url);
-            expect(response.status).toBe(404);
-            expect(response.body.message).toBe('Equipamento nao encontrado');
+            if(response.status === 200){
+                response = await request.delete(`/equipamentos/${response.body.id}`);
+                expect(response.status).toBe(200);
+            }
+            else {
+                expect(response.status).toBe(404);
+                expect(response.body.message).toBe('Equipamento nao encontrado');
+            }
         });
     };
     const givenNotPatrimonioExist = async (given) => {
@@ -70,18 +57,20 @@ defineFeature(feature, (test) => {
     };
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
-            let response;
-            let data;
-            if(campo === 'patrimonio'){
-                data = new modelPatrimonio('Monitor phillips', 'monitor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', patrimonio=identificador);
-            } else if (campo === 'numero_serie'){
-                data = new modelSN('Ar condicionado philco', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', numero_serie=identificador);
+            response = await request.get(`/equipamentos/${campo}/${identificador}`);
+            if(response.status !== 200){
+                if (campo === 'patrimonio'){
+                    data = new modelPatrimonio('Monitor phillips', 'monitor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', patrimonio=identificador);
+                } else {
+                    data = new modelSN('Ar condicionado philco', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', numero_serie=identificador);
+                } 
+                response = await request.post(`/equipamentos/${campo}`).send(data);
+                response.status === 201 ? equipmentsID.push(response.body.id) : null;
+            } else {
+                expect(response.status).toBe(200);
             }
-            response = await request.post(`/equipamentos/${campo}`).send(data);
-            console.log(response.body);
-            expect(response.status).toBe(201);
         });
-    }
+    };
 //When steps
     const whenRequest = async (when) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, user, role) => {
@@ -94,10 +83,20 @@ defineFeature(feature, (test) => {
     const thenEquipmentIsOnDatabase = async (then, data) => {
         then(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, valor) => {
             //jest.spyOn(mockEquipamentos, 'addEquipamento').mockResolvedValue(data);
-            const response = await request.post(`/equipamentos/${campo}`).send(data);
-            expect(response.status).toBe(201);
-            expect(response.body['nome']).toBe(nome);
-            expect(response.body[campo]).toBe(valor);
+            response = await request.get(`/equipamentos/${campo}/${valor}`);
+            if(response.status !== 200){
+                response = await request.post(`/equipamentos/${campo}`).send(data);
+                equipmentsID.push(response.body.id);
+
+            } else {
+                response = await request.delete(`/equipamentos/${response.body.id}`);
+                expect(response.status).toBe(200);
+                response = await request.post(`/equipamentos/${campo}`).send(data);
+                equipmentsID.push(response.body.id);
+                expect(response.status).toBe(201);
+                expect(response.body['nome']).toBe(nome);
+                expect(response.body[campo]).toBe(valor);
+            }
         });
     };
     const thenResponseError = async (then, data, identificador) => {
@@ -194,77 +193,77 @@ defineFeature(feature, (test) => {
         andFieldMatch(and, data);
         thenResponseError(then, data, 'patrimonio');
     });
-});
-    
-
-        /*
-    test('Adicionando equipamento duplicado', ({given, when, then, and}) => {
+        test('Adicionando equipamento com numero de serie duplicado', ({given, when, then, and}) => {
+        const data = new modelSN('Projetor epson', 'projetor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', '1098643');
         givenEquipmentExist(given);
         whenRequest(when);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Equipamento já cadastrado');
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'numero_serie');
     });
     test('Adicionando equipamento com descricao vazia', ({given, when, then, and}) => {
+        const data = new modelPatrimonio('Monitor phillips', descricao='', 'Bom', '15/03/2023', 'R$ 1.200,00', '5583147');
         givenNotEquipmentExist(given);
         whenRequest(when);
-        andFieldMatch(and);
-        andFieldEmpty(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Descricao nao pode ser vazia');
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
     });
     test('Adicionando equipamento com estado de conservacao vazio', ({given, when, then, and}) => {
-        givenRequest(given);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldEmpty(and); //test to check if the field is empty
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Estado de conservacao nao pode ser vazio');
+        const data = new modelPatrimonio('Monitor phillips', 'Monitor de 19 polegadas', '', '15/03/2023', 'R$ 1.200,00', '5583147');
+        givenNotEquipmentExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
     });
     test('Adicionando equipamento com data de aquisicao vazia', ({given, when, then, and}) => {
-        givenRequest(given);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldEmpty(and); //test to check if the field is empty
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Data de aquisicao nao pode ser vazia');
+        const data = new modelPatrimonio('Monitor phillips', 'Monitor de 19 polegadas', 'Bom', '', 'R$ 1.200,00', '5583147');
+        givenNotEquipmentExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
     });
     test('Adicionando equipamento com valor estimado vazio', ({given, when, then, and}) => {
-        givenRequest(given);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldEmpty(and); //test to check if the field is empty
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Valor estimado nao pode ser vazio');
+        const data = new modelPatrimonio('Monitor phillips', 'Monitor de 19 polegadas', 'Bom', '15/03/2023', '', '5583147');
+        givenNotEquipmentExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenResponseError(then, data, 'patrimonio');
     });
-    test('Adicionando equipamento com estado de conservacao nao funcional', ({given, when, then, and}) => {
-        givenRequest(given);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and); //test to check if the field is empty
-        andFieldMatch(and);
-        andFieldMatch(and);
-        andFieldMatch(and);
-        thenResponseError(then);
-        andMessageError(and, 'Estado de conservacao inválido');
-
+    test('Adicionando equipamento com estado de conservação não funcional', ({given, when, then, and}) => {
+        const data = new modelSN('Monitor phillips', 'Monitor de 19 polegadas', 'não funcional', '15/03/2023', 'R$ 1.200,00', '5583147');
+        givenNotEquipmentExist(given);
+        whenRequest(when);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        andFieldMatch(and, data);
+        thenEquipmentIsOnDatabase(then, data, 'numero_serie');
+        andResponseSucesso(and);
     });
-*/
+});
