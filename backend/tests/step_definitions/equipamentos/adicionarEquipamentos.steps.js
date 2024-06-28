@@ -1,19 +1,23 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../app.js')
+const app = require('../../../app.js');
 const modelSN = require('../../../api/models/equipamentoSNModel.js');
 const modelPatrimonio = require('../../../api/models/equipamentoPatrimonioModel.js');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
 defineFeature(feature, (test) => {
-    let request, mockEquipamentos, service, injector, equipmentsID, response;
+    
+    const server = app.listen(3001, () =>{
+        console.log('Testes rodando na porta 3001');
+    });
+    
+    let request, service, injector, equipmentsID, response;
     equipmentsID = [];
     request = supertest(app);
     request.headers = {username: 'joao', role: 'admin'};
-    request.method = '/POST'; 
-
+    request.method = '/POST';
+    
     beforeEach(() => {
-        
     });
 
     afterAll( async () => {
@@ -21,6 +25,7 @@ defineFeature(feature, (test) => {
         for (let i = 0; i < equipmentsID.length; i++){
             await request.delete(`/equipamentos/${equipmentsID[i]}`);
         }
+        server.close();
     });
 
 //Steps to reuse
