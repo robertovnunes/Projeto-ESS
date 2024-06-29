@@ -8,12 +8,12 @@ const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.fe
 defineFeature(feature, (test) => {
     
     const server = app.listen(3001, () =>{
-        console.log('Testes rodando na porta 3001');
+        console.log('Testando...');
     });
     
-    let request, service, injector, equipmentsID, response;
+    let request, equipmentsID, response;
     equipmentsID = [];
-    request = supertest(app);
+    request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/POST';
     

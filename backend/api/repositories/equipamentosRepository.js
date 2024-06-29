@@ -1,3 +1,4 @@
+const e = require('express');
 const fs = require('fs');
 const path = require('path');
 
@@ -16,7 +17,8 @@ class EquipamentosRepository {
     }
 
     async _readFile(filePath) {
-        const data = await fs.promises.readFile(filePath, 'utf8');
+        let data;
+        data = await fs.promises.readFile(filePath, 'utf8');
         return JSON.parse(data);
     }
 
@@ -90,15 +92,28 @@ class EquipamentosRepository {
 
     async updateEquipment(id, data) {
         let db = await this.getAllEquipments();
-        let equipamento = this.getEquipmentById(id);
-        console.log(equipamento);
+        let equipamento = await this.getEquipmentById(id);
         if(equipamento === 'Equipamento nao encontrado' || db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
         else {
             const index = db.findIndex(equipamento => equipamento.id === id);
             if(index === -1) return 'Equipamento nao encontrado';
-            db[index] = {...db[index], ...data};
-            if (!this.isMock) await this._writeFile(db);
-            return db[index];
+            if(equipamento.hasOwnProperty('patrimonio')){
+                if(data.patrimonio === equipamento.patrimonio){
+                    db[index] = {...db[index], ...data};
+                    if (!this.isMock) await this._writeFile(db);
+                    return db[index];
+                } else {
+                    return 'O patrimonio de um equipamento não pode ser modificado';
+                }
+            } else if(equipamento.hasOwnProperty('numero_serie')){
+                if(data.numero_serie === equipamento.numero_serie){
+                    db[index] = {...db[index], ...data};
+                    if (!this.isMock) await this._writeFile(db);
+                    return db[index];
+                } else {
+                    return 'O numero de serie de um equipamento não pode ser modificado';
+                }
+            }
         }
     }
 

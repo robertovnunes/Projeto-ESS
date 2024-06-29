@@ -1,12 +1,23 @@
 [
   {
-    "id": "04Yyf3w0ma1x",
-    "nome": "Monitor phillips",
-    "descricao": "monitor full hd",
-    "estado_conservacao": "Bom",
+    "id": "04sk2GHcgYri",
+    "nome": "Ar condicionado midea",
+    "descricao": "Ar condicionado de 12.000 btus",
+    "estado_conservacao": "reformado",
     "data_aquisicao": "15/03/2023",
     "valor_estimado": "R$ 1.200,00",
-    "patrimonio": "1098643",
+    "patrimonio": "1098642",
+    "reservas": [],
+    "manutencao": []
+  },
+  {
+    "id": "04EGkIhCGohs",
+    "nome": "Ar condicionado midea",
+    "descricao": "Ar condicionado de 12.000 btus",
+    "estado_conservacao": "novo",
+    "data_aquisicao": "15/03/2023",
+    "valor_estimado": "R$ 1.200,00",
+    "numero_serie": "1098642",
     "reservas": [],
     "manutencao": []
   }
