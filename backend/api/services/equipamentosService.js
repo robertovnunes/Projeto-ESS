@@ -34,7 +34,7 @@ class EquipamentosService {
     }
 
     patchEquipment(id, newEquipamento) {
-        return this.equipamentoRepository.patchEquipment(id, newEquipamento);
+        return this.equipamentoRepository.updateEquipment(id, newEquipamento);
     }
 
     deleteEquipment(id) {
