@@ -20,5 +20,27 @@
     "numero_serie": "3642597",
     "reservas": [],
     "manutencao": []
+  },
+  {
+    "id": "123456",
+    "nome": "Projetor epson",
+    "descricao": "Projetor laser ultra curta distancia",
+    "estado_conservacao": "novo",
+    "data_aquisicao": "10/04/2024",
+    "valor_estimado": "R$ 4.500,00",
+    "patrimonio": "5578945",
+    "reservas": [],
+    "manutencao": []
+  },
+  {
+    "id": "7891234",
+    "nome": "FPGA",
+    "descricao": "placa de prototipação de circuitos",
+    "estado_conservacao": "novo",
+    "data_aquisicao": "10/04/2024",
+    "valor_estimado": "R$ 2.000,00",
+    "numero_serie": "5578945",
+    "reservas": [],
+    "manutencao": []
   }
 ]

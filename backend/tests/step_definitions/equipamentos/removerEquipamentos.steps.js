@@ -38,6 +38,21 @@ defineFeature(feature, (test) => {
     equipamentosRepository = new EquipamentosRepository();
     equipamentosService = new EquipamentoService(equipamentosRepository);
 
+
+beforeAll( async () => {
+        let equipamentosService = new EquipamentoService(equipamentosRepository);
+        return await Promise.all(equipments.map(async (eq) => {
+            if (await equipamentosService.getEquipmentById(eq.id) === null) {
+                if (eq.hasOwnProperty('patrimonio')) {
+                    await equipamentosService.createEquipmentPatrimonio(eq);
+                } else {
+                    await equipamentosService.createEquipmentSN(eq);
+                }
+            }
+        }));
+
+    })
+
     afterAll(() => {
 
         server.close();
@@ -47,14 +62,8 @@ defineFeature(feature, (test) => {
 //GIVEN
     const givenEquipmentExist = async (given) => {
         given(/^que eu tenho o equipamento com id (.*)$/, async (identificador) => {
-            let eq = equipments.find(equipamento => equipamento.id === identificador);
-            let created;
-            if(eq.hasOwnProperty('patrimonio')){
-                created = await equipamentosRepository.createEquipmentPatrimonio(eq);
-            } else {
-                 created = await equipamentosRepository.createEquipmentSN(eq);
-            }
-            expect(created).not.toBe(null);
+            response = await request.get(`/equipamentos/${identificador}`);
+            expect(response.status).toBe(200);
         });
     };
     const givenEquipmentNotExist = (given) => {
@@ -71,7 +80,7 @@ defineFeature(feature, (test) => {
         });
     };
 //THEN
-    const thenEquipmentRemoved = (then) =>{
+    const thenEquipmentRemoved = async (then) =>{
         then(/^o equipamento com id (.*) deve ser removido do banco de dados$/, async (identificador) => {
             response = await request.delete(`/equipamentos/${identificador}`);
         });
@@ -84,8 +93,8 @@ defineFeature(feature, (test) => {
         });
     };
 //AND
-    const andResponse = (and) => {
-        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, (message, code) => {
+    const andResponse = async (and) => {
+        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (message, code) => {
             expect(response.status).toBe(parseInt(code));
         });
     };

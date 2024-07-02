@@ -6,7 +6,7 @@ const path = require('path');
 class EquipamentosRepository {
     constructor() {
         this.filePath = path.join(__dirname, '../../db/equipamentos.json');
-        this.db = this._init();
+        this.db =  this._init();
     }
 
     async _init() {
