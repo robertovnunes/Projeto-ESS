@@ -2,7 +2,6 @@ const app = require('./conf/server.js');
 const consign = require('consign');
 const swaggerUi = require('swagger-ui-express');
 const specs = require('./docs/swagger.js');
-const port = 3001;
 
 //app.use('/', swaggerUi.serve, swaggerUi.setup(specs));
 
@@ -13,9 +12,5 @@ app.get('/', (req, res) => {
 consign({ cwd: 'api'})
     .include('routes')
     .into(app);
-
-app.listen(port, () =>{
-    console.log(`Server running on port ${port}`);
-});
 
 module.exports = app;

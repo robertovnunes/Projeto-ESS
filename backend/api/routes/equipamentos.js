@@ -19,7 +19,7 @@ equipamentosController = new EquipamentosController(injector.getEquipmentService
 module.exports = app => {
     app.use('/equipamentos', router);
     router.get('/', equipamentosController.getAllEquipments);
-    router.get('/id/:id', equipamentosController.getEquipmentById);
+    router.get('/:id', equipamentosController.getEquipmentById);
     router.get('/patrimonio/:patrimonio', equipamentosController.getEquipmentByPatrimonio);
     router.get('/numero_serie/:numero_serie', equipamentosController.getEquipmentBySN);
     router.post('/patrimonio/', equipamentosController.createEquipmentPatrimonio);

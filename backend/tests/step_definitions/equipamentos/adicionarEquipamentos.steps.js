@@ -1,11 +1,11 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../app.js');
+const app = require('../../../apptest');
 const modelSN = require('../../../api/models/equipamentoSNModel.js');
 const modelPatrimonio = require('../../../api/models/equipamentoPatrimonioModel.js');
 
 const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
-defineFeature(feature, (test) => {
+defineFeature(feature, async (test) => {
     
     const server = app.listen(3001, () =>{
         console.log('Testando...');
@@ -20,9 +20,8 @@ defineFeature(feature, (test) => {
     beforeEach(() => {
     });
 
-    afterAll( async () => {
-        jest.clearAllMocks();
-        for (let i = 0; i < equipmentsID.length; i++){
+    afterAll(async () => {
+        for(let i=0; i < equipmentsID.length; i++){
             await request.delete(`/equipamentos/${equipmentsID[i]}`);
         }
         server.close();

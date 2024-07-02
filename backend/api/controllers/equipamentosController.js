@@ -20,7 +20,7 @@ class EquipamentosController {
      async getAllEquipments(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === 'Nenhum equipamento cadastrado'){
+            if(equipments === null){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             }
@@ -35,7 +35,7 @@ class EquipamentosController {
     async getAllEquipmentsByPatrimpnio(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === 'Nenhum equipamento cadastrado'){
+            if(equipments === null){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             } else {
@@ -52,7 +52,7 @@ class EquipamentosController {
         async getAllEquipmentsBySN(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === 'Nenhum equipamento cadastrado'){
+            if(equipments === null){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             } else {
@@ -71,7 +71,7 @@ class EquipamentosController {
         try{
             const id = req.params.id;
             const equipment = await this.equipamentosService.getEquipmentById(id);
-            if(equipment !== 'Equipamento nao encontrado'){
+            if(equipment !== null){
                 console.log(`GET /equipamentos/:${id} by ID [200] OK`);
                 return res.status(200).send(equipment);
             } else {
@@ -88,7 +88,7 @@ class EquipamentosController {
         try{
             const patrimonio = req.params.patrimonio;
             const equipment = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-            if(equipment !== 'Equipamento nao encontrado'){
+            if(equipment !== null){
                 console.log(`GET /equipamentos/patrimonio/:${patrimonio} [200] OK`);
                 return res.status(200).send(equipment);
             } else {
@@ -105,7 +105,7 @@ class EquipamentosController {
         try{
             const sn = req.params.numero_serie;
             const equipment = await this.equipamentosService.getEquipmentBySerie(sn);
-            if(equipment === 'Equipamento nao encontrado'){
+            if(equipment === null){
                 console.log(`GET /equipamentos/patrimonio/:${sn} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
@@ -138,7 +138,7 @@ class EquipamentosController {
                 }
             } else {
                 const equipmentExist = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-                if(equipmentExist !== 'Equipamento nao encontrado') {
+                if(equipmentExist !== null) {
                     console.log(`POST /equipamentos [400] BAD REQUEST `);
                     return res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
                 } else {
@@ -174,7 +174,7 @@ class EquipamentosController {
                 }
             } else {
                 const equipmentExist = await this.equipamentosService.getEquipmentBySerie(numero_serie);
-                if(equipmentExist !== 'Equipamento nao encontrado') {
+                if(equipmentExist !== null) {
                     console.log(`POST /equipamentos [400] BAD REQUEST`);
                     return res.status(400).send({message: 'Já existe um equipamento com este numero de serie'});
                     return;
@@ -194,7 +194,7 @@ class EquipamentosController {
     async patchEquipment(req, res) {
         try{
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
-            if(updated === 'Equipamento nao encontrado') {
+            if(updated === null) {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
@@ -218,12 +218,12 @@ class EquipamentosController {
     async deleteEquipment(req, res) {
         try{
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
-            if(deleted === 'Equipamento nao encontrado') {
+            if(deleted === null) {
                 console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
                 console.log(`DELETE /equipamentos/${req.params.id} [200] OK`);
-                return res.status(200).send(deleted);
+                return res.status(200).send({message: `Equipamento ${deleted.nome} removido com sucesso`});
             }
         } catch (error) {
             console.log(`DELETE /equipamentos/${req.params.id} [500] INTERNAL SERVER ERROR\n ${error.message}`);

@@ -1,11 +1,11 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../app.js');
+const app = require('../../../apptest');
 const modelSN = require('../../../api/models/equipamentoSNModel.js');
 const modelPatrimonio = require('../../../api/models/equipamentoPatrimonioModel.js');
 
 const feature = loadFeature('tests/features/equipamentos/editarEquipamento.feature');
-defineFeature(feature, (test) => {
+defineFeature(feature, async (test) => {
     const server = app.listen(3001, () =>{
         console.log('Testando...');
     });
@@ -19,14 +19,11 @@ defineFeature(feature, (test) => {
     beforeEach(() => {
     });
 
-    afterAll( async () => {
-        jest.clearAllMocks();
-        equipmentsID.forEach(async (id) => {
-            try {
-                await request.delete(`/equipamentos/${id}`);
-            } catch (error) {
-            }
-        });
+    afterAll(async () => {
+        console.log(equipmentsID);
+        for(let i=0; i < equipmentsID.length; i++){
+            await request.delete(`/equipamentos/${equipmentsID[i]}`);
+        }
         server.close();
     });
 
@@ -37,31 +34,29 @@ defineFeature(feature, (test) => {
             const equipamento = JSON.parse(json);
             if(equipamento.hasOwnProperty('patrimonio')){
                 response = await request.get(`/equipamentos/patrimonio/${equipamento.patrimonio}`);
-                if(response.status === 404){
-                    response = await request.post('/equipamentos/patrimonio').send(equipamento);
-                    if(response.status === 201){
-                        id = response.body.id;
-                        equipmentsID.push(id);
-                    }
-                    expect(response.status).toBe(201);
+                if(response.status === 200){
+                    id = response.body.id;
                 } else {
-                    expect(response.status).toBe(200);
+                    response = await request.post('/equipamentos/patrimonio').send(equipamento);
+                    id = response.body.id;
+                    expect(response.status).toBe(201);
+                }
+                if(equipmentsID.filter(value => value !== id)){
+                    equipmentsID.push(id);
                 }
             } else if(equipamento.hasOwnProperty('numero_serie')){
-                    response = await request.get(`/equipamentos/numero_serie/${equipamento.numero_serie}`);
-                    if(response.status === 404){
-                        response = await request.post('/equipamentos/numero_serie').send(equipamento);
-                        if(response.status === 201){
-                        id = response.body.id;
-                        equipmentsID.push(id);
-                    }
-                        expect(response.status).toBe(201);
-                    } else {
-                        id = response.body.id;
-                        equipmentsID.push(id);
-                        expect(response.status).toBe(200);
-                    }
+                response = await request.get(`/equipamentos/numero_serie/${equipamento.numero_serie}`);
+                if(response.status === 200){
+                    id = response.body.id;
+                } else {
+                    response = await request.post('/equipamentos/numero_serie').send(equipamento);
+                    id = response.body.id;
+                    expect(response.status).toBe(201);
                 }
+                if(equipmentsID.filter(value => value !== id)){
+                    equipmentsID.push(id);
+                }
+            }
         });
     }
 //When steps
