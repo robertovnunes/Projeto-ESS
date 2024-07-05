@@ -1,14 +1,12 @@
 const EquipamentosRepository = require('../../../api/repositories/equipamentosRepository');
-const EquipamentoService = require('../../../api/services/equipamentosService');
 const {defineFeature, loadFeature} = require('jest-cucumber');
 const app = require('../../../apptest');
 const supertest = require('supertest');
-const equipamento = require('../../../api/models/equipamentoSNModel');
 
 const feature = loadFeature('./tests/features/equipamentos/removerEquipamentos.feature');
 
 defineFeature(feature, (test) => {
-    let request, response, equipments, equipamentosRepository, server, equipamentosService;
+    let request, response, equipments, mockEquipamentosRepository, server, injector;
     equipments = [{
         id:"123456",
         nome: "Projetor epson",
@@ -35,23 +33,11 @@ defineFeature(feature, (test) => {
     });
     request = supertest(server);
     request.headers = {"username": "joao", "role": "admin"};
-    equipamentosRepository = new EquipamentosRepository();
-    equipamentosService = new EquipamentoService(equipamentosRepository);
+    request.method = '/DELETE';
 
-
-beforeAll( async () => {
-        let equipamentosService = new EquipamentoService(equipamentosRepository);
-        return await Promise.all(equipments.map(async (eq) => {
-            if (await equipamentosService.getEquipmentById(eq.id) === null) {
-                if (eq.hasOwnProperty('patrimonio')) {
-                    await equipamentosService.createEquipmentPatrimonio(eq);
-                } else {
-                    await equipamentosService.createEquipmentSN(eq);
-                }
-            }
-        }));
-
-    })
+    beforeAll(() => {
+        mockEquipamentosRepository = new EquipamentosRepository();
+    });
 
     afterAll(() => {
 
@@ -62,8 +48,15 @@ beforeAll( async () => {
 //GIVEN
     const givenEquipmentExist = async (given) => {
         given(/^que eu tenho o equipamento com id (.*)$/, async (identificador) => {
-            response = await request.get(`/equipamentos/${identificador}`);
-            expect(response.status).toBe(200);
+            equipments.forEach( async (eq) => {
+                if(eq.id === identificador) {
+                    if (eq.hasOwnProperty('patrimonio')) { 
+                        await mockEquipamentosRepository.createEquipmentPatrimonio(eq) 
+                    } else { 
+                        await mockEquipamentosRepository.createEquipmentSN(eq);
+                    }
+                }
+            });
         });
     };
     const givenEquipmentNotExist = (given) => {

@@ -1,8 +1,7 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
 const app = require('../../../apptest');
-const modelSN = require('../../../api/models/equipamentoSNModel.js');
-const modelPatrimonio = require('../../../api/models/equipamentoPatrimonioModel.js');
+const EquipamentosRepository = require('../../../api/repositories/equipamentosRepository');
 
 const feature = loadFeature('tests/features/equipamentos/editarEquipamento.feature');
 defineFeature(feature, async (test) => {
@@ -10,20 +9,18 @@ defineFeature(feature, async (test) => {
         console.log('Testando...');
     });
     
-    let request, equipmentsID, response, id;
+    let request, equipmentsID, response, id, equipamentosRepository;
     equipmentsID = [];
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/PATCH';
     
-    beforeEach(() => {
-    });
+    equipamentosRepository = new EquipamentosRepository();
 
     afterAll(async () => {
-        console.log(equipmentsID);
-        for(let i=0; i < equipmentsID.length; i++){
-            await request.delete(`/equipamentos/${equipmentsID[i]}`);
-        }
+        equipmentsID.forEach( async (id) => {
+            await equipamentosRepository.deleteEquipment(id);
+        });
         server.close();
     });
 

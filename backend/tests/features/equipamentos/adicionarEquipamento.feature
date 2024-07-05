@@ -4,134 +4,182 @@ Feature: As a usuario administrador
 
   Scenario: Adicionando equipamento usando patrimonio com sucesso
     Given nao existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Ar condicionado midea"
-    And "descricao" com "Ar condicionado split de 12.000 btus"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "1098642"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+     "nome": "Ar condicionado midea",
+     "descricao": "Ar condicionado split de 12.000 btus",
+     "estado_conservacao": "Bom",
+     "data_aquisicao": "15/03/2023",
+     "valor_estimado": "R$ 1.200,00",
+     "patrimonio": "1098642"
+    }
+    """
     Then o equipamento "Ar condicionado midea" com "patrimonio" "1098642" está no banco de dados
     And eu envio uma resposta de "sucesso" com codigo "201"
 
   Scenario: Adicionando equipamento usando numero de serie com sucesso
     Given nao existe o equipamento "Ar condicionado philco" com "numero_serie" "1098643"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Ar condicionado philco"
-    And "descricao" com "Ar condicionado split de 12.000 btus"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "numero_serie" com "1098643"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Ar condicionado philco",
+      "descricao": "Ar condicionado split de 12.000 btus",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "numero_serie": "1098643"
+    }
+    """
     Then o equipamento "Ar condicionado philco" com "numero_serie" "1098643" está no banco de dados
     And eu envio uma resposta de "sucesso" com codigo "201"
 
   Scenario: Adicionando equipamento com nome vazio
-    Given nao existe o equipamento com "patrimonio" "1098642"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com ""
-    And "descricao" com "Ar condicionado split de 12.000 btus"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "1098642"
+    Given nao existe o equipamento "" com "patrimonio" "1098644"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "1098644"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Nome nao informado"
 
   Scenario: Adicionando equipamento com patrimonio vazio
-    Given eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Ar condicionado midea"
-    And "descricao" com "Ar condicionado de 12.000 btus"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com ""
+    Given eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Ar condicionado philco",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": ""
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Patrimonio nao informado"
 
   Scenario: Adicionando equipamento com numero de serie vazio
-    Given eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Ar condicionado philco"
-    And "descricao" com "Ar condicionado de 12.000 btus"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "numero_serie" com ""
+    Given eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Ar condicionado philco",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "numero_serie": ""
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Numero de serie nao informado"
 
   Scenario: Adicionando equipamento com patrimonio duplicado
     Given existe o equipamento com "patrimonio" "1098643"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Projetor epson"
-    And "descricao" com "projetor full hd"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "1098643"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Projetor epson",
+      "descricao": "projetor full hd",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "1098643"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Já existe um equipamento com este patrimônio"
 
   Scenario: Adicionando equipamento com numero de serie duplicado
     Given existe o equipamento com "numero_serie" "1098643"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Projetor epson"
-    And "descricao" com "projetor full hd"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "numero_serie" com "1098643"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Projetor epson",
+      "descricao": "projetor full hd",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "numero_serie": "1098643"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Já existe um equipamento com este numero de serie"
 
   Scenario: Adicionando equipamento com descricao vazia
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Monitor phillips"
-    And "descricao" com ""
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "5583147"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Monitor phillips",
+      "descricao": "",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "5583147"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Descriçao nao informada"
 
   Scenario: Adicionando equipamento com estado de conservacao vazio
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Monitor phillips"
-    And "descricao" com "Monitor de 19 polegadas"
-    And "estado_conservacao" com ""
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "5583147"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Monitor phillips",
+      "descricao": "Monitor de 19 polegadas",
+      "estado_conservacao": "",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "5583147"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Estado de conservaçao nao informado"
 
   Scenario: Adicionando equipamento com data de aquisicao vazia
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Monitor phillips"
-    And "descricao" com "Monitor de 19 polegadas"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com ""
-    And "valor_estimado" com "R$ 1.200,00"
-    And "patrimonio" com "5583147"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Monitor phillips",
+      "descricao": "Monitor de 19 polegadas",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "5583147"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Data de aquisiçao nao informada"
 
 #adicionar scenario outline em todos os cenarios
   Scenario: Adicionando equipamento com valor estimado vazio
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Monitor phillips"
-    And "descricao" com "Monitor de 19 polegadas"
-    And "estado_conservacao" com "Bom"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com ""
-    And "patrimonio" com "5583147"
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Monitor phillips",
+      "descricao": "Monitor de 19 polegadas",
+      "estado_conservacao": "Bom",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "",
+      "patrimonio": "5583147"
+    }
+    """
     Then eu envio uma resposta de "erro" com codigo "400" e mensagem "Valor estimado nao informado"
 
   Scenario: Adicionando equipamento com estado de conservação não funcional
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
-    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin"
-    And "nome" com "Monitor phillips"
-    And "descricao" com "Monitor de 19 polegadas"
-    And "estado_conservacao" com "não funcional"
-    And "data_aquisicao" com "15/03/2023"
-    And "valor_estimado" com "R$ 1.200,00"
-    And "numero_serie" com "5583147"
-    Then o equipamento "Monitor phillips" com "numero_serie" "5583147" está no banco de dados
+    When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
+    """
+    {
+      "nome": "Monitor phillips",
+      "descricao": "Monitor de 19 polegadas",
+      "estado_conservacao": "Ruim",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "5583147"
+    }
+    """
+    Then o equipamento "Monitor phillips" com "patrimonio" "5583147" está no banco de dados
     And eu envio uma resposta de "sucesso" com codigo "201"
