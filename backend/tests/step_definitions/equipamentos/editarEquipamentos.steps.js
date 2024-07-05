@@ -9,18 +9,20 @@ defineFeature(feature, async (test) => {
         console.log('Testando...');
     });
     
-    let request, equipmentsID, response, id, equipamentosRepository;
+    let request, equipmentsID, response, id, equipamentosRepository, mockData;
     equipmentsID = [];
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/PATCH';
     
-    equipamentosRepository = new EquipamentosRepository();
+    beforeAll(() => {
+        equipamentosRepository = new EquipamentosRepository();
+    }); 
 
     afterAll(async () => {
-        equipmentsID.forEach( async (id) => {
+        for(let id of equipmentsID){
             await equipamentosRepository.deleteEquipment(id);
-        });
+        }
         server.close();
     });
 
@@ -29,29 +31,21 @@ defineFeature(feature, async (test) => {
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento:/, async (json) => {
             const equipamento = JSON.parse(json);
+            let exist;
+            exist = await equipamentosRepository.getEquipmentByID(equipamento.id);
             if(equipamento.hasOwnProperty('patrimonio')){
-                response = await request.get(`/equipamentos/patrimonio/${equipamento.patrimonio}`);
-                if(response.status === 200){
-                    id = response.body.id;
+                if(exist !== null){
+                    await equipamentosRepository.deleteEquipment(exist.id);
                 } else {
-                    response = await request.post('/equipamentos/patrimonio').send(equipamento);
-                    id = response.body.id;
-                    expect(response.status).toBe(201);
-                }
-                if(equipmentsID.filter(value => value !== id)){
-                    equipmentsID.push(id);
+                    await equipamentosRepository.createEquipmentByPatrimonio(equipamento);
+                    equipmentsID.push(equipamento.id);
                 }
             } else if(equipamento.hasOwnProperty('numero_serie')){
-                response = await request.get(`/equipamentos/numero_serie/${equipamento.numero_serie}`);
-                if(response.status === 200){
-                    id = response.body.id;
+                if(exist !== null){
+                    await equipamentosRepository.deleteEquipment(exist.id);
                 } else {
-                    response = await request.post('/equipamentos/numero_serie').send(equipamento);
-                    id = response.body.id;
-                    expect(response.status).toBe(201);
-                }
-                if(equipmentsID.filter(value => value !== id)){
-                    equipmentsID.push(id);
+                    await equipamentosRepository.createEquipmentBySN(equipamento);
+                    equipmentsID.push(equipamento.id);
                 }
             }
         });

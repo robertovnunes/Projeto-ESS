@@ -12,18 +12,20 @@ defineFeature(feature, (test) => {
         console.log('Testando...');
     });
     
-    let request, equipmentsID, response, data, mockEquipamentosRepository;
-    equipmentsID = [];
+    let request, response, mockEquipamentosRepository, mockData;
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/POST';
-    mockEquipamentosRepository = new EquipamentosRepository();
-    
+    let equipmentsID = [];
+
+    beforeAll(async () => {
+        mockEquipamentosRepository = new EquipamentosRepository();
+    });
 
     afterAll(async () => {
-        equipmentsID.forEach( async (id) => {
+        for(let id of equipmentsID){
             await mockEquipamentosRepository.deleteEquipment(id);
-        });
+        }
         server.close();
     });
 
@@ -31,46 +33,34 @@ defineFeature(feature, (test) => {
 //Given steps
     const givenNotEquipmentExist = async (given) => {
         given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-            const url = `/equipamentos/${campo}/${identificador}`;
-            response = await request.get(url);
-            expect(response.status).toBe(404);            
-        });
-    };
-    const givenNotPatrimonioExist = async (given) => {
-        given(/^nao existe o equipamento "(.*)" com "(.*)" "(.*)"$/, async (nome, campo, identificador) => {
-            const url = `/equipamentos/${campo}/${identificador}`;
-            const response = await request.get(url);
-            expect(response.status).toBe(404);
-        });
-    };
-    const givenRequest = (given) => {
-        given(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)" e json:$/, async (req, user, role, json) => {
-            data = JSON.parse(json);
-            expect(request.method).toBe(req);
-            expect(request.headers.username).toBe(user);
-            expect(request.headers.role).toBe(role);
+            let exist;
+            if(campo === 'patrimonio'){
+                exist = await mockEquipamentosRepository.getEquipmentByPatrimonio(identificador);
+            } else {
+                exist = await mockEquipamentosRepository.getEquipmentBySerie(identificador);
+            }
+            if(exist !== null){
+                console.log(exist);
+                await mockEquipamentosRepository.deleteEquipment(exist.id);
+            }
         });
     };
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
-            response = await request.get(`/equipamentos/${campo}/${identificador}`);
-            if(response.status !== 200){
-                if (campo === 'patrimonio'){
-                    data = new modelPatrimonio('Monitor phillips', 'monitor full hd', 'Bom', '15/03/2023', 'R$ 1.200,00', patrimonio=identificador);
-                } else {
-                    data = new modelSN('Ar condicionado philco', 'Ar condicionado split de 12.000 btus', 'Bom', '15/03/2023', 'R$ 1.200,00', numero_serie=identificador);
-                } 
-                response = await request.post(`/equipamentos/${campo}`).send(data);
-                response.status === 201 ? equipmentsID.push(response.body.id) : null;
-            } else {
-                expect(response.status).toBe(200);
+            if(campo === 'patrimonio'){
+                mockData = new modelPatrimonio('Projetor epson', 'Projetor laser ultra curta distancia', 'novo', '10/04/2024', 'R$ 4.500,00', identificador);
+                await mockEquipamentosRepository.createEquipmentPatrimonio(mockData);
+            } else if (campo === 'numero_serie'){
+                mockData = new modelSN('FPGA', 'placa de prototipação de circuitos', 'novo', '10/04/2024', 'R$ 2.000,00', identificador);
+                await mockEquipamentosRepository.createEquipmentSN(mockData);
             }
+            equipmentsID.push(mockData.id);
         });
     };
 //When steps
     const whenRequest = async (when) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)" e json:$/, async (req, user, role, json) => {
-            data = JSON.parse(json);
+            mockData = JSON.parse(json);
             expect(request.method).toBe(req);
             expect(request.headers.username).toBe(user);
             expect(request.headers.role).toBe(role);
@@ -80,36 +70,26 @@ defineFeature(feature, (test) => {
     const thenEquipmentIsOnDatabase = async (then) => {
         then(/^o equipamento "(.*)" com "(.*)" "(.*)" está no banco de dados$/, async (nome, campo, valor) => {
             //jest.spyOn(mockEquipamentos, 'addEquipamento').mockResolvedValue(data);
-            response = await request.get(`/equipamentos/${campo}/${valor}`);
-            if(response.status !== 200){
-                response = await request.post(`/equipamentos/${campo}`).send(data);
-                equipmentsID.push(response.body.id);
-
-            } else {
-                response = await request.delete(`/equipamentos/${response.body.id}`);
-                expect(response.status).toBe(200);
-                response = await request.post(`/equipamentos/${campo}`).send(data);
-                equipmentsID.push(response.body.id);
-                expect(response.status).toBe(201);
-                expect(response.body['nome']).toBe(nome);
-                expect(response.body[campo]).toBe(valor);
-            }
+            response = await request.post(`/equipamentos/${campo}`).send(mockData);
+            expect(response.status).toBe(201);
+            equipmentsID.push(response.body.id);
         });
     };
     const thenResponseError = async (then) => {
-        then(/^eu envio uma resposta de "(.*)" com codigo "(.*)" e mensagem "(.*)"$/, async (type, code, message) => {
-            const identificador = data.hasOwnProperty('patrimonio') ? 'patrimonio' : 'numero_serie';
-            console.log(identificador);
-            const response = await request.post(`/equipamentos/${identificador}`).send(data);
-            expect(response.statusCode).toBe(parseInt(code));
+        then(/^eu envio uma resposta de erro com codigo "(.*)" e mensagem "(.*)"$/, async (code, message) => {
+            if(mockData.hasOwnProperty('patrimonio')){
+                response = await request.post('/equipamentos/patrimonio').send(mockData);
+            } else {
+                response = await request.post('/equipamentos/numero_serie').send(mockData);
+            }
+            expect(response.status).toBe(parseInt(code));
             expect(response.body.message).toBe(message);
         });
     }
 //And steps
     const andResponseSucesso = async (and) => {
-        and(/^eu envio uma resposta de "(.*)" com codigo "(.*)"$/, async (type, code) => {
-            expect(type).toBe('sucesso');
-            expect(code).toBe('201');
+        and(/^eu envio uma resposta de sucesso com codigo "(.*)"$/, async (code) => {
+            expect(response.status).toBe(parseInt(code));
         });
     };
 
@@ -127,24 +107,24 @@ defineFeature(feature, (test) => {
         andResponseSucesso(and);
     });
     test('Adicionando equipamento com nome vazio', ({given, when, then}) => {
-        givenNotPatrimonioExist(given);
+        givenNotEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com patrimonio vazio', ({given, when, then, and}) => {
-        givenRequest(given);
+    test('Adicionando equipamento com patrimonio vazio', ({ when, then}) => {
+        whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com numero de serie vazio', ({given, when, then, and}) => {
-        givenRequest(given);
+    test('Adicionando equipamento com numero de serie vazio', ({when, then}) => {
+        whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com patrimonio duplicado', ({given, when, then, and}) => {
+    test('Adicionando equipamento com patrimonio duplicado', ({given, when, then}) => {
         givenEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);
     });
-        test('Adicionando equipamento com numero de serie duplicado', ({given, when, then, and}) => {
+        test('Adicionando equipamento com numero de serie duplicado', ({given, when, then}) => {
         givenEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);
@@ -154,17 +134,17 @@ defineFeature(feature, (test) => {
         whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com estado de conservacao vazio', ({given, when, then, and}) => {
+    test('Adicionando equipamento com estado de conservacao vazio', ({given, when, then}) => {
         givenNotEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com data de aquisicao vazia', ({given, when, then, and}) => {
+    test('Adicionando equipamento com data de aquisicao vazia', ({given, when, then}) => {
         givenNotEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);
     });
-    test('Adicionando equipamento com valor estimado vazio', ({given, when, then, and}) => {
+    test('Adicionando equipamento com valor estimado vazio', ({given, when, then}) => {
         givenNotEquipmentExist(given);
         whenRequest(when);
         thenResponseError(then);

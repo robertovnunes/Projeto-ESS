@@ -17,7 +17,8 @@ defineFeature(feature, (test) => {
         patrimonio: "5578945",
         reservas: [],
         manutencao: []
-    }, {
+    },
+    {
         id:"7891234",
         nome: "FPGA",
         descricao: "placa de prototipação de circuitos",
@@ -47,7 +48,7 @@ defineFeature(feature, (test) => {
 //GIVEN
     const givenEquipmentExist = async (given) => {
         given(/^que eu tenho o equipamento com id (.*)$/, async (identificador) => {
-            equipments.forEach( async (eq) => {
+            for(let eq of equipments) {
                 if(eq.id === identificador) {
                     if (eq.hasOwnProperty('patrimonio')) { 
                         await mockEquipamentosRepository.createEquipmentPatrimonio(eq); 
@@ -55,7 +56,7 @@ defineFeature(feature, (test) => {
                         await mockEquipamentosRepository.createEquipmentSN(eq);
                     }
                 }
-            });
+            }
         });
     };
     const givenEquipmentNotExist = (given) => {

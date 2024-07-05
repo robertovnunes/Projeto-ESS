@@ -42,7 +42,7 @@ defineFeature(feature, async (test) => {
     });
 
     afterAll( async () => {
-        for (const eq of equipamentos) {
+        for (let eq of equipamentos) {
             await equipamentosRepository.deleteEquipment(eq.id);
         }
         server.close();
@@ -53,33 +53,67 @@ defineFeature(feature, async (test) => {
     const givenEquipmentsExist = async (given) => {
         given(/^que exitem os seguintes equipamentos cadastrados no sistema:$/, async (obj) => {
             for (const eq of equipamentos) {
-                if(eq.hasOwnProperty('patrimonio')){
-                    await equipamentosRepository.createEquipmentPatrimonio(eq);
+                let exist = await equipamentosRepository.getEquipment(eq.id);
+                if(exist !== null){
+                    await equipamentosRepository.deleteEquipment(eq.id);
                 } else {
-                    await equipamentosRepository.createEquipmentSN(eq);
+                    if(eq.hasOwnProperty('patrimonio')){
+                        exist = await equipamentosRepository.getEquipmentByPatrimonio(eq.patrimonio);
+                        if(exist !== null){
+                            await equipamentosRepository.deleteEquipment(exist.id);
+                        }
+                        await equipamentosRepository.createEquipmentPatrimonio(eq);
+                    equipmentsID.push(eq.id);
+                    } else {
+                        exist = await equipamentosRepository.getEquipmentBySN(eq.numero_serie);
+                        if(exist !== null){
+                            await equipamentosRepository.deleteEquipment(exist.id);
+                        }
+                        await equipamentosRepository.createEquipmentSN(eq);
+                    }
                 }
             }
         });     
     };   
     const givenEquipmentExist = async (given) => {
         given(/^que exite o equipamento com (.*) (.*) cadastrado$/, async (campo, identificador) => {
+            let eq, exist;
             if(campo === 'id'){
-                response = await request.get(`/equipamentos/${identificador}`);
+                exist = await equipamentosRepository.getEquipmentByID(identificador);
+                if(exist === null){
+                    eq = equipamentos.find(eq => eq.id === identificador);
+                }
             } else {
-                response = await request.get(`/equipamentos/${campo}/${identificador}`);
+                if(campo === 'patrimonio'){
+                    exist = await equipamentosRepository.getEquipmentByPatrimonio(identificador);
+                    if(exist === null){
+                        eq = equipamentos.find(eq => eq.patrimonio === identificador);
+                    }
+                } else {
+                    exist = await equipamentosRepository.getEquipmentBySN(identificador);
+                    if(exist === null){
+                        eq = equipamentos.find(eq => eq.numero_serie === identificador);
+                    }
+                }
             }
-            expect(response.status).toBe(200);
+            eq.hasOwnProperty('patrimonio') && (exist === null) ? await equipamentosRepository.createEquipmentPatrimonio(eq) : await equipamentosRepository.createEquipmentSN(eq);
         });
     };
     const givenNotexistEquipment = async (given) => {
         given(/^que não existe o equipamento com (.*) (.*)$/, async (campo, identificador) => {
-            console.log(campo, identificador);
+            let exist;
             if(campo === 'id'){
-                response = await request.get(`/equipamentos/${identificador}`);
+                exist = await equipamentosRepository.getEquipmentByID(identificador);
             } else {
-                response = await request.get(`/equipamentos/${campo}/${identificador}`);
+                if(campo === 'patrimonio'){
+                    exist = await equipamentosRepository.getEquipmentByPatrimonio(identificador);
+                } else {
+                    exist = await equipamentosRepository.getEquipmentBySN(identificador);
+                }
             }
-            expect(response.status).toBe(404);
+            if(exist !== null){
+                await equipamentosRepository.deleteEquipment(exist.id);
+            }
         });
     };
 //WHEN
@@ -95,7 +129,7 @@ defineFeature(feature, async (test) => {
         then(/^eu retorno uma lista com "(.*)" equipamentos e json:$/, async (qtd, json) => {
             response = await request.get('/equipamentos');
             let equipamentos = response.body;
-            equipamentosList = JSON.parse(json);
+            const equipamentosList = JSON.parse(json);
             expect(equipamentos.length).toBe(parseInt(qtd));
             equipamentoslist.forEach(equipamento => {
                 expect(equipamentos).toContainEqual(equipamento);
