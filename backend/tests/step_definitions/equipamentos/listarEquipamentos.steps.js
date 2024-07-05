@@ -37,14 +37,14 @@ defineFeature(feature, async (test) => {
             "manutencao": []
         }];
 
-    beforeAll(() => {
+    beforeAll( async () => {
         equipamentosRepository = new EquipamentosRepository();
     });
 
     afterAll( async () => {
-        equipamentos.forEach( async (eq) => {
-            await equipamentosRepository.deleteEquipment(qe.id);
-        });
+        for (const eq of equipamentos) {
+            await equipamentosRepository.deleteEquipment(eq.id);
+        }
         server.close();
     });
 
@@ -52,19 +52,19 @@ defineFeature(feature, async (test) => {
 //GIVEN
     const givenEquipmentsExist = async (given) => {
         given(/^que exitem os seguintes equipamentos cadastrados no sistema:$/, async (obj) => {
-            equipamentos.forEach( async (eq) => {
+            for (const eq of equipamentos) {
                 if(eq.hasOwnProperty('patrimonio')){
                     await equipamentosRepository.createEquipmentPatrimonio(eq);
                 } else {
                     await equipamentosRepository.createEquipmentSN(eq);
                 }
-            });
+            }
         });     
     };   
     const givenEquipmentExist = async (given) => {
         given(/^que exite o equipamento com (.*) (.*) cadastrado$/, async (campo, identificador) => {
             if(campo === 'id'){
-                
+                response = await request.get(`/equipamentos/${identificador}`);
             } else {
                 response = await request.get(`/equipamentos/${campo}/${identificador}`);
             }
@@ -95,6 +95,7 @@ defineFeature(feature, async (test) => {
         then(/^eu retorno uma lista com "(.*)" equipamentos e json:$/, async (qtd, json) => {
             response = await request.get('/equipamentos');
             let equipamentos = response.body;
+            equipamentosList = JSON.parse(json);
             expect(equipamentos.length).toBe(parseInt(qtd));
             equipamentoslist.forEach(equipamento => {
                 expect(equipamentos).toContainEqual(equipamento);

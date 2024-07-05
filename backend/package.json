@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest"
   },
-  "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
+  "author": "chmfc, jrvn, js3, mgc3, tns",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",

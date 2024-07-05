@@ -40,7 +40,6 @@ defineFeature(feature, (test) => {
     });
 
     afterAll(() => {
-
         server.close();
     });
 
@@ -51,7 +50,7 @@ defineFeature(feature, (test) => {
             equipments.forEach( async (eq) => {
                 if(eq.id === identificador) {
                     if (eq.hasOwnProperty('patrimonio')) { 
-                        await mockEquipamentosRepository.createEquipmentPatrimonio(eq) 
+                        await mockEquipamentosRepository.createEquipmentPatrimonio(eq); 
                     } else { 
                         await mockEquipamentosRepository.createEquipmentSN(eq);
                     }
