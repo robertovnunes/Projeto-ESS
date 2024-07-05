@@ -138,7 +138,7 @@ class EquipamentosController {
                 }
             } else {
                 const equipmentExist = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-                if(equipmentExist !== null) {
+                if(equipmentExist === 'Patrimonio já existe') {
                     console.log(`POST /equipamentos [400] BAD REQUEST `);
                     return res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
                 } else {

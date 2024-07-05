@@ -40,21 +40,31 @@ defineFeature(feature, (test) => {
                 exist = await mockEquipamentosRepository.getEquipmentBySerie(identificador);
             }
             if(exist !== null){
-                console.log(exist);
                 await mockEquipamentosRepository.deleteEquipment(exist.id);
             }
         });
     };
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
+            let exist;
             if(campo === 'patrimonio'){
-                mockData = new modelPatrimonio('Projetor epson', 'Projetor laser ultra curta distancia', 'novo', '10/04/2024', 'R$ 4.500,00', identificador);
-                await mockEquipamentosRepository.createEquipmentPatrimonio(mockData);
-            } else if (campo === 'numero_serie'){
-                mockData = new modelSN('FPGA', 'placa de prototipação de circuitos', 'novo', '10/04/2024', 'R$ 2.000,00', identificador);
-                await mockEquipamentosRepository.createEquipmentSN(mockData);
+                exist = await mockEquipamentosRepository.getEquipmentByPatrimonio(identificador);
+            } else{
+                exist = await mockEquipamentosRepository.getEquipmentBySerie(identificador);
             }
-            equipmentsID.push(mockData.id);
+            if(exist !== null){
+                await mockEquipamentosRepository.deleteEquipment(exist.id);
+            } else {
+                let data;
+                if(campo === 'patrimonio'){
+                    data = new modelPatrimonio('Projetor epson', 'Projetor laser ultra curta distancia', 'novo', '10/04/2024', 'R$ 4.500,00', identificador);
+                    await mockEquipamentosRepository.createEquipmentPatrimonio(data);
+                } else if (campo === 'numero_serie'){
+                    data = new modelSN('FPGA', 'placa de prototipação de circuitos', 'novo', '10/04/2024', 'R$ 2.000,00', identificador);
+                    await mockEquipamentosRepository.createEquipmentSN(data);
+                }
+                equipmentsID.push(data.id);
+            }
         });
     };
 //When steps
@@ -79,7 +89,7 @@ defineFeature(feature, (test) => {
         then(/^eu envio uma resposta de erro com codigo "(.*)" e mensagem "(.*)"$/, async (code, message) => {
             if(mockData.hasOwnProperty('patrimonio')){
                 response = await request.post('/equipamentos/patrimonio').send(mockData);
-            } else {
+            } else if(mockData.hasOwnProperty('numero_serie')) {
                 response = await request.post('/equipamentos/numero_serie').send(mockData);
             }
             expect(response.status).toBe(parseInt(code));
