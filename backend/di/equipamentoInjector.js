@@ -16,8 +16,8 @@ class EquipamentoInjector {
         this.repositories.set(type, repository);
     }
 
-    getEquipmentRepository(name) {
-        return this.repositories.get(name);
+    getEquipmentRepository(repository) {
+        return this.repositories.get(repository);
     }
 }
 

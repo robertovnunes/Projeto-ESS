@@ -11,8 +11,7 @@ let injector = new equipamentoInjector();
 injector.registerEquipmentRepository(EquipamentosRepository, new EquipamentosRepository());
 
 injector.registerEquipmentService(EquipamentosService, new EquipamentosService(
-    injector.getEquipmentRepository(EquipamentosRepository)
-));
+    injector.getEquipmentRepository(EquipamentosRepository)));
 equipamentosController = new EquipamentosController(injector.getEquipmentService(EquipamentosService));
 
 

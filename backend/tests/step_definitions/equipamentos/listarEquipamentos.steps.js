@@ -3,149 +3,118 @@ const app = require('../../../apptest');
 const supertest = require('supertest');
 const EquipamentosRepository = require('../../../api/repositories/equipamentosRepository');
 
-const feature = loadFeature('./tests/features/equipamentos/listarEquipamentos.feature');
+const feature = loadFeature('tests/features/equipamentos/listarEquipamentos.feature');
 
 defineFeature(feature, async (test) => {
 
     const server = app.listen(3001, () => {
         console.log('Testando...');
     });
-    let response, equipamentoslist = [], equipamentosRepository, equipamentos;
+    let response, equipamentosRepository, equipamentos = [];
     let request = supertest(server);
     request.headers = {"username": "joao", "role": "admin"};
-    equipamentos = [
-        {
-            "id": "04sk2GHcgYri",
-            "nome": "Monitor philips",
-            "descricao": "monitor full hd 24 polegadas OLED",
-            "estado_conservacao": "reformado",
-            "data_aquisicao": "15/03/2023",
-            "valor_estimado": "R$ 1.200,00",
-            "patrimonio": "5237418",
-            "reservas": [],
-            "manutencao": []
-        },
-        {
-            "id": "04EGkIhCGohs",
-            "nome": "Ar condicionado midea",
-            "descricao": "Ar condicionado de 12.000 btus",
-            "estado_conservacao": "novo",
-            "data_aquisicao": "15/03/2023",
-            "valor_estimado": "R$ 1.200,00",
-            "numero_serie": "3642597",
-            "reservas": [],
-            "manutencao": []
-        }];
+    let equipamentosID = [];
 
     beforeAll( async () => {
         equipamentosRepository = new EquipamentosRepository();
     });
 
     afterAll( async () => {
-        for (let eq of equipamentos) {
-            await equipamentosRepository.deleteEquipment(eq.id);
-        }
         server.close();
+        for (let id of equipamentosID) {
+            await equipamentosRepository.deleteEquipment(id);
+        }
     });
 
 //steps to reuse
 //GIVEN
     const givenEquipmentsExist = async (given) => {
-        given(/^que exitem os seguintes equipamentos cadastrados no sistema:$/, async (obj) => {
-            for (const eq of equipamentos) {
-                let exist = await equipamentosRepository.getEquipment(eq.id);
-                if(exist !== null){
-                    await equipamentosRepository.deleteEquipment(eq.id);
-                } else {
-                    if(eq.hasOwnProperty('patrimonio')){
-                        exist = await equipamentosRepository.getEquipmentByPatrimonio(eq.patrimonio);
-                        if(exist !== null){
-                            await equipamentosRepository.deleteEquipment(exist.id);
-                        }
-                        await equipamentosRepository.createEquipmentPatrimonio(eq);
-                    equipmentsID.push(eq.id);
-                    } else {
-                        exist = await equipamentosRepository.getEquipmentBySN(eq.numero_serie);
-                        if(exist !== null){
-                            await equipamentosRepository.deleteEquipment(exist.id);
-                        }
-                        await equipamentosRepository.createEquipmentSN(eq);
-                    }
+        given(/^que exitem os seguintes equipamentos cadastrados no sistema:$/, async (json) => {
+            equipamentos = JSON.parse(json);
+            for(let eq of equipamentos) {
+                if(eq['patrimonio'] !== undefined){
+                    const created = await equipamentosRepository.createEquipmentPatrimonio(eq);
+                    equipamentosID.push(created.id);
+                } else if(eq['numero_serie'] !== undefined){
+                    const created = await equipamentosRepository.createEquipmentSN(eq);
+                    equipamentosID.push(created.id);
                 }
             }
         });     
     };   
     const givenEquipmentExist = async (given) => {
-        given(/^que exite o equipamento com (.*) (.*) cadastrado$/, async (campo, identificador) => {
-            let eq, exist;
-            if(campo === 'id'){
-                exist = await equipamentosRepository.getEquipmentByID(identificador);
-                if(exist === null){
-                    eq = equipamentos.find(eq => eq.id === identificador);
-                }
-            } else {
-                if(campo === 'patrimonio'){
-                    exist = await equipamentosRepository.getEquipmentByPatrimonio(identificador);
-                    if(exist === null){
-                        eq = equipamentos.find(eq => eq.patrimonio === identificador);
+        given(/^que exite o equipamento com json cadastrado$/, async (json) => {
+            let exist;
+            const equipamento = JSON.parse(json);
+            exist = await equipamentosRepository.getEquipmentById(equipamento.id);
+            console.log(exist);
+            if(exist === undefined){
+                equipamentos.foreach(async eq => {
+                    if(eq.id === equipamento.id){
+                        if(eq.patrimonio !== undefined){
+                            await equipamentosRepository.createEquipmentPatrimonio(eq);
+                        } else if(eq.numero_serie !== undefined){
+                            await equipamentosRepository.createEquipmentSN(eq);
+                        }
+                        equipamentosID.push(eq.id);
                     }
-                } else {
-                    exist = await equipamentosRepository.getEquipmentBySN(identificador);
-                    if(exist === null){
-                        eq = equipamentos.find(eq => eq.numero_serie === identificador);
-                    }
-                }
+                });
             }
-            eq.hasOwnProperty('patrimonio') && (exist === null) ? await equipamentosRepository.createEquipmentPatrimonio(eq) : await equipamentosRepository.createEquipmentSN(eq);
         });
     };
     const givenNotexistEquipment = async (given) => {
         given(/^que não existe o equipamento com (.*) (.*)$/, async (campo, identificador) => {
             let exist;
             if(campo === 'id'){
-                exist = await equipamentosRepository.getEquipmentByID(identificador);
+                exist = await equipamentosRepository.getEquipmentById(identificador);
+                if(exist !== undefined){
+                    equipamentosID = equipamentosID.filter(id => id !== exist.id);
+                    await equipamentosRepository.deleteEquipment(exist.id);
+                }
             } else {
                 if(campo === 'patrimonio'){
                     exist = await equipamentosRepository.getEquipmentByPatrimonio(identificador);
+                    if(exist !== undefined){
+                        equipamentosID = equipamentosID.filter(id => id !== exist.id);
+                        await equipamentosRepository.deleteEquipment(exist.id);
+                    }
                 } else {
-                    exist = await equipamentosRepository.getEquipmentBySN(identificador);
+                    exist = await equipamentosRepository.getEquipmentBySerie(identificador);
+                    if(exist !== undefined){
+                        equipamentosID = equipamentosID.filter(id => id !== exist.id);
+                        await equipamentosRepository.deleteEquipment(exist.id);
+                    }
                 }
-            }
-            if(exist !== null){
-                await equipamentosRepository.deleteEquipment(exist.id);
             }
         });
     };
 //WHEN
-    const whenRequest = (when) => {
-        when(/^eu recebo uma requisição (.*) do usuario "(.*)" logado como "(.*)"$/, (req, username, userRole) =>{
-            expect(request.headers.username).toBe(username);
-            expect(request.headers.role).toBe(userRole);
+    const whenRequest = async (when) => {
+        when(/^eu recebo uma requisição GET para "(.*)" do usuario "(.*)" logado como "(.*)"$/, async (req, username, userRole) =>{
+            response = await request.get(req);
+        });
+    };
+    const whenRequestFail = async (when) => {
+        when(/^eu recebo uma requisição GET para (.*) do usuario "(.*)" logado como "(.*)"$/, async (req, username, userRole) =>{
+            response = await request.get(req);
+            console.log(response.body);
         });
     };
 
 //THEN
     const thenEquipmentsShow = async (then) => {
-        then(/^eu retorno uma lista com "(.*)" equipamentos e json:$/, async (qtd, json) => {
-            response = await request.get('/equipamentos');
-            let equipamentos = response.body;
+        then(/^eu retorno uma lista de equipamentos e json:$/, async (json) => {
+            let equipamentos = await response.body;
             const equipamentosList = JSON.parse(json);
-            expect(equipamentos.length).toBe(parseInt(qtd));
-            equipamentoslist.forEach(equipamento => {
+            equipamentosList.forEach(equipamento => {
                 expect(equipamentos).toContainEqual(equipamento);
             })
         });
     };
     const thenEquipmentReturn = async (then) => {
         then(/^o json com os dados do equipamento com "(.*)" "(.*)" é retornado$/, async (campo, identificador, json) =>{
-            let equipmentResponse;
-            if(campo === 'id'){
-                equipmentResponse = await request.get(`/equipamentos/${identificador}`);
-            } else {
-                equipmentResponse = await request.get(`/equipamentos/${campo}/${identificador}`);
-            }
             const equipamento = JSON.parse(json);
-            const equipment = equipmentResponse.body;
+            const equipment = response.body;
             expect(equipment).toEqual(equipamento);
         });
     };
@@ -161,7 +130,7 @@ defineFeature(feature, async (test) => {
         givenEquipmentsExist(given);
         whenRequest(when);
         thenEquipmentsShow(then);
-    });
+        });
     test('buscar equipamento específico por id', ({given, when, then}) => {
         givenEquipmentExist(given);
         whenRequest(when);
@@ -179,7 +148,7 @@ defineFeature(feature, async (test) => {
     });
     test('Buscar equipamento por identificador inexistente', ({given, when, then}) => {
         givenNotexistEquipment(given);
-        whenRequest(when);
+        whenRequestFail(when);
         thenResponseError(then);
     });
 });

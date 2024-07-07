@@ -20,7 +20,7 @@ class EquipamentosController {
      async getAllEquipments(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === null){
+            if(equipments === undefined){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             }
@@ -35,7 +35,7 @@ class EquipamentosController {
     async getAllEquipmentsByPatrimpnio(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === null){
+            if(equipments === undefined){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             } else {
@@ -52,7 +52,7 @@ class EquipamentosController {
         async getAllEquipmentsBySN(req, res) {
         try{
             const equipments = await this.equipamentosService.getAllEquipments();
-            if(equipments === null){
+            if(equipments === undefined){
                 console.log('GET /equipamentos [404] NOT FOUND');
                 return res.status(404).send({message: 'Nenhum equipamento cadastrado'});
             } else {
@@ -71,7 +71,7 @@ class EquipamentosController {
         try{
             const id = req.params.id;
             const equipment = await this.equipamentosService.getEquipmentById(id);
-            if(equipment !== null){
+            if(equipment !== undefined){
                 console.log(`GET /equipamentos/:${id} by ID [200] OK`);
                 return res.status(200).send(equipment);
             } else {
@@ -88,7 +88,7 @@ class EquipamentosController {
         try{
             const patrimonio = req.params.patrimonio;
             const equipment = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-            if(equipment !== null){
+            if(equipment !== undefined){
                 console.log(`GET /equipamentos/patrimonio/:${patrimonio} [200] OK`);
                 return res.status(200).send(equipment);
             } else {
@@ -105,7 +105,7 @@ class EquipamentosController {
         try{
             const sn = req.params.numero_serie;
             const equipment = await this.equipamentosService.getEquipmentBySerie(sn);
-            if(equipment === null){
+            if(equipment === undefined){
                 console.log(`GET /equipamentos/patrimonio/:${sn} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
@@ -137,19 +137,17 @@ class EquipamentosController {
                     return res.status(400).send({message: 'Patrimonio nao informado'});
                 }
             } else {
-                const equipmentExist = await this.equipamentosService.getEquipmentByPatrimonio(patrimonio);
-                if(equipmentExist === 'Patrimonio já existe') {
-                    console.log(`POST /equipamentos [400] BAD REQUEST `);
-                    return res.status(400).send({message: 'Já existe um equipamento com este patrimônio'});
+                const newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
+                let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
+                if(equipmentCreated === 'Patrimonio já existe') {
+                    return res.status(400).send({message: 'Ja existe um equipamento com este patrimonio'});
                 } else {
-                    let newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
-                    let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
                     console.log(`POST /equipamentos [201] CREATED`);
                     return res.status(201).send(equipmentCreated);
                 }
             }
         } catch (error) {
-                console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR \n ${error.message}`);
+                console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR ${error.message}`);
                 return res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
             }
     };
@@ -173,28 +171,25 @@ class EquipamentosController {
                     return res.status(400).send({message: 'Numero de serie nao informado'});
                 }
             } else {
-                const equipmentExist = await this.equipamentosService.getEquipmentBySerie(numero_serie);
-                if(equipmentExist !== null) {
-                    console.log(`POST /equipamentos [400] BAD REQUEST`);
-                    return res.status(400).send({message: 'Já existe um equipamento com este numero de serie'});
-                    return;
+                const newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
+                let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
+                if(equipmentCreated === 'Numero de serie já existe') {
+                    return res.status(400).send({message: 'Ja existe um equipamento com este numero de serie'});
                 } else {
-                    let newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
-                    let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
                     console.log(`POST /equipamentos [201] CREATED`);
                     return res.status(201).send(equipmentCreated);
                 }
             }
         } catch (error) {
-                console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR \n ${error.message}`);
+                console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR ${error.message}`);
                 return res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
-            }
+        }
     };
 
     async patchEquipment(req, res) {
         try{
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
-            if(updated === null) {
+            if(updated === undefined) {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
@@ -218,7 +213,7 @@ class EquipamentosController {
     async deleteEquipment(req, res) {
         try{
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
-            if(deleted === null) {
+            if(deleted === undefined) {
                 console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
                 return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {

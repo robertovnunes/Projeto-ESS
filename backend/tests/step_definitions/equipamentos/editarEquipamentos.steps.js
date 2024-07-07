@@ -9,7 +9,7 @@ defineFeature(feature, async (test) => {
         console.log('Testando...');
     });
     
-    let request, equipmentsID, response, id, equipamentosRepository, mockData;
+    let request, equipmentsID, response, equipamentosRepository;
     equipmentsID = [];
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
@@ -31,32 +31,20 @@ defineFeature(feature, async (test) => {
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento:/, async (json) => {
             const equipamento = JSON.parse(json);
-            let exist;
-            exist = await equipamentosRepository.getEquipmentByID(equipamento.id);
-            if(equipamento.hasOwnProperty('patrimonio')){
-                if(exist !== null){
-                    await equipamentosRepository.deleteEquipment(exist.id);
-                } else {
-                    await equipamentosRepository.createEquipmentByPatrimonio(equipamento);
-                    equipmentsID.push(equipamento.id);
-                }
-            } else if(equipamento.hasOwnProperty('numero_serie')){
-                if(exist !== null){
-                    await equipamentosRepository.deleteEquipment(exist.id);
-                } else {
-                    await equipamentosRepository.createEquipmentBySN(equipamento);
-                    equipmentsID.push(equipamento.id);
-                }
+            console.log(equipamento);
+            if(equipamento['patrimonio'] !== undefined){   
+                await equipamentosRepository.createEquipmentPatrimonio(equipamento);   
+            } else if(equipamento['numero_serie'] !== undefined){
+                await equipamentosRepository.createEquipmentSN(equipamento);
             }
+            equipmentsID.push(equipamento.id);
         });
     }
 //When steps
     const whenRequest = async (when) => {
-        when(/^eu recebo uma requisição "(.*)" do usuario "(.*)" logado como "(.*)" e json$/, async (req, user, role, json) => {
+        when(/^eu recebo uma requisição "(.*)" e id "(.*)" do usuario "(.*)" logado como "(.*)" e json$/, async (req, id, user, role, json) => {
             data = JSON.parse(json);
-            expect(request.method).toBe(req);
-            expect(request.headers.username).toBe(user);
-            expect(request.headers.role).toBe(role);
+            response = await request.patch(`/equipamentos/${id}`).send(data);
         });
     };
 //Then steps
