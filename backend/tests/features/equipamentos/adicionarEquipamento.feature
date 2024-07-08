@@ -82,8 +82,8 @@ Feature: As a usuario administrador
     When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
     """
     {
-      "nome": "Projetor epson",
-      "descricao": "projetor full hd",
+      "nome": "Monitor phillips",
+      "descricao": "monitor full hd",
       "estado_conservacao": "Bom",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
@@ -97,8 +97,8 @@ Feature: As a usuario administrador
     When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
     """
     {
-      "nome": "Projetor epson",
-      "descricao": "projetor full hd",
+      "nome": "Monitor phillips",
+      "descricao": "monitor full hd",
       "estado_conservacao": "Bom",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",

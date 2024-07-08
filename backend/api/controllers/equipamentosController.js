@@ -138,7 +138,7 @@ class EquipamentosController {
                 }
             } else {
                 const newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
-                let equipmentCreated = await this.equipamentosService.createEquipmentPatrimonio(newEquipment);
+                let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
                 if(equipmentCreated === 'Patrimonio já existe') {
                     return res.status(400).send({message: 'Ja existe um equipamento com este patrimonio'});
                 } else {
@@ -172,7 +172,7 @@ class EquipamentosController {
                 }
             } else {
                 const newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
-                let equipmentCreated = await this.equipamentosService.createEquipmentSN(newEquipment);
+                let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
                 if(equipmentCreated === 'Numero de serie já existe') {
                     return res.status(400).send({message: 'Ja existe um equipamento com este numero de serie'});
                 } else {
@@ -214,8 +214,8 @@ class EquipamentosController {
         try{
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
             if(deleted === undefined) {
-                console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
-                return res.status(404).send({message: 'Equipamento nao encontrado'});
+                console.log(`DELETE /equipamentos/${req.params.id} [400] NOT FOUND`);
+                return res.status(400).send({message: 'Equipamento nao encontrado'});
             } else {
                 console.log(`DELETE /equipamentos/${req.params.id} [200] OK`);
                 return res.status(200).send({message: `Equipamento ${deleted.nome} removido com sucesso`});

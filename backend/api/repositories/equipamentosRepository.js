@@ -1,125 +1,86 @@
-const e = require('express');
 const fs = require('fs');
 const path = require('path');
 
 class EquipamentosRepository {
     constructor() {
         this.filePath = path.join(__dirname, './../../db/equipamentos.json');
-        this._init().then(data => this.db = data);
+        this._loadJson().then(data => this.db = data);
     }
 
-    async _init() {
+    async _loadJson() {
         const data = await this._readFile();
-        return data;
-    }
-
-    async _readFile() {
-        let data = await fs.promises.readFile(this.filePath);
         return JSON.parse(data);
     }
 
+    async _readFile() {
+        let data = await fs.promises.readFile(this.filePath, 'utf-8');
+        return data;
+    }
+
     async _writeFile(data) {
-        try{
-            await fs.promises.writeFile(this.filePath, JSON.stringify(data));
-        } catch (error) {
-            return error;
-        }
+            await fs.promises.writeFile(this.filePath, JSON.stringify(data), 'utf-8');
     }
 
     async getAllEquipments() {
-        try{
-            this.db = await this._readFile();
-            return this.db;
-        } catch (error) {
-            return error;
-        }
+        let data = await this._loadJson().then(data => data);
+        this.db = data;
+        return this.db;
     }
 
     async getEquipmentById(id) {
-        try{
-            let equipamentos = await this.getAllEquipments();
-            if(equipamentos.length > 0){
-                for (let item of equipamentos){
-                    if(item['id'] === id){
-                        return item;
-                    }
-                }
-            }
-            return undefined;
-        } catch (error) {
-            return error;
-        }
-    }
-    async getEquipmentByPatrimonio(value) {
-        try{
-            let equipamentos = await this.getAllEquipments();
-            if(equipamentos.length > 0){
-                for (let item of equipamentos){
-                    if(item.hasOwnProperty('patrimonio')){
-                        if(item.patrimonio === value){
-                            return item;
-                        }
-                    }
-                }
-            }
-            return undefined;
-        }catch(error) {
-            return error;
-        }
-    }
-    async getEquipmentBySerie(value) {
-        try{
-            let equipamentos = await this.getAllEquipments();
-        if(equipamentos.length > 0) {
+        let equipamentos = await this.getAllEquipments();
+        if(equipamentos.length > 0){
             for (let item of equipamentos){
-                if(item.hasOwnProperty('numero_serie')){
-                    if(item.numero_serie === value){
-                        return item;
-                    }
+                if(item.hasOwnProperty('id') && item.id === id){
+                    return item;
                 }
             }
         }
         return undefined;
-        } catch (error) {
-            return error;
+    }
+    async getEquipmentByPatrimonio(value) {
+        let equipamentos = await this.getAllEquipments();
+        if(equipamentos.length > 0){
+            for (let item of equipamentos){
+                if(item.hasOwnProperty('patrimonio') && item.patrimonio === value){
+                    return item;
+                }
+            }
         }
+        return undefined;
+    }
+    async getEquipmentBySerie(value) {
+        let equipamentos = await this.getAllEquipments();
+        if(equipamentos.length > 0) {
+            for (let item of equipamentos){
+                if(item.hasOwnProperty('numero_serie') && item.numero_serie === value){
+                    return item;
+                }
+            }
+        }
+        return undefined;
     }
     
-    async createEquipmentPatrimonio(newEquipamento) {
-        try{
-            const exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
-            if(exist === undefined){
-            if(this.db.length === 0){
-                    this.db = [newEquipamento];
-                } else {
-                    this.db.push(newEquipamento);
-                }
-                await this._writeFile(this.db);
-                return newEquipamento;
-            } else {
-                return 'Patrimonio já existe';
-            }
-        }catch(error){
-            return error;
+    async createEquipment(newEquipamento) {
+        let exist;
+        if(newEquipamento.hasOwnProperty('patrimonio')){
+            exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
+        } else if(newEquipamento.hasOwnProperty('numero_serie')){
+            exist = await this.getEquipmentBySerie(newEquipamento.numero_serie);
         }
-    }
-
-    async createEquipmentSN(newEquipamento){
-        try{
-            const exits = await this.getEquipmentBySerie(newEquipamento.numero_serie);
-            if(exits === undefined){
-                if(this.db.length === 0){
-                    this.db = [newEquipamento];
-                } else {
-                    this.db.push(newEquipamento);
-                }
-                await this._writeFile(this.db);
-                return newEquipamento;
+        if(!exist){
+            let equipamentos = await this.getAllEquipments();
+            if(equipamentos.length > 0) {
+                equipamentos.push(newEquipamento);
             } else {
-                return 'Numero de serie já existe';
+                equipamentos = [newEquipamento];
             }
-        }catch(error){
-            return error;
+            this.db = equipamentos;
+            await this._writeFile(this.db);
+            return newEquipamento;
+        } else {
+            if(newEquipamento.patrimonio !== undefined) return 'Patrimonio já existe';
+            else if(newEquipamento.numero_serie !== undefined) return 'Numero de serie já existe';
         }
     }
 
@@ -154,28 +115,26 @@ class EquipamentosRepository {
     }
 
     async deleteEquipment(id) {
-        try{
-            let equipamento = await this.getEquipmentById(id);
-            if(equipamento === undefined) {
-                return undefined;
-            } 
-            else {
-                if(this.db.length === 1){
-                    this.db = [];
-                } else {
-                    const equipamentos = await this.getAllEquipments();
-                    const index = equipamentos.findIndex(equipamento => equipamento.id === id);
-                    if(index === -1) return undefined;
-                    this.db.splice(index, 1);
-                }
-                await this._writeFile(this.db);
-                return equipamento;
+        let equipamento = await this.getEquipmentById(id);
+        let equipamentos = await this.getAllEquipments();
+        if(equipamento !== undefined) {
+            let deleted;
+            if(equipamentos.length > 1){
+                const index = equipamentos.findIndex(equipamento => equipamento.id === id);
+                if(index === -1) return undefined;
+                deleted = equipamentos.splice(index, 1);
+            } else {
+                deleted = equipamento;
+                equipamentos = [];
             }
-        } catch(error) {
-            return error;
+            this.db = equipamentos;
+            await this._writeFile(this.db);
+            return deleted;
+        }
+        else {
+            return undefined;
         }
     }
-
 }
 
 module.exports = EquipamentosRepository;

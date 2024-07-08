@@ -20,10 +20,10 @@ defineFeature(feature, (test) => {
     });
 
     afterAll(async () => {
-        server.close();
         for(let id of equipamentosID){
             await mockEquipamentosRepository.deleteEquipment(id);
         }
+        server.close();
     });
 
 //Steps to reuse
@@ -42,37 +42,11 @@ defineFeature(feature, (test) => {
         });
     };
     const givenEquipmentExist = async (given) => {
-        given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {  
-            let created;
-            if(campo === 'patrimonio'){
-                const equipamento = {
-                    id: '1234567890',
-                    nome: 'Projetor epson',
-                    descricao: 'Projetor laser ultra curta distancia',
-                    estado_conservacao: 'novo',
-                    data_aquisicao: '10/04/2024',
-                    valor_estimado: 'R$ 4.500,00',
-                    patrimonio: identificador,
-                    reservas: [],
-                    manutencao: []
-                }
-                created = await mockEquipamentosRepository.createEquipmentPatrimonio(equipamento);
-                equipamentosID.push(created.id);
-            } else if(campo === 'numero_serie'){
-                const equipamento = {
-                    id: '12345679780',
-                    nome: 'Projetor epson',
-                    descricao: 'Projetor laser ultra curta distancia',
-                    estado_conservacao: 'novo',
-                    data_aquisicao: '10/04/2024',
-                    valor_estimado: 'R$ 4.500,00',
-                    numero_serie: identificador,
-                    reservas: [],
-                    manutencao: []
-                }
-                created = await mockEquipamentosRepository.createEquipmentSN(equipamento);
-                equipamentosID.push(created.id);
-            }
+        given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
+            const id = identificador+Math.floor(Math.random()*1000);
+            const equipamento = {'id':id, 'nome':'Arduino', 'descricao':'Placa de prototipação', 'estado_conservacao':'novo', 'data_aquisicao':'10/04/2024', 'valor_estimado':'R$ 200,00', [campo]:identificador, 'reservas':[], 'manutencao':[]};
+            await mockEquipamentosRepository.createEquipment(equipamento);
+            equipamentosID.push(id);
         });
     };
 //When steps

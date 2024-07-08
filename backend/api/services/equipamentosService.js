@@ -25,12 +25,8 @@ class EquipamentosService {
         return equipamento;
     }
 
-    async createEquipmentPatrimonio(newEquipamento) {
-        return await this.equipamentoRepository.createEquipmentPatrimonio(newEquipamento);
-    }
-
-    async createEquipmentSN(newEquipamento) {
-        return await this.equipamentoRepository.createEquipmentSN(newEquipamento);
+    async createEquipment(newEquipamento) {
+        return await this.equipamentoRepository.createEquipment(newEquipamento);
     }
 
     async patchEquipment(id, newEquipamento) {

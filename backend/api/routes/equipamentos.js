@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const equipamentoInjector = require('../../di/equipamentoInjector');
+const equipamentoInjector = require('../../src/di/equipamentoInjector');
 
 const EquipamentosController = require('../controllers/equipamentosController');
 const EquipamentosService = require('../services/equipamentosService');

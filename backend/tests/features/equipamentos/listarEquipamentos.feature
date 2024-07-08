@@ -127,9 +127,9 @@ Feature: Buscar equipamentos
     """
     {
       "id": "04EGkIhCGohs",
-      "nome": "Monitor philips",
-      "descricao": "monitor full hd 24 polegadas OLED",
-      "estado_conservacao": "reformado",
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "novo",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
       "numero_serie": "3642597",

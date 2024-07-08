@@ -12,7 +12,7 @@ Feature: As a usuario
       "estado_conservacao": "novo",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "patrimonio": "1098642",
+      "patrimonio": "20201567",
       "reservas": [],
       "manutencao": []
     }
@@ -25,10 +25,10 @@ Feature: As a usuario
       "estado_conservacao": "reformado",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "patrimonio": "1098642"
+      "patrimonio": "20201567"
     }
     """
-    Then o equipamento "Ar condicionado midea" com "patrimonio" "1098642" é modificado no banco de dados para
+    Then o equipamento "Ar condicionado midea" com "patrimonio" "20201567" é modificado no banco de dados para
     """
     {
       "id": "a1b2c3d4",
@@ -37,7 +37,7 @@ Feature: As a usuario
       "estado_conservacao": "reformado",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "patrimonio": "1098642",
+      "patrimonio": "20201567",
       "reservas": [],
       "manutencao": []
     }
@@ -54,7 +54,7 @@ Feature: As a usuario
       "estado_conservacao": "novo",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "patrimonio": "1098642",
+      "patrimonio": "20206624",
       "reservas": [],
       "manutencao": []
     }
@@ -67,10 +67,10 @@ Feature: As a usuario
       "estado_conservação": "novo",
       "data_aquisição": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "patrimonio": "1098643"
+      "patrimonio": "20206629"
     }
     """
-    Then o equipamento "Ar condicionado midea" com "patrimonio" "1098642" não é modificado no banco de dados
+    Then o equipamento "Ar condicionado midea" com "patrimonio" "20206629" não é modificado no banco de dados
     And eu envio uma resposta de "O patrimonio de um equipamento não pode ser modificado" com codigo "400" 
 
   Scenario: Editar o numero de serie de um equipamento
@@ -83,7 +83,7 @@ Feature: As a usuario
       "estado_conservacao": "novo",
       "data_aquisicao": "15/03/2023",
       "valor_estimado": "R$ 1.200,00",
-      "numero_serie": "1098642"
+      "numero_serie": "20201568"
     }
     """
     When eu recebo uma requisição "/PATCH" e id "a3b4c5d6" do usuario "joao" logado como "admin" e json
@@ -97,5 +97,5 @@ Feature: As a usuario
       "numero_serie": "1098643"
     }
     """
-    Then o equipamento "Ar condicionado midea" com "numero_serie" "1098642" não é modificado no banco de dados
+    Then o equipamento "Ar condicionado midea" com "numero_serie" "20201568" não é modificado no banco de dados
     And eu envio uma resposta de "O numero de serie de um equipamento não pode ser modificado" com codigo "400" 

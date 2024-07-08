@@ -20,10 +20,10 @@ defineFeature(feature, async (test) => {
     });
 
     afterAll( async () => {
-        server.close();
         for (let id of equipamentosID) {
-            await equipamentosRepository.deleteEquipment(id);
+           await equipamentosRepository.deleteEquipment(id);
         }
+        server.close();
     });
 
 //steps to reuse
@@ -32,33 +32,19 @@ defineFeature(feature, async (test) => {
         given(/^que exitem os seguintes equipamentos cadastrados no sistema:$/, async (json) => {
             equipamentos = JSON.parse(json);
             for(let eq of equipamentos) {
-                if(eq['patrimonio'] !== undefined){
-                    const created = await equipamentosRepository.createEquipmentPatrimonio(eq);
-                    equipamentosID.push(created.id);
-                } else if(eq['numero_serie'] !== undefined){
-                    const created = await equipamentosRepository.createEquipmentSN(eq);
-                    equipamentosID.push(created.id);
-                }
+                const created = await equipamentosRepository.createEquipment(eq);
+                equipamentosID.push(created.id);
             }
         });     
     };   
     const givenEquipmentExist = async (given) => {
         given(/^que exite o equipamento com json cadastrado$/, async (json) => {
-            let exist;
+            let exist, created;
             const equipamento = JSON.parse(json);
             exist = await equipamentosRepository.getEquipmentById(equipamento.id);
-            console.log(exist);
-            if(exist === undefined){
-                equipamentos.foreach(async eq => {
-                    if(eq.id === equipamento.id){
-                        if(eq.patrimonio !== undefined){
-                            await equipamentosRepository.createEquipmentPatrimonio(eq);
-                        } else if(eq.numero_serie !== undefined){
-                            await equipamentosRepository.createEquipmentSN(eq);
-                        }
-                        equipamentosID.push(eq.id);
-                    }
-                });
+            if(exist === undefined) {
+                created = await equipamentosRepository.createEquipment(equipamento);
+                equipamentosID.push(created.id);
             }
         });
     };
@@ -97,7 +83,6 @@ defineFeature(feature, async (test) => {
     const whenRequestFail = async (when) => {
         when(/^eu recebo uma requisição GET para (.*) do usuario "(.*)" logado como "(.*)"$/, async (req, username, userRole) =>{
             response = await request.get(req);
-            console.log(response.body);
         });
     };
 

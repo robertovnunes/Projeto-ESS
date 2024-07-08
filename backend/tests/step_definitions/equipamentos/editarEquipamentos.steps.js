@@ -31,13 +31,8 @@ defineFeature(feature, async (test) => {
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento:/, async (json) => {
             const equipamento = JSON.parse(json);
-            console.log(equipamento);
-            if(equipamento['patrimonio'] !== undefined){   
-                await equipamentosRepository.createEquipmentPatrimonio(equipamento);   
-            } else if(equipamento['numero_serie'] !== undefined){
-                await equipamentosRepository.createEquipmentSN(equipamento);
-            }
-            equipmentsID.push(equipamento.id);
+            const created = await equipamentosRepository.createEquipment(equipamento);
+            equipmentsID.push(created.id);
         });
     }
 //When steps
@@ -58,9 +53,6 @@ defineFeature(feature, async (test) => {
     };
     const thenEquipmentIsNotUpdated = async (then) => {
         then(/^o equipamento "(.*)" com "(.*)" "(.*)" não é modificado no banco de dados$/, async (nome, campo, valor) => {
-            const res = await request.get(`/equipamentos/${campo}/${valor}`);
-            const EquipmentID = res.body.id;
-            response = await request.patch(`/equipamentos/${EquipmentID}`).send(data);
             expect(response.status).toBe(400);
         });
     }
