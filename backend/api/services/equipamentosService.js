@@ -5,40 +5,36 @@ class EquipamentosService {
         this.equipamentoRepository = equipamentoRepository;
     }
 
-    getAllEquipments() {
-        let equipamentos = this.equipamentoRepository.getAllEquipments();
+    async getAllEquipments() {
+        let equipamentos = await this.equipamentoRepository.getAllEquipments();
         return equipamentos
     }
 
-    getEquipmentById(id) {
-        let equipamento = this.equipamentoRepository.getEquipmentById(id);
+    async getEquipmentById(id) {
+        let equipamento = await this.equipamentoRepository.getEquipmentById(id);
         return equipamento;
     }
 
-    getEquipmentByPatrimonio(value) {
-        let equipamento = this.equipamentoRepository.getEquipmentByPatrimonio(value);
+    async getEquipmentByPatrimonio(value) {
+        let equipamento = await this.equipamentoRepository.getEquipmentByPatrimonio(value);
         return equipamento;
     }
 
-    getEquipmentBySerie(value) {
-        let equipamento = this.equipamentoRepository.getEquipmentBySerie(value);
+    async getEquipmentBySerie(value) {
+        let equipamento = await this.equipamentoRepository.getEquipmentBySerie(value);
         return equipamento;
     }
 
-    createEquipmentPatrimonio(newEquipamento) {
-        return this.equipamentoRepository.createEquipmentPatrimonio(newEquipamento);
-    }
-
-    createEquipmentSN(newEquipamento) {
-        return this.equipamentoRepository.createEquipmentSN(newEquipamento);
+    async createEquipment(newEquipamento) {
+        return await this.equipamentoRepository.createEquipment(newEquipamento);
     }
 
     patchEquipment(id, newEquipamento) {
         return this.equipamentoRepository.updateEquipment(id, newEquipamento);
     }
 
-    deleteEquipment(id) {
-        return this.equipamentoRepository.deleteEquipment(id);
+    async deleteEquipment(id) {
+        return await this.equipamentoRepository.deleteEquipment(id);
     }
 }
 

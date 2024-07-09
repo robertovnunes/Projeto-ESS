@@ -2,101 +2,100 @@ Feature: As a usuario
   I want to editar um equipamento no banco de dados
   So that eu posso modificar todos os recusros de uma sala
 
-  Scenario Outline: Editar estado de conservação de um equipamento
-    Given existe o equipamento <nome> com "patrimonio" <patrimonio>
-    And descricao <descricao>
-    And "estado de conservacao" <estado de conservacao>
-    And "data de aquisicao" <data de aquisicao>
-    And "valor estimado" <valor estimado>
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" "reformado"
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" é modificado no banco de dados
+  Scenario: Editar estado de conservação de um equipamento
+    Given existe o equipamento: 
+    """
+    {
+      "id": "a1b2c3d4",
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "novo",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "20201567",
+      "reservas": [],
+      "manutencao": []
+    }
+    """
+    When eu recebo uma requisição "/PATCH" e id "a1b2c3d4" do usuario "joao" logado como "admin" e json
+    """
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "reformado",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "20201567"
+    }
+    """
+    Then o equipamento "Ar condicionado midea" com "patrimonio" "20201567" é modificado no banco de dados para
+    """
+    {
+      "id": "a1b2c3d4",
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "reformado",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "20201567",
+      "reservas": [],
+      "manutencao": []
+    }
+    """
     And eu envio uma resposta de "sucesso" com codigo "200"
-    And json atualizado do equipamentos "Ar condicionado midea" com patrimonio "1098642" é retornado
-    Examples:
-      |nome  |descricao|estado de conservacao|data de aquisicao|valor estimado| patrimonio|
-      |Ar condicionado midea|Ar condicionado de 12.000 btus|novo|15/03/2023|R$ 1.200,00|1098642|
+    
+  Scenario: Editar o patrimonio de um equipamento
+    Given existe o equipamento: 
+    """
+    {
+      "id": "a2b3c4d5",
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "novo",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "20206624",
+      "reservas": [],
+      "manutencao": []
+    }
+    """
+    When eu recebo uma requisição "/PATCH" e id "a2b3c4d5" do usuario "joao" logado como "admin" e json
+    """
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservação": "novo",
+      "data_aquisição": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "20206629"
+    }
+    """
+    Then o equipamento "Ar condicionado midea" com "patrimonio" "20206629" não é modificado no banco de dados
+    And eu envio uma resposta de "O patrimonio de um equipamento não pode ser modificado" com codigo "400" 
 
-  Scenario: Editar um equipamento com nome vazio
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" ""
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" "reformado"
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
-  Scenario: Editar um equipamento com patrimonio vazio
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" "reformado"
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio ""
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
-  Scenario: Editar um equipamento com descricao vazia
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" ""
-    And "estado de conservação" "reformado"
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
-  Scenario: Editar um equipamento com estado de conservação vazio
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" ""
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
-  Scenario: Editar um equipamento com data de aquisição vazia
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" "reformado"
-    And "data de aquisição" ""
-    And "valor estimado" "R$ 1.200,00"
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
-  Scenario: Editar um equipamento com valor estimado vazio
-    Given existe o equipamento "Ar condicionado midea" com "patrimonio" "1098642"
-    When eu recebo uma requisição "/PATCH" do usuario "joao" logado como "admin"
-    And "nome" "Ar condicionado midea"
-    And "descricao" "Ar condicionado de 12.000 btus"
-    And "estado de conservação" "reformado"
-    And "data de aquisição" "15/03/2023"
-    And "valor estimado" ""
-    And patrimonio "1098642"
-    Then o equipamento "Ar condicionado midea" com patrimonio "1098642" não é modificado no banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And json de erro é retornado
-
+  Scenario: Editar o numero de serie de um equipamento
+    Given existe o equipamento: 
+    """
+    {
+      "id": "a3b4c5d6",
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservacao": "novo",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "numero_serie": "20201568"
+    }
+    """
+    When eu recebo uma requisição "/PATCH" e id "a3b4c5d6" do usuario "joao" logado como "admin" e json
+    """
+    {
+      "nome": "Ar condicionado midea",
+      "descricao": "Ar condicionado de 12.000 btus",
+      "estado_conservação": "novo",
+      "data_aquisição": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "numero_serie": "1098643"
+    }
+    """
+    Then o equipamento "Ar condicionado midea" com "numero_serie" "20201568" não é modificado no banco de dados
+    And eu envio uma resposta de "O numero de serie de um equipamento não pode ser modificado" com codigo "400" 

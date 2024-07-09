@@ -4,15 +4,25 @@ Feature: Remover equipamentos de uma sala
   So that eu posso armazenar todos os recusros de uma sala
 
   Scenario: Remover um equipamento com sucesso
-    Given que eu tenho o equipamento "Projetor" com id "123456"
-    When eu recebo uma requisição "/DELETE/123456" do usuario "joao" logado como "admin"
-    Then o equipamento deve ser removido do banco de dados
-    And eu envio uma resposta de "sucesso" com codigo "200"
+    Given que eu tenho o equipamento com id "7891234" e json:
+    """
+    {
+      "id": "7891234",
+      "nome": "Monitor LG",
+      "descricao": "Monitor LG 21 polegadas",
+      "estado_conservacao": "Novo",
+      "data_aquisicao": "10/02/2022",
+      "valor_estimado": "R$ 800.00",
+      "patrimonio": "1098643",
+      "reservas": [],
+      "manutencao": []
+    }
+    """
+    When eu recebo uma requisição "/DELETE" para o id "7891234" do usuario "joao" logado como "admin"
+    Then o equipamento com id "7891234" deve ser removido do banco de dados
 
   Scenario: Remover um equipamento inexistente
-    Given que eu nao tenho o equipamento "Projetor" com id "123456"
-    When eu recebo uma requisição "/DELETE/123456" do usuario "joao" logado como "admin"
-    Then o equipamento não deve ser removido do banco de dados
-    And eu envio uma resposta de "erro" com codigo "400"
-    And eu envio uma mensagem de "Erro: equipamento existe"
+    Given que eu nao tenho o equipamento com id "5237418"
+    When eu recebo uma requisição "/DELETE" para o id "5237418" do usuario "joao" logado como "admin"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem de "Equipamento nao encontrado" para o id "5237418"
 

@@ -1,12 +1,23 @@
 [
   {
-    "id": "041Lu6fq0-Jr",
-    "nome": "Projetor epson",
-    "descricao": "projetor full hd",
+    "id": "04DA8KaNIKg",
+    "nome": "Ar condicionado midea",
+    "descricao": "Ar condicionado split 12000 btus",
     "estado_conservacao": "Bom",
     "data_aquisicao": "15/03/2023",
-    "valor_estimado": "R$ 1.200,00",
-    "patrimonio": "1098643",
+    "valor_estimado": "1200.00",
+    "patrimonio": "1098642",
+    "reservas": [],
+    "manutencao": []
+  },
+  {
+    "id": "04zH2AgXXvC",
+    "nome": "Ar condicionado midea",
+    "descricao": "Ar condicionado split 12000 btus",
+    "estado_conservacao": "Bom",
+    "data_aquisicao": "15/03/2023",
+    "valor_estimado": "1200.00",
+    "numero_serie": "1098642",
     "reservas": [],
     "manutencao": []
   }
