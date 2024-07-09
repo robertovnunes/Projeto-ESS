@@ -29,8 +29,8 @@ class EquipamentosService {
         return await this.equipamentoRepository.createEquipment(newEquipamento);
     }
 
-    async patchEquipment(id, newEquipamento) {
-        return await this.equipamentoRepository.updateEquipment(id, newEquipamento);
+    patchEquipment(id, newEquipamento) {
+        return this.equipamentoRepository.updateEquipment(id, newEquipamento);
     }
 
     async deleteEquipment(id) {

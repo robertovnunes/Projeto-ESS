@@ -1,14 +1,22 @@
 const fs = require('fs');
 const path = require('path');
 
+
 class EquipamentosRepository {
-    constructor() {
-        this.filePath = path.join(__dirname, './../../db/equipamentos.json');
-        this._loadJson().then(data => this.db = data);
+    constructor(db) {
+        this.filePath = path.join(__dirname, '../../db/equipamentos.json');
+        this.isMock = db !== undefined;
+        this.db = db || [];
+        this._init();
     }
 
-    async _loadJson() {
-        const data = await this._readFile();
+    async _init() {
+        if(!this.isMock) this.db = await this._readFile(this.filePath);
+        else this.db = [];
+    }
+
+    async _readFile(filePath) {
+        const data = await fs.promises.readFile(filePath, 'utf8');
         return JSON.parse(data);
     }
 
@@ -18,121 +26,165 @@ class EquipamentosRepository {
     }
 
     async _writeFile(data) {
-            await fs.promises.writeFile(this.filePath, JSON.stringify(data), 'utf-8');
+        if (!this.isMock) await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 2));
     }
 
     async getAllEquipments() {
-        let data = await this._loadJson().then(data => data);
-        this.db = data;
-        return this.db;
+        //parei aqui
+        return this.db.length === 0  ? 'Nenhum equipamento cadastrado' : this.db;
     }
 
     async getEquipmentById(id) {
-        let equipamentos = await this.getAllEquipments();
-        if(equipamentos.length > 0){
-            for (let item of equipamentos){
-                if(item.hasOwnProperty('id') && item.id === id){
-                    return item;
-                }
-            }
+        const db = await this.getAllEquipments();
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.id === id);
+            return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
         }
-        return undefined;
     }
     async getEquipmentByPatrimonio(value) {
-        let equipamentos = await this.getAllEquipments();
-        if(equipamentos.length > 0){
-            for (let item of equipamentos){
-                if(item.hasOwnProperty('patrimonio') && item.patrimonio === value){
-                    return item;
-                }
-            }
+        const db = await this.getAllEquipments();
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.patrimonio === value)
+            return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
         }
-        return undefined;
     }
     async getEquipmentBySerie(value) {
-        let equipamentos = await this.getAllEquipments();
-        if(equipamentos.length > 0) {
-            for (let item of equipamentos){
-                if(item.hasOwnProperty('numero_serie') && item.numero_serie === value){
-                    return item;
-                }
-            }
+        const db = await this.getAllEquipments();
+        let equipamento;
+        if (db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            equipamento = db.find(equipamento => equipamento.numero_serie === value);
+            return equipamento === undefined ? 'Equipamento nao encontrado' : equipamento;
         }
-        return undefined;
     }
-    
-    async createEquipment(newEquipamento) {
-        let exist;
-        if(newEquipamento.hasOwnProperty('patrimonio')){
-            exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
-        } else if(newEquipamento.hasOwnProperty('numero_serie')){
-            exist = await this.getEquipmentBySerie(newEquipamento.numero_serie);
+    async createEquipmentPatrimonio(newEquipamento) {
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+           db.forEach(equipamento => {
+                if(equipamento.patrimonio === newEquipamento.patrimonio){
+                     return 'Patrimonio já existe';
+                }
+            });
+            db.push(newEquipamento);
+        } else {
+            db = [newEquipamento];
+
         }
-        if(!exist){
-            let equipamentos = await this.getAllEquipments();
-            if(equipamentos.length > 0) {
-                equipamentos.push(newEquipamento);
-            } else {
-                equipamentos = [newEquipamento];
-            }
-            this.db = equipamentos;
-            await this._writeFile(this.db);
-            return newEquipamento;
+        if (!this.isMock) await this._writeFile(db);
+        return newEquipamento;
+    }
+
+    async createEquipmentSN(newEquipamento){
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+            db.forEach(equipamento => {
+                if(equipamento.numero_serie === newEquipamento.numero_serie){
+                    return 'Numero de serie já existe';
+                }
+            });
+            db.push(newEquipamento);
         } else {
             if(newEquipamento.patrimonio !== undefined) return 'Patrimonio já existe';
             else if(newEquipamento.numero_serie !== undefined) return 'Numero de serie já existe';
         }
+        if (!this.isMock) await this._writeFile(db);
+        return newEquipamento;
     }
 
     async updateEquipment(id, data) {
-        try{
-            let equipamento = await this.getEquipmentById(id);
-            if(equipamento === undefined) return undefined;
-            else {
-                const index = await this.db.findIndex(equipamento => equipamento.id === id);
-                if(index === -1) return undefined;
-                if(equipamento.hasOwnProperty('patrimonio')){
-                    if(data.patrimonio === equipamento.patrimonio){
-                        this.db[index] = {...this.db[index], ...data};
-                        await this._writeFile(this.db);
-                        return this.db[index];
-                    } else {
-                        return 'O patrimonio de um equipamento não pode ser modificado';
-                    }
-                } else if(equipamento.hasOwnProperty('numero_serie')){
-                    if(data.numero_serie === equipamento.numero_serie){
-                        this.db[index] = {...this.db[index], ...data};
-                        await this._writeFile(this.db);
-                        return this.db[index];
-                    } else {
-                        return 'O numero de serie de um equipamento não pode ser modificado';
-                    }
-                }
-            }
-        } catch (error) {
-            return error;
+        let db = await this.getAllEquipments();
+        let equipamento = this.getEquipmentById(id);
+        console.log(equipamento);
+        if(equipamento === 'Equipamento nao encontrado' || db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            const index = db.findIndex(equipamento => equipamento.id === id);
+            if(index === -1) return 'Equipamento nao encontrado';
+            db[index] = {...db[index], ...data};
+            if (!this.isMock) await this._writeFile(db);
+            return db[index];
         }
     }
 
     async deleteEquipment(id) {
+        let db;
+        db = await this.getAllEquipments();
         let equipamento = await this.getEquipmentById(id);
-        let equipamentos = await this.getAllEquipments();
-        if(equipamento !== undefined) {
-            let deleted;
-            if(equipamentos.length > 1){
-                const index = equipamentos.findIndex(equipamento => equipamento.id === id);
-                if(index === -1) return undefined;
-                deleted = equipamentos.splice(index, 1);
-            } else {
-                deleted = equipamento;
-                equipamentos = [];
-            }
-            this.db = equipamentos;
-            await this._writeFile(this.db);
+        if(equipamento === 'Equipamento nao encontrado' || db === 'Nenum equipamento cadastrado') return 'Equipamento nao encontrado'; 
+        else {
+            let index = db.findIndex(equipamento => equipamento.id === id);
+            if(index === -1) return 'Equipamento nao encontrado';
+            const deleted = db.splice(index, 1);
+            if (!this.isMock) await this._writeFile(db);
             return deleted;
         }
+    }
+
+    async getReservaById(id) {
+        const db = await this.getAllEquipments();
+        let reserva;
+        if (db === 'Nenhum equipamento cadastrado') return 'Reserva nao encontrada';
         else {
-            return undefined;
+            reserva = db.find(equipamento => equipamento.reservas.id === id);
+            return reserva === undefined ? 'Reserva nao encontrada' : reserva;
+        }
+    }
+
+    async getReservaManutencaoById(id) {
+        const db = await this.getAllEquipments();
+        let reserva;
+        if (db === 'Nenhum equipamento cadastrado') return 'Reserva nao encontrada';
+        else {
+            reserva = db.find(equipamento => equipamento.manutencao.id === id);
+            return reserva === undefined ? 'Reserva nao encontrada' : reserva;
+        }
+    }
+
+    async createReservaManutencao(newReserva) {
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+            db.forEach(equipamento => {
+                if(equipamento.manutencao.id === newReserva.id){
+                    return 'Reserva já existe';
+                }
+            });
+            db.push(newReserva);
+        } else {
+            db = [newReserva];
+        }
+        if (!this.isMock) await this._writeFile(db);
+        return newReserva;
+    }
+
+    async createReserva(newReserva) {
+        let db = await this.getAllEquipments();
+        if(db !== 'Nenhum equipamento cadastrado'){
+            db.forEach(equipamento => {
+                if(equipamento.reservas.id === newReserva.id){
+                    return 'Reserva já existe';
+                }
+            });
+            db.push(newReserva);
+        } else {
+            db = [newReserva];
+        }
+        if (!this.isMock) await this._writeFile(db);
+        return newReserva;
+    }
+
+    async updateReserva(id, data) {
+        let db = await this.getAllEquipments();
+        let equipamento = this.getEquipmentById(id);
+        if(equipamento === 'Equipamento nao encontrado' || db === 'Nenhum equipamento cadastrado') return 'Equipamento nao encontrado';
+        else {
+            const index = db.findIndex(equipamento => equipamento.id === id);
+            if(index === -1) return 'Equipamento nao encontrado';
+            db[index] = {...db[index], ...data};
+            if (!this.isMock) await this._writeFile(db);
+            return db[index];
         }
     }
 }

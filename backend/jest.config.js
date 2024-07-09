@@ -4,7 +4,9 @@ module.exports = {
   rootDir: './',
   testRegex: '.steps.js$',
   transform: {
-    '^.+\\.js$': 'babel-jest',
+  
+  '^.+\\.(t|j)s$': 'babel-jest',
+  
   },
   setupFilesAfterEnv: ['./setupTests.js'],
 };

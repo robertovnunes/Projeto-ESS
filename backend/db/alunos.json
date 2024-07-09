@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "Draco Lúcio Malfoy",
+    "login": "dlm",
+    "senha": "$2b$10$5e5kcuu.H7FEuscHBvKGIO.9VETfpPXO6Ey52Mmhop/b7yUQaz18y"
+  },
+  {
+    "nome": "Hermione Jean Granger",
+    "login": "hjg",
+    "senha": "$2b$10$4SEi6/3SCbCEbkGUXmAL6Od76E.Yhdm.o5TfHdpybmmPII2Tdn0JG"
+  },
+  {
+    "nome": "Juliana Silva",
+    "login": "js3",
+    "senha": "$2a$10$e..l/9b/V3PjcyeJIzIRmegkOEvCLHww1l4TdRPKHOVNjn0fcNchG"
+  }
+]
