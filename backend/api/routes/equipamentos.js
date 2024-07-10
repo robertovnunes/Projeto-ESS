@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const equipamentoInjector = require('../../di/equipamentoInjector');
+const equipamentoInjector = require('../../src/di/equipamentoInjector');
 
 const EquipamentosController = require('../controllers/equipamentosController');
 const EquipamentosService = require('../services/equipamentosService');
@@ -11,8 +11,7 @@ let injector = new equipamentoInjector();
 injector.registerEquipmentRepository(EquipamentosRepository, new EquipamentosRepository());
 
 injector.registerEquipmentService(EquipamentosService, new EquipamentosService(
-    injector.getEquipmentRepository(EquipamentosRepository)
-));
+    injector.getEquipmentRepository(EquipamentosRepository)));
 equipamentosController = new EquipamentosController(injector.getEquipmentService(EquipamentosService));
 
 
