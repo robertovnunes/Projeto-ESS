@@ -91,8 +91,7 @@ class EquipamentosRepository {
             await this._writeFile(this.db);
             return newEquipamento;
         } else {
-            if(newEquipamento.patrimonio !== undefined) return 'Patrimonio já existe';
-            else if(newEquipamento.numero_serie !== undefined) return 'Numero de serie já existe';
+            db = [newEquipamento];
         }
     }
 
@@ -147,6 +146,7 @@ class EquipamentosRepository {
             return undefined;
         }
     }
+
 }
 
 module.exports = EquipamentosRepository;

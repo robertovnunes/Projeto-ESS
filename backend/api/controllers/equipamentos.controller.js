@@ -179,8 +179,8 @@ class EquipamentosController {
         try{
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
             if(deleted === undefined) {
-                console.log(`DELETE /equipamentos/${req.params.id} [400] NOT FOUND`);
-                return res.status(400).send({message: 'Equipamento nao encontrado'});
+                console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
+                return res.status(404).send({message: 'Equipamento nao encontrado'});
             } else {
                 console.log(`DELETE /equipamentos/${req.params.id} [200] OK`);
                 return res.status(200).send({message: `Equipamento ${deleted.nome} removido com sucesso`});
