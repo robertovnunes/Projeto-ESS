@@ -8,8 +8,8 @@ class EquipamentosRepository {
     }
 
     async _loadJson() {
-        const data = await this._readFile();
-        return JSON.parse(data);
+        const json = await this._readFile();
+        return JSON.parse(json);
     }
 
     async _readFile() {
@@ -21,7 +21,7 @@ class EquipamentosRepository {
             await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 3), 'utf-8');
     }
 
-    async getAllEquipments() {
+    async getEquipments() {
         let data = await this._loadJson().then(data => data);
         this.db = data;
         return this.db;
