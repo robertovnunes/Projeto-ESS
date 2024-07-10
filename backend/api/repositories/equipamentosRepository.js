@@ -8,19 +8,37 @@ class EquipamentosRepository {
     }
 
     async _loadJson() {
-        const data = await this._readFile();
-        return JSON.parse(data);
+        const json = await this._readFile();
+        return JSON.parse(json);
+    }
+
+    async _readFile() {
+        const data = await fs.promises.readFile(this.filePath, 'utf-8');
+        return data;
     }
 
     async _writeFile(data) {
             await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 3), 'utf-8');
     }
 
-    async getAllEquipments() {
+    async getEquipments() {
         let data = await this._loadJson().then(data => data);
         this.db = data;
         return this.db;
     }
+
+    async getEquipmentByKey(key, value) {
+        let equipamentos = await this.getAllEquipments();
+        if(equipamentos.length > 0){
+            for (let item of equipamentos){
+                if(item.hasOwnProperty(key) && item[key] === value){
+                    return item;
+                }
+            }
+        }
+        return undefined;
+    }
+
     async getEquipmentById(id) {
         let equipamentos = await this.getAllEquipments();
         if(equipamentos.length > 0){
