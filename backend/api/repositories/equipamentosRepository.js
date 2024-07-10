@@ -20,11 +20,6 @@ class EquipamentosRepository {
         return JSON.parse(data);
     }
 
-    async _readFile() {
-        let data = await fs.promises.readFile(this.filePath, 'utf-8');
-        return data;
-    }
-
     async _writeFile(data) {
         if (!this.isMock) await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 2));
     }
@@ -33,7 +28,6 @@ class EquipamentosRepository {
         //parei aqui
         return this.db.length === 0  ? 'Nenhum equipamento cadastrado' : this.db;
     }
-
     async getEquipmentById(id) {
         const db = await this.getAllEquipments();
         let equipamento;
@@ -88,8 +82,7 @@ class EquipamentosRepository {
             });
             db.push(newEquipamento);
         } else {
-            if(newEquipamento.patrimonio !== undefined) return 'Patrimonio já existe';
-            else if(newEquipamento.numero_serie !== undefined) return 'Numero de serie já existe';
+            db = [newEquipamento];
         }
         if (!this.isMock) await this._writeFile(db);
         return newEquipamento;
@@ -187,6 +180,7 @@ class EquipamentosRepository {
             return db[index];
         }
     }
+
 }
 
 module.exports = EquipamentosRepository;
