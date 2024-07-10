@@ -13,7 +13,7 @@ class EquipamentosRepository {
     }
 
     async _readFile() {
-        let data = await fs.promises.readFile(this.filePath, 'utf-8');
+        const data = await fs.promises.readFile(this.filePath, 'utf-8');
         return data;
     }
 
