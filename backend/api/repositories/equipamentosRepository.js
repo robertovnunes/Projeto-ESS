@@ -13,17 +13,15 @@ class EquipamentosRepository {
     }
 
     async _readFile() {
-        const data = await fs.promises.readFile(this.filePath, 'utf-8');
-        return data;
+        return await fs.promises.readFile(this.filePath, 'utf-8');
     }
 
     async _writeFile(data) {
             await fs.promises.writeFile(this.filePath, JSON.stringify(data, null, 3), 'utf-8');
     }
 
-    async getEquipments() {
-        let data = await this._loadJson().then(data => data);
-        this.db = data;
+    async getAllEquipments() {
+        this.db = await this._loadJson().then(data => data);
         return this.db;
     }
 
@@ -91,7 +89,7 @@ class EquipamentosRepository {
             await this._writeFile(this.db);
             return newEquipamento;
         } else {
-            db = [newEquipamento];
+            this.db = [newEquipamento];
         }
     }
 
