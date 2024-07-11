@@ -75,10 +75,12 @@ class EquipamentosRepository {
         let exist;
         if(newEquipamento.hasOwnProperty('patrimonio')){
             exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
+            if(exist !== undefined) return 'Patrimonio ja existe';
         } else if(newEquipamento.hasOwnProperty('numero_serie')){
             exist = await this.getEquipmentBySerie(newEquipamento.numero_serie);
+            if(exist !== undefined) return 'Numero de serie ja existe';
         }
-        if(!exist){
+        if(exist === undefined){
             let equipamentos = await this.getAllEquipments();
             if(equipamentos.length > 0) {
                 equipamentos.push(newEquipamento);
@@ -88,9 +90,8 @@ class EquipamentosRepository {
             this.db = equipamentos;
             await this._writeFile(this.db);
             return newEquipamento;
-        } else {
-            this.db = [newEquipamento];
         }
+        return undefined;
     }
 
     async updateEquipment(id, data) {
