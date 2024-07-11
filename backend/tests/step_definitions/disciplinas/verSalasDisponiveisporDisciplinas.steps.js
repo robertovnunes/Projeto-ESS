@@ -1,11 +1,12 @@
 const supertest = require('supertest');
-const server = require('/home/mariana/Documents/Projeto-ESS/backend/conf/server.js');
+const server = require('../../../../../../Downloads/Projeto-ESS-dev/Projeto-ESS-dev/backend');
 const { defineFeature, loadFeature } = require('jest-cucumber');
-const database = require('./databaseScramble');
+const database = require('../../../../../../Downloads/Projeto-ESS-dev/Projeto-ESS-dev/backend/tests/step_definitions/databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
 
-const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/aluno/verSalasDisponiveisporDisciplina.feature');
+const feature = loadFeature('./tests/features/aluno/verSalasDisponiveisporDisciplina.feature');
+
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;
