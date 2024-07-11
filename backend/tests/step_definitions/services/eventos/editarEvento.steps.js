@@ -1,11 +1,11 @@
 const supertest = require('supertest');
-const server = require('../../../../app.js');
+const server = require('/home/mariana/Documents/Projeto-ESS/backend/conf/server.js');
 const { defineFeature, loadFeature } = require('jest-cucumber');
-const database = require('../../databaseEdit.js');
+const database = require('./databaseScramble');
 //const { response } = require('express');
 const request = supertest(server);
 
-const feature = loadFeature('../../../features/professor/editarEvento.feature');
+const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/professor/editarEvento.feature');
 
 const eventExists = (eventsList, name, eventDateAndTime) => {
     let found = false;

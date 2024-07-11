@@ -1,11 +1,10 @@
 const supertest = require('supertest');
-const server = require('../../../../app.js');
+const server = require('/home/mariana/Documents/Projeto-ESS/backend/conf/server.js');
 const { defineFeature, loadFeature } = require('jest-cucumber');
-const database = require('../../databaseEdit.js');
-//const { response } = require('express');
+const database = require('./databaseScramble.js');
 const request = supertest(server);
 
-const feature = loadFeature('../../../features/admin/adicionarDisciplina_admin.feature');
+const feature = loadFeature('/home/mariana/Documents/Projeto-ESS/backend/tests/features/admin/adicionarDisciplina_admin.feature');
 
 const disciplineExists = (disciplineList, name, disciplineID) => {
     let found = false;
