@@ -1,5 +1,5 @@
-const equipamentoSNModel = require('../models/equipamentoSNModel');
-const equipamentoPatrimonioModel = require('../models/equipamentoPatrimonioModel');
+const equipamentoSNModel = require('../models/equipamentos/SN.model');
+const equipamentoPatrimonioModel = require('../models/equipamentos/patrimonio.model');
 
 
 class EquipamentosController {
