@@ -1,3 +1,4 @@
+const EquipamentoRepository = require('../repositories/equipamentosRepository');
 
 class EquipamentosService {
     constructor(equipamentoRepository){
@@ -5,25 +6,32 @@ class EquipamentosService {
     }
 
     getAllEquipments() {
-        return this.equipamentoRepository.getAllEquipments()
+        let equipamentos = this.equipamentoRepository.getAllEquipments();
+        return equipamentos
     }
 
     getEquipmentById(id) {
-        return this.equipamentoRepository.getEquipmentById(id);
+        let equipamento = this.equipamentoRepository.getEquipmentById(id);
+        return equipamento;
     }
 
     getEquipmentByPatrimonio(value) {
-        return this.equipamentoRepository.getEquipmentByPatrimonio(value);
+        let equipamento = this.equipamentoRepository.getEquipmentByPatrimonio(value);
+        return equipamento;
     }
 
     getEquipmentBySerie(value) {
-        return this.equipamentoRepository.getEquipmentBySerie(value);
+        let equipamento = this.equipamentoRepository.getEquipmentBySerie(value);
+        return equipamento;
     }
 
-    createEquipment(newEquipamento) {
-        return this.equipamentoRepository.createEquipment(newEquipamento);
+    createEquipmentPatrimonio(newEquipamento) {
+        return this.equipamentoRepository.createEquipmentPatrimonio(newEquipamento);
     }
 
+    createEquipmentSN(newEquipamento) {
+        return this.equipamentoRepository.createEquipmentSN(newEquipamento);
+    }
 
     patchEquipment(id, newEquipamento) {
         return this.equipamentoRepository.updateEquipment(id, newEquipamento);
