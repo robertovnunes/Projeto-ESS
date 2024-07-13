@@ -1,6 +1,7 @@
 const equipamentoSNModel = require('../models/equipamentoSNModel');
 const equipamentoPatrimonioModel = require('../models/equipamentoPatrimonioModel');
-
+const EquipamentosService = require('../services/equipamentosService');
+const shortid = require('shortid');
 
 class EquipamentosController {
 
@@ -103,7 +104,7 @@ class EquipamentosController {
             } else {
                 const newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
                 let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
-                if(equipmentCreated === 'Patrimonio ja existe') {
+                if(equipmentCreated === 'Patrimonio já existe') {
                     return res.status(400).send({message: 'Ja existe um equipamento com este patrimonio'});
                 } else {
                     console.log(`POST /equipamentos [201] CREATED`);
@@ -137,7 +138,7 @@ class EquipamentosController {
             } else {
                 const newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
                 let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
-                if(equipmentCreated === 'Numero de serie ja existe') {
+                if(equipmentCreated === 'Numero de serie já existe') {
                     return res.status(400).send({message: 'Ja existe um equipamento com este numero de serie'});
                 } else {
                     console.log(`POST /equipamentos [201] CREATED`);
