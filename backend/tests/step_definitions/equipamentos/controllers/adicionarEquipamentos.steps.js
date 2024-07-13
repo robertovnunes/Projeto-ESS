@@ -43,10 +43,12 @@ defineFeature(feature, (test) => {
     };
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
+            console.log('criando');
             const id = identificador+Math.floor(Math.random()*1000);
             const equipamento = {'id':id, 'nome':'Arduino', 'descricao':'Placa de prototipação', 'estado_conservacao':'novo', 'data_aquisicao':'10/04/2024', 'valor_estimado':'R$ 200,00', [campo]:identificador, 'reservas':[], 'manutencao':[]};
             await mockEquipamentosRepository.createEquipment(equipamento);
             equipamentosID.push(id);
+            console.log('criado');
         });
     };
 //When steps
