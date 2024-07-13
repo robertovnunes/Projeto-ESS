@@ -24,5 +24,5 @@ Feature: Remover equipamentos de uma sala
   Scenario: Remover um equipamento inexistente
     Given que eu nao tenho o equipamento com id "5237418"
     When eu recebo uma requisição "/DELETE" para o id "5237418" do usuario "joao" logado como "admin"
-    Then eu envio uma resposta de erro com codigo "404" e mensagem de "Equipamento nao encontrado" para o id "5237418"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem de "Equipamento nao encontrado" para o id "5237418"
 

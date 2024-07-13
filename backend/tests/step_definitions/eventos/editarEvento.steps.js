@@ -1,7 +1,7 @@
 const supertest = require('supertest');
-const server = require('../../../../../../Downloads/Projeto-ESS-dev/Projeto-ESS-dev/backend');
+const server = require('../../../app.js');
 const { defineFeature, loadFeature } = require('jest-cucumber');
-const database = require('../../../../../../Downloads/Projeto-ESS-dev/Projeto-ESS-dev/backend/tests/step_definitions/databaseEdit.js');
+const database = require('../databaseEdit.js');
 //const { response } = require('express');
 const request = supertest(server);
 
