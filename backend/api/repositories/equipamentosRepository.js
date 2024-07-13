@@ -25,18 +25,6 @@ class EquipamentosRepository {
         return this.db;
     }
 
-    async getEquipmentByKey(key, value) {
-        let equipamentos = await this.getAllEquipments();
-        if(equipamentos.length > 0){
-            for (let item of equipamentos){
-                if(item.hasOwnProperty(key) && item[key] === value){
-                    return item;
-                }
-            }
-        }
-        return undefined;
-    }
-
     async getEquipmentById(id) {
         let equipamentos = await this.getAllEquipments();
         if(equipamentos.length > 0){
