@@ -51,7 +51,7 @@ class Comentarios {
             const newComentario = req.body;
             const comentario = await this.comentariosService.createComentario(newComentario);
             console.log(`POST /comentarios [201] CREATED`);
-            res.status(201).send(comentario);
+            res.status(201).send({message: 'comentário enviado para ADM', body: comentario});
         } catch (error) {
             console.log(`POST /comentarios [500] INTERNAL SERVER ERROR\n ${error}`);
             res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});

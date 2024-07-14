@@ -68,5 +68,47 @@
     "resposta": "",
     "validado": false,
     "id": "04txUPnKlwm"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "04EhqlL9Hwv"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "04HIRUzKE2o"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "04kU1vQ8i8D"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "048y9MzbGt7"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "04O6XEZWtXo"
+  },
+  {
+    "autor": "professor",
+    "login": "acm",
+    "comentario": "o computador da sala 3 não liga",
+    "destinatario": "ADM",
+    "id": "04nZKoKpanI"
   }
 ]

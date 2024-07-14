@@ -1,8 +1,10 @@
 module.exports = {
 
   testEnvironment: 'node',
-  moduleFileExtensions: ['js', 'json', 'ts'],
-  rootDir: '',
+  //moduleFileExtensions: ['js', 'json', 'ts'],
+  moduleFileExtensions: ['js', 'json'],
+  // rootDir: '',
+  rootDir: './',
   testRegex: '.steps.js$',
   transform: {
   
