@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-const comentariosRoutes = require('../api/routes/comentarios.routes');
+const comentariosRoutes = require('../../../api/routes/comentarios.routes');
 const fs = require('fs');
 const path = require('path');
 

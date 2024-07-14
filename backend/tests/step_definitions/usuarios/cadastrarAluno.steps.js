@@ -1,7 +1,7 @@
 const { loadFeature, defineFeature } = require('jest-cucumber');
 const path = require('path');
 const scrambler = require('./scrambler');
-const app = require('../testApp');
+const {app, server} = require('../testApp');
 const fs = require('fs').promises;
 
 const feature = loadFeature('tests/features/usuarios/cadastrarAluno.feature');
@@ -36,6 +36,7 @@ defineFeature(feature, (test) => {
         await scrambler.setupForTestUsers(alunosDB, newAlunos);
         await app.request.delete('/usuarios/logout');
         await scrambler.setupForTestUsers(oldAlunos, alunosDB);
+        server.close();
     });
 
     const checkUserDoesNotExist = (login, userType) => {
