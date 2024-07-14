@@ -1,6 +1,6 @@
 const supertest = require('supertest');
 const path = require('path');
-const server = require('../../../apptest.js');
+const server = require('../../../app');
 const { defineFeature, loadFeature } = require('jest-cucumber');
 const database = require('../databaseEdit.js');
 //const { response } = require('express');
