@@ -1,28 +1,30 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../apptest');
-const EquipamentosRepository = require('../../../api/repositories/equipamentosRepository');
+const app = require('../../../../apptest');
+const EquipamentosRepository = require('../../../../api/repositories/equipamentosRepository');
+const testSetup = require('../testSetup');
 
-const feature = loadFeature('tests/features/equipamentos/adicionarEquipamento.feature');
+const feature = loadFeature('tests/features/equipamentos/controllers/adicionarEquipamento.feature');
 defineFeature(feature, (test) => {
     
     const server = app.listen(3001, () =>{
         console.log('Testando...');
     });
 
-    let request, response, mockEquipamentosRepository, mockData, equipamentosID = [];
+    let request, response, mockEquipamentosRepository, mockData, setup;
+    let equipamentosID = [];
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/POST';
+    setup = new testSetup();
 
     beforeAll(async () => {
         mockEquipamentosRepository = new EquipamentosRepository();
+        await setup.getDatabaseCopy();
     });
 
     afterAll(async () => {
-        for(let id of equipamentosID){
-            await mockEquipamentosRepository.deleteEquipment(id);
-        }
+        await setup.restoreDatabase();
         server.close();
     });
 

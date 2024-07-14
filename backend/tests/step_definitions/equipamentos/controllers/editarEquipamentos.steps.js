@@ -1,9 +1,12 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
 const supertest = require ('supertest');
-const app = require('../../../apptest');
-const EquipamentosRepository = require('../../../api/repositories/equipamentosRepository');
+const app = require('../../../../apptest');
+const EquipamentosRepository = require('../../../../api/repositories/equipamentosRepository');
+const testSetup = require('../testSetup');
 
-const feature = loadFeature('tests/features/equipamentos/editarEquipamento.feature');
+
+const feature = loadFeature('tests/features/equipamentos/controllers/editarEquipamento.feature');
+
 defineFeature(feature, async (test) => {
     const server = app.listen(3001, () =>{
         console.log('Testando...');
@@ -11,18 +14,18 @@ defineFeature(feature, async (test) => {
     
     let request, equipmentsID, response, equipamentosRepository;
     equipmentsID = [];
+    let setup = new testSetup();
     request = supertest(server);
     request.headers = {username: 'joao', role: 'admin'};
     request.method = '/PATCH';
     
-    beforeAll(() => {
+    beforeAll(async () => {
         equipamentosRepository = new EquipamentosRepository();
+        await setup.getDatabaseCopy();
     }); 
 
     afterAll(async () => {
-        for(let id of equipmentsID){
-            await equipamentosRepository.deleteEquipment(id);
-        }
+        await setup.restoreDatabase();
         server.close();
     });
 
