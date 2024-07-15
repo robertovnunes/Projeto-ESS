@@ -1,4 +1,4 @@
-const equipamentosRepository = require('../../../api/repositories/equipamentosRepository');
+const equipamentosRepository = require('../../../api/repositories/equipamentos.repository');
 
 const file = require('fs');
 const path = require('path');

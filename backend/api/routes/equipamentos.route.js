@@ -1,22 +1,23 @@
 const router = require('express').Router();
 const di = require('../../src/di/equipamentoInjector');
+const reservas = require('./reservaEquipamentos.route');
 
 const EquipamentosController = require('../controllers/equipamentos.controller');
-const EquipamentosService = require('../services/equipamentosService');
-const EquipamentosRepository = require('../repositories/equipamentosRepository');
+const EquipamentosService = require('../services/equipamentos.service');
+const EquipamentosRepository = require('../repositories/equipamentos.repository');
 
 let injector = new di();
 
 
 injector.registerEquipmentRepository(EquipamentosRepository, new EquipamentosRepository());
-
-injector.registerEquipmentService(EquipamentosService, new EquipamentosService(
-    injector.getEquipmentRepository(EquipamentosRepository)));
+const repository = injector.getEquipmentRepository(EquipamentosRepository)
+injector.registerEquipmentService(EquipamentosService, new EquipamentosService(repository));
 equipamentosController = new EquipamentosController(injector.getEquipmentService(EquipamentosService));
 
 
 module.exports = app => {
     app.use('/equipamentos', router);
+    router.use('/reservas', reservas);
     router.get('/', equipamentosController.getAllEquipments);
     router.get('/:id', equipamentosController.getEquipmentById);
     router.get('/patrimonio/:patrimonio', equipamentosController.getEquipmentByPatrimonio);
