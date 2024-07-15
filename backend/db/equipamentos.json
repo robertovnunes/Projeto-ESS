@@ -11,7 +11,7 @@
       "reservas": [
          {
             "id": "ggu4-8yt",
-            "equipamento": "1098645604",
+            "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
@@ -31,7 +31,7 @@
       "reservas": [
          {
             "id": "wwjhkdh2",
-            "equipamento": "1098646179",
+            "equipamentoID": "1098646179",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
             "responsavel": {"email":"cpm22@cin.ufpe.br","username":"cpm22"},
@@ -52,7 +52,7 @@
       "reservas": [
          {
             "id": "8y1fwq1t",
-            "equipamento": "04I6YMZgNpWM",
+            "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
             "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
@@ -60,7 +60,7 @@
          },
          {
             "id": "'121wd+q",
-            "equipamento": "04I6YMZgNpWM",
+            "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-11-01",
             "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},

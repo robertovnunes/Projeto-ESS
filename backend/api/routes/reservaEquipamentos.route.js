@@ -10,11 +10,11 @@ let injector = new di();
 injector.registerReservaRepository(ReservaEquipamentoRepository, new ReservaEquipamentoRepository());
 const repository = injector.getReservaRepository(ReservaEquipamentoRepository);
 injector.registerReservaService(ReservaEquipamentoService, new ReservaEquipamentoService(repository));
-reservaEquipamentoController = new ReservaEquipamentoController(injector.getReservaService(ReservaEquipamentoService));
+const reservaEquipamentoController = new ReservaEquipamentoController(injector.getReservaService(ReservaEquipamentoService));
+
+router.get('/', reservaEquipamentoController.getReservas);
 
 module.exports = app => {
-    app.use('/reservas', router);
-    router.get('/', reservaEquipamentoController.getReservas);
-}
+    app.use('/reservas/equipamentos', router);
 
-
+};

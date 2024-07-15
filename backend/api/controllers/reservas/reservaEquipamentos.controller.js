@@ -8,6 +8,7 @@ class reservaController {
 
     async getReservas(req, res) {
         const reservas = await this.reservaService.getReservas();
+        console.log('GET /reservas/equipamentos [200] OK');
         res.status(200).json(reservas);
     }
 }
