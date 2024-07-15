@@ -103,3 +103,37 @@ Feature: Visualizar reservas de equipamentos
         }
       ]
       """
+
+    Scenario: Visualizar reserva por id
+        Given que a reserva de equipamento com id "ggu4-8yt" existe
+        """
+        {
+            "id": "ggu4-8yt",
+            "equipamentoID": "1098645604",
+            "dataReserva": "2021-10-10",
+            "dataInicio": "2021-10-13",
+            "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
+            "status": "pendente"
+         }
+        """
+        When eu recebo uma requisicao GET "/reservas/equipamentos/ggu4-8yt" do usuario "joao" logado como "admin"
+        Then eu retorno a reserva de equipamento e codigo "200"
+        """
+        {
+            "id": "ggu4-8yt",
+            "equipamentoID": "1098645604",
+            "dataReserva": "2021-10-10",
+            "dataInicio": "2021-10-13",
+            "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
+            "status": "pendente"
+         }
+        """
+    Scenario: Visualizar reserva por id inexistente
+        Given que a reserva de equipamento com id "gsu4-8yt" nao existe
+        When eu recebo uma requisicao GET "/reservas/equipamentos/ggu4-8yt" do usuario "joao" logado como "admin"
+        Then eu retorno uma mensagem de erro e codigo "404"
+        """
+        {
+            "error": "Reserva de equipamento nao encontrada"
+        }
+        """

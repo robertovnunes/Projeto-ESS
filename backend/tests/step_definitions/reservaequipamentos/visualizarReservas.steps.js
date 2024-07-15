@@ -24,10 +24,18 @@ defineFeature(feature, test => {
             const reservas = JSON.parse(json);
             for (let reserva of reservas){
                 const exist = await reservaMockRepository.getReservaByID(reserva['id']);
-                console.log(exist);
                 if (exist === undefined){
                     await reservaMockRepository.createReserva(reserva);
                 }
+            }
+        });
+    };
+    const givenReservaExiste = async (given) => {
+        given(/^que a reserva de equipamento com id "(.*)" existe$/, async (id, json) => {
+            const data = JSON.parse(json);
+            const exist = await reservaMockRepository.getReservaByID(id);
+            if (exist === undefined){
+                await reservaMockRepository.createReserva(data);
             }
         });
     };
@@ -44,10 +52,27 @@ defineFeature(feature, test => {
             expect(response.body).toEqual(equipmentExpected);
         });
     };
+    const thenReturnEquipment = async (then) => {
+        then(/^eu retorno a reserva de equipamento e codigo "(.*)"$/, async (code, docString) => {
+            const equipmentExpected = JSON.parse(docString);
+            expect(response.statusCode).toBe(parseInt(code));
+            expect(response.body).toEqual(equipmentExpected);
+        });
+    };
 
     test('Visualizar reservas de equipamentos', ({given, when, then}) => {
         givenExistemReservas(given);
         whenRequest(when);
         thenReturnEquipments(then);
+    });
+    test('Visualizar reserva por id', ({ given, when, then }) => {
+        givenReservaExiste(given);
+        whenRequest(when);
+        thenReturnEquipment(then);
+    });
+    test('Visualizar reserva por id inexistente', ({ given, when, then }) => {
+        givenReservaExiste(given);
+        whenRequest(when);
+        thenReturnEquipment(then);
     });
 });

@@ -13,6 +13,7 @@ injector.registerReservaService(ReservaEquipamentoService, new ReservaEquipament
 const reservaEquipamentoController = new ReservaEquipamentoController(injector.getReservaService(ReservaEquipamentoService));
 
 router.get('/', reservaEquipamentoController.getReservas);
+router.get('/:id', reservaEquipamentoController.getReservaByID);
 
 module.exports = app => {
     app.use('/reservas/equipamentos', router);

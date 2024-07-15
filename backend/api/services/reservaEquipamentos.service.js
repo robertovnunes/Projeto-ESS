@@ -6,10 +6,10 @@ class reservaService {
     async getReservas() {
         return await this.reservaEquipamentosRepository.getReservas();
     }
-/*
-    getReservaById(id) {
-        return this.reservas.find(reserva => reserva.id === id);
+    async getReservaByID(id) {
+        return await this.reservaEquipamentosRepository.getReservaByID(id);
     }
+/*
 
     createReserva(reserva){
         return this.reservaEquipamentosRepository
