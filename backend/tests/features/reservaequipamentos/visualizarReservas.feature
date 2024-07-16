@@ -134,7 +134,6 @@ Feature: Visualizar reservas de equipamentos
         When eu recebo uma requisicao GET "/reservas/equipamentos/25314789" do usuario "joao" logado como "admin"
         Then eu retorno uma mensagem "Reserva não encontrada" e codigo "404"
 
-
     Scenario: Visualizar reservas de um equipamento
         Given que o equipamento com id "04I6YMZgNpWM" possui as seguintes reservas:
         """
@@ -179,4 +178,8 @@ Feature: Visualizar reservas de equipamentos
             }
         ]
         """
-        
+
+    Scenario: Visualizar reservas de um equipamento inexistente
+        Given que nao existe o equipamento com id "25314789"
+        When eu recebo uma requisicao GET "/reservas/equipamentos/equipamento/25314789" do usuario "joao" logado como "admin"
+        Then eu retorno uma mensagem "Equipamento não encontrado" e codigo "404"

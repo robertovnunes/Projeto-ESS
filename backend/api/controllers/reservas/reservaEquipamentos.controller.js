@@ -29,12 +29,12 @@ class reservaController {
     async getReservasByEquipamentoID(req, res) {
         const id = req.params.id;
         const reservas = await this.reservaService.getReservasByEquipamentoID(id);
-        if (reservas !== undefined) {
+        if (reservas.status === 'ok') {
             console.log('GET /reservas/equipamentos/equipamento/:id [200] OK');
-            res.status(200).json(reservas);
+            res.status(200).json(reservas.data);
         } else {
             console.log('GET /reservas/equipamentos/equipamento/:id [404] Not Found');
-            res.status(404).send({message: 'Reserva não encontrada'});
+            res.status(404).send({message: reservas.data});
         }
     }
    

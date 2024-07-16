@@ -32,12 +32,16 @@ class reservaRepository{
     async getReservaByID(id){
         const reservas = await this.getReservas();
         const reserva = findItem(reservas, 'id', id);
-        return reserva;
+        return reserva !== undefined ? reserva : undefined;
     }
 
     async getReservasByEquipamentoID(id){
         const equipamento = await this.equipmentrepo.getEquipmentById(id);
-        return equipamento.reservas;
+        if(equipamento !== undefined){
+            return {status: 'ok', data: equipamento.reservas};
+        } else {
+            return {status: 'not found', data: 'Equipamento não encontrado'};
+        }
     }
 
     async createReserva(reserva, equipmentID){

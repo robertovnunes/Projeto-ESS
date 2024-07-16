@@ -3,6 +3,7 @@ const app = require('../../../apptest');
 const supertest = require('supertest');
 const reservaRepository = require('../../../api/repositories/reservaEquipamentos.repository');
 const {parse} = require("dotenv-safe");
+const {Given} = require("cucumber");
 const feature = loadFeature('./tests/features/reservaequipamentos/visualizarReservas.feature');
 
 defineFeature(feature, test => {
@@ -58,6 +59,15 @@ defineFeature(feature, test => {
             }
         });
     };
+    const givenNotExistEquipment = async (given) => {
+        given(/^que nao existe o equipamento com id "(.*)"$/, async (equipamentoID) => {
+            const reservas = reservaMockRepository.getReservasByEquipamentoID(equipamentoID);
+            if (reservas !== undefined){
+                await reservaMockRepository.equipmentrepo.deleteEquipment(equipamentoID);
+            }
+
+        });
+    }
     const whenRequest = async (when) => {
         when(/^eu recebo uma requisicao GET "(.*)" do usuario "(.*)" logado como "(.*)"$/, async  (req, arg1, arg2) => {
             response = await request.get(req.toString());
@@ -104,5 +114,10 @@ defineFeature(feature, test => {
         givenExistemReservasEquipamento(given);
         whenRequest(when);
         thenReturnEquipments(then);
+    });
+    test('Visualizar reservas de um equipamento inexistente', ({ given, when, then }) => {
+        givenNotExistEquipment(given);
+        whenRequest(when);
+        thenReturnError(then);
     });
 });
