@@ -5,6 +5,7 @@ class reservaController {
         this.reservaService = reservaService;
         this.getReservas = this.getReservas.bind(this);
         this.getReservaByID = this.getReservaByID.bind(this);
+        this.getReservasByEquipamentoID = this.getReservasByEquipamentoID.bind(this);
     }
 
     async getReservas(req, res) {
@@ -12,17 +13,31 @@ class reservaController {
         console.log('GET /reservas/equipamentos [200] OK');
         res.status(200).json(reservas);
     }
+
     async getReservaByID(req, res) {
         const id = req.params.id;
         const reserva = await this.reservaService.getReservaByID(id);
-        if (reserva) {
+        if (reserva !== undefined) {
             console.log('GET /reservas/equipamentos/:id [200] OK');
             res.status(200).json(reserva);
         } else {
             console.log('GET /reservas/equipamentos/:id [404] Not Found');
-            res.status(404).send();
+            res.status(404).send({message: 'Reserva não encontrada'});
         }
     }
+
+    async getReservasByEquipamentoID(req, res) {
+        const id = req.params.id;
+        const reservas = await this.reservaService.getReservasByEquipamentoID(id);
+        if (reservas !== undefined) {
+            console.log('GET /reservas/equipamentos/equipamento/:id [200] OK');
+            res.status(200).json(reservas);
+        } else {
+            console.log('GET /reservas/equipamentos/equipamento/:id [404] Not Found');
+            res.status(404).send({message: 'Reserva não encontrada'});
+        }
+    }
+   
 }
 
 module.exports = reservaController;

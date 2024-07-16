@@ -32,10 +32,29 @@ defineFeature(feature, test => {
     };
     const givenReservaExiste = async (given) => {
         given(/^que a reserva de equipamento com id "(.*)" existe$/, async (id, json) => {
-            const data = JSON.parse(json);
+            const reserva = JSON.parse(json);
             const exist = await reservaMockRepository.getReservaByID(id);
             if (exist === undefined){
-                await reservaMockRepository.createReserva(data);
+                await reservaMockRepository.createReserva(reserva);
+            }
+        });
+    };
+    const givenExistemReservasEquipamento = async (given) => {
+        given(/^que o equipamento com id "(.*)" possui as seguintes reservas:$/, async (id, json) => {
+            const data = JSON.parse(json);
+            for(let reserva of data){
+                const exist = await reservaMockRepository.getReservaByID(reserva['id']);
+                if (exist === undefined){
+                    await reservaMockRepository.createReserva(data);
+                }
+            }
+        });
+    };
+        const givenReservaNaoExiste = async (given) => {
+        given(/^que a reserva de equipamento com id "(.*)" nao existe$/, async (id) => {
+            const exist = await reservaMockRepository.getReservaByID(id);
+            if (exist !== undefined){
+                await reservaMockRepository.deleteReserva(id);
             }
         });
     };
@@ -59,6 +78,12 @@ defineFeature(feature, test => {
             expect(response.body).toEqual(equipmentExpected);
         });
     };
+    const thenReturnError = async (then) => {
+        then(/^eu retorno uma mensagem "(.*)" e codigo "(.*)"$/, async (message, code) => {
+            expect(response.statusCode).toBe(parseInt(code));
+            expect(response.body.message).toBe(message);
+        });
+    };
 
     test('Visualizar reservas de equipamentos', ({given, when, then}) => {
         givenExistemReservas(given);
@@ -71,8 +96,13 @@ defineFeature(feature, test => {
         thenReturnEquipment(then);
     });
     test('Visualizar reserva por id inexistente', ({ given, when, then }) => {
-        givenReservaExiste(given);
+        givenReservaNaoExiste(given);
         whenRequest(when);
-        thenReturnEquipment(then);
+        thenReturnError(then);
+    });
+    test('Visualizar reservas de um equipamento', ({ given, when, then }) => {
+        givenExistemReservasEquipamento(given);
+        whenRequest(when);
+        thenReturnEquipments(then);
     });
 });

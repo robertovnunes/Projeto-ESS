@@ -21,9 +21,7 @@ function findItem(itemlist, key, value) {
 }
 
 class reservaRepository{
-    constructor(){
-        this.equipmentrepo = new equipamentosRepository();
-    }
+    equipmentrepo = new equipamentosRepository();
 
     async getReservas(){
         const equipamentos = await this.equipmentrepo.getAllEquipments();
@@ -35,6 +33,11 @@ class reservaRepository{
         const reservas = await this.getReservas();
         const reserva = findItem(reservas, 'id', id);
         return reserva;
+    }
+
+    async getReservasByEquipamentoID(id){
+        const equipamento = await this.equipmentrepo.getEquipmentById(id);
+        return equipamento.reservas;
     }
 
     async createReserva(reserva, equipmentID){
@@ -59,7 +62,19 @@ class reservaRepository{
             }
             equipamento.reservas.push(reserva);
             await this.equipmentrepo.updateEquipment(equipamento);
-            return reserva;
+            return {status:'realizada', reserva};
+        }
+    }
+    async deleteReserva(id){
+        const reserva = await this.getReservaByID(id);
+        if(reserva !== undefined){
+            const equipamento = await this.equipmentrepo.getEquipmentById(reserva.equipamentoID);
+            const index = equipamento.reservas.findIndex(r => r.id === id);
+            equipamento.reservas.splice(index, 1);
+            await this.equipmentrepo.updateEquipment(equipamento);
+            return 'Reserva deletada';
+        } else {
+            return 'not found';
         }
     }
     /*
@@ -68,9 +83,6 @@ class reservaRepository{
     }
     async addReserva(reserva){
         this.reservas.push(reserva);
-    }
-    async deleteReserva(id){
-        this.reservas = this.reservas.filter(reserva => reserva.id !== id);
     }
     async updateReserva(reserva){
         this.reservas = this.reservas.map(r => r.id === reserva.id ? reserva : r);

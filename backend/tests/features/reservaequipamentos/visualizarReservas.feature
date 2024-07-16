@@ -128,12 +128,55 @@ Feature: Visualizar reservas de equipamentos
             "status": "pendente"
          }
         """
+    
     Scenario: Visualizar reserva por id inexistente
-        Given que a reserva de equipamento com id "gsu4-8yt" nao existe
-        When eu recebo uma requisicao GET "/reservas/equipamentos/ggu4-8yt" do usuario "joao" logado como "admin"
-        Then eu retorno uma mensagem de erro e codigo "404"
+        Given que a reserva de equipamento com id "25314789" nao existe
+        When eu recebo uma requisicao GET "/reservas/equipamentos/25314789" do usuario "joao" logado como "admin"
+        Then eu retorno uma mensagem "Reserva não encontrada" e codigo "404"
+
+
+    Scenario: Visualizar reservas de um equipamento
+        Given que o equipamento com id "04I6YMZgNpWM" possui as seguintes reservas:
         """
-        {
-            "error": "Reserva de equipamento nao encontrada"
-        }
+        [
+            {
+                "id": "8y1fwq1t",
+                "equipamentoID": "04I6YMZgNpWM",
+                "dataReserva": "2021-10-10",
+                "dataInicio": "2021-10-13",
+                "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
+                "status": "confirmada"
+            },
+            {
+                "id": "'121wd+q",
+                "equipamentoID": "04I6YMZgNpWM",
+                "dataReserva": "2021-10-10",
+                "dataInicio": "2021-11-01",
+                "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},
+                "status": "em execução"
+            }
+        ]
         """
+        When eu recebo uma requisicao GET "/reservas/equipamentos/equipamento/04I6YMZgNpWM" do usuario "joao" logado como "admin"
+        Then eu retorno uma lista com as reservas de equipamentos e codigo "200"
+        """
+        [
+            {
+                "id": "8y1fwq1t",
+                "equipamentoID": "04I6YMZgNpWM",
+                "dataReserva": "2021-10-10",
+                "dataInicio": "2021-10-13",
+                "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
+                "status": "confirmada"
+            },
+            {
+                "id": "'121wd+q",
+                "equipamentoID": "04I6YMZgNpWM",
+                "dataReserva": "2021-10-10",
+                "dataInicio": "2021-11-01",
+                "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},
+                "status": "em execução"
+            }
+        ]
+        """
+        
