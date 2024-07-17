@@ -12,11 +12,11 @@ class reservaService {
     async getReservasByEquipamentoID(id) {
         return await this.reservaEquipamentosRepository.getReservasByEquipamentoID(id);
     }
+    async createReserva(reserva, equipamentoID) {
+        return await this.reservaEquipamentosRepository.createReserva(reserva, equipamentoID);
+    }
 /*
 
-    createReserva(reserva){
-        return this.reservaEquipamentosRepository
-    }
 
     updateReserva(id, reserva) {
         const index = this.reservas.findIndex(reserva => reserva.id === id);

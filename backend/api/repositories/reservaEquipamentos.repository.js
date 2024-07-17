@@ -1,6 +1,6 @@
 const equipamentosRepository = require('../../api/repositories/equipamentos.repository');
 
-const findItems = async (array, field) => {
+const filterItems = async (array, field) => {
     let itemlist = [];
     for (let item of array) {
         const fieldlist = item[field];
@@ -25,7 +25,7 @@ class reservaRepository{
 
     async getReservas(){
         const equipamentos = await this.equipmentrepo.getAllEquipments();
-        let reservas = await findItems(equipamentos, 'reservas');
+        let reservas = await filterItems(equipamentos, 'reservas');
         return reservas;
     }
 
@@ -48,7 +48,7 @@ class reservaRepository{
         const equipamento = await this.equipmentrepo.getEquipmentById(equipmentID);
         if(equipamento.hasOwnProperty('status')){
             if(equipamento.status !== 'Em manutenção'){
-                if(equipamento.status === 'disponivel'){
+                if(equipamento.status === 'disponivel' && equipamento.estado_conservacao !== 'nao_funcional'){
                     equipamento.status = 'reservado';
                     reserva.status = 'pendente';
                 } else if (equipamento.status === 'reservado'){
@@ -57,16 +57,19 @@ class reservaRepository{
                         reserva.status = 'pendente';
                     } else {
                         reserva.status = 'negada';
-                        return {status: 'negada', message: 'Este equipámento não está disponível para reserva neste período'};
+                        return {status: 'negada', message: 'Este equipamento não está disponível para reserva neste período'};
                     }
                 }
             } else {
-                reserva.status = 'negada';
-                return {status: 'negada', message: 'Equipamento em manutenção'};
+                if(equipamento.status === 'Em manutenção'){
+                    return {status: 'negada', message: 'Este equipamento está em manutenção'};
+                } else if (equipamento.estado_conservacao === 'nao_funcional'){
+                    return {status: 'negada', message: 'Este equipamento não está funcional'};
+                }
             }
             equipamento.reservas.push(reserva);
-            await this.equipmentrepo.updateEquipment(equipamento);
-            return {status:'realizada', reserva};
+            await this.equipmentrepo.updateEquipment(equipamento.id, equipamento);
+            return {status:'ok', data: reserva};
         }
     }
     async deleteReserva(id){
@@ -82,12 +85,6 @@ class reservaRepository{
         }
     }
     /*
-    async getReservaById(id, equipamentoID){
-        return this.reservas.find(reserva => reserva.id === id);
-    }
-    async addReserva(reserva){
-        this.reservas.push(reserva);
-    }
     async updateReserva(reserva){
         this.reservas = this.reservas.map(r => r.id === reserva.id ? reserva : r);
     }

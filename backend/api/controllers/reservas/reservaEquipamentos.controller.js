@@ -6,6 +6,7 @@ class reservaController {
         this.getReservas = this.getReservas.bind(this);
         this.getReservaByID = this.getReservaByID.bind(this);
         this.getReservasByEquipamentoID = this.getReservasByEquipamentoID.bind(this);
+        this.createReserva = this.createReserva.bind(this);
     }
 
     async getReservas(req, res) {
@@ -35,6 +36,20 @@ class reservaController {
         } else {
             console.log('GET /reservas/equipamentos/equipamento/:id [404] Not Found');
             res.status(404).send({message: reservas.data});
+        }
+    }
+
+    async createReserva(req, res) {
+        const reserva = new reservaModel(req.body);
+        const equipmentID = req.params.id;
+        const result = await this.reservaService.createReserva(reserva, equipmentID);
+        if (result.status === 'ok') {
+            console.log(result.data);
+            console.log('POST /reservas/equipamentos [201] Created');
+            res.status(201).json({message: 'Reserva criada com sucesso, pendente de confirmação'});
+        } else {
+            console.log('POST /reservas/equipamentos [400] Bad Request');
+            res.status(400).send({message: result.message});
         }
     }
    
