@@ -14,9 +14,14 @@
             "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
-            "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
+            "dataFim": "2021-10-28",
+            "responsavel": {
+               "email": "joao@cin.ufpe.br",
+               "username": "joao"
+            },
             "status": "pendente"
-         }],
+         }
+      ],
       "manutencao": []
    },
    {
@@ -34,7 +39,11 @@
             "equipamentoID": "1098646179",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
-            "responsavel": {"email":"cpm22@cin.ufpe.br","username":"cpm22"},
+            "dataFim": "2021-10-28",
+            "responsavel": {
+               "email": "cpm22@cin.ufpe.br",
+               "username": "cpm22"
+            },
             "status": "negada"
          }
       ],
@@ -55,7 +64,11 @@
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
-            "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
+            "dataFim": "2021-10-28",
+            "responsavel": {
+               "email": "jrvn@cin.ufpe.br",
+               "username": "robertovnunes"
+            },
             "status": "confirmada"
          },
          {
@@ -63,7 +76,11 @@
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-11-01",
-            "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},
+            "dataFim": "2021-11-15",
+            "responsavel": {
+               "email": "maria@cin.ufpe.br",
+               "username": "maria"
+            },
             "status": "em execução"
          }
       ],

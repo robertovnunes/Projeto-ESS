@@ -1,9 +1,8 @@
 const {defineFeature, loadFeature} = require('jest-cucumber');
-const app = require('../../../apptest');
+const app = require('../../../../apptest');
 const supertest = require('supertest');
-const reservaRepository = require('../../../api/repositories/reservaEquipamentos.repository');
-const {parse} = require("dotenv-safe");
-const {Given} = require("cucumber");
+const reservaRepository = require('../../../../api/repositories/reservaEquipamentos.repository');
+
 const feature = loadFeature('./tests/features/reservaequipamentos/visualizarReservas.feature');
 
 defineFeature(feature, test => {

@@ -9,6 +9,38 @@ class reservaController {
         this.createReserva = this.createReserva.bind(this);
     }
 
+    calculateDataFim = (dataInicio) => {
+        let day, month, year;
+        let data = new Date(dataInicio);
+        day = data.getDate();
+        month = data.getMonth();
+        year = data.getFullYear();
+        day = day+15;
+        if (day > 30 && month === [4, 6, 9, 11].includes(month)) {
+            day = day-30;
+            month = month+1;
+            if(month > 12) {
+                month = 1;
+                year = year+1;
+            }
+        } else if (day > 31 && month === [1, 3, 5, 7, 8, 10, 12].includes(month)) {
+            day = day-31;
+            month = month+1;
+            if(month > 12) {
+                month = 1;
+                year = year+1;
+            }
+        } else if (day > 28 && month === 2) {
+            day = day-28;
+            month = month+1;
+            if(month > 12) {
+                month = 1;
+                year = year+1;
+            }
+        }
+        return new Date(year, month, day);
+    };
+
     async getReservas(req, res) {
         const reservas = await this.reservaService.getReservas();
         console.log('GET /reservas/equipamentos [200] OK');
@@ -40,19 +72,18 @@ class reservaController {
     }
 
     async createReserva(req, res) {
-        const reserva = new reservaModel(req.body);
-        const equipmentID = req.params.id;
-        const result = await this.reservaService.createReserva(reserva, equipmentID);
+        const {equipamentoID, dataReserva, dataInicio, responsavel} = req.body;
+        const dataFim = this.calculateDataFim(dataInicio);
+        const reserva = new reservaModel(dataReserva, dataInicio, dataFim, responsavel, equipamentoID);
+        const result = await this.reservaService.createReserva(reserva, equipamentoID);
         if (result.status === 'ok') {
-            console.log(result.data);
             console.log('POST /reservas/equipamentos [201] Created');
             res.status(201).json({message: 'Reserva criada com sucesso, pendente de confirmação'});
         } else {
-            console.log('POST /reservas/equipamentos [400] Bad Request');
+            console.log('POST /reservas/equipamentos [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});
         }
     }
-   
 }
 
 module.exports = reservaController;
