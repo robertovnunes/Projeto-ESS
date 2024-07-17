@@ -10,7 +10,7 @@ class _responsavel {
 class BaseModel {
     constructor(dataReserva, dataInicio, responsavel = {}, equipamentoID) {
         this.id = '04'+shortid.generate();
-        this.dataReserva = dataReserva || new Date();      
+        this.dataReserva = new Date(dataReserva) || new Date();
         this.dataInicio = new Date(dataInicio) || new Date();
         this.responsavel = new _responsavel(responsavel) || '';
         this.equipamento = equipamentoID || '';

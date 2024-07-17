@@ -15,7 +15,7 @@ const reservaEquipamentoController = new ReservaEquipamentoController(injector.g
 router.get('/', reservaEquipamentoController.getReservas);
 router.get('/:id', reservaEquipamentoController.getReservaByID);
 router.get('/equipamento/:id', reservaEquipamentoController.getReservasByEquipamentoID);
-router.post('/equipamento/:id', reservaEquipamentoController.createReserva);
+router.post('/', reservaEquipamentoController.createReserva);
 
 module.exports = app => {
     app.use('/reservas/equipamentos', router);

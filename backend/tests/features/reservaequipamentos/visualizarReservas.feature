@@ -12,6 +12,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "joao@cin.ufpe.br",
                 "username": "joao"
@@ -23,6 +24,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098646179",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "cpm22@cin.ufpe.br",
                 "username": "cpm22"
@@ -34,6 +36,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "jrvn@cin.ufpe.br",
                 "username": "robertovnunes"
@@ -45,6 +48,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-11-01",
+            "dataFim": "2021-11-15",
             "responsavel": {
                 "email": "maria@cin.ufpe.br",
                 "username": "maria"
@@ -62,6 +66,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "joao@cin.ufpe.br",
                 "username": "joao"
@@ -73,6 +78,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098646179",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "cpm22@cin.ufpe.br",
                 "username": "cpm22"
@@ -84,6 +90,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {
                 "email": "jrvn@cin.ufpe.br",
                 "username": "robertovnunes"
@@ -95,6 +102,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "04I6YMZgNpWM",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-11-01",
+            "dataFim": "2021-11-15",
             "responsavel": {
                 "email": "maria@cin.ufpe.br",
                 "username": "maria"
@@ -112,6 +120,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
             "status": "pendente"
          }
@@ -124,6 +133,7 @@ Feature: Visualizar reservas de equipamentos
             "equipamentoID": "1098645604",
             "dataReserva": "2021-10-10",
             "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
             "status": "pendente"
          }
@@ -143,6 +153,7 @@ Feature: Visualizar reservas de equipamentos
                 "equipamentoID": "04I6YMZgNpWM",
                 "dataReserva": "2021-10-10",
                 "dataInicio": "2021-10-13",
+                "dataFim": "2021-10-28",
                 "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
                 "status": "confirmada"
             },
@@ -151,6 +162,7 @@ Feature: Visualizar reservas de equipamentos
                 "equipamentoID": "04I6YMZgNpWM",
                 "dataReserva": "2021-10-10",
                 "dataInicio": "2021-11-01",
+                "dataFim": "2021-11-15",
                 "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},
                 "status": "em execução"
             }
@@ -165,6 +177,7 @@ Feature: Visualizar reservas de equipamentos
                 "equipamentoID": "04I6YMZgNpWM",
                 "dataReserva": "2021-10-10",
                 "dataInicio": "2021-10-13",
+                "dataFim": "2021-10-28",
                 "responsavel": {"email":"jrvn@cin.ufpe.br","username":"robertovnunes"},
                 "status": "confirmada"
             },
@@ -173,6 +186,7 @@ Feature: Visualizar reservas de equipamentos
                 "equipamentoID": "04I6YMZgNpWM",
                 "dataReserva": "2021-10-10",
                 "dataInicio": "2021-11-01",
+                "dataFim": "2021-11-15",
                 "responsavel": {"email":"maria@cin.ufpe.br","username":"maria"},
                 "status": "em execução"
             }

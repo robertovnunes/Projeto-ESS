@@ -46,32 +46,48 @@ class reservaRepository{
 
     async createReserva(reserva, equipmentID){
         const equipamento = await this.equipmentrepo.getEquipmentById(equipmentID);
-        if(equipamento.hasOwnProperty('status')){
-            if(equipamento.status !== 'Em manutenção'){
-                if(equipamento.status === 'disponivel' && equipamento.estado_conservacao !== 'nao_funcional'){
-                    equipamento.status = 'reservado';
+        if(equipamento.status !== undefined){
+            if(equipamento.status === 'em_manutencao'){
+                return {status: 'negada', message: 'Este equipamento está em manutenção'};
+            } else if (equipamento.estado_conservacao === 'nao_funcional'){
+                return {status: 'negada', message: 'Este equipamento não está funcional'};
+            }
+            if(equipamento.status !== 'em_manutencao'){
+                const last = equipamento.reservas.length-1;
+                const data = new Date(equipamento.reservas[last].dataFim);
+                const dataInicio = reserva.dataInicio;
+                if(dataInicio >= data){
                     reserva.status = 'pendente';
-                } else if (equipamento.status === 'reservado'){
-                    const data = new Date(equipamento.reservas[equipamento.reservas.length - 1].dataFim);
-                    if(reserva.dataInicio >= data){
-                        reserva.status = 'pendente';
-                    } else {
-                        reserva.status = 'negada';
-                        return {status: 'negada', message: 'Este equipamento não está disponível para reserva neste período'};
-                    }
-                }
-            } else {
-                if(equipamento.status === 'Em manutenção'){
-                    return {status: 'negada', message: 'Este equipamento está em manutenção'};
-                } else if (equipamento.estado_conservacao === 'nao_funcional'){
-                    return {status: 'negada', message: 'Este equipamento não está funcional'};
+                } else {
+                    reserva.status = 'negada';
+                    return {status: 'negada', message: 'Este equipamento não está disponível para reserva neste período'};
                 }
             }
             equipamento.reservas.push(reserva);
             await this.equipmentrepo.updateEquipment(equipamento.id, equipamento);
-            return {status:'ok', data: reserva};
+            const newReserva = await this.getReservaByID(reserva.id);
+            return {status:'ok', data: newReserva};
         }
     }
+
+    async patchReserva (id, status) {
+        const reserva = await this.getReservaByID(id);
+        if(reserva !== undefined){
+            reserva.status = status;
+            const equipamento = await this.equipmentrepo.getEquipmentById(reserva['equipamentoID']);
+            if(equipamento !== undefined){
+                const index = equipamento.reservas.findIndex(r => r.id === id);
+                equipamento.reservas[index] = reserva;
+                await this.equipmentrepo.updateEquipment(equipamento);
+                return {status: 'ok', data: reserva};
+            } else {
+                throw new Error('Equipamento não encontrado');
+            }
+        } else {
+            return {status: 'not found', data: undefined};
+        }
+    }
+
     async deleteReserva(id){
         const reserva = await this.getReservaByID(id);
         if(reserva !== undefined){
