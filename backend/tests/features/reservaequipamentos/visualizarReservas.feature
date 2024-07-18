@@ -4,58 +4,97 @@ Feature: Visualizar reservas de equipamentos
     Para que eu possa saber quais equipamentos estão reservados
 
     Scenario: Visualizar reservas de equipamentos
-      Given que existem as seguintes reservas de equipamentos:
+      Given que existem os seguintes equipamentos com reservas:
       """
       [
         {
-            "id": "ggu4-8yt",
-            "equipamentoID": "1098645604",
-            "dataReserva": "2021-10-10",
-            "dataInicio": "2021-10-13",
-            "dataFim": "2021-10-28",
-            "responsavel": {
-                "email": "joao@cin.ufpe.br",
-                "username": "joao"
-            },
-            "status": "pendente"
+            "id": "1098645604",
+            "nome": "Arduino",
+            "descricao": "Placa de prototipação",
+            "estado_conservacao": "novo",
+            "data_aquisicao": "10/04/2024",
+            "valor_estimado": "R$ 200,00",
+            "patrimonio": "1098645",
+            "status": "disponivel",
+            "reservas": [
+                {
+                    "id": "ggu4-8yt",
+                    "equipamentoID": "1098645604",
+                    "dataReserva": "2021-10-10",
+                    "dataInicio": "2021-10-13",
+                    "dataFim": "2021-10-28",
+                    "responsavel": {
+                    "email": "joao@cin.ufpe.br",
+                    "username": "joao"
+                    },
+                    "status": "pendente"
+                }
+            ],
+            "manutencao": []
         },
         {
-            "id": "wwjhkdh2",
-            "equipamentoID": "1098646179",
-            "dataReserva": "2021-10-10",
-            "dataInicio": "2021-10-13",
-            "dataFim": "2021-10-28",
-            "responsavel": {
-                "email": "cpm22@cin.ufpe.br",
-                "username": "cpm22"
-            },
-            "status": "negada"
+            "id": "1098646179",
+            "nome": "Arduino",
+            "descricao": "Placa de prototipação",
+            "estado_conservacao": "novo",
+            "data_aquisicao": "10/04/2024",
+            "valor_estimado": "R$ 200,00",
+            "numero_serie": "1098646",
+            "status": "em manutenção",
+            "reservas": [
+                {
+                    "id": "wwjhkdh2",
+                    "equipamentoID": "1098646179",
+                    "dataReserva": "2021-10-10",
+                    "dataInicio": "2021-10-13",
+                    "dataFim": "2021-10-28",
+                    "responsavel": {
+                    "email": "cpm22@cin.ufpe.br",
+                    "username": "cpm22"
+                    },
+                    "status": "pendente"
+                }
+            ],
+            "manutencao": []
         },
         {
-            "id": "8y1fwq1t",
-            "equipamentoID": "04I6YMZgNpWM",
-            "dataReserva": "2021-10-10",
-            "dataInicio": "2021-10-13",
-            "dataFim": "2021-10-28",
-            "responsavel": {
-                "email": "jrvn@cin.ufpe.br",
-                "username": "robertovnunes"
-            },
-            "status": "confirmada"
-        },
-        {
-            "id": "'121wd+q",
-            "equipamentoID": "04I6YMZgNpWM",
-            "dataReserva": "2021-10-10",
-            "dataInicio": "2021-11-01",
-            "dataFim": "2021-11-15",
-            "responsavel": {
-                "email": "maria@cin.ufpe.br",
-                "username": "maria"
-            },
-            "status": "em execução"
+            "id": "04I6YMZgNpWM",
+            "nome": "Monitor phillips",
+            "descricao": "Monitor de 19 polegadas",
+            "estado_conservacao": "bom",
+            "data_aquisicao": "15/03/2023",
+            "valor_estimado": "R$ 1.200,00",
+            "patrimonio": "5583159",
+            "status": "reservado",
+            "reservas": [
+                {
+                    "id": "8y1fwq1t",
+                    "equipamentoID": "04I6YMZgNpWM",
+                    "dataReserva": "2021-10-10",
+                    "dataInicio": "2021-10-13",
+                    "dataFim": "2021-10-28",
+                    "responsavel": {
+                    "email": "jrvn@cin.ufpe.br",
+                    "username": "robertovnunes"
+                    },
+                    "status": "confirmada"
+                },
+                {
+                    "id": "'121wd+q",
+                    "equipamentoID": "04I6YMZgNpWM",
+                    "dataReserva": "2021-10-10",
+                    "dataInicio": "2021-11-01",
+                    "dataFim": "2021-11-15",
+                    "responsavel": {
+                    "email": "maria@cin.ufpe.br",
+                    "username": "maria"
+                    },
+                    "status": "em execução"
+                }
+            ],
+            "manutencao": []
         }
-      ]
+        ]
       """
       When eu recebo uma requisicao GET "/reservas/equipamentos" do usuario "joao" logado como "admin"
       Then eu retorno uma lista com as reservas de equipamentos e codigo "200"
@@ -83,7 +122,7 @@ Feature: Visualizar reservas de equipamentos
                 "email": "cpm22@cin.ufpe.br",
                 "username": "cpm22"
             },
-            "status": "negada"
+            "status": "Pendente"
         },
         {
             "id": "8y1fwq1t",
@@ -122,7 +161,7 @@ Feature: Visualizar reservas de equipamentos
             "dataInicio": "2021-10-13",
             "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
-            "status": "pendente"
+            "status": "Pendente"
          }
         """
         When eu recebo uma requisicao GET "/reservas/equipamentos/ggu4-8yt" do usuario "joao" logado como "admin"
@@ -135,7 +174,7 @@ Feature: Visualizar reservas de equipamentos
             "dataInicio": "2021-10-13",
             "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
-            "status": "pendente"
+            "status": "Pendente"
          }
         """
     

@@ -7,6 +7,7 @@ class reservaController {
         this.getReservaByID = this.getReservaByID.bind(this);
         this.getReservasByEquipamentoID = this.getReservasByEquipamentoID.bind(this);
         this.createReserva = this.createReserva.bind(this);
+        this.patchReserva = this.patchReserva.bind(this);
     }
 
     calculateDataFim = (dataInicio) => {
@@ -82,6 +83,17 @@ class reservaController {
         } else {
             console.log('POST /reservas/equipamentos [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});
+        }
+    }
+
+    async patchReserva(req, res) {
+        const id = req.params.id;
+        const status = req.body.status;
+        const result = await this.reservaService.patchReserva(id, status);
+        if (result.status === 'ok') {
+            const message = `Reserva ${result.message}`;
+            console.log('PATCH /reservas/equipamentos/:id [200] OK');
+            res.status(200).json({message: message});
         }
     }
 }

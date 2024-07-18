@@ -16,6 +16,7 @@ router.get('/', reservaEquipamentoController.getReservas);
 router.get('/:id', reservaEquipamentoController.getReservaByID);
 router.get('/equipamento/:id', reservaEquipamentoController.getReservasByEquipamentoID);
 router.post('/', reservaEquipamentoController.createReserva);
+router.patch('/:id', reservaEquipamentoController.patchReserva);
 
 module.exports = app => {
     app.use('/reservas/equipamentos', router);

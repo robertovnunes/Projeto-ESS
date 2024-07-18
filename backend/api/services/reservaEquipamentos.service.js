@@ -15,6 +15,9 @@ class reservaService {
     async createReserva(reserva, equipamentoID) {
         return await this.reservaEquipamentosRepository.createReserva(reserva, equipamentoID);
     }
+    async patchReserva(id, status) {
+        return await this.reservaEquipamentosRepository.patchReserva(id, status);
+    }
 /*
 
 

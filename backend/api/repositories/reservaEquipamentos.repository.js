@@ -73,16 +73,22 @@ class reservaRepository{
     async patchReserva (id, status) {
         const reserva = await this.getReservaByID(id);
         if(reserva !== undefined){
-            reserva.status = status;
-            const equipamento = await this.equipmentrepo.getEquipmentById(reserva['equipamentoID']);
-            if(equipamento !== undefined){
-                const index = equipamento.reservas.findIndex(r => r.id === id);
-                equipamento.reservas[index] = reserva;
-                await this.equipmentrepo.updateEquipment(equipamento);
-                return {status: 'ok', data: reserva};
+            console.log(status)
+            if(status === 'confirmada'){
+                reserva.status = `${status}`;
             } else {
-                throw new Error('Equipamento não encontrado');
+                reserva.status = `${status.status}/${status.justificativa}`;
             }
+            const equipamento = await this.equipmentrepo.getEquipmentById(reserva['equipamentoID']);
+                if(equipamento !== undefined){
+                    const index = equipamento.reservas.findIndex(r => r.id === id);
+                    equipamento.reservas[index] = reserva;
+                    console.log(equipamento.reservas[index]);
+                    await this.equipmentrepo.updateEquipment(reserva['equipamentoID'], equipamento);
+                    return {status: 'ok', message: reserva.status};
+                } else {
+                    throw new Error('Equipamento não encontrado');
+                }
         } else {
             return {status: 'not found', data: undefined};
         }

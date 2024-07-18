@@ -29,11 +29,26 @@ Feature: Confirmar Reserva
       "manutencao": []
    }
     """
-    When eu recebo uma requisicao PATCH "/reservas/equipamentos/id" do usuario "sara" logado como "admin" e json:
+    When eu recebo uma requisicao PATCH "/reservas/equipamentos/ggu4-8yt" do usuario "sara" logado como "admin" e json:
     """
     {
       "status": "confirmada"
     }
     """
-    Then o codigo de resposta deve ser "200"
-    And mensagem "Reserva confirmada com sucesso"
+    Then a reserva com id "ggu4-8yt" é confirmada no banco de dados para
+    """
+     {
+            "id": "ggu4-8yt",
+            "equipamentoID": "1098645604",
+            "dataReserva": "2021-10-10",
+            "dataInicio": "2021-10-13",
+            "dataFim": "2021-10-28",
+            "responsavel": {
+               "email": "joao@cin.ufpe.br",
+               "username": "joao"
+            },
+            "status": "confirmada"
+         }
+    """
+    And o codigo de resposta deve ser "200"
+    And mensagem "Reserva confirmada"

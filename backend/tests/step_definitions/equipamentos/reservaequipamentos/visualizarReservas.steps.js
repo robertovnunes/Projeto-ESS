@@ -2,6 +2,8 @@ const {defineFeature, loadFeature} = require('jest-cucumber');
 const app = require('../../../../apptest');
 const supertest = require('supertest');
 const reservaRepository = require('../../../../api/repositories/reservaEquipamentos.repository');
+const testSetup = require('../testSetup');
+const equipamentosRepository = require('../../../../api/repositories/equipamentos.repository');
 
 const feature = loadFeature('./tests/features/reservaequipamentos/visualizarReservas.feature');
 
@@ -10,23 +12,22 @@ defineFeature(feature, test => {
     const server = app.listen(3001);
     let reservaMockRepository, response, request;
     request = supertest(server);
+    let setup = new testSetup();
+    let equipmentrepo = new equipamentosRepository();
 
-    beforeAll(() => {
+    beforeAll(async() => {
         reservaMockRepository = new reservaRepository();
     });
 
-    afterAll(() => {
+    afterAll(async () => {
         server.close();
     });
 
     const givenExistemReservas = async (given) => {
-        given(/^que existem as seguintes reservas de equipamentos:$/, async (json) => {
-            const reservas = JSON.parse(json);
-            for (let reserva of reservas){
-                const exist = await reservaMockRepository.getReservaByID(reserva['id']);
-                if (exist === undefined){
-                    await reservaMockRepository.createReserva(reserva);
-                }
+        given(/^que existem os seguintes equipamentos com reservas:$/, async (json) => {
+            const equipamentos = JSON.parse(json);
+            for (let equipamento of equipamentos){
+                await equipmentrepo.createEquipment(equipamento);
             }
         });
     };

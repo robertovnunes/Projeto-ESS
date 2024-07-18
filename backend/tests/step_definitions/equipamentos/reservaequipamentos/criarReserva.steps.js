@@ -14,6 +14,7 @@ defineFeature(feature, test => {
         request = supertest(server);
         let setup = new testSetup();
         let equipmentrepo = new equipamentosRepository();
+
         beforeAll(async () => {
             reservaMockRepository = new reservaRepository();
             await setup.getDatabaseCopy();
