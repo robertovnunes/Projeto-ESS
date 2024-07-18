@@ -1,11 +1,11 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
-const app = require('../../../../apptest');
+const app = require('../../../../../apptest');
 const supertest = require('supertest');
-const reservaRepository = require('../../../../api/repositories/reservaEquipamentos.repository');
-const equipamentosRepository = require('../../../../api/repositories/equipamentos.repository');
-const testSetup = require('../testSetup');
+const reservaRepository = require('../../../../../api/repositories/reservaEquipamentos.repository');
+const equipamentosRepository = require('../../../../../api/repositories/equipamentos.repository');
+const testSetup = require('../../testSetup');
 
-const feature = loadFeature('./tests/features/reservaequipamentos/negarReserva.feature');
+const feature = loadFeature('./tests/features/equipamentos/controllers/reservaequipamentos/confirmarReserva.feature');
 
 defineFeature(feature, test => {
 
@@ -25,7 +25,7 @@ defineFeature(feature, test => {
         await setup.restoreDatabase();
     });
 
-    test('negar reserva de equipamento', ({ given, when, then , and}) => {
+    test('Confirmar reserva de equipamento', ({ given, when, then , and}) => {
         given(/^existe a reserva com id "(.*)" para o equipamento com id "(.*)" pendente$/, async (idReserva, idEquipamento, json) => {
             const equipamento = JSON.parse(json);
             await equipmentrepo.createEquipment(equipamento);
@@ -34,10 +34,10 @@ defineFeature(feature, test => {
             const data = JSON.parse(json);
             response = await request.patch(req).send(data);
         });
-        then(/^a reserva com id "(.*)" é negada no banco de dados para$/, async(id, json) => {
-            const data = JSON.parse(json);
-            const reserva = await reservaMockRepository.getReservaByID(id);
-            expect(reserva).toEqual(data);
+        then(/^a reserva com id "(.*)" é confirmada no banco de dados para$/, async(id, json) => {
+            const reserva = JSON.parse(json);
+            const reservaConfirmada = await reservaMockRepository.getReservaByID(id);
+            expect(reserva).toEqual(reservaConfirmada);
         });
         and(/^o codigo de resposta deve ser "(.*)"$/, (code) => {
             expect(response.status).toBe(parseInt(code));
