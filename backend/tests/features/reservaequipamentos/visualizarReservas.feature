@@ -122,7 +122,7 @@ Feature: Visualizar reservas de equipamentos
                 "email": "cpm22@cin.ufpe.br",
                 "username": "cpm22"
             },
-            "status": "Pendente"
+            "status": "pendente"
         },
         {
             "id": "8y1fwq1t",
@@ -161,7 +161,7 @@ Feature: Visualizar reservas de equipamentos
             "dataInicio": "2021-10-13",
             "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
-            "status": "Pendente"
+            "status": "pendente"
          }
         """
         When eu recebo uma requisicao GET "/reservas/equipamentos/ggu4-8yt" do usuario "joao" logado como "admin"
@@ -174,7 +174,7 @@ Feature: Visualizar reservas de equipamentos
             "dataInicio": "2021-10-13",
             "dataFim": "2021-10-28",
             "responsavel": {"email":"joao@cin.ufpe.br","username":"joao"},
-            "status": "Pendente"
+            "status": "pendente"
          }
         """
     

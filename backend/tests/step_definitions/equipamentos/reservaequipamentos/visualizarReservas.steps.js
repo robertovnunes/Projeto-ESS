@@ -17,10 +17,12 @@ defineFeature(feature, test => {
 
     beforeAll(async() => {
         reservaMockRepository = new reservaRepository();
+        await setup.getDatabaseCopy();
     });
 
     afterAll(async () => {
         server.close();
+        await setup.restoreDatabase();
     });
 
     const givenExistemReservas = async (given) => {
@@ -69,7 +71,7 @@ defineFeature(feature, test => {
         });
     }
     const whenRequest = async (when) => {
-        when(/^eu recebo uma requisicao GET "(.*)" do usuario "(.*)" logado como "(.*)"$/, async  (req, arg1, arg2) => {
+        when(/^eu recebo uma requisicao GET "(.*)" do usuario "(.*)" logado como "(.*)"$/, async  (req) => {
             response = await request.get(req.toString());
         });
     }

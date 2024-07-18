@@ -25,8 +25,7 @@ class reservaRepository{
 
     async getReservas(){
         const equipamentos = await this.equipmentrepo.getAllEquipments();
-        let reservas = await filterItems(equipamentos, 'reservas');
-        return reservas;
+        return await filterItems(equipamentos, 'reservas');
     }
 
     async getReservaByID(id){
@@ -73,17 +72,15 @@ class reservaRepository{
     async patchReserva (id, status) {
         const reserva = await this.getReservaByID(id);
         if(reserva !== undefined){
-            console.log(status)
-            if(status === 'confirmada'){
+            if(status['justificativa'] === undefined){
                 reserva.status = `${status}`;
             } else {
-                reserva.status = `${status.status}/${status.justificativa}`;
+                reserva.status = `${status.status}/${status['justificativa']}`;
             }
             const equipamento = await this.equipmentrepo.getEquipmentById(reserva['equipamentoID']);
                 if(equipamento !== undefined){
                     const index = equipamento.reservas.findIndex(r => r.id === id);
                     equipamento.reservas[index] = reserva;
-                    console.log(equipamento.reservas[index]);
                     await this.equipmentrepo.updateEquipment(reserva['equipamentoID'], equipamento);
                     return {status: 'ok', message: reserva.status};
                 } else {
