@@ -1,0 +1,71 @@
+/* MainPage.css */
+
+.main-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+  }
+  
+  .navbar {
+    background-color: #fff; /* Ajuste conforme necessário */
+    color: white;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra no canto inferior */
+  }
+  
+  .navbar .user-icon,
+  .navbar .left-icon {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente no meio da altura do navbar */
+    transform: translateY(-50%); /* Ajusta o alinhamento vertical ao meio */
+  }
+  
+  .navbar .user-icon {
+    right: 20px; /* Ajuste para posicionar mais para a direita */
+    width: 50px; /* Ajuste o tamanho desejado para o ícone do usuário */
+    height: 50px; /* Ajuste o tamanho desejado para o ícone do usuário */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Faz o ícone ficar redondo */
+    color: white;
+    font-weight: bold;
+    font-size: 24px; /* Ajuste conforme necessário */
+    text-transform: uppercase;
+  }
+  
+  .navbar .left-icon {
+    left: 10px;
+    width: 160px;  /* Ajuste conforme necessário */
+    height: auto; /* Mantém a proporção da altura com base na largura */
+    padding-top: 5px;
+    padding-left: 20px;
+  }
+  
+  .navbar img {
+    width: 100%; /* A imagem ocupa 100% do tamanho do contêiner */
+    height: auto; /* Mantém a proporção da altura com base na largura */
+    object-fit: contain; /* Ajusta a imagem para se encaixar no contêiner, mantendo a proporção */
+    border: none; /* Remove qualquer borda */
+    border-radius: 0; /* Remove arredondamento */
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+  }
+  
