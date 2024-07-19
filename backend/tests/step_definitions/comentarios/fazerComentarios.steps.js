@@ -5,7 +5,7 @@ const app = require('../../../apptest');
 //apptest
 const ComentariosRepository = require('../../../api/repositories/comentariosRepository');
 
-const feature = loadFeature('tests/features/fazerComentarios.feature');
+const feature = loadFeature('tests/features/comentarios/fazerComentario.feature');
 
 defineFeature(feature, test => {
     const server = app.listen(3001, () => {
