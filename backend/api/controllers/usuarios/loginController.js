@@ -29,7 +29,7 @@ class LoginController {
     
             // Verificar se o usuário existe no banco de dados
             const usuario = await this.authService.getUserByLogin(login);
-            if (!usuario) {
+            if (!usuario.senha) {
                 return res.status(401).send({message: 'Credenciais inválidas'});
             }
 
@@ -47,9 +47,11 @@ class LoginController {
             const token = this.authService.generateToken(usuario.login, usuario.tipo);
 
             // Armazenar o token JWT e outras informações em cookies
-            res.cookie('accessToken', token, { httpOnly: true });
-            res.cookie('userType', usuario.tipo, { httpOnly: true });
-            res.cookie('login', usuario.login, { httpOnly: true });
+            res.cookie('accessToken', token, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('userType', usuario.tipo, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('login', usuario.login, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('nome', usuario.nome, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            
     
             // Retornar sucesso
             return res.status(200).send({message: 'Login realizado com sucesso'});
@@ -72,11 +74,12 @@ class LoginController {
             res.clearCookie('accessToken');
             res.clearCookie('userType');
             res.clearCookie('login');
+            res.clearCookie('nome');
 
             
             res.status(200).send({message: 'Logout bem sucedido'});
 
-            console.log(res.cookie)
+            //console.log(res.cookie)
         } catch (error) {
             //console.error('Erro ao fazer logout:', error);
             res.status(500).send({message: 'Erro interno do servidor'});

@@ -5,6 +5,11 @@ import LoginPage from './pages/login';
 import MainPage from './pages/MainPage';
 import Home from './pages/Home';
 
+import axios from 'axios';
+
+// Defina a URL base para todas as requisições Axios
+axios.defaults.baseURL = 'http://localhost:3001';
+
 const App = () => {
   const isAuthenticated = true; // Simula estado de autenticação
 

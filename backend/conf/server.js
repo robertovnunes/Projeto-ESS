@@ -5,7 +5,10 @@ const port = 3001;
 
 const server = express();
 
-server.use(cors());
+server.use(cors({
+    origin: 'http://localhost:3000', // Substitua pelo URL do seu frontend
+    credentials: true
+}));
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
@@ -13,8 +16,8 @@ server.use(express.urlencoded({ extended: false }))
 server.use(cookieParser());
 
 
-/*server.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server running on port ${port}`);
-}); */
+}); 
 
 module.exports = server;
