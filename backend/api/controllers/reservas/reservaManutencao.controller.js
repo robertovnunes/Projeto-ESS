@@ -41,9 +41,11 @@ class reservaController {
     }
 
     async createReserva(req, res) {
-        const {equipamentoID, dataReserva, dataInicio, responsavel, tecnico, depto} = req.body;
-        const reserva = new reservaModel(dataReserva, dataInicio, responsavel, tecnico, depto, equipamentoID);
+        const {equipamentoID, dataInicio, responsavel, tecnico, depto} = req.body;
+        const reserva = new reservaModel(new Date(dataInicio), responsavel, tecnico, depto, equipamentoID);
+        console.log(reserva);
         const result = await this.manutencaoService.createReserva(reserva, equipamentoID);
+        console.log(result);
         if (result.status === 'ok') {
             console.log('POST /reservas/manutencao [201] Created');
             res.status(201).json({message: 'Reserva criada com sucesso, pendente de confirmação'});

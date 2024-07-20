@@ -13,13 +13,13 @@ Feature: Criar reserva de manutencao
             "estado_conservacao": "novo",
             "data_aquisicao": "10/04/2024",
             "valor_estimado": "R$ 200,00",
-            "numero_serie": "1098646",
+            "patrimonio": "1098646",
             "status": "disponivel",
             "reservas": [],
             "manutencao": []
         }
         """
-        When eu recebo uma requisicao POST "/reservas/equipamentos/manutencao" do usuario "carlos" logado como "admin" e json:
+        When eu recebo uma requisicao POST "/reservas/manutencao" do usuario "carlos" logado como "admin" e json:
         """
         {
             "id": "123456",
@@ -27,14 +27,14 @@ Feature: Criar reserva de manutencao
             "dataFim": "2021-10-28",
             "responsavel": {
               "email": "carlos@cin.ufpe.br",
-              "username": "carlos"
-            },
-            "funcao": "técnico",
-            "depto": "oficina",
+              "username": "carlos",
+              "funcao": "técnico",
+              "depto": "oficina"
+            }
         }
         """
         Then o codigo de resposta deve ser "201"
-        And a o status da reserva é "confirmada"
+        And o status da reserva com id "123456" é "confirmada"
 
     Scenario: Criar reserva de manutencao de equipamento reservado
         Given que existe o equipamento com id "3642789"
@@ -62,19 +62,19 @@ Feature: Criar reserva de manutencao
             "manutencao": []
         }
         """
-        When eu recebo uma requisicao POST "/reservas/equipamentos/manutencao" do usuario "carlos" logado como "admin" e json:
+        When eu recebo uma requisicao POST "/reservas/manutencao" do usuario "carlos" logado como "admin" e json:
         """
         {
-            "id": "123456",
+            "id": "12345678",
             "equipamentoID": "3642789",
             "dataFim": "2021-10-28",
             "responsavel": {
               "email": "carlos@cin.ufpe.br",
-              "username": "carlos"
-            },
-            "funcao": "técnico",
-            "depto": "oficina",
+              "username": "carlos",
+              "funcao": "técnico",
+              "depto": "oficina"
+            }
         }
         """
         Then o codigo de resposta deve ser "201"
-        And a o status da reserva é "pendente"
+        And o status da reserva com id "12345678" é "pendente"
