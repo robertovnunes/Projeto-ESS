@@ -16,7 +16,7 @@ const EventsPage = () => {
   };
 
   const handleViewEventsClick = () => {
-    navigate('/events-list');
+    navigate('/calendar-events');
     // Navegar para a página de ver eventos
   };
 

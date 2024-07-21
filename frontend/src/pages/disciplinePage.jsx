@@ -10,11 +10,11 @@ const DisciplinePage = () => {
   };
 
   const handleEditDisciplineClick = () => {
-    navigate('/disciplines');
+    navigate('/disciplines-list');
   };
 
   const handleViewDisciplinesClick = () => {
-    navigate('/disciplines-list');
+    navigate('/calendar-disciplines');
   };
 
   return (

@@ -8,6 +8,8 @@ import DisciplineEditPage from './pages/disciplinesEditPage.jsx';
 import DisciplineListPage from './pages/disciplinesListPage.jsx';
 import DisciplineSignUpPage from './pages/disciplines.jsx';
 import DisciplinePage from './pages/disciplinePage.jsx';
+import EventCalendarPage from './pages/eventCalendarPage.jsx';
+import DisciplineCalendarPage from './pages/DisciplineCalendarPage.jsx';
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/create-discipline" element={<DisciplineSignUpPage />} />
         <Route path="/disciplines-list" element={<DisciplineListPage />} />
         <Route path="/edit-discipline/:id" element={<DisciplineEditPage />} />
+        <Route path="/calendar-events" element={<EventCalendarPage />} />
+        <Route path="/calendar-disciplines" element={<DisciplineCalendarPage />} />
       <Route path="/events" element={<EventsPage />} />
         <Route path="/events-list" element={<EventListPage />} />
         <Route path="/edit-event/:id" element={<EventEditPage />} />
