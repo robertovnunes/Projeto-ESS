@@ -16,6 +16,8 @@ import AlunosPage from './pages/administrador/alunosPage';
 import ProfessoresPage from './pages/administrador/professoresPage';
 import AdministradoresPage from './pages/administrador/administradoresPage';
 
+import AddAlunoPage from './pages/administrador/AddAlunoPage'; // Importe a nova página
+
 import axios from 'axios';
 
 // Defina a URL base para todas as requisições Axios
@@ -38,9 +40,11 @@ const App = () => {
         <Route path="/equipamentos" element={<EquipmentPage />} />
         <Route path="/eventos" element={<EventsPage />} />
 
-        <Route path="/alunos" element={<AlunosPage />} />
-        <Route path="/professores" element={<ProfessoresPage />} />
-        <Route path="/administradores" element={<AdministradoresPage />} />
+        <Route path="usuarios/alunos" element={<AlunosPage />} />
+        <Route path="usuarios/professores" element={<ProfessoresPage />} />
+        <Route path="usuarios/administradores" element={<AdministradoresPage />} />
+
+        <Route path="/usuarios/alunos/adicionar" element={<AddAlunoPage />} />
 
         <Route path="*" element={<Navigate to="/" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>

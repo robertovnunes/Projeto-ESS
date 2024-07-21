@@ -3,13 +3,19 @@ html, body {
     margin: 0; /* Remove a margem padrão do body */
 }
 
+.header-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Espaço abaixo do header */
+}
+
 .page-conteiner {
     padding: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 80vh; /* Garantir que a altura da página ocupe toda a altura da tela */
+    height: 100vh; /* Garantir que a altura da página ocupe toda a altura da tela */
     box-sizing: border-box; /* Inclui padding e border na altura total */
 }
 
