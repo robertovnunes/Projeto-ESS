@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
+import { MdDateRange } from "react-icons/md";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineEventNote } from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/events.css';
 
@@ -72,11 +76,15 @@ const EventsSignUpPage = () => {
   };
 
   return (
+  
+  <div className = "body">
+  
     <div className="event-form-container">
       <div className="event-form-box">
-        <h2>Cadastrar Novo Evento</h2>
+        <h1>Cadastrar Novo Evento</h1>
         <form onSubmit={handleSubmit} className="event-form">
           <div className="form-group">
+            <MdOutlineEventNote className="event-icon" />
             <label htmlFor="eventName">Nome do Evento</label>
             <input 
               type="text" 
@@ -89,6 +97,7 @@ const EventsSignUpPage = () => {
             />
           </div>
           <div className="form-group">
+            <MdDriveFileRenameOutline className="description-icon" />
             <label htmlFor="description">Descrição</label>
             <input 
               type="text" 
@@ -100,6 +109,7 @@ const EventsSignUpPage = () => {
             />
           </div>
           <div className="form-group">
+            <FaChalkboardTeacher className="teacher-icon" />
             <label htmlFor="responsibleTeacher">Professor Responsável</label>
             <input 
               type="text" 
@@ -112,6 +122,7 @@ const EventsSignUpPage = () => {
             />
           </div>
           <div className="form-group">
+            <MdDateRange className="date-icon" />
             <label htmlFor="eventDateAndTime">Data e Hora</label>
             <DatePicker
               selected={eventDateAndTime}
@@ -128,6 +139,7 @@ const EventsSignUpPage = () => {
           <button type="submit" className="submit-button">Cadastrar Evento</button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

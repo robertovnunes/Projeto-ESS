@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Adirek+Serif:wght@400;700&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Adirek Serif', serif;
+    background: #f2f2f2;    
+    box-sizing: border-box;
+
+}
+header{
+    position:fixed;
+    top:0;
+    left:0;
+}
+
+.navbar a{
+    position:relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left:40px;
+}
+.events-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h1 {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.event-button {
+  background-color: #ed5c69;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.event-button:hover {
+  background-color: red;
+}
+
+.event-button:active {
+  background-color: red;
+}

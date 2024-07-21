@@ -1,14 +1,22 @@
+
+
+
 .event-form-container {
-    max-width: 400px;
+    display: block;
+    height: 420px;
+    width: 1000px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: #ed5c69;
   }
   
   .event-form-box {
     display: flex;
+    
     flex-direction: column;
     align-items: center;
   }
@@ -19,17 +27,25 @@
   }
   
   .event-form {
-    display: flex;
+    display: block;
     flex-direction: column;
     width: 100%;
   }
   
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+  }
+  .event-icon{
+    width:20px;
+    height: 20px;
+    padding-right: 20px;
+
+   
   }
   
   .form-input {
-    width: 100%;
+    margin-left: 150px;
+    height:30px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -37,12 +53,17 @@
   
   .submit-button {
     padding: 10px;
+    width: 200px;
+    height: 50px;
+    margin-top: 40px;
+    margin-left: 400px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
+
   
   .submit-button:hover {
     background-color: #0056b3;

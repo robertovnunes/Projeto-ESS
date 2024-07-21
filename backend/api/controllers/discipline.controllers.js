@@ -6,6 +6,21 @@ const disciplinesPath = path.resolve("./db/disciplines.json");
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
 };
+exports.getDiscipline = (req,res) => {
+    try{ 
+        const data = JSON.parse(fs.readFileSync(path.resolve("./db/disciplines.json"),'utf-8'))
+        if(!data){
+            console.log("Empty");
+            return res.status(200).json({})
+        }
+        return res.status(200).json(data);
+    }catch(error){
+        console.log("Error in getAll",error.message);
+        res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+}
 exports.getDisciplinebyID = (req,res) => {
     try{
         console.log(disciplinesPath);
