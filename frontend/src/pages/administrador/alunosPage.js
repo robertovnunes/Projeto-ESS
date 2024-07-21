@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'; // Ícones de edição e exclusão
-import '../../style/admin/usuarios.css'; // Ajuste conforme necessário
 import BaseLayout from '../../components/common/BaseLayout';
-import '../../style/admin/AlunosPage.css'; // Adicione um arquivo CSS para estilizar a página
+import '../../style/lista_usuarios.css'; // Adicione um arquivo CSS para estilizar a página
 import '../../style/conteiner.css';
 import api from '../../utils/AxiosConfig'; // Importe a configuração do Axios
 
@@ -56,7 +55,7 @@ const AlunosPage = () => {
               className="search-input"
             />
           </div>
-          <div className="alunos-list">
+          <div className="usuarios-list">
             {/* Cabeçalhos da lista */}
             <div className="list-header">
               <span className="header-item nome-header">Nome</span>
@@ -68,25 +67,25 @@ const AlunosPage = () => {
                 aluno.nome.toLowerCase().includes(searchTerm.toLowerCase())
               )
               .map(aluno => (
-                <div key={aluno.login} className="aluno-item">
-                  <span className="aluno-name">{aluno.nome}</span>
-                  <span className="aluno-login">{aluno.login}</span>
-                  <div className="aluno-actions">
+                <div key={aluno.login} className="usuario-item">
+                  <span className="usuario-name">{aluno.nome}</span>
+                  <span className="usuario-login">{aluno.login}</span>
+                  <div className="usuario-actions">
                     <FontAwesomeIcon
                       icon={faEdit}
-                      className="aluno-action-icon edit-icon"
+                      className="usuario-action-icon edit-icon"
                       onClick={() => handleEditAluno(aluno.login)}
                     />
                     <FontAwesomeIcon
                       icon={faTrash}
-                      className="aluno-action-icon delete-icon"
+                      className="usuario-action-icon delete-icon"
                       onClick={() => handleDeleteAluno(aluno.login)}
                     />
                   </div>
                 </div>
               ))}
           </div>
-          <button className="button add-aluno-button" onClick={handleAddAluno}>
+          <button className="button add-usuario-button" onClick={handleAddAluno}>
             Adicionar Aluno
           </button>
         </div>

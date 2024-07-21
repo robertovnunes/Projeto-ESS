@@ -16,11 +16,15 @@ html, body {
 .content-container {
     padding: 20px;
     background-color: #fff;
-    border: 1px solid #ececec; /* Borda preta de 2px de largura */
+    border: 1px solid #ececec; /* Borda cinza claro de 1px de largura */
     border-radius: 10px;
-    width: 100%; /* Largura responsiva em porcentagem */
+    width: 70%; /* Largura responsiva em porcentagem */
     height: 100%;
-    max-width: 1200px; /* Largura máxima */
     margin: 2% auto; /* Centraliza o contêiner horizontalmente */
   }
   
+  .search-container {
+    margin: 0 auto 20px auto; /* Define margens automáticas para esquerda e direita */
+    width: 95%;
+    text-align: center;
+  }

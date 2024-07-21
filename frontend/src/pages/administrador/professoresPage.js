@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../style/admin/usuarios.css'; // Ajuste conforme necessário
 import BaseLayout from '../../components/common/BaseLayout';
 
 const ProfessoresPage = () => {

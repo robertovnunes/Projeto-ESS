@@ -1,18 +1,14 @@
 /* src/style/alunos.css */
   
-  .search-container {
-    margin-bottom: 20px;
-  }
-  
   .search-input {
-    width: 100%;
+    width: 99%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
   }
   
-  .alunos-list {
+  .usuarios-list {
     margin-bottom: 20px;
   }
   
@@ -46,7 +42,7 @@
     text-align: center;
   }
   
-  .aluno-item {
+  .usuario-item {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     display: flex;
@@ -54,28 +50,28 @@
     align-items: center;
   }
   
-  .aluno-item:last-child {
+  .usuario-item:last-child {
     border-bottom: none;
   }
   
-  .aluno-name {
+  .usuario-name {
     flex: 3; /* Ajuste a largura conforme necessário */
     text-align: left;
     margin: 0% 1%;
   }
   
-  .aluno-login {
+  .usuario-login {
     flex: 1; /* Ajuste a largura conforme necessário */
     text-align: center;
   }
   
-  .aluno-actions {
+  .usuario-actions {
     flex: 1;
     display: flex;
     justify-content: center;
   }
   
-  .aluno-action-icon {
+  .usuario-action-icon {
     margin-left: 10px;
     cursor: pointer;
     font-size: 18px;
@@ -90,7 +86,7 @@
     color: #F44336; /* Cor vermelha para o ícone de exclusão ao passar o mouse */
   }
   
-  .add-aluno-button {
+  .add-usuario-button {
     background-color: #4CAF50; /* Cor verde para o botão */
     color: white;
     font-size: 16px;
@@ -101,7 +97,7 @@
     transition: background-color 0.3s;
   }
   
-  .add-aluno-button:hover {
+  .add-usuario-button:hover {
     background-color: #45a049; /* Cor verde mais escura ao passar o mouse */
   }
   

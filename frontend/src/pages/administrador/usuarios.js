@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../style/admin/usuarios.css'; // Adicione o CSS correspondente
 import BaseLayout from '../../components/common/BaseLayout';
 import '../../style/conteiner.css'
 
@@ -26,7 +25,7 @@ const UsersPage = () => {
       <div className="page-conteiner">
         <div className="content-container">
             <div className="page-container">
-            <h2>Usuários</h2>
+              <h2>Usuários</h2>
               <button className="button" onClick={handleAlunos}>Alunos</button>
               <button className="button" onClick={handleProfessores}>Professores</button>
               <button className="button" onClick={handleAdministradores}>Administradores</button>
