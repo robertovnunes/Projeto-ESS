@@ -3,15 +3,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import BaseLayout from '../../components/common/BaseLayout';
-import '../../style/lista_usuarios.css'; // Adicione um arquivo CSS para estilizar a página
+import Modal from '../../components/common/simNao_Modal'; // Importe o componente Modal
+import '../../style/lista_usuarios.css';
 import '../../style/container.css';
-import '../../style/adicionar_usuario.css'
-import '../../style/icons.css'
-import { fetchAlunos } from '../../context/usuarios/alunos/apiService'; // Importe a função de requisição
+import '../../style/adicionar_usuario.css';
+import '../../style/icons.css';
+import { fetchAlunos, deleteUsuario } from '../../context/usuarios/alunos/apiService';
 
 const AlunosPage = () => {
   const [alunos, setAlunos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showConfirmModal, setShowConfirmModal] = useState(false); // Estado para controle do modal de confirmação
+  const [alunoToDelete, setAlunoToDelete] = useState(null); // Estado para armazenar o aluno a ser deletado
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,22 +36,43 @@ const AlunosPage = () => {
   };
 
   const handleAddAlunoClick = () => {
-    navigate('/usuarios/alunos/adicionar'); // Redirecionar para a página de adicionar aluno
+    navigate('/usuarios/alunos/adicionar');
   };
 
-  const handleEditAluno = (id) => {
-    // Navegue para a página de edição do aluno com o id especificado
+  const handleEditAluno = (login) => {
+    // Navegue para a página de edição do aluno com o login especificado
   };
 
-  const handleDeleteAluno = (id) => {
-    // Lógica para excluir o aluno com o id especificado
+  const handleDeleteAluno = (login) => {
+    setAlunoToDelete(login); // Armazena o aluno a ser deletado e exibe o modal
+    setShowConfirmModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      if (alunoToDelete) {
+        await deleteUsuario("alunos", alunoToDelete); // Chamar a função de exclusão do backend
+        const updatedAlunos = alunos.filter(aluno => aluno.login !== alunoToDelete);
+        setAlunos(updatedAlunos);
+        setAlunoToDelete(null); // Limpar o aluno selecionado
+      }
+    } catch (error) {
+      console.error('Erro ao deletar aluno:', error);
+    } finally {
+      setShowConfirmModal(false); // Fechar o modal de confirmação
+    }
+  };
+
+  const cancelDelete = () => {
+    setAlunoToDelete(null); // Limpar o aluno selecionado
+    setShowConfirmModal(false); // Fechar o modal de confirmação
   };
 
   const handleGoBack = () => {
     if (location.state?.from) {
-      navigate(location.state.from); // Navegar para a página anterior específica
+      navigate(location.state.from);
     } else {
-      navigate('/usuarios'); // Redirecionar para a página de usuários se não houver uma página anterior específica
+      navigate('/usuarios');
     }
   };
 
@@ -103,6 +127,13 @@ const AlunosPage = () => {
           <button className="button add-usuario-button" onClick={handleAddAlunoClick}>
             Adicionar Aluno
           </button>
+          {showConfirmModal && (
+            <Modal
+              message={`Tem certeza de que deseja deletar o aluno com login ${alunoToDelete}?`}
+              onConfirm={confirmDelete}
+              onCancel={cancelDelete}
+            />
+          )}
         </div>
       </div>
     </BaseLayout>
