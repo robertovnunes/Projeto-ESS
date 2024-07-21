@@ -12,12 +12,18 @@ class BaseController {
     }
 
     async getAll(req, res) {
+        console.log("Cheguei")
         try {
+            console.log("Em getAll")
             // Verificar se o usuário está autenticado e recebe o tipo do usuário
             const existingToken = this.AuthService.isAuthenticatedAs(req);
+            console.log(existingToken)
 
-            if(!existingToken || ((await existingToken).userType != 'admin')) 
+            if(!existingToken || ((await existingToken).userType != 'admin')){
+                console.log("Não autorizado")
                 return res.status(401).send({ message:'Acesso Restrito'});
+            }
+            
 
             const usuarios = await this.service.getAll();
             if (usuarios === 'Nenhum usuário cadastrado') {

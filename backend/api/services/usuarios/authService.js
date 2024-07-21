@@ -42,7 +42,7 @@ class AuthService {
     
         // Retorna o usuário encontrado com o tipo ou null se não existir
         if (usuario) {
-            return { login, tipo: tipoUsuario, senha: usuario.senha }; // Adiciona senha ao retorno
+            return { login, tipo: tipoUsuario, senha: usuario.senha, nome: usuario.nome }; // Adiciona senha ao retorno
         } else {
             return null;
         }

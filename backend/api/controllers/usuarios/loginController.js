@@ -29,14 +29,11 @@ class LoginController {
     
             // Verificar se o usuário existe no banco de dados
             const usuario = await this.authService.getUserByLogin(login);
-            if (!usuario) {
+            if (!usuario.senha) {
                 return res.status(401).send({message: 'Credenciais inválidas'});
             }
 
             // Comparar a senha fornecida com a senha armazenada no banco de dados
-            //console.log(usuario)
-            //console.log(senha)
-            //console.log(usuario.senha)
             const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
             //console.log(senhaCorreta)
             if (!senhaCorreta) {
@@ -47,9 +44,11 @@ class LoginController {
             const token = this.authService.generateToken(usuario.login, usuario.tipo);
 
             // Armazenar o token JWT e outras informações em cookies
-            res.cookie('accessToken', token, { httpOnly: true });
-            res.cookie('userType', usuario.tipo, { httpOnly: true });
-            res.cookie('login', usuario.login, { httpOnly: true });
+            res.cookie('accessToken', token, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('userType', usuario.tipo, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('login', usuario.login, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            res.cookie('nome', usuario.nome, { httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
+            
     
             // Retornar sucesso
             return res.status(200).send({message: 'Login realizado com sucesso'});
@@ -64,19 +63,21 @@ class LoginController {
         try {
             // Verificar se o usuário está autenticado (possui token de acesso válido)
             const decoded = this.authService.verifyAccessToken(req);
-            if (!decoded) {
+            /*if (!decoded) {
+                console.log("usuário não atent")
                 return res.status(400).send('Usuário não autenticado');
-            }
+            }*/
 
             // Limpar todos os cookies relacionados ao login
             res.clearCookie('accessToken');
             res.clearCookie('userType');
             res.clearCookie('login');
+            res.clearCookie('nome');
 
             
             res.status(200).send({message: 'Logout bem sucedido'});
 
-            console.log(res.cookie)
+            //console.log(res.cookie)
         } catch (error) {
             //console.error('Erro ao fazer logout:', error);
             res.status(500).send({message: 'Erro interno do servidor'});
