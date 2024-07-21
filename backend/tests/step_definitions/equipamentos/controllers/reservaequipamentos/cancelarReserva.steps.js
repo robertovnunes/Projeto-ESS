@@ -2,6 +2,7 @@ const {loadFeature, defineFeature} = require('jest-cucumber');
 const app = require('../../../../../apptest');
 const supertest = require('supertest');
 const reservaRepository = require('../../../../../api/repositories/reservaEquipamentos.repository');
+const manutencaoRepository = require('../../../../../api/repositories/reservaManutencao.repository');
 const equipamentosRepository = require('../../../../../api/repositories/equipamentos.repository');
 const testSetup = require('../../testSetup');
 
@@ -10,13 +11,14 @@ const feature = loadFeature('./tests/features/equipamentos/controllers/reservaeq
 defineFeature(feature, test => {
 
     let server = app.listen(3001);
-    let reservaMockRepository, response, request, equipmentrepo, setup;
+    let reservaMockRepository, manutencaoMockRepository, response, request, equipmentrepo, setup;
     request = supertest(server);
     setup = new testSetup();
     equipmentrepo = new equipamentosRepository();
 
     beforeAll(async () => {
         reservaMockRepository = new reservaRepository();
+        manutencaoMockRepository = new manutencaoRepository();
         await setup.getDatabaseCopy();
     });
 
@@ -26,7 +28,7 @@ defineFeature(feature, test => {
     });
 
     const givenEquipmentReservaExist = async (given) => {
-        given(/^que a reserva com id "(.*)" para o equipamento com id "(.*)" existe$/, async (idReserva, idEquipamento, json) => {
+        given(/^que a reserva de "(.*)" com id "(.*)" para o equipamento com id "(.*)" existe$/, async (type, idReserva, idEquipamento, json) => {
             const equipamento = JSON.parse(json);
             await equipmentrepo.createEquipment(equipamento);
         });
@@ -38,8 +40,13 @@ defineFeature(feature, test => {
         });
     }
     const thenReservaIsCanceled = async (then) => {
-        then(/^a reserva de equipamento com id "(.*)" deve ser cancelada$/, async (idReserva) => {
-            const reserva = await reservaMockRepository.getReservaByID(idReserva);
+        then(/^a reserva de "(.*)" com id "(.*)" deve ser cancelada$/, async (type, idReserva) => {
+            let reserva;
+            if(type === 'equipamento'){
+                reserva = await reservaMockRepository.getReservaByID(idReserva);
+            } else {
+                reserva = await manutencaoMockRepository.getReservaByID(idReserva);
+            }
             expect(reserva.status).toBe("cancelada");
         });
     }
@@ -54,6 +61,14 @@ defineFeature(feature, test => {
         });
     }
     test('Cancelar reserva de equipamento', ({ given, when, then, and }) => {
+        givenEquipmentReservaExist(given);
+        whenRequestCancelReserva(when);
+        thenReservaIsCanceled(then);
+        andResponseIsOk(and);
+        andMessageIs(and);
+    });
+
+    test('cancelar reserva de manutencao', ({ given, when, then, and }) => {
         givenEquipmentReservaExist(given);
         whenRequestCancelReserva(when);
         thenReservaIsCanceled(then);
