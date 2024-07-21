@@ -10,7 +10,8 @@ let injector = new di();
 injector.registerReservaRepository(ReservaEquipamentoRepository, new ReservaEquipamentoRepository());
 const repository = injector.getReservaRepository(ReservaEquipamentoRepository);
 injector.registerReservaService(ReservaEquipamentoService, new ReservaEquipamentoService(repository));
-const reservaEquipamentoController = new ReservaEquipamentoController(injector.getReservaService(ReservaEquipamentoService));
+const service = injector.getReservaService(ReservaEquipamentoService);
+const reservaEquipamentoController = new ReservaEquipamentoController(service);
 
 router.get('/', reservaEquipamentoController.getReservas);
 router.get('/:id', reservaEquipamentoController.getReservaByID);

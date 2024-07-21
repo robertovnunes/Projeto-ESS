@@ -22,7 +22,6 @@ Feature: Criar reserva de manutencao
         When eu recebo uma requisicao POST "/reservas/manutencao" do usuario "carlos" logado como "admin" e json:
         """
         {
-            "id": "123456",
             "equipamentoID": "1098646179",
             "dataFim": "2021-10-28",
             "responsavel": {
@@ -34,7 +33,7 @@ Feature: Criar reserva de manutencao
         }
         """
         Then o codigo de resposta deve ser "201"
-        And o status da reserva com id "123456" é "confirmada"
+        And o status da reserva é "confirmada"
 
     Scenario: Criar reserva de manutencao de equipamento reservado
         Given que existe o equipamento com id "3642789"
@@ -65,9 +64,8 @@ Feature: Criar reserva de manutencao
         When eu recebo uma requisicao POST "/reservas/manutencao" do usuario "carlos" logado como "admin" e json:
         """
         {
-            "id": "12345678",
             "equipamentoID": "3642789",
-            "dataFim": "2021-10-28",
+            "dataInicio": "2021-10-28",
             "responsavel": {
               "email": "carlos@cin.ufpe.br",
               "username": "carlos",
@@ -77,4 +75,4 @@ Feature: Criar reserva de manutencao
         }
         """
         Then o codigo de resposta deve ser "201"
-        And o status da reserva com id "12345678" é "pendente"
+        And o status da reserva é "pendente"

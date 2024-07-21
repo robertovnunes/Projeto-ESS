@@ -30,8 +30,7 @@ defineFeature(feature, test => {
     const givenEquipmentExist = async ( given ) => {
         given(/^que existe o equipamento com id "(.*)"$/, async (id, json) => {
             const data = JSON.parse(json);
-            const created = await mockEquipamentosRepository.createEquipment(data);
-            console.log(created);
+            await mockEquipamentosRepository.createEquipment(data);
         });
     };
     const whenRequest = async (when) => {
@@ -47,10 +46,9 @@ defineFeature(feature, test => {
         });
     };
     const andStatusIs = async (and) => {
-        and(/^o status da reserva com id "(.*)" é "(.*)"/, async (id, status) => {
-            console.log("ID: " + id);
+        and(/^o status da reserva é "(.*)"/, async (status) => {
+            const id = response.body.id;
             const reserva = await mockReservaRepository.getReservaByID(id);
-            console.log(reserva);
             expect(reserva.status).toBe(status);
         });
     };

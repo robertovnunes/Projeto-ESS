@@ -46,7 +46,7 @@ class reservaController {
         const result = await this.manutencaoService.createReserva(reserva, equipamentoID);
         if (result.status === 'ok') {
             console.log('POST /reservas/manutencao [201] Created');
-            res.status(201).json({message: 'Reserva criada com sucesso'});
+            res.status(201).json({message: 'Reserva criada com sucesso', id: result.id});
         } else {
             console.log('POST /reservas/manutencao [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});

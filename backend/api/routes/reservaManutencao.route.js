@@ -10,7 +10,8 @@ let injector = new di();
 injector.registerReservaRepository(ReservaManutencaoRepository, new ReservaManutencaoRepository());
 const repository = injector.getReservaRepository(ReservaManutencaoRepository);
 injector.registerReservaService(ReservaManutencaoService, new ReservaManutencaoService(repository));
-const reservaManutencaoController = new ReservaManutencaoController(injector.getReservaService(ReservaManutencaoService));
+const service = injector.getReservaService(ReservaManutencaoService);
+const reservaManutencaoController = new ReservaManutencaoController(service);
 
 router.get('/', reservaManutencaoController.getReservas);
 router.get('/:id', reservaManutencaoController.getReservaByID);
@@ -20,5 +21,4 @@ router.patch('/:id', reservaManutencaoController.patchReserva);
 
 module.exports = app => {
     app.use('/reservas/manutencao', router);
-
 };

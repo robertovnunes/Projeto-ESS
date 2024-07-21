@@ -60,7 +60,7 @@ class reservaRepository{
             }
             equipamento.manutencao.push(reserva);
             await this.equipmentrepo.updateEquipment(equipmentID, equipamento);
-            return {status: 'ok', message: 'Reserva criada com sucesso'};
+            return {status: 'ok', message: 'Reserva criada com sucesso', id : reserva.id};
         }
         return {status:'erro', data:undefined};
     }
@@ -88,14 +88,16 @@ class reservaRepository{
                             }
                         }
                     }
-                    await this.equipmentrepo.updateEquipment(reserva['equipamentoID'], equipamento);
-                    return {status: 'ok', message: reserva.status};
-                } else {
-                    throw new Error('Equipamento não encontrado');
+                } else if(reserva.status === 'cancelada'){
+                    equipamento.status = 'disponivel';
                 }
+                await this.equipmentrepo.updateEquipment(reserva['equipamentoID'], equipamento);
+                return {status: 'ok', message: reserva.status};
+            } else {
+                return {status: 'not found', message: 'Equipamento não encontrado'};
             }
         } else {
-            return {status: 'not found', data: undefined};
+            return {status: 'not found', message: 'Reserva não encontrada'};
         }
     }
 
