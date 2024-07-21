@@ -1,4 +1,4 @@
-const EquipamentosRepository = require('../../../../api/repositories/equipamentosRepository');
+const EquipamentosRepository = require('../../../../api/repositories/equipamentos.repository');
 const {defineFeature, loadFeature} = require('jest-cucumber');
 const app = require('../../../../apptest');
 const supertest = require('supertest');
