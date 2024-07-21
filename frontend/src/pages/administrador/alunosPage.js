@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import BaseLayout from '../../components/common/BaseLayout';
 import '../../style/lista_usuarios.css'; // Adicione um arquivo CSS para estilizar a página
-import '../../style/conteiner.css';
+import '../../style/container.css';
 import '../../style/adicionar_usuario.css'
 import '../../style/icons.css'
 import { fetchAlunos } from '../../context/usuarios/alunos/apiService'; // Importe a função de requisição

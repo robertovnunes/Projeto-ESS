@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate do react-router-dom
 import '../../style/OpcoesButton.css'; // Importando o CSS
-import '../../style/conteiner.css'
+import '../../style/container.css'
 
 const AdminPage = () => {
   const navigate = useNavigate(); // Cria uma instância de navegação

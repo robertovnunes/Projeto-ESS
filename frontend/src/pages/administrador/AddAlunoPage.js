@@ -5,7 +5,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import BaseLayout from '../../components/common/BaseLayout';
 import { addAluno } from '../../context/usuarios/alunos/apiService'; // Importe a função de requisição
 import Modal from '../../components/common/Modal'; // Importe o componente Modal
-import '../../style/conteiner.css'
+import '../../style/container.css'
 
 const AddAlunoPage = () => {
   const [newAluno, setNewAluno] = useState({ nome: '', login: '', senha: '' });

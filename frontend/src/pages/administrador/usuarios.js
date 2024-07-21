@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import BaseLayout from '../../components/common/BaseLayout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import '../../style/conteiner.css'
+import '../../style/container.css'
 
 const UsersPage = () => {
   const navigate = useNavigate();

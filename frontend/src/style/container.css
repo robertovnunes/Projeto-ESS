@@ -9,7 +9,7 @@ html, body {
   margin-bottom: 20px; /* Espaço abaixo do header */
 }
 
-.page-conteiner {
+.page-container {
     padding: 20px;
     text-align: center;
     display: flex;
