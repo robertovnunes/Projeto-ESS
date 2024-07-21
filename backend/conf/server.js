@@ -15,7 +15,7 @@ server.use(express.urlencoded({ extended: false }))
 // Middleware cookie-parser
 server.use(cookieParser());
 
-
+///ATENCAO
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);
 }); 

@@ -1,13 +1,35 @@
 [
-  {
-    "id": "041Lu6fq0-Jr",
-    "nome": "Projetor epson",
-    "descricao": "projetor full hd",
-    "estado_conservacao": "Bom",
-    "data_aquisicao": "15/03/2023",
-    "valor_estimado": "R$ 1.200,00",
-    "patrimonio": "1098643",
-    "reservas": [],
-    "manutencao": []
-  }
+   {
+      "id": "1098645604",
+      "nome": "Arduino",
+      "descricao": "Placa de prototipação",
+      "estado_conservacao": "novo",
+      "data_aquisicao": "10/04/2024",
+      "valor_estimado": "R$ 200,00",
+      "patrimonio": "1098645",
+      "reservas": [],
+      "manutencao": []
+   },
+   {
+      "id": "1098646179",
+      "nome": "Arduino",
+      "descricao": "Placa de prototipação",
+      "estado_conservacao": "novo",
+      "data_aquisicao": "10/04/2024",
+      "valor_estimado": "R$ 200,00",
+      "numero_serie": "1098646",
+      "reservas": [],
+      "manutencao": []
+   },
+   {
+      "id": "04I6YMZgNpWM",
+      "nome": "Monitor phillips",
+      "descricao": "Monitor de 19 polegadas",
+      "estado_conservacao": "Ruim",
+      "data_aquisicao": "15/03/2023",
+      "valor_estimado": "R$ 1.200,00",
+      "patrimonio": "5583159",
+      "reservas": [],
+      "manutencao": []
+   }
 ]

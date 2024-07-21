@@ -25,12 +25,8 @@ class EquipamentosService {
         return equipamento;
     }
 
-    createEquipmentPatrimonio(newEquipamento) {
-        return this.equipamentoRepository.createEquipmentPatrimonio(newEquipamento);
-    }
-
-    createEquipmentSN(newEquipamento) {
-        return this.equipamentoRepository.createEquipmentSN(newEquipamento);
+    createEquipment(newEquipamento) {
+        return this.equipamentoRepository.createEquipment(newEquipamento);
     }
 
     patchEquipment(id, newEquipamento) {

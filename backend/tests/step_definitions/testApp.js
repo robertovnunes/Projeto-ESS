@@ -1,7 +1,7 @@
 const supertest = require('supertest');
-const app = require('../../app');
+const server = require('../../app');
 
-const request = supertest(app);
+const request = supertest(server);
 
 module.exports = {
     request
