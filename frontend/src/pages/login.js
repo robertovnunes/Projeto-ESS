@@ -1,6 +1,8 @@
+// src/pages/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Importa o axios
+import { useColor } from '../context/userColorContext'; // Importe o contexto de cor
 import logo from '../assets/CIn_logo.png'; // Importa a logo (ajuste o caminho conforme necessário)
 import '../style/Login.css'; // Importe o CSS
 
@@ -12,6 +14,7 @@ const Login = () => {
   const [usernameError, setUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const navigate = useNavigate();
+  const { updateColor } = useColor(); // Use o contexto para obter a função de atualizar a cor
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +29,7 @@ const Login = () => {
       }, { withCredentials: true });
 
       if (response.status === 200) {
+        updateColor(); // Atualiza a cor ao fazer login
         navigate('/mainpage');
       }
     } catch (error) {

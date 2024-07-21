@@ -1,0 +1,38 @@
+/* src/style/OpcoesButton.css */
+
+.admin-page {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 80vh; /* Garantir que a altura da página ocupe toda a altura da tela */
+    box-sizing: border-box; /* Inclui padding e border na altura total */
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px; /* Espaço abaixo dos botões */
+    position: relative; /* Permite o ajuste da posição do conteúdo abaixo dos botões */
+}
+
+.button {
+    background-color: #fff; /* Cor de fundo cinza claro */
+    color: #000; /* Texto preto */
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    border: none;
+    padding: 10px 20px;
+    margin: 1px;
+    border-radius: 1px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra no canto inferior */
+}
+
+.button:hover {
+    background-color: #939393; /* Cor de fundo ao passar o mouse */
+}

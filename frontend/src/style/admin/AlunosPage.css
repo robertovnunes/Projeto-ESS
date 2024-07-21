@@ -1,0 +1,107 @@
+/* src/style/alunos.css */
+  
+  .search-container {
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .alunos-list {
+    margin-bottom: 20px;
+  }
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+  .header-item {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .nome-header {
+    flex: 3; /* Ajuste a largura conforme necessário */
+    text-align: left;
+    margin: 0% 1%;
+  }
+  
+  .login-header {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }
+  
+  .acoes-header {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .aluno-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .aluno-item:last-child {
+    border-bottom: none;
+  }
+  
+  .aluno-name {
+    flex: 3; /* Ajuste a largura conforme necessário */
+    text-align: left;
+    margin: 0% 1%;
+  }
+  
+  .aluno-login {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }
+  
+  .aluno-actions {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .aluno-action-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .edit-icon:hover {
+    color: #4CAF50; /* Cor verde para o ícone de edição ao passar o mouse */
+  }
+  
+  .delete-icon:hover {
+    color: #F44336; /* Cor vermelha para o ícone de exclusão ao passar o mouse */
+  }
+  
+  .add-aluno-button {
+    background-color: #4CAF50; /* Cor verde para o botão */
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-aluno-button:hover {
+    background-color: #45a049; /* Cor verde mais escura ao passar o mouse */
+  }
+  

@@ -34,9 +34,6 @@ class LoginController {
             }
 
             // Comparar a senha fornecida com a senha armazenada no banco de dados
-            //console.log(usuario)
-            //console.log(senha)
-            //console.log(usuario.senha)
             const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
             //console.log(senhaCorreta)
             if (!senhaCorreta) {
@@ -66,9 +63,10 @@ class LoginController {
         try {
             // Verificar se o usuário está autenticado (possui token de acesso válido)
             const decoded = this.authService.verifyAccessToken(req);
-            if (!decoded) {
+            /*if (!decoded) {
+                console.log("usuário não atent")
                 return res.status(400).send('Usuário não autenticado');
-            }
+            }*/
 
             // Limpar todos os cookies relacionados ao login
             res.clearCookie('accessToken');

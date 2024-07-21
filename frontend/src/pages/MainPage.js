@@ -1,35 +1,40 @@
 // src/pages/MainPage.js
 
-import React, { useState, useEffect } from 'react';
-import NavBar from '../components/common/NavBar';
-import UserBox from '../components/common/UserBox';
-import '../style/MainPage.css';
-import util from '../utils/functions';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookie from 'js-cookie';
+import StudentPage from './aluno/AlunoMainPage';
+import TeacherPage from './professor/ProfessorMainPage';
+import AdminPage from './administrador/AdminMainPage';
+import BaseLayout from '../components/common/BaseLayout';
 
 const MainPage = () => {
-  const [showUserBox, setShowUserBox] = useState(false);
-  const [bgColor, setBgColor] = useState('#000');
+  const userType = Cookie.get('userType') || 'Desconhecido';
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setBgColor(util.getRandomColor());
-  }, []);
+    if (userType === 'Desconhecido') {
+      navigate('/login');
+    }
+  }, [userType, navigate]);
 
-  const toggleUserBox = () => {
-    setShowUserBox(!showUserBox);
-  };
+  let SpecificPage;
+  if (userType === 'aluno') {
+    SpecificPage = StudentPage;
+  } else if (userType === 'professor') {
+    SpecificPage = TeacherPage;
+  } else if (userType === 'admin') {
+    SpecificPage = AdminPage;
+  } else {
+    SpecificPage = null;
+  }
 
   return (
-    <div className="main-container">
-      <NavBar toggleUserBox={toggleUserBox} bgColor={bgColor} />
-      <UserBox showUserBox={showUserBox} bgColor={bgColor} />
-      <div className="content">
-        <div className="card">
-          <h2 style={{ marginBottom: '20px' }}>Página Principal</h2>
-          <p>Bem-vindo à página principal do site!</p>
-          <p>Acho que deve aparecer as reservas do usuário.</p>
-        </div>
+    <BaseLayout>
+      <div className="main-content">
+        {SpecificPage && <SpecificPage />}
       </div>
-    </div>
+    </BaseLayout>
   );
 };
 
