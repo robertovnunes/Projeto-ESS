@@ -1,10 +1,10 @@
 // src/services/apiService.js
-import api from '../../../utils/AxiosConfig'; // Importe a configuração do Axios
+import api from '../../utils/AxiosConfig'; // Importe a configuração do Axios
 
 // Função para buscar todos os alunos
-export const fetchAlunos = async () => {
+export const fetchUsuarios = async (usuarios) => {
   try {
-    const response = await api.get('/usuarios/alunos');
+    const response = await api.get(`/usuarios/${usuarios}`);
     return response.data;
   } catch (error) {
     console.error('Erro na requisição:', error);
@@ -13,12 +13,12 @@ export const fetchAlunos = async () => {
 };
 
 // Função para adicionar um novo aluno
-export const addAluno = async (aluno) => {
+export const addUsuario = async (usuarios, aluno) => {
   try {
-    const response = await api.post('/usuarios/alunos', aluno);
+    const response = await api.post(`/usuarios/${usuarios}`, aluno);
     return response.data;
   } catch (error) {
-    console.error('Erro ao adicionar aluno:', error);
+    console.error('Erro ao adicionar Usuario:', error);
     throw error;
   }
 };
@@ -29,7 +29,7 @@ export const deleteUsuario = async (usuarios, login) => {
     const response = await api.delete(`/usuarios/${usuarios}/${login}`);
     return response.data; // Pode ser vazio ou conter uma mensagem, dependendo da resposta do backend
   } catch (error) {
-    console.error('Erro ao deletar aluno:', error);
+    console.error('Erro ao deletar Usuario:', error);
     throw error;
   }
 };

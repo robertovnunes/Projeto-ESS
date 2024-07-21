@@ -7,29 +7,29 @@ import { addUsuario } from '../../context/usuarios/apiService'; // Importe a fun
 import Modal from '../../components/common/Modal'; // Importe o componente Modal
 import '../../style/container.css'
 
-const AddAlunoPage = () => {
-  const [newAluno, setNewAluno] = useState({ nome: '', login: '', senha: '' });
+const AddAdminPage = () => {
+  const [newAdmin, setNewAdmin] = useState({ nome: '', login: '', senha: '' });
   const [message, setMessage] = useState('');
   const [showModal, setShowModal] = useState(false); // Estado para controlar a exibição do modal
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewAluno({ ...newAluno, [name]: value });
+    setNewAdmin({ ...newAdmin, [name]: value });
   };
 
-  const handleAddAluno = async () => {
+  const handleAddAdmin = async () => {
     try {
-      await addUsuario("alunos" ,newAluno); // Enviando dados para o backend
+      await addUsuario("admins" ,newAdmin); // Enviando dados para o backend
       setMessage('Cadastro realizado com sucesso');
       setShowModal(true); // Mostrar o modal
-      setNewAluno({ nome: '', login: '', senha: '' }); // Limpar os campos do formulário
+      setNewAdmin({ nome: '', login: '', senha: '' }); // Limpar os campos do formulário
     } catch (error) {
       // Verificar se o erro tem uma resposta e se contém uma mensagem
-      const errorMessage = error.response?.data?.message || 'Erro ao adicionar aluno';
+      const errorMessage = error.response?.data?.message || 'Erro ao adicionar administrador';
       setMessage(errorMessage); // Mostrar a mensagem do erro retornado pela API
       setShowModal(true); // Mostrar o modal
-      console.error('Erro ao adicionar aluno:', error);
+      console.error('Erro ao adicionar administrador:', error);
     }
   };
 
@@ -49,14 +49,14 @@ const AddAlunoPage = () => {
             <button className="back-button" onClick={handleGoBack}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </button>
-            <h2>Adicionar Aluno</h2>
+            <h2>Adicionar administrador</h2>
           </div>
           <div className="add-usuario-form">
             <input
               type="text"
               name="nome"
               placeholder="Nome"
-              value={newAluno.nome}
+              value={newAdmin.nome}
               onChange={handleInputChange}
               className="form-input"
             />
@@ -64,7 +64,7 @@ const AddAlunoPage = () => {
               type="text"
               name="login"
               placeholder="Login"
-              value={newAluno.login}
+              value={newAdmin.login}
               onChange={handleInputChange}
               className="form-input"
             />
@@ -72,11 +72,11 @@ const AddAlunoPage = () => {
               type="password"
               name="senha"
               placeholder="Senha"
-              value={newAluno.senha}
+              value={newAdmin.senha}
               onChange={handleInputChange}
               className="form-input"
             />
-            <button className="add-usuario-button" onClick={handleAddAluno}>
+            <button className="add-usuario-button" onClick={handleAddAdmin}>
               Adicionar
             </button>
           </div>
@@ -92,4 +92,4 @@ const AddAlunoPage = () => {
   );
 };
 
-export default AddAlunoPage;
+export default AddAdminPage;

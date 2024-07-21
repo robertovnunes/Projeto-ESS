@@ -15,14 +15,14 @@
   }
   
   /* CSS para o formulário de adicionar aluno */
-.add-aluno-form {
+.add-usuario-form {
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.add-aluno-form .form-input {
+.add-usuario-form .form-input {
   width: 90%;
   padding: 10px;
   border: 1px solid #ccc;

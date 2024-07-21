@@ -8,5 +8,15 @@
     "nome": "Amanda Gonçalves Santos",
     "login": "8000",
     "senha": "$2a$10$XC//pJ/63F.eLFhkXnzIQ.AuX6cPeeSB2.NQ7HEjL5XgN6ER/lnKa"
+  },
+  {
+    "nome": "Catarina Mendonça",
+    "login": "9999",
+    "senha": "$2a$10$wgRHnzuwwPKPtTeRxMSckekbq6azF4eTAjUlYldnc0jr1dj/iOvbO"
+  },
+  {
+    "nome": "Eduardo Barbosa Lima",
+    "login": "1212",
+    "senha": "$2a$10$jDr75cVVbJatwz4TK.vZ0.EokK9eokNIhsFPfd4AtErb68DAvUT8G"
   }
 ]

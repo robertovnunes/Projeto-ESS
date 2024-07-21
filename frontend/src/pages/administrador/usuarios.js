@@ -19,7 +19,7 @@ const UsersPage = () => {
   };
 
   const handleAdministradores = () => {
-    navigate('usuarios/administradores'); // Substitua pelo caminho da página de edição de professores
+    navigate('/usuarios/admins'); // Substitua pelo caminho da página de edição de professores
   };
 
   const handleGoBack = () => {

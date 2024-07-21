@@ -17,6 +17,8 @@ import ProfessoresPage from './pages/administrador/professoresPage';
 import AdministradoresPage from './pages/administrador/administradoresPage';
 
 import AddAlunoPage from './pages/administrador/AddAlunoPage'; // Importe a nova página
+import AddProfessorPage from './pages/administrador/AddProfessorPage'
+import AddAdminPage from './pages/administrador/AddAdminPage'
 
 import axios from 'axios';
 
@@ -40,13 +42,15 @@ const App = () => {
         <Route path="/equipamentos" element={<EquipmentPage />} />
         <Route path="/eventos" element={<EventsPage />} />
 
-        <Route path="usuarios/alunos" element={<AlunosPage />} />
-        <Route path="usuarios/professores" element={<ProfessoresPage />} />
-        <Route path="usuarios/administradores" element={<AdministradoresPage />} />
+        <Route path="/usuarios/alunos" element={<AlunosPage />} />
+        <Route path="/usuarios/professores" element={<ProfessoresPage />} />
+        <Route path="/usuarios/admins" element={<AdministradoresPage />} />
 
         <Route path="/usuarios/alunos/adicionar" element={<AddAlunoPage />} />
+        <Route path="/usuarios/professores/adicionar" element={<AddProfessorPage />} />
+        <Route path="/usuarios/admins/adicionar" element={<AddAdminPage />} />
 
-        <Route path="*" element={<Navigate to="/" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
+        <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>
     </Router>
     </ColorProvider>

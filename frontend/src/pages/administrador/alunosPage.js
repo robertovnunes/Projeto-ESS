@@ -8,7 +8,7 @@ import '../../style/lista_usuarios.css';
 import '../../style/container.css';
 import '../../style/adicionar_usuario.css';
 import '../../style/icons.css';
-import { fetchAlunos, deleteUsuario } from '../../context/usuarios/alunos/apiService';
+import { fetchUsuarios, deleteUsuario } from '../../context/usuarios/apiService';
 
 const AlunosPage = () => {
   const [alunos, setAlunos] = useState([]);
@@ -21,7 +21,7 @@ const AlunosPage = () => {
   useEffect(() => {
     const getAlunos = async () => {
       try {
-        const data = await fetchAlunos();
+        const data = await fetchUsuarios("alunos");
         setAlunos(data);
       } catch (error) {
         console.error('Erro na requisição:', error);
