@@ -30,26 +30,27 @@ defineFeature(feature, test => {
     const givenEquipmentExist = async ( given ) => {
         given(/^que existe o equipamento com id "(.*)"$/, async (id, json) => {
             const data = JSON.parse(json);
-            console.log('criando equipamento');
             const created = await mockEquipamentosRepository.createEquipment(data);
-            console.log(`criado ${created}`);
+            console.log(created);
         });
     };
     const whenRequest = async (when) => {
         when(/^eu recebo uma requisicao POST "(.*)" do usuario "(.*)" logado como "(.*)" e json:$/, async (req, username, role, json) => {
             const data = JSON.parse(json);
-            await request.post(req).send(data);
+            response = await request.post(req).send(data);
         });
     };
 
     const thenResponse = async (then) => {
         then(/^o codigo de resposta deve ser "(.*)"$/, async (statusCode) => {
-            expect(request.status).toBe(parseInt(statusCode));
+            expect(response.status).toBe(parseInt(statusCode));
         });
     };
     const andStatusIs = async (and) => {
         and(/^o status da reserva com id "(.*)" é "(.*)"/, async (id, status) => {
+            console.log("ID: " + id);
             const reserva = await mockReservaRepository.getReservaByID(id);
+            console.log(reserva);
             expect(reserva.status).toBe(status);
         });
     };

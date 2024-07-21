@@ -46,7 +46,6 @@ class reservaRepository{
     async createReserva(reserva, equipmentID){
         const equipamento = await this.equipmentrepo.getEquipmentById(equipmentID);
         if(equipamento['status'] !== undefined){
-            console.log(equipamento);
             if(equipamento.status === 'disponivel'){
                 equipamento.status = 'em_manutencao';
                 reserva.status = 'confirmada';
@@ -59,6 +58,9 @@ class reservaRepository{
             else if (equipamento.status === 'reservado'){
                 reserva.status = 'pendente';
             }
+            equipamento.manutencao.push(reserva);
+            await this.equipmentrepo.updateEquipment(equipmentID, equipamento);
+            return {status: 'ok', message: 'Reserva criada com sucesso'};
         }
         return {status:'erro', data:undefined};
     }

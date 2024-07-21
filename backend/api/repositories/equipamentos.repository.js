@@ -70,7 +70,6 @@ class EquipamentosRepository {
         }
         if(exist === undefined){
             let equipamentos = await this.getAllEquipments();
-            console.log(newEquipamento);
             if(equipamentos.length > 0) {
                 equipamentos.push(newEquipamento);
             } else {

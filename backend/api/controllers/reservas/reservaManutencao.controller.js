@@ -43,12 +43,10 @@ class reservaController {
     async createReserva(req, res) {
         const {equipamentoID, dataInicio, responsavel, tecnico, depto} = req.body;
         const reserva = new reservaModel(new Date(dataInicio), responsavel, tecnico, depto, equipamentoID);
-        console.log(reserva);
         const result = await this.manutencaoService.createReserva(reserva, equipamentoID);
-        console.log(result);
         if (result.status === 'ok') {
             console.log('POST /reservas/manutencao [201] Created');
-            res.status(201).json({message: 'Reserva criada com sucesso, pendente de confirmação'});
+            res.status(201).json({message: 'Reserva criada com sucesso'});
         } else {
             console.log('POST /reservas/manutencao [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});
