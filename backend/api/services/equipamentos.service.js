@@ -1,4 +1,4 @@
-const EquipamentoRepository = require('../repositories/equipamentosRepository');
+const EquipamentoRepository = require('../repositories/equipamentos.repository');
 
 class EquipamentosService {
     constructor(equipamentoRepository){
