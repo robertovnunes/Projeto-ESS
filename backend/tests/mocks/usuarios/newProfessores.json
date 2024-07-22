@@ -1,0 +1,26 @@
+[
+  {
+    "nome": "Maria Santos",
+    "login": "ms",
+    "senha": "$2a$10$RbuEWRKGrjhE8XLoP/J.gOmqUqldKJAi6rQj9KV0waY9iw5GqKdmW",
+    "SIAPE": "8888812"
+  },
+  {
+    "nome": "Charles Francis Xavier",
+    "login": "cfx",
+    "senha": "$2a$10$3L0vNQxzspi7XQc1SNLer.v3CLqOorMJGT2tM.od7yJTm7sLvQ1ve",
+    "SIAPE": "8888811"
+  },
+  {
+    "nome": "Carolina Souza Santos Lima",
+    "login": "cssl",
+    "senha": "$2a$10$UFwxC4K06G34ZDKIZcXTNODRU/SOky/zjcMxYCbeg5abGq/iMrWq6",
+    "SIAPE": "8786812"
+  },
+  {
+    "nome": "Caio Santos",
+    "login": "cs8",
+    "senha": "$2a$10$uXsTbZpq4WiaPfUFDVoAPefcInU1GAA6rZ5qR3EyHIonF8fZsSnlG",
+    "SIAPE": "8979462"
+  }
+]

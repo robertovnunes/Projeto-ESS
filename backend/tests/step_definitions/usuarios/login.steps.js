@@ -1,10 +1,16 @@
 const { loadFeature, defineFeature } = require('jest-cucumber');
-const app = require('../testApp');
+const app = require('../../../apptest');
+const supertest = require ('supertest');
 
 const feature = loadFeature('tests/features/usuarios/loginLogout.feature');
 defineFeature(feature, (test) => {
     //const request = supertest(app);
     let accessToken;
+    let request, response, server, cookies;
+    server = app.listen(3001, () => {
+        console.log('Testando...');
+    });
+    request = supertest(server); 
 
     beforeEach(() => {
         // Limpa o token de acesso antes de cada teste
@@ -13,6 +19,10 @@ defineFeature(feature, (test) => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    afterAll(async () => {
+        server.close();
     });
 
     // Função para extrair o token de acesso dos cookies
@@ -43,7 +53,7 @@ defineFeature(feature, (test) => {
 
     const givenUserIsLoggedIn = (given) => {
         given(/^eu estou logado na conta de login "(.*)" com um token de autenticação$/, async (login) => {
-            const response = await app.request.post('/usuarios/login').send({
+            const response = await request.post('/usuarios/login').send({
                 login: login,
                 senha: '12345678'
             });
@@ -55,7 +65,7 @@ defineFeature(feature, (test) => {
     // When steps
     const whenLoginRequestIsMade = (when) => {
         when(/^eu envio uma requisição "(.*)" para o endpoint "(.*)"$/, async (method, endpoint) => {
-            const response = await app.request.post(endpoint).send({
+            const response = await request.post(endpoint).send({
                 login: this.login,
                 senha: this.password
             });
@@ -66,7 +76,7 @@ defineFeature(feature, (test) => {
 
     const whenLogoutRequestIsMade = (when) => {
         when(/^eu envio uma requisição "(.*)" para o endpoint "(.*)"$/, async (method, endpoint) => {
-            const response = await app.request.post(endpoint).set('Cookie', `accessToken=${accessToken}`);
+            const response = await request.post(endpoint).set('Cookie', `accessToken=${accessToken}`);
             this.response = response;
         });
     };

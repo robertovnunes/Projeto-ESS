@@ -1,7 +1,8 @@
 const { loadFeature, defineFeature } = require('jest-cucumber');
 const path = require('path');
 const scrambler = require('./scrambler');
-const {app, server} = require('../testApp');
+const supertest = require ('supertest');
+const app = require('../../../apptest');
 
 const feature = loadFeature('tests/features/usuarios/cadastrarAdmin.feature');
 
@@ -10,8 +11,12 @@ const newAdmins = path.resolve(__dirname, '../../mocks/usuarios/newAdmins.json')
 const adminsDB = path.resolve(__dirname, '../../../db/admins.json');
 
 defineFeature(feature, (test) => {
-    let cookies;
-    let response;
+    let request, response, server, cookies;
+    server = app.listen(3001, () => {
+        console.log('Testando...');
+    });
+    request = supertest(server);
+
 
     beforeAll(async () => {
         // Setup inicial, carregando a base de dados original
@@ -19,7 +24,7 @@ defineFeature(feature, (test) => {
 
         // Fazendo login como administrador para obter os cookies de autenticação
         try {
-            const loginResponse = await app.request.post('/usuarios/login').send({
+            const loginResponse = await request.post('/usuarios/login').send({
                 login: '9472',
                 senha: '12345678'
             });
@@ -33,7 +38,7 @@ defineFeature(feature, (test) => {
     afterAll(async () => {
         // Restaura a base de dados ao seu estado original após os testes
         await scrambler.setupForTestUsers(adminsDB, newAdmins);
-        await app.request.delete('/usuarios/logout');
+        await request.delete('/usuarios/logout');
         await scrambler.setupForTestUsers(oldAdmins, adminsDB);
         server.close();
     });
@@ -49,7 +54,7 @@ defineFeature(feature, (test) => {
             throw new Error('Cookies não foram definidos.');
         }
         try {
-            const res = await app.request.post(endpoint)
+            const res = await request.post(endpoint)
                 .set('Cookie', cookies)
                 .send(user);
             response = res;
@@ -63,7 +68,7 @@ defineFeature(feature, (test) => {
             throw new Error('Cookies não foram definidos.');
         }
         try {
-            const res = await app.request.delete(endpoint)
+            const res = await request.delete(endpoint)
                 .set('Cookie', cookies)
                 .send(user);
             response = res;
