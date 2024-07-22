@@ -17,7 +17,7 @@ const DisciplinePage = () => {
     navigate('/discipline-view');
   };
   const handleGoBack = () => {
-    navigate('/events'); // Navegar para a página anterior
+    navigate('/disciplines'); // Navegar para a página anterior
   };
 
   return (
