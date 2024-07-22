@@ -5,14 +5,8 @@ import 'react-calendar/dist/Calendar.css';
 import axios from 'axios';
 import { parse, format, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import '../styles/eventCalendarPage.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/CIn_logo.png';
-import { MdDateRange } from "react-icons/md";
-import { FaChalkboardTeacher } from "react-icons/fa";
-import { MdOutlineEventNote } from "react-icons/md";
-import { MdDriveFileRenameOutline } from "react-icons/md";
+import '../../style/events/eventCalendarPage.css';
+import logo from '../../assets/CIn_logo.png';
 
 const parseDate = (dateString) => {
   return parse(dateString, 'dd-MM-yyyy', new Date(), { locale: ptBR });

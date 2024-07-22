@@ -1,26 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/eventsPage.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/CIn_logo.png';
-
-
-const EventsPage = () => {
+import '../../style/disciplines/disciplinesPage.css';
+import logo from '../../assets/CIn_logo.png';
+const DisciplinePage = () => {
   const navigate = useNavigate();
 
-  const handleCreateEventClick = () => {
-    navigate('/create-event');
+  const handleCreateDisciplineClick = () => {
+    navigate('/create-discipline');
   };
 
-  const handleEditEventClick = () => {
-    navigate('/events-list');
-    // Navegar para a página de editar evento
+  const handleEditDisciplineClick = () => {
+    navigate('/disciplines-list');
   };
 
-  const handleViewEventsClick = () => {
-    navigate('/calendar-events');
-    // Navegar para a página de ver eventos
+  const handleViewDisciplinesClick = () => {
+    navigate('/discipline-view');
   };
   const handleGoBack = () => {
     navigate('/events'); // Navegar para a página anterior
@@ -45,20 +39,21 @@ const EventsPage = () => {
             </ul>
         </div>
       </nav>
-    <div className="events-page-container">
-      <button className="back-button" onClick={handleGoBack}>
-        <i className="fas fa-arrow-left"></i>
-      </button>
-      <h1>Eventos</h1>
-      <div className="button-group">
-        <button className="event-button" onClick={handleCreateEventClick}>Cadastrar Novo Evento</button>
-        <button className="event-button" onClick={handleEditEventClick}>Editar Evento Existente</button>
-        <button className="event-button" onClick={handleViewEventsClick}>Ver Eventos</button>
+
+      <div className="discipline-page-container">
+        <button className="back-button" onClick={handleGoBack}>
+          <i className="fas fa-arrow-left"></i>
+        </button>
+        <h1>Disciplinas</h1>
+        <div className="button-group">
+          <button className="discipline-button" onClick={handleCreateDisciplineClick}>Cadastrar Nova Disciplina</button>
+          <button className="discipline-button" onClick={handleEditDisciplineClick}>Editar Disciplina Existente</button>
+          <button className="discipline-button" onClick={handleViewDisciplinesClick}>Ver Disciplinas</button>
+        </div>
       </div>
-    </div>
     </body>
     </html>
   );
 };
 
-export default EventsPage;
+export default DisciplinePage;

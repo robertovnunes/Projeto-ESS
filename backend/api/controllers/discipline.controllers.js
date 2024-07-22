@@ -37,7 +37,7 @@ exports.getDisciplinebyID = (req,res) => {
         let length = discipline.salas.length;
         if(length === 0){
             console.log("Discipline has no salas");
-        return res.status(400).json({error: "Discipline has no salas"});
+        return res.status(200).json([]);
         }
         return res.status(200).json(discipline.salas);
     }catch(error){

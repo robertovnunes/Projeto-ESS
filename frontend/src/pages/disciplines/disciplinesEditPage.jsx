@@ -4,19 +4,32 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import { format, parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/disciplineEditPage.css';
-import logo from '../assets/CIn_logo.png';
+import '../../style/disciplines/disciplineEditPage.css';
+import logo from '../../assets/CIn_logo.png';
 import { MdDateRange } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineEventNote } from "react-icons/md";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+
+const daysOfWeekMap = {
+  'DOM': 'SUN',
+  'SEG': 'MON',
+  'TER': 'TUE',
+  'QUA': 'WED',
+  'QUI': 'THU',
+  'SEX': 'FRI',
+  'SAB': 'SAT'
+};
 
 const DisciplineEditPage = () => {
   const { id } = useParams();
   const [nome, setNome] = useState('');
   const [disciplineID, setDisciplineID] = useState('');
   const [responsibleTeacher, setResponsibleTeacher] = useState('');
-  const [horario, setHorario] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [selectedDays, setSelectedDays] = useState([]);
   const [description, setDescription] = useState('');
   const [disciplineCurso, setDisciplineCurso] = useState('');
   const [disciplinePeriodo, setDisciplinePeriodo] = useState('');
@@ -32,7 +45,15 @@ const DisciplineEditPage = () => {
         setNome(discipline.nome);
         setDisciplineID(discipline.disciplineID);
         setResponsibleTeacher(discipline.responsibleTeacher);
-        setHorario(parseISO(discipline.horario));
+
+        const [start, end, time, ...days] = discipline.horario.split(' ');
+        setStartDate(parseISO(start.replace(/\//g, '-')));
+        setEndDate(parseISO(end.replace(/\//g, '-')));
+        setTime(parseISO(time));
+
+        const selectedDaysFromServer = days.map(day => Object.keys(daysOfWeekMap).find(key => daysOfWeekMap[key] === day));
+        setSelectedDays(selectedDaysFromServer);
+
         setDescription(discipline.description);
         setDisciplineCurso(discipline.disciplineCurso);
         setDisciplinePeriodo(discipline.disciplinePeriodo);
@@ -44,16 +65,29 @@ const DisciplineEditPage = () => {
     fetchDiscipline();
   }, [id]);
 
+  const handleDayChange = (day) => {
+    setSelectedDays(prevSelectedDays =>
+      prevSelectedDays.includes(day)
+        ? prevSelectedDays.filter(d => d !== day)
+        : [...prevSelectedDays, day]
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedDate = format(horario, 'dd-MM-yyyy hh:mm a');
+    const formattedStartDate = format(startDate, 'dd/MM/yyyy');
+    const formattedEndDate = format(endDate, 'dd/MM/yyyy');
+    const formattedTime = format(time, 'hh:mm aa');
+    const daysString = selectedDays.map(day => daysOfWeekMap[day]).join(' ');
+
+    const horario = `${formattedStartDate} a ${formattedEndDate} ${formattedTime} ${daysString}`;
 
     const disciplineData = {
       nome,
       disciplineID,
       responsibleTeacher,
-      horario: formattedDate,
+      horario,
       description,
       disciplineCurso,
       disciplinePeriodo
@@ -70,8 +104,9 @@ const DisciplineEditPage = () => {
       setErrorMessage(error.response?.data?.error || 'Erro ao atualizar disciplina');
     }
   };
+
   const handleGoBack = () => {
-    navigate('/disciplines-list'); // Navegar para a página anterior
+    navigate('/disciplines-list');
   };
 
   return (
@@ -94,7 +129,7 @@ const DisciplineEditPage = () => {
         </div>
       </nav>
     <div className="discipline-form-container">
-    <button className="back-button" onClick={handleGoBack}>
+      <button className="back-button" onClick={handleGoBack}>
         <i className="fas fa-arrow-left"></i>
       </button>
       <h1>Editar Disciplina</h1>
@@ -137,14 +172,55 @@ const DisciplineEditPage = () => {
         </div>
         <div className="form-group">
         <MdDateRange className="form-icon" />
-          <label htmlFor="horario">Horário</label>
+          <label htmlFor="startDate">Data de Início</label>
           <DatePicker
-            selected={horario}
-            onChange={(date) => setHorario(date)}
-            showTimeSelect
-            dateFormat="dd-MM-yyyy hh:mm aa"
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            dateFormat="dd/MM/yyyy"
             className="form-input"
           />
+        </div>
+        <div className="form-group">
+        <MdDateRange className="form-icon" />
+          <label htmlFor="endDate">Data de Término</label>
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            dateFormat="dd/MM/yyyy"
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+        <i class="fa fa-bell icon-color" aria-hidden="true"></i>
+          <label htmlFor="time">Hora</label>
+          <DatePicker
+            selected={time}
+            onChange={(date) => setTime(date)}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={30}
+            timeCaption="Hora"
+            dateFormat="hh:mm aa"
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+        <i class="fa fa-bell icon-color" aria-hidden="true"></i>
+          <label>Dias da Semana</label>
+          <div className="days-checkboxes">
+            {Object.keys(daysOfWeekMap).map(day => (
+              <div key={day}>
+                <input 
+                  type="checkbox"
+                  id={day}
+                  value={day}
+                  onChange={() => handleDayChange(day)}
+                  checked={selectedDays.includes(day)}
+                />
+                <label htmlFor={day}>{day}</label>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="form-group">
         <MdDriveFileRenameOutline className="form-icon" />

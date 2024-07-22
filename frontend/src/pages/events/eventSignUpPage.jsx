@@ -8,10 +8,8 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineEventNote } from "react-icons/md";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/events.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/CIn_logo.png';
+import '../../style/events/eventSignUpPage.css';
+import logo from '../../assets/CIn_logo.png';
 
 const EventsSignUpPage = () => {
   const [eventName, setEventName] = useState('');
