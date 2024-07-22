@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style/disciplines/disciplineForm.css';
-import logo from '../../assets/CIn_logo.png';
+import NavBarCin from '../../components/common/NavBarCin';
 import { MdDateRange } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineEventNote } from "react-icons/md";
@@ -86,18 +86,7 @@ const DisciplineSignUpPage = () => {
     </head>
 
     <body>
-    <nav className="navbar">
-      <div className="navbar-content">
-          <img src={logo} alt="Logo" className="logo-image"/>
-          <span className="website-name">Reservas CIn</span>
-          <ul className="navbar-list">
-              <li className="navbar-item"><a href="#home" className="navbar-link"><i className="fas fa-home"></i> Home</a></li>
-              <li className="navbar-item"><a href="#services" className="navbar-link"><i className="fas fa-user"></i> Perfil</a></li>
-              <li className="navbar-item"><a href="/disciplines" className="navbar-link"><i className="fas fa-book"></i> Disciplinas</a></li>
-              <li className="navbar-item"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
-          </ul>
-      </div>
-    </nav>
+    <NavBarCin />
     <div className="discipline-form-container">
       <h1>Cadastrar Nova Disciplina</h1>
       <button className="back-button" onClick={handleGoBack}>

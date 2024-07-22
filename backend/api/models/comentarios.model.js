@@ -5,6 +5,9 @@ class Comentario {
         this.id_usuario = id_usuario;
         this.texto = texto;
         this.data = data;
+        this.destinatario = destinatario;
+        this.validado = validado;
+        this.resposta = resposta;
     }
 }
 

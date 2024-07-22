@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../../assets/CIn_logo.png';
+import NavBarCin from '../../components/common/NavBarCin';
 import '../../style/disciplines/disciplineRoomsPage.css';
 
 const DisciplineRoomsPage = () => {
@@ -34,18 +34,7 @@ const DisciplineRoomsPage = () => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     </head>
     <div className="discipline-rooms-page">
-      <nav className="navbar">
-        <div className="navbar-content">
-          <img src={logo} alt="Logo" className="logo-image" />
-          <span className="website-name">Reservas CIn</span>
-          <ul className="navbar-list">
-            <li className="navbar-item"><a href="#home" className="navbar-link"><i className="fas fa-home"></i> Home</a></li>
-            <li className="navbar-item"><a href="#services" className="navbar-link"><i className="fas fa-user"></i> Perfil</a></li>
-            <li className="navbar-item"><a href="/disciplines" className="navbar-link"><i className="fas fa-book"></i> Disciplinas</a></li>
-            <li className="navbar-item"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
-          </ul>
-        </div>
-      </nav>
+    <NavBarCin />
 
       <div className="discipline-room-container">
       <button className="back-button" onClick={handleGoBack}>

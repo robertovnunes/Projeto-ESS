@@ -11,14 +11,14 @@ const comentariosController = new ComentariosController(comentariosService);
 
 
 module.exports = app => {
-    console.log('entrou no router');
     app.use('/comentarios', router);
     router.get('/', comentariosController.getAllComentarios);
     router.get('/:id', comentariosController.getComentarioById);
     router.post('/', comentariosController.createComentario);
     router.patch('/:id', comentariosController.patchComentario);
     router.delete('/:id', comentariosController.deleteComentario);
-}
-
+    router.patch('/:id/validar', comentariosController.validarComentario);
+    router.patch('/:id/responder', comentariosController.responderComentario);
+};
 
 //module.exports = router;

@@ -8,7 +8,7 @@ const isValidDateFormat = (dateStr) => {
 };
 exports.getDiscipline = (req,res) => {
     try{ 
-        const data = JSON.parse(fs.readFileSync(path.resolve("./db/disciplines.json"),'utf-8'))
+        const data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'))
         if(!data){
             console.log("Empty");
             return res.status(200).json({})
@@ -23,9 +23,8 @@ exports.getDiscipline = (req,res) => {
 }
 exports.getDisciplinebyID = (req,res) => {
     try{
-        console.log(disciplinesPath);
         const id = req.params.id;
-        const data = JSON.parse(fs.readFileSync(path.resolve('./db/disciplines.json'),'utf-8'));
+        const data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'));
         const discipline = data.find(element => element.disciplineID === id);
         if(!discipline){
             console.log("Discipline not found");
@@ -61,7 +60,7 @@ exports.disciplinesSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("./db/disciplines.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'));
         // Checks if discipline exists with boolean variable
         const disciplineExists = data.some(element => 
             element.nome === nome && 
@@ -103,7 +102,7 @@ exports.disciplinesSignUpJson = async(req, res) => {
         data.push(newDiscipline);
         console.log("Disciplina cadastrada com sucesso");
         res.status(201).json(newDiscipline);
-        fs.writeFileSync(path.resolve("./db/disciplines.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve("../models/disciplines.json"),JSON.stringify(data,null,2));
     }catch(error){
         console.log("Error in signUp:",error.message);
         res.status(500).json({

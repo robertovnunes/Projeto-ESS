@@ -13,11 +13,11 @@
   margin-top: 80px;
 }
 .discipline-room-container h1{
-  position: absolute;
-  top: 20px;
   width: 100%;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
+  font-size: 40px;
+  
 }
 .icon-circle{
   color: #e55347;
@@ -27,6 +27,8 @@
 p{
   font-family: 'Inter', sans-serif;
   color: #e55347;
+
+
 }
 .room{
   text-align: center;

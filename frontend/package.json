@@ -59,5 +59,9 @@
     "@vitejs/plugin-react": "^4.3.1",
     "cypress": "^13.9.0",
     "cypress-cucumber-preprocessor": "^4.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "step_definitions": "cypress/e2e/step_definitions"
   }
 }

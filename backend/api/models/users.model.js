@@ -13,7 +13,7 @@ async function readAdmins() {
         console.error(`Erro ao ler o arquivo admins:`, error);
         return [];
     }
-}    
+}
 
 async function readAlunos () {
     try {

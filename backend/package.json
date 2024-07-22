@@ -5,20 +5,19 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
-  "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
+  "author": "chmfc, jrvn, js3, mgc3, tns",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "consign": "^0.1.6",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv-safe": "^9.1.0",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "shortid": "^2.2.16",
-    "supertest": "^7.0.0",
     "nodemon": "^3.1.0",
     "shortid": "^2.2.16",
     "supertest": "^7.0.0",

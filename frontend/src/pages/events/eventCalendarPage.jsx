@@ -6,7 +6,7 @@ import axios from 'axios';
 import { parse, format, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import '../../style/events/eventCalendarPage.css';
-import logo from '../../assets/CIn_logo.png';
+import NavBarCin from '../../components/common/NavBarCin';
 
 const parseDate = (dateString) => {
   return parse(dateString, 'dd-MM-yyyy', new Date(), { locale: ptBR });
@@ -69,18 +69,7 @@ const EventCalendarPage = () => {
     </head>
 
     <body>
-      <nav className="navbar">
-        <div className="navbar-content">
-            <img src={logo} alt="Logo" className="logo-image"/>
-            <span className="website-name">Reservas CIn</span>
-            <ul className="navbar-list">
-                <li className="navbar-item"><a href="#home" className="navbar-link"><i className="fas fa-home"></i> Home</a></li>
-                <li className="navbar-item"><a href="#services" className="navbar-link"><i className="fas fa-user"></i> Perfil</a></li>
-                <li className="navbar-item"><a href="/disciplines" className="navbar-link"><i className="fas fa-book"></i> Disciplinas</a></li>
-                <li className="navbar-item"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
-            </ul>
-        </div>
-      </nav>
+    <NavBarCin />
     <div className="calendar-page-container">
     <button className="back-button" onClick={handleGoBack}>
         <i className="fas fa-arrow-left"></i>
