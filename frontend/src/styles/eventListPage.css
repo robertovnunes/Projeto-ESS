@@ -13,18 +13,24 @@ body, html {
 .event-list-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  height: 70vh;
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  position: relative;
+  margin-top: 80px; /* Adjust for the fixed navbar height */
 }
 
-h1 {
-  color: red;
-  margin-bottom: 20px;
+.event-list-container h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .event-list {
@@ -40,6 +46,7 @@ h1 {
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  font-family: 'Inter', sans-serif;
 }
 
 .event-actions {
@@ -47,15 +54,20 @@ h1 {
   gap: 10px;
 }
 
-.edit-button, .delete-button {
-  background-color: #4CAF50;
+.edit-button-event, .delete-button-event {
+  background-color: #FF6347;
   color: white;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 .edit-button:hover, .delete-button:hover {
@@ -64,4 +76,33 @@ h1 {
 
 .edit-button:active, .delete-button:active {
   background-color: red;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #FF6347;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-button i {
+  font-size: 20px;
+}
+
+.back-button:hover {
+  background-color: #e55347;
+}
+
+.back-button:active {
+  background-color: #c43f2b;
 }

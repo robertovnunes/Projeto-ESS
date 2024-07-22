@@ -2,29 +2,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Adirek+Serif:wght@400;700&display=swap');
 
 body, html {
-  font-family: 'Adirek Serif', serif;
+  font-family: 'Inter', sans-serif;
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .calendar-page-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  max-height: 80vh;
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  position: relative;
+  margin-top: 80px; /* Adjust for the fixed navbar height */
 }
 
-h1 {
-  color: red;
-  margin-bottom: 20px;
+.calendar-page-container h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .react-calendar {

@@ -9,6 +9,9 @@ import { MdOutlineEventNote } from "react-icons/md";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/events.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import logo from '../assets/CIn_logo.png';
 
 const EventsSignUpPage = () => {
   const [eventName, setEventName] = useState('');
@@ -74,17 +77,37 @@ const EventsSignUpPage = () => {
       setSuccessMessage('');
     }
   };
+  const handleGoBack = () => {
+    navigate('/events'); // Navegar para a página anterior
+  };
 
   return (
-  
-  <div className = "body">
-  
+    <html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    </head>
+
+    <body>
+    <nav className="navbar">
+      <div className="navbar-content">
+          <img src={logo} alt="Logo" className="logo-image"/>
+          <span className="website-name">Reservas CIn</span>
+          <ul className="navbar-list">
+              <li className="navbar-item"><a href="#home" className="navbar-link"><i className="fas fa-home"></i> Home</a></li>
+              <li className="navbar-item"><a href="#services" className="navbar-link"><i className="fas fa-user"></i> Perfil</a></li>
+              <li className="navbar-item"><a href="/disciplines" className="navbar-link"><i className="fas fa-book"></i> Disciplinas</a></li>
+              <li className="navbar-item"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
+          </ul>
+      </div>
+    </nav>
     <div className="event-form-container">
-      <div className="event-form-box">
         <h1>Cadastrar Novo Evento</h1>
+        <button className="back-button" onClick={handleGoBack}>
+        <i className="fas fa-arrow-left"></i>
+      </button>
         <form onSubmit={handleSubmit} className="event-form">
           <div className="form-group">
-            <MdOutlineEventNote className="event-icon" />
+            <MdOutlineEventNote className="form-icon" />
             <label htmlFor="eventName">Nome do Evento</label>
             <input 
               type="text" 
@@ -97,7 +120,7 @@ const EventsSignUpPage = () => {
             />
           </div>
           <div className="form-group">
-            <MdDriveFileRenameOutline className="description-icon" />
+            <MdDriveFileRenameOutline className="form-icon" />
             <label htmlFor="description">Descrição</label>
             <input 
               type="text" 
@@ -109,7 +132,7 @@ const EventsSignUpPage = () => {
             />
           </div>
           <div className="form-group">
-            <FaChalkboardTeacher className="teacher-icon" />
+            <FaChalkboardTeacher className="form-icon" />
             <label htmlFor="responsibleTeacher">Professor Responsável</label>
             <input 
               type="text" 
@@ -117,30 +140,32 @@ const EventsSignUpPage = () => {
               name="responsibleTeacher"
               value={responsibleTeacher} 
               onChange={handleInputChange}
-              required 
               className="form-input" 
             />
           </div>
           <div className="form-group">
-            <MdDateRange className="date-icon" />
-            <label htmlFor="eventDateAndTime">Data e Hora</label>
-            <DatePicker
-              selected={eventDateAndTime}
-              onChange={(date) => setEventDateAndTime(date)}
+            <MdDateRange className="form-icon" />
+            <label htmlFor="eventDateAndTime">Data e Hora do Evento</label>
+            <DatePicker 
+              id="eventDateAndTime"
+              name="eventDateAndTime"
+              selected={eventDateAndTime} 
+              onChange={date => setEventDateAndTime(date)}
               showTimeSelect
-              timeFormat="hh:mm aa"
+              timeFormat="HH:mm"
               timeIntervals={15}
-              dateFormat="dd-MM-yyyy hh:mm aa"
-              className="form-input"
+              dateFormat="dd-MM-yyyy hh:mm a"
+              timeCaption="time"
+              className="form-input datepicker-input"
             />
           </div>
+          <button type="submit" className="submit-button-event">Cadastrar Evento</button>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
           {successMessage && <p className="success-message">{successMessage}</p>}
-          <button type="submit" className="submit-button">Cadastrar Evento</button>
         </form>
-      </div>
     </div>
-    </div>
+    </body>
+    </html>
   );
 };
 

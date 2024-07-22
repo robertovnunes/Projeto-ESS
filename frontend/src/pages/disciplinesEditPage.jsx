@@ -4,7 +4,12 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import { format, parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../styles/disciplineForm.css';
+import '../styles/disciplineEditPage.css';
+import logo from '../assets/CIn_logo.png';
+import { MdDateRange } from "react-icons/md";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineEventNote } from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 
 const DisciplineEditPage = () => {
   const { id } = useParams();
@@ -65,12 +70,37 @@ const DisciplineEditPage = () => {
       setErrorMessage(error.response?.data?.error || 'Erro ao atualizar disciplina');
     }
   };
+  const handleGoBack = () => {
+    navigate('/disciplines-list'); // Navegar para a página anterior
+  };
 
   return (
+    <html>
+    <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    </head>
+
+    <body>
+      <nav className="navbar">
+        <div className="navbar-content">
+            <img src={logo} alt="Logo" className="logo-image"/>
+            <span className="website-name">Reservas CIn</span>
+            <ul className="navbar-list">
+                <li className="navbar-item"><a href="#home" className="navbar-link"><i className="fas fa-home"></i> Home</a></li>
+                <li className="navbar-item"><a href="#services" className="navbar-link"><i className="fas fa-user"></i> Perfil</a></li>
+                <li className="navbar-item"><a href="/disciplines" className="navbar-link"><i className="fas fa-book"></i> Disciplinas</a></li>
+                <li className="navbar-item"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
+            </ul>
+        </div>
+      </nav>
     <div className="discipline-form-container">
+    <button className="back-button" onClick={handleGoBack}>
+        <i className="fas fa-arrow-left"></i>
+      </button>
       <h1>Editar Disciplina</h1>
       <form onSubmit={handleSubmit} className="discipline-form">
         <div className="form-group">
+        <MdOutlineEventNote className="form-icon" />
           <label htmlFor="nome">Nome da Disciplina</label>
           <input 
             type="text"
@@ -82,6 +112,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <i class="fa fa-address-card icon-color" aria-hidden="true"></i>
           <label htmlFor="disciplineID">ID da Disciplina</label>
           <input 
             type="text"
@@ -93,6 +124,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <FaChalkboardTeacher className="form-icon" />
           <label htmlFor="responsibleTeacher">Professor Responsável</label>
           <input 
             type="text"
@@ -104,6 +136,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <MdDateRange className="form-icon" />
           <label htmlFor="horario">Horário</label>
           <DatePicker
             selected={horario}
@@ -114,6 +147,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <MdDriveFileRenameOutline className="form-icon" />
           <label htmlFor="description">Descrição</label>
           <input 
             type="text"
@@ -124,6 +158,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <i class="fa fa-graduation-cap icon-color" aria-hidden="true"></i>
           <label htmlFor="disciplineCurso">Curso da Disciplina</label>
           <input 
             type="text"
@@ -134,6 +169,7 @@ const DisciplineEditPage = () => {
           />
         </div>
         <div className="form-group">
+        <i class="fa fa-book icon-color" aria-hidden="true"></i>
           <label htmlFor="disciplinePeriodo">Período da Disciplina</label>
           <input 
             type="text"
@@ -145,9 +181,11 @@ const DisciplineEditPage = () => {
         </div>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         {successMessage && <p className="success-message">{successMessage}</p>}
-        <button type="submit" className="submit-button">Salvar</button>
+        <button type="submit" className="submit-button-event">Salvar</button>
       </form>
     </div>
+     </body>
+     </html>
   );
 };
 

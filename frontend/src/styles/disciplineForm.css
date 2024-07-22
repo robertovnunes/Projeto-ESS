@@ -13,25 +13,28 @@ body, html {
 .discipline-form-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  height: 85vh;
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  position: relative;
+  margin-top: 80px; /* Adjust for the fixed navbar height */
 }
 
-h1 {
-  color: red;
-  margin-bottom: 20px;
+.disciplines-form-container h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .discipline-form {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  max-width: 500px;
 }
 
 .form-group {
@@ -39,10 +42,9 @@ h1 {
 }
 
 .form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
-  color: red;
+  flex: 1;
+  margin-left: 10px;
+  font-family: 'Inter', sans-serif;
 }
 
 .form-input {
@@ -50,19 +52,42 @@ h1 {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+}
+
+.days-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.days-checkboxes div {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.error-message {
   color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
 }
 
 .submit-button {
-  background-color: #4CAF50;
+  background-color: #FF6347;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 .submit-button:hover {
@@ -81,4 +106,8 @@ h1 {
 .success-message {
   color: green;
   margin-top: 10px;
+}
+
+.icon-color {
+  color: #ed5c69;
 }

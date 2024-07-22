@@ -13,56 +13,73 @@ body, html {
 .discipline-form-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  height: 70vh;
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  position: relative;
+  margin-top: 80px; /* Adjust for the fixed navbar height */
 }
 
-h1 {
-  color: red;
-  margin-bottom: 20px;
+.discipline-form-container h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .discipline-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center the form elements vertically */
   width: 100%;
-  max-width: 500px;
 }
 
 .form-group {
-  margin-bottom: 15px;
-}
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 50%; /* Control the width of form inputs */}
 
 .form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
-  color: red;
+  flex: 1;
+  margin-left: 10px;
+  font-family: 'Inter', sans-serif;
 }
 
 .form-input {
-  width: 100%;
+  flex: 2;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  color: red;
+  margin-left: 10px;
+  font-size: 1rem;
 }
 
-.submit-button {
-  background-color: #4CAF50;
+.datepicker-input {
+  width: 100%;
+}
+
+.submit-button-event {
+  background-color: #FF6347;
   color: white;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 .submit-button:hover {
@@ -81,4 +98,8 @@ h1 {
 .success-message {
   color: green;
   margin-top: 10px;
+}
+
+.icon-color {
+  color: #ed5c69;
 }

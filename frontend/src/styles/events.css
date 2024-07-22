@@ -1,81 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-
+body, html {
+  font-family: 'Inter', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .event-form-container {
-    display: block;
-    height: 420px;
-    width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    align-items: center;
-    justify-content: center;
-    background-color: #ed5c69;
-  }
-  
-  .event-form-box {
-    display: flex;
-    
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 100px;
-    margin-bottom: 20px;
-  }
-  
-  .event-form {
-    display: block;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .form-group {
-    margin-bottom: 30px;
-  }
-  .event-icon{
-    width:20px;
-    height: 20px;
-    padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 1000px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+  margin-top: 80px; /* Adjust for the fixed navbar height */
+}
 
-   
-  }
-  
-  .form-input {
-    margin-left: 150px;
-    height:30px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    padding: 10px;
-    width: 200px;
-    height: 50px;
-    margin-top: 40px;
-    margin-left: 400px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.event-form-container h1 {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
 
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  .success-message {
-    color: green;
-    margin-top: 10px;
-  }
-  
+.event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center the form elements vertically */
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 80%; /* Control the width of form inputs */
+}
+
+.form-group label {
+  flex: 1;
+  margin-left: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-icon {
+  flex: 0 0 30px;
+  font-size: 1.5rem;
+  color: #ed5c69;
+}
+
+.form-input {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.datepicker-input {
+  width: 100%;
+}
+
+.submit-button-event {
+  background-color: #FF6347;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.submit-button-event:hover {
+  background-color: #e55347;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #FF6347;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-button i {
+  font-size: 20px;
+}
+
+.back-button:hover {
+  background-color: #e55347;
+}
+
+.back-button:active {
+  background-color: #c43f2b;
+}

@@ -13,13 +13,24 @@ body, html {
 .discipline-list-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  height: 70vh;
+  width: 1000px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  position: relative;
+  margin-top: 80px; 
+}
+.discipline-list-container h1{
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+
 }
 
 h1 {
@@ -40,6 +51,7 @@ h1 {
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  font-family: 'Inter', sans-serif;
 }
 
 .discipline-actions {
