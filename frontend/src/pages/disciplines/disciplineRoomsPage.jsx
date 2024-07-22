@@ -5,6 +5,7 @@ import NavBarCin from '../../components/common/NavBarCin';
 import '../../style/disciplines/disciplineRoomsPage.css';
 
 const DisciplineRoomsPage = () => {
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [salas, setSalas] = useState([]);

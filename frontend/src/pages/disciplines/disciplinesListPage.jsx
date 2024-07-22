@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookie from 'js-cookie';
 import '../../style/disciplines/disciplineListPage.css';
 import NavBarCin from '../../components/common/NavBarCin';
 
 const DisciplineListPage = () => {
   const [disciplines, setDisciplines] = useState([]);
   const navigate = useNavigate();
+  const userType = Cookie.get('userType') || 'Desconhecido';
+
+  useEffect(() => {
+    if (userType !== 'professor' && userType !== 'admin') {
+      navigate('/mainpage');
+    }
+  }, [navigate, userType]);
 
   useEffect(() => {
     const fetchDisciplines = async () => {
