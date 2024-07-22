@@ -1,0 +1,52 @@
+[
+  {
+    "nome": "Draco Lúcio Malfoy",
+    "login": "dlm",
+    "senha": "$2b$10$5e5kcuu.H7FEuscHBvKGIO.9VETfpPXO6Ey52Mmhop/b7yUQaz18y"
+  },
+  {
+    "nome": "Hermione Jean Granger",
+    "login": "hjg",
+    "senha": "$2b$10$4SEi6/3SCbCEbkGUXmAL6Od76E.Yhdm.o5TfHdpybmmPII2Tdn0JG"
+  },
+  {
+    "nome": "Amanda Silva Santos",
+    "login": "ass",
+    "senha": "$2a$10$6OG03QgurDYHIpshYv.m5OdPLARogTso7w2hHpyKwp.y0LDKVWJuy"
+  },
+  {
+    "nome": "Otávio Barbosa Souza",
+    "login": "obs",
+    "senha": "$2a$10$f8YIkSU4YgZ2drQ3cqjFze6szyk0CSIVBu4zp87qGwoVuK3z7fsx2"
+  },
+  {
+    "nome": "Fernando Moreira Alves",
+    "login": "fma",
+    "senha": "$2a$10$iMFkoeFk/e7q0gPru9DbLuchSl00QoFiI3oIdZ4RKKLMfKzeOqUzm"
+  },
+  {
+    "nome": "Clara Alves Dias",
+    "login": "cad",
+    "senha": "$2a$10$L9R50NSktX8AIfuimcBhR.3YlTv0fwZMFJGOrfkgxPmBFZML6kcI."
+  },
+  {
+    "nome": "Maria Clara Wenderson",
+    "login": "mcw",
+    "senha": "$2a$10$UrRqtFtNpch76MczCwSfuu3D0ctI0tL7knKF6V0JQM/beD1lqKEUO"
+  },
+  {
+    "nome": "Olivia Rodrigo Pereira",
+    "login": "orp",
+    "senha": "$2a$10$RueWsLA3jNMxLF6mg2HWnORwMKkI.YiXzzhDy8I/iSNnxDZ3M3EBS"
+  },
+  {
+    "nome": "Anderson Pereira Pontes",
+    "login": "app",
+    "senha": "$2a$10$tlGvH7BthTzKB9H5JpV4DOYBMWZhtBqYhE3YjG42BoFwKuvi580xK"
+  },
+  {
+    "nome": "Julio Cesar",
+    "login": "jc2",
+    "senha": "$2a$10$DdxFwdapsP69iSXrnK0fieTrFTfmYo5Bhdd4/VbeLtK5//9w.2RVe"
+  }
+]
