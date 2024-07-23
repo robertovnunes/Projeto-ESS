@@ -6,7 +6,7 @@ import axios from 'axios';
 import { parse, format, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import '../../style/events/eventCalendarPage.css';
-import NavBarCin from '../../components/common/NavBarCin';
+import NavUserBar from '../../components/common/NavUserBar';
 
 const parseDate = (dateString) => {
   return parse(dateString, 'dd-MM-yyyy', new Date(), { locale: ptBR });
@@ -69,7 +69,7 @@ const EventCalendarPage = () => {
     </head>
 
     <body>
-    <NavBarCin />
+    <NavUserBar/>
     <div className="calendar-page-container">
     <button className="back-button" onClick={handleGoBack}>
         <i className="fas fa-arrow-left"></i>

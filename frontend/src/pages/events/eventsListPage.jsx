@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../style/events/eventListPage.css';
-import NavBarCin from '../../components/common/NavBarCin';
+import NavUserBar from '../../components/common/NavUserBar';
 import Cookie from 'js-cookie';
 
 const EventListPage = () => {
@@ -52,7 +52,7 @@ const EventListPage = () => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
       </head>
       <body>
-        <NavBarCin />
+        <NavUserBar />
         <div className="event-list-container">
           <button className="back-button" onClick={handleGoBack}>
             <i className="fas fa-arrow-left"></i>

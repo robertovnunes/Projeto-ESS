@@ -66,3 +66,17 @@
     background-color: #FF6347;
     color: white;
   }
+  .navbar-cin .user-icon {
+    right: 20px; /* Ajuste para posicionar mais para a direita */
+    width: 50px; /* Tamanho do ícone no navbar */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 24px; /* Ajuste conforme necessário */
+    text-transform: uppercase;
+    cursor: pointer; /* Adiciona o cursor de ponteiro para indicar que é clicável */
+  }

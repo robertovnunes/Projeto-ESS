@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'; // Importar o componente Link
 import Cookie from 'js-cookie';
 import '../../style/NavBarCin.css';
 import logo from '../../assets/CIn_logo.png'; // Importe a imagem
-
+import UserBox from './UserBox';
+import '../../style/UserBox.css';
 const NavBarCin = ({ toggleUserBox, bgColor }) => {
+  const initial = Cookie.get('nome')?.charAt(0).toUpperCase() || 'U';
 
   return (
     <nav className="navbar-cin">
@@ -18,6 +20,10 @@ const NavBarCin = ({ toggleUserBox, bgColor }) => {
                 <li className="navbar-item-cin"><a href="/events" className="navbar-link"><i className="fas fa-calendar"></i> Eventos</a></li>
             </ul>
         </div>
+        <div className="user-icon" style={{ backgroundColor: bgColor }} onClick={toggleUserBox}>
+        {initial}
+        </div>
+
       </nav>
   );
 };

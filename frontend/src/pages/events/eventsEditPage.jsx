@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import { format, parseISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style/events/eventEditPage.css';
-import NavBarCin from '../../components/common/NavBarCin';
+import NavUserBar from '../../components/common/NavUserBar';
 import { MdDateRange } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineEventNote } from "react-icons/md";
@@ -81,7 +81,7 @@ const EventEditPage = () => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
       </head>
       <body>
-        <NavBarCin />
+        <NavUserBar />
         <div className="event-edit-container">
           <h1>Editar Evento</h1>
           <button className="back-button" onClick={handleGoBack}>

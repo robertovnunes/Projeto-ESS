@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import NavBarCin from '../../components/common/NavBarCin';
+import NavUserBar from '../../components/common/NavUserBar';
 import '../../style/disciplines/disciplineRoomsPage.css';
 
 const DisciplineRoomsPage = () => {
@@ -26,7 +26,7 @@ const DisciplineRoomsPage = () => {
   }, [id]);
 
   const handleGoBack = () => {
-    navigate('/disciplines'); // Navegar para a página anterior
+    navigate('/disciplines-view'); // Navegar para a página anterior
   };
 
   return (
@@ -35,7 +35,7 @@ const DisciplineRoomsPage = () => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     </head>
     <div className="discipline-rooms-page">
-    <NavBarCin />
+    <NavUserBar />
 
       <div className="discipline-room-container">
       <button className="back-button" onClick={handleGoBack}>

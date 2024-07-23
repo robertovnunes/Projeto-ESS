@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../style/events/eventSignUpPage.css';
 import NavBarCin from '../../components/common/NavBarCin';
 import Cookie from 'js-cookie';
+import NavUserBar from '../../components/common/NavUserBar';
 
 const EventsSignUpPage = () => {
   const [eventName, setEventName] = useState('');
@@ -94,7 +95,7 @@ const EventsSignUpPage = () => {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
       </head>
       <body>
-        <NavBarCin />
+        <NavUserBar />
         <div className="event-form-container">
           <h1>Cadastrar Novo Evento</h1>
           <button className="back-button" onClick={handleGoBack}>

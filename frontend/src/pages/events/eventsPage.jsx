@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookie from 'js-cookie';
-import NavBarCin from '../../components/common/NavBarCin';
+import NavUserBar from '../../components/common/NavUserBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '../../style/events/eventsPage.css';
@@ -34,7 +34,7 @@ const EventsPage = () => {
 
   return (
     <div className="events-page">
-      <NavBarCin />
+      <NavUserBar />
       <div className="events-page-container">
         <button className="back-button" onClick={handleGoBack}>
           <FontAwesomeIcon icon={faArrowLeft} />
