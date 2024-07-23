@@ -12,7 +12,7 @@ class reservaController {
 
     async getReservas(req, res) {
         const reservas = await this.manutencaoService.getReservas();
-        console.log('GET /reservas/manutencao [200] OK');
+        console.log('GET /reservaEquipamento/manutencao [200] OK');
         res.status(200).json(reservas);
     }
 
@@ -20,10 +20,10 @@ class reservaController {
         const id = req.params.id;
         const reserva = await this.manutencaoService.getReservaByID(id);
         if (reserva !== undefined) {
-            console.log('GET /reservas/manutencao/:id [200] OK');
+            console.log('GET /reservaEquipamento/manutencao/:id [200] OK');
             res.status(200).json(reserva);
         } else {
-            console.log('GET /reservas/manutencao/:id [404] Not Found');
+            console.log('GET /reservaEquipamento/manutencao/:id [404] Not Found');
             res.status(404).send({message: 'Reserva não encontrada'});
         }
     }
@@ -32,10 +32,10 @@ class reservaController {
         const id = req.params.id;
         const reservas = await this.manutencaoService.getReservasByEquipamentoID(id);
         if (reservas.status === 'ok') {
-            console.log('GET /reservas/manutencao/equipamento/:id [200] OK');
+            console.log('GET /reservaEquipamento/manutencao/equipamento/:id [200] OK');
             res.status(200).json(reservas.data);
         } else {
-            console.log('GET /reservas/manutencao/equipamento/:id [404] Not Found');
+            console.log('GET /reservaEquipamento/manutencao/equipamento/:id [404] Not Found');
             res.status(404).send({message: reservas.data});
         }
     }
@@ -45,10 +45,10 @@ class reservaController {
         const reserva = new reservaModel(new Date(dataInicio), responsavel, tecnico, depto, equipamentoID);
         const result = await this.manutencaoService.createReserva(reserva, equipamentoID);
         if (result.status === 'ok') {
-            console.log('POST /reservas/manutencao [201] Created');
+            console.log('POST /reservaEquipamento/manutencao [201] Created');
             res.status(201).json({message: 'Reserva criada com sucesso', id: result.id});
         } else {
-            console.log('POST /reservas/manutencao [400] Bad Request '+result.message);
+            console.log('POST /reservaEquipamento/manutencao [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});
         }
     }
@@ -59,7 +59,7 @@ class reservaController {
         const result = await this.manutencaoService.patchReserva(id, status);
         if (result.status === 'ok') {
             const message = `Reserva ${result.message}`;
-            console.log('PATCH /reservas/manutencao/:id [200] OK');
+            console.log('PATCH /reservaEquipamento/manutencao/:id [200] OK');
             res.status(200).json({message: message});
         }
     }

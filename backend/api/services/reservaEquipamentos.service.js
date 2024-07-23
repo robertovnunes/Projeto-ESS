@@ -22,12 +22,12 @@ class reservaService {
 
 
     updateReserva(id, reserva) {
-        const index = this.reservas.findIndex(reserva => reserva.id === id);
-        this.reservas[index] = reserva;
+        const index = this.reservaEquipamento.findIndex(reserva => reserva.id === id);
+        this.reservaEquipamento[index] = reserva;
     }
 
     deleteReserva(id) {
-        this.reservas = this.reservas.filter(reserva => reserva.id !== id);
+        this.reservaEquipamento = this.reservaEquipamento.filter(reserva => reserva.id !== id);
     }
  */
 

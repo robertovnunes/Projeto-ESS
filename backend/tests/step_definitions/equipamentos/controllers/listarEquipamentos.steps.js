@@ -8,9 +8,7 @@ const feature = loadFeature('tests/features/equipamentos/controllers/listarEquip
 
 defineFeature(feature, async (test) => {
 
-    const server = app.listen(3001, () => {
-        console.log('Testando...');
-    });
+    const server = app.listen(3001);
     let response, equipamentosRepository, equipamentos = [];
     let request = supertest(server);
     request.headers = {"username": "joao", "role": "admin"};

@@ -8,9 +8,7 @@ const testSetup = require('../testSetup');
 const feature = loadFeature('tests/features/equipamentos/controllers/editarEquipamento.feature');
 
 defineFeature(feature, async (test) => {
-    const server = app.listen(3001, () =>{
-        console.log('Testando...');
-    });
+    const server = app.listen(3001);
     
     let request, equipmentsID, response, equipamentosRepository;
     equipmentsID = [];

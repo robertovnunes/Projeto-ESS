@@ -7,9 +7,7 @@ const testSetup = require('../testSetup');
 const feature = loadFeature('tests/features/equipamentos/controllers/adicionarEquipamento.feature');
 defineFeature(feature, (test) => {
     
-    const server = app.listen(3001, () =>{
-        console.log('Testando...');
-    });
+    const server = app.listen(3001);
 
     let request, response, mockEquipamentosRepository, mockData, setup;
     let equipamentosID = [];
@@ -45,12 +43,10 @@ defineFeature(feature, (test) => {
     };
     const givenEquipmentExist = async (given) => {
         given(/^existe o equipamento com "(.*)" "(.*)"$/, async (campo, identificador) => {
-            console.log('criando');
             const id = identificador+Math.floor(Math.random()*1000);
             const equipamento = {'id':id, 'nome':'Arduino', 'descricao':'Placa de prototipação', 'estado_conservacao':'novo', 'data_aquisicao':'10/04/2024', 'valor_estimado':'R$ 200,00', [campo]:identificador, 'reservas':[], 'manutencao':[]};
             await mockEquipamentosRepository.createEquipment(equipamento);
             equipamentosID.push(id);
-            console.log('criado');
         });
     };
 //When steps

@@ -105,7 +105,7 @@ class reservaRepository{
     }
     /*
     async updateReserva(reserva){
-        this.reservas = this.reservas.map(r => r.id === reserva.id ? reserva : r);
+        this.reservaEquipamento = this.reservaEquipamento.map(r => r.id === reserva.id ? reserva : r);
     }
      */
 }

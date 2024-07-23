@@ -1,0 +1,80 @@
+*{margin: 0; padding: 0;}
+
+body{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.menu{
+    list-style:none;
+    border:1px solid #c0c0c0;
+    float:left;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li Link {
+    color: #090808;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para o menu principal */
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+}
+.menu li {
+    display: inline-block;
+    position: relative;
+}
+.menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.menu li a:hover {
+    background-color: #111;
+}
+
+/* Estilo para o submenu */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    min-width: 160px;
+    z-index: 1;
+}
+.submenu li {
+    display: block;
+}
+.submenu li a {
+    padding: 12px 16px;
+}
+.submenu li a:hover {
+    background-color: #111;
+}
+
+/* Mostrar o submenu quando passar o mouse */
+.menu li:hover .submenu {
+    display: block;
+}

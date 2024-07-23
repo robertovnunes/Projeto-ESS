@@ -26,7 +26,7 @@ defineFeature(feature, test => {
     });
 
     const givenExistemReservas = async (given) => {
-        given(/^que existem os seguintes equipamentos com reservas:$/, async (json) => {
+        given(/^que existem os seguintes equipamentos com reservaEquipamento:$/, async (json) => {
             const equipamentos = JSON.parse(json);
             for (let equipamento of equipamentos){
                 await equipmentrepo.createEquipment(equipamento);
@@ -43,7 +43,7 @@ defineFeature(feature, test => {
         });
     };
     const givenExistemReservasEquipamento = async (given) => {
-        given(/^que o equipamento com id "(.*)" possui as seguintes reservas:$/, async (id, json) => {
+        given(/^que o equipamento com id "(.*)" possui as seguintes reservaEquipamento:$/, async (id, json) => {
             const data = JSON.parse(json);
             for(let reserva of data){
                 const exist = await reservaMockRepository.getReservaByID(reserva['id']);
@@ -63,7 +63,7 @@ defineFeature(feature, test => {
     };
     const givenNotExistEquipment = async (given) => {
         given(/^que nao existe o equipamento com id "(.*)"$/, async (equipamentoID) => {
-            const reservas = reservaMockRepository.getReservasByEquipamentoID(equipamentoID);
+            const reservaEquipamento = reservaMockRepository.getReservasByEquipamentoID(equipamentoID);
             if (reservas !== undefined){
                 await reservaMockRepository.equipmentrepo.deleteEquipment(equipamentoID);
             }
@@ -77,7 +77,7 @@ defineFeature(feature, test => {
     }
 
     const thenReturnEquipments = async (then) => {
-        then(/^eu retorno uma lista com as reservas de equipamentos e codigo "(.*)"$/, async (code, docString) => {
+        then(/^eu retorno uma lista com as reservaEquipamento de equipamentos e codigo "(.*)"$/, async (code, docString) => {
             const equipmentExpected = JSON.parse(docString);
             expect(response.statusCode).toBe(parseInt(code));
             expect(response.body).toEqual(equipmentExpected);
@@ -97,7 +97,7 @@ defineFeature(feature, test => {
         });
     };
 
-    test('Visualizar reservas de equipamentos', ({given, when, then}) => {
+    test('Visualizar reservaEquipamento de equipamentos', ({given, when, then}) => {
         givenExistemReservas(given);
         whenRequest(when);
         thenReturnEquipments(then);
@@ -112,12 +112,12 @@ defineFeature(feature, test => {
         whenRequest(when);
         thenReturnError(then);
     });
-    test('Visualizar reservas de um equipamento', ({ given, when, then }) => {
+    test('Visualizar reservaEquipamento de um equipamento', ({ given, when, then }) => {
         givenExistemReservasEquipamento(given);
         whenRequest(when);
         thenReturnEquipments(then);
     });
-    test('Visualizar reservas de um equipamento inexistente', ({ given, when, then }) => {
+    test('Visualizar reservaEquipamento de um equipamento inexistente', ({ given, when, then }) => {
         givenNotExistEquipment(given);
         whenRequest(when);
         thenReturnError(then);

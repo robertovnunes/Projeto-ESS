@@ -20,5 +20,5 @@ router.post('/', reservaManutencaoController.createReserva);
 router.patch('/:id', reservaManutencaoController.patchReserva);
 
 module.exports = app => {
-    app.use('/reservas/manutencao', router);
+    app.use('/reservaEquipamento/manutencao', router);
 };

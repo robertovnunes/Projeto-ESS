@@ -44,7 +44,7 @@ class reservaController {
 
     async getReservas(req, res) {
         const reservas = await this.reservaService.getReservas();
-        console.log('GET /reservas/equipamentos [200] OK');
+        console.log('GET /reservaEquipamento/equipamentos [200] OK');
         res.status(200).json(reservas);
     }
 
@@ -52,10 +52,10 @@ class reservaController {
         const id = req.params.id;
         const reserva = await this.reservaService.getReservaByID(id);
         if (reserva !== undefined) {
-            console.log('GET /reservas/equipamentos/:id [200] OK');
+            console.log('GET /reservaEquipamento/equipamentos/:id [200] OK');
             res.status(200).json(reserva);
         } else {
-            console.log('GET /reservas/equipamentos/:id [404] Not Found');
+            console.log('GET /reservaEquipamento/equipamentos/:id [404] Not Found');
             res.status(404).send({message: 'Reserva não encontrada'});
         }
     }
@@ -64,10 +64,10 @@ class reservaController {
         const id = req.params.id;
         const reservas = await this.reservaService.getReservasByEquipamentoID(id);
         if (reservas.status === 'ok') {
-            console.log('GET /reservas/equipamentos/equipamento/:id [200] OK');
+            console.log('GET /reservaEquipamento/equipamentos/equipamento/:id [200] OK');
             res.status(200).json(reservas.data);
         } else {
-            console.log('GET /reservas/equipamentos/equipamento/:id [404] Not Found');
+            console.log('GET /reservaEquipamento/equipamentos/equipamento/:id [404] Not Found');
             res.status(404).send({message: reservas.data});
         }
     }
@@ -78,10 +78,10 @@ class reservaController {
         const reserva = new reservaModel(dataReserva, dataInicio, dataFim, responsavel, equipamentoID);
         const result = await this.reservaService.createReserva(reserva, equipamentoID);
         if (result.status === 'ok') {
-            console.log('POST /reservas/equipamentos [201] Created');
+            console.log('POST /reservaEquipamento/equipamentos [201] Created');
             res.status(201).json({message: 'Reserva criada com sucesso, pendente de confirmação'});
         } else {
-            console.log('POST /reservas/equipamentos [400] Bad Request '+result.message);
+            console.log('POST /reservaEquipamento/equipamentos [400] Bad Request '+result.message);
             res.status(400).send({message: result.message});
         }
     }
@@ -92,7 +92,7 @@ class reservaController {
         const result = await this.reservaService.patchReserva(id, status);
         if (result.status === 'ok') {
             const message = `Reserva ${result.message}`;
-            console.log('PATCH /reservas/equipamentos/:id [200] OK');
+            console.log('PATCH /reservaEquipamento/equipamentos/:id [200] OK');
             res.status(200).json({message: message});
         }
     }

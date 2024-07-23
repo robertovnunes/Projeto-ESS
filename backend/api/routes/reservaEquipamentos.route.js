@@ -20,6 +20,6 @@ router.post('/', reservaEquipamentoController.createReserva);
 router.patch('/:id', reservaEquipamentoController.patchReserva);
 
 module.exports = app => {
-    app.use('/reservas/equipamentos', router);
+    app.use('/reservaEquipamento/equipamentos', router);
 
 };

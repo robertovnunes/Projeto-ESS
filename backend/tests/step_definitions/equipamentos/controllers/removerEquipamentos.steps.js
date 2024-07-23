@@ -7,10 +7,8 @@ const setupTest = require('../testSetup');
 const feature = loadFeature('./tests/features/equipamentos/controllers/removerEquipamentos.feature');
 
 defineFeature(feature, (test) => {
-    let request, response, mockEquipamentosRepository, server;
-    server = app.listen(3001, () => {
-        console.log('Testando...');
-    });
+    let request, response, mockEquipamentosRepository;
+    const server = app.listen(3001);
     request = supertest(server);
     request.headers = {"username": "joao", "role": "admin"};
     request.method = '/DELETE';
