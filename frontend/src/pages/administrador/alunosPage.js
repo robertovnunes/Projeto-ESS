@@ -119,6 +119,7 @@ const AlunosPage = () => {
                       icon={faTrash}
                       className="usuario-action-icon delete-icon"
                       onClick={() => handleDeleteAluno(aluno.login)}
+                      data-testid={`delete-icon-${aluno.login}`} // Adicionando este atributo
                     />
                   </div>
                 </div>

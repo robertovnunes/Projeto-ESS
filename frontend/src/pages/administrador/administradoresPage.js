@@ -122,6 +122,7 @@ const AdminsPage = () => {
                       icon={faTrash}
                       className="usuario-action-icon delete-icon"
                       onClick={() => handleDeleteAdmin(admin.login)}
+                      data-testid={`delete-icon-${admin.login}`} // Adicionando este atributo
                     />
                   </div>
                 </div>
@@ -132,7 +133,7 @@ const AdminsPage = () => {
           </button>
           {showConfirmModal && (
             <Modal
-              message={`Tem certeza de que deseja deletar o Admin com login ${AdminToDelete}?`}
+              message={`Tem certeza de que deseja deletar o administrador com login ${AdminToDelete}?`}
               onConfirm={confirmDelete}
               onCancel={cancelDelete}
             />
