@@ -14,75 +14,7 @@ header{
     left:0;
 }
 
-/* Navbar Styles */
-.navbar {
-  background-color: #ffffff;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  box-sizing: border-box;
-  height: 60px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-content {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo-image {
-  height: 40px;
-  margin-right: 10px;
-}
-
-.website-name {
-  color: rgb(0, 0, 0);
-  font-size: 22px;
-  font-weight: 700;
-  font-family: 'Inter', sans-serif;
-}
-
-.navbar-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-.navbar-item {
-  margin: 0 20px;
-}
-
-.navbar-link {
-  display: block;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.navbar-link:hover {
-  background-color: #FF6347;
-  color: white;
-}
-
-.back-button {
+.back-button-red {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -99,15 +31,15 @@ header{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.back-button i {
+.back-button-red i {
   font-size: 20px;
 }
 
-.back-button:hover {
+.back-button-red:hover {
   background-color: #e55347;
 }
 
-.back-button:active {
+.back-button-red:active {
   background-color: #c43f2b;
 }
 .navbar a{

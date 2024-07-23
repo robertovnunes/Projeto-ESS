@@ -22,7 +22,7 @@ body, html {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   position: relative;
-  margin-top: 80px; /* Adjust for the fixed navbar height */
+  margin-top: 80px;
 }
 
 .discipline-form-container h1 {
@@ -37,7 +37,7 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center the form elements vertically */
+  justify-content: center; 
   width: 100%;
 }
 
@@ -45,7 +45,7 @@ body, html {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  width: 50%; /* Control the width of form inputs */}
+  width: 50%; }
 
 .form-group label {
   flex: 1;

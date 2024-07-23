@@ -22,7 +22,7 @@ body, html {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   position: relative;
-  margin-top: 80px; /* Adjust for the fixed navbar height */
+  margin-top: 80px; 
 }
 
 .disciplines-form-container h1 {
