@@ -1,7 +1,5 @@
 Feature: Cadastro de uma Disciplina bem-sucedido
 
-Feature: Cadastro de uma Disciplina bem-sucedido
-
 Scenario: Cadastro de uma disciplina de forma sucecida pelo professor
     Given Eu estou logado como "professor"
     When Eu visito a página "/disciplines"
