@@ -102,7 +102,7 @@ exports.disciplinesSignUpJson = async(req, res) => {
         data.push(newDiscipline);
         console.log("Disciplina cadastrada com sucesso");
         res.status(201).json(newDiscipline);
-        fs.writeFileSync(path.resolve("../models/disciplines.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve(disciplinesPath),JSON.stringify(data,null,2));
     }catch(error){
         console.log("Error in signUp:",error.message);
         res.status(500).json({

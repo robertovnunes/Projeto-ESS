@@ -171,6 +171,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="startDate">Data de Início</label>
               <DatePicker
                 selected={startDate}
+                id = "startDate"
                 onChange={(date) => setStartDate(date)}
                 dateFormat="dd/MM/yyyy"
                 className="form-input"
@@ -181,6 +182,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="endDate">Data de Término</label>
               <DatePicker
                 selected={endDate}
+                id = "endDate"
                 onChange={(date) => setEndDate(date)}
                 dateFormat="dd/MM/yyyy"
                 className="form-input"
@@ -191,6 +193,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="time">Hora</label>
               <DatePicker
                 selected={time}
+                id = "time"
                 onChange={(date) => setTime(date)}
                 showTimeSelect
                 showTimeSelectOnly

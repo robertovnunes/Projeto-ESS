@@ -1,10 +1,11 @@
-
 {
     "name": "reservacin",
     "version": "1.0.0",
     "description": "Reservas de salas e equipamentos",
     "main": "app.js",
     "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "cypress": "^13.13.1"
+    }
 }
-
