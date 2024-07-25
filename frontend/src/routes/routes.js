@@ -27,8 +27,6 @@ const router = createBrowserRouter([
     {path:"/login", element:<LoginPage />},
     {path: "/mainpage", element: isAuthenticated ? <MainPage /> : <Navigate to="/login" />},
 
-
-
 ]);
 
 export default router;
