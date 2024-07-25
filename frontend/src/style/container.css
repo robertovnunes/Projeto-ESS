@@ -1,0 +1,36 @@
+html, body {
+    height: 100%;
+    margin: 0; /* Remove a margem padrão do body */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Espaço abaixo do header */
+}
+
+.page-container {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh; /* Garantir que a altura da página ocupe toda a altura da tela */
+    box-sizing: border-box; /* Inclui padding e border na altura total */
+}
+
+.content-container {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ececec; /* Borda cinza claro de 1px de largura */
+    border-radius: 10px;
+    width: 70%; /* Largura responsiva em porcentagem */
+    height: 100%;
+    margin: 2% auto; /* Centraliza o contêiner horizontalmente */
+  }
+  
+  .search-container {
+    margin: 0 auto 20px auto; /* Define margens automáticas para esquerda e direita */
+    width: 95%;
+    text-align: center;
+  }

@@ -1,0 +1,81 @@
+
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap);
+
+.navbar {
+    background-color: #fff; /* Ajuste conforme necessário */
+    color: white;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra no canto inferior */
+ }
+  
+.navbar .user-icon,
+.navbar .left-icon {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente no meio da altura do navbar */
+    transform: translateY(-50%); /* Ajusta o alinhamento vertical ao meio */
+}
+  
+.navbar .user-icon {
+    right: 20px; /* Ajuste para posicionar mais para a direita */
+    width: 50px; /* Ajuste o tamanho desejado para o ícone do usuário */
+    height: 50px; /* Ajuste o tamanho desejado para o ícone do usuário */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Faz o ícone ficar redondo */
+    color: white;
+    font-weight: bold;
+    font-size: 24px; /* Ajuste conforme necessário */
+    text-transform: uppercase;
+    cursor: pointer; /* Adiciona o cursor de ponteiro para indicar que é clicável */
+}
+
+.navbar .left-icon {
+    left: 10px;
+    display: flex;
+    width: 160px;  /* Ajuste conforme necessário */
+    height: auto; /* Mantém a proporção da altura com base na largura */
+    align-items: center; /* Centraliza verticalmente o texto e a imagem */
+}
+
+  .navbar img {
+    width: 100%; /* A imagem ocupa 100% do tamanho do contêiner */
+    height: auto; /* Mantém a proporção da altura com base na largura */
+    object-fit: contain; /* Ajusta a imagem para se encaixar no contêiner, mantendo a proporção */
+    border: none; /* Remove qualquer borda */
+    border-radius: 0; /* Remove arredondamento */
+  }
+
+  .navbar .user-icon {
+    right: 20px; /* Ajuste para posicionar mais para a direita */
+    width: 50px; /* Tamanho do ícone no navbar */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 24px; /* Ajuste conforme necessário */
+    text-transform: uppercase;
+    cursor: pointer; /* Adiciona o cursor de ponteiro para indicar que é clicável */
+  }
+
+  .navbar .navbar-logo {
+    width: 160px; /* Tamanho da imagem conforme necessário */
+    height: auto; /* Mantém a proporção da altura com base na largura */
+    object-fit: contain; /* Ajusta a imagem para se encaixar no contêiner, mantendo a proporção */
+}
+
+.navbar .reservas-cin {
+    font-size: 30px; /* Ajuste conforme necessário */
+    color: black; /* Cor do texto, ajuste conforme necessário */
+    font-weight: bold;
+    margin-left: 10px; /* Espaço entre a imagem e o texto */
+    white-space: nowrap; /* Evita a quebra de linha */
+    margin-left: 40px;
+    font-family: "Inter", sans-serif;
+    font-weight: 250;
+}
