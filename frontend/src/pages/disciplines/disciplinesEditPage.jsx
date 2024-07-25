@@ -84,21 +84,21 @@ const DisciplineEditPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedStartDate = format(startDate, 'dd/MM/yyyy');
-    const formattedEndDate = format(endDate, 'dd/MM/yyyy');
-    const formattedTime = format(time, 'hh:mm aa');
-    const daysString = selectedDays.map(day => daysOfWeekMap[day]).join(' ');
+    const formattedStartDate = startDate ? format(startDate, 'dd/MM/yyyy') : '';
+    const formattedEndDate = endDate ? format(endDate, 'dd/MM/yyyy') : '';
+    const formattedTime = time ? format(time, 'hh:mm aa') : '';
+    const daysString = selectedDays.length ? selectedDays.map(day => daysOfWeekMap[day]).join(' ') : '';
 
-    const horario = `${formattedStartDate} a ${formattedEndDate} ${formattedTime} ${daysString}`;
+    const horario = `${formattedStartDate || ''} a ${formattedEndDate || ''} ${formattedTime || ''} ${daysString || ''}`.trim();
 
     const disciplineData = {
-      nome,
-      disciplineID,
-      responsibleTeacher,
-      horario,
-      description,
-      disciplineCurso,
-      disciplinePeriodo
+      nome: nome || undefined,
+      disciplineID: disciplineID || undefined,
+      responsibleTeacher: responsibleTeacher || undefined,
+      horario: horario || undefined,
+      description: description || undefined,
+      disciplineCurso: disciplineCurso || undefined,
+      disciplinePeriodo: disciplinePeriodo || undefined
     };
 
     try {
@@ -125,7 +125,7 @@ const DisciplineEditPage = () => {
       <body>
         <NavUserBar />
         <div className="discipline-form-container">
-          <button className="back-button-red" onClick={handleGoBack}>
+          <button className="back-button" onClick={handleGoBack}>
             <i className="fas fa-arrow-left"></i>
           </button>
           <h1>Editar Disciplina</h1>
@@ -138,7 +138,6 @@ const DisciplineEditPage = () => {
                 id="nome"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                required
                 className="form-input"
               />
             </div>
@@ -150,7 +149,6 @@ const DisciplineEditPage = () => {
                 id="disciplineID"
                 value={disciplineID}
                 onChange={(e) => setDisciplineID(e.target.value)}
-                required
                 className="form-input"
               />
             </div>
@@ -162,7 +160,6 @@ const DisciplineEditPage = () => {
                 id="responsibleTeacher"
                 value={responsibleTeacher}
                 onChange={(e) => setResponsibleTeacher(e.target.value)}
-                required
                 className="form-input"
               />
             </div>
@@ -171,7 +168,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="startDate">Data de Início</label>
               <DatePicker
                 selected={startDate}
-                id = "startDate"
+                id="startDate"
                 onChange={(date) => setStartDate(date)}
                 dateFormat="dd/MM/yyyy"
                 className="form-input"
@@ -182,7 +179,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="endDate">Data de Término</label>
               <DatePicker
                 selected={endDate}
-                id = "endDate"
+                id="endDate"
                 onChange={(date) => setEndDate(date)}
                 dateFormat="dd/MM/yyyy"
                 className="form-input"
@@ -193,7 +190,7 @@ const DisciplineEditPage = () => {
               <label htmlFor="time">Hora</label>
               <DatePicker
                 selected={time}
-                id = "time"
+                id="time"
                 onChange={(date) => setTime(date)}
                 showTimeSelect
                 showTimeSelectOnly

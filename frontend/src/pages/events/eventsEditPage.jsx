@@ -15,9 +15,13 @@ import Cookie from 'js-cookie';
 const EventEditPage = () => {
   const { id } = useParams();
   const [eventName, setEventName] = useState('');
+  const [originalEventName, setOriginalEventName] = useState('');
   const [eventDateAndTime, setEventDateAndTime] = useState(new Date());
+  const [originalEventDateAndTime, setOriginalEventDateAndTime] = useState(new Date());
   const [description, setDescription] = useState('');
+  const [originalDescription, setOriginalDescription] = useState('');
   const [responsibleTeacher, setResponsibleTeacher] = useState('');
+  const [originalResponsibleTeacher, setOriginalResponsibleTeacher] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
@@ -35,9 +39,13 @@ const EventEditPage = () => {
         const response = await axios.get(`http://localhost:3001/events/${id}`);
         const event = response.data;
         setEventName(event.eventName);
+        setOriginalEventName(event.eventName);
         setEventDateAndTime(parseISO(event.eventDateAndTime));
+        setOriginalEventDateAndTime(parseISO(event.eventDateAndTime));
         setDescription(event.description);
+        setOriginalDescription(event.description);
         setResponsibleTeacher(event.responsibleTeacher);
+        setOriginalResponsibleTeacher(event.responsibleTeacher);
       } catch (error) {
         console.error('Erro ao buscar evento:', error);
       }
@@ -52,9 +60,9 @@ const EventEditPage = () => {
     const formattedDate = format(eventDateAndTime, 'dd-MM-yyyy hh:mm a');
 
     const eventData = {
-      eventName,
-      description,
-      responsibleTeacher,
+      eventName: eventName || originalEventName,
+      description: description || originalDescription,
+      responsibleTeacher: responsibleTeacher || originalResponsibleTeacher,
       eventDateAndTime: formattedDate
     };
 
@@ -76,79 +84,72 @@ const EventEditPage = () => {
   };
 
   return (
-    <html>
-      <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-      </head>
-      <body>
-        <NavUserBar />
-        <div className="event-edit-container">
-          <h1>Editar Evento</h1>
-          <button className="back-button-red" onClick={handleGoBack}>
-            <i className="fas fa-arrow-left"></i>
-          </button>
-          <form onSubmit={handleSubmit} className="event-form">
-            <div className="form-group">
-              <MdOutlineEventNote className="form-icon" />
-              <label htmlFor="eventName">Nome do Evento</label>
-              <input 
-                type="text" 
-                id="eventName"
-                name="eventName"
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-                required 
-                className="form-input"
-              />
-            </div>
-            <div className="form-group">
-              <MdDriveFileRenameOutline className="form-icon" />
-              <label htmlFor="description">Descrição</label>
-              <input 
-                type="text"
-                id="description"
-                name="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="form-input"
-              />
-            </div>
-            <div className="form-group">
-              <FaChalkboardTeacher className="form-icon" />
-              <label htmlFor="responsibleTeacher">Professor Responsável</label>
-              <input 
-                type="text"
-                id="responsibleTeacher"
-                name="responsibleTeacher"
-                value={responsibleTeacher}
-                onChange={(e) => setResponsibleTeacher(e.target.value)}
-                required 
-                className="form-input"
-              />
-            </div>
-            <div className="form-group">
-              <MdDateRange className="form-icon" />
-              <label htmlFor="eventDateAndTime">Data e Hora</label>
-              <DatePicker 
-                id="eventDateAndTime"
-                name="eventDateAndTime"
-                selected={eventDateAndTime} 
-                onChange={date => setEventDateAndTime(date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                dateFormat="dd-MM-yyyy hh:mm a"
-                timeCaption="time"
-                className="form-input datepicker-input"
-              />
-            </div>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            {successMessage && <p className="success-message">{successMessage}</p>}
-            <button type="submit" className="submit-button-event">Salvar</button>
-          </form>
-        </div>
-      </body>
-    </html>
+    <div>
+      <NavUserBar />
+      <div className="event-edit-container">
+        <h1>Editar Evento</h1>
+        <button className="back-button" onClick={handleGoBack}>
+          <i className="fas fa-arrow-left"></i>
+        </button>
+        <form onSubmit={handleSubmit} className="event-form">
+          <div className="form-group">
+            <MdOutlineEventNote className="form-icon" />
+            <label htmlFor="eventName">Nome do Evento</label>
+            <input 
+              type="text" 
+              id="eventName"
+              name="eventName"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <MdDriveFileRenameOutline className="form-icon" />
+            <label htmlFor="description">Descrição</label>
+            <input 
+              type="text"
+              id="description"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <FaChalkboardTeacher className="form-icon" />
+            <label htmlFor="responsibleTeacher">Professor Responsável</label>
+            <input 
+              type="text"
+              id="responsibleTeacher"
+              name="responsibleTeacher"
+              value={responsibleTeacher}
+              onChange={(e) => setResponsibleTeacher(e.target.value)}
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <MdDateRange className="form-icon" />
+            <label htmlFor="eventDateAndTime">Data e Hora</label>
+            <DatePicker 
+              id="eventDateAndTime"
+              name="eventDateAndTime"
+              selected={eventDateAndTime} 
+              onChange={date => setEventDateAndTime(date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="dd-MM-yyyy hh:mm a"
+              timeCaption="time"
+              className="form-input datepicker-input"
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && <p className="success-message">{successMessage}</p>}
+          <button type="submit" className="submit-button-event">Salvar</button>
+        </form>
+      </div>
+    </div>
   );
 };
 
