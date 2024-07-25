@@ -6,8 +6,10 @@ const cors = require('cors');
 const port = 3001;
 
 //app.use('/', swaggerUi.serve, swaggerUi.setup(specs)); 
-
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Substitua pelo URL do seu frontend
+    credentials: true
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World');

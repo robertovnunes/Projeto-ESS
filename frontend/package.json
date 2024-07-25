@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@mui/base": "^5.0.0-beta.40",
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.2",
     "consign": "^0.1.6",
     "express": "^4.19.2",
+    "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -19,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:web": "npx cypress open",
+    "cypress:headless": "npx cypress run --browser chrome"
   },
   "eslintConfig": {
     "extends": [
@@ -41,7 +47,11 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.7.0",
-    "cypress": "^13.9.0",
+    "cypress": "^13.13.1",
     "cypress-cucumber-preprocessor": "^4.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "step_definitions": "cypress/e2e/step_definitions"
   }
 }
