@@ -19,8 +19,7 @@ router.get('/', equipamentosController.getAllEquipments);
 router.get('/:id', equipamentosController.getEquipmentById);
 router.get('/patrimonio/:patrimonio', equipamentosController.getEquipmentByPatrimonio);
 router.get('/numero_serie/:numero_serie', equipamentosController.getEquipmentBySN);
-router.post('/patrimonio/', equipamentosController.createEquipmentPatrimonio);
-router.post('/numero_serie/', equipamentosController.createEquipmentSN);
+router.post('/', equipamentosController.createEquipment);
 router.patch('/:id', equipamentosController.patchEquipment);
 router.delete('/:id', equipamentosController.deleteEquipment);
 
