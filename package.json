@@ -1,8 +1,10 @@
 
 {
-    
- "scripts": {"test": "jest"},   "dependencies":{"dotenv":"^16.4.5"},"devDependencies":{"jest":"^29.7.0","supertest":"^7.0.0"}
-
-
+    "name": "reservacin",
+    "version": "1.0.0",
+    "description": "Reservas de salas e equipamentos",
+    "main": "app.js",
+    "author": "chmfc, jrvn, js3, jcasf, mgc3, thrb, tns",
+    "license": "ISC"
 }
 

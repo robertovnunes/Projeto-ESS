@@ -1,0 +1,76 @@
+/* src/style/alunos.css */
+  
+  .search-input {
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .usuarios-list {
+    margin-bottom: 20px;
+  }
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+  .header-item {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .nome-header {
+    flex: 3; /* Ajuste a largura conforme necessário */
+    text-align: left;
+    margin: 0% 1%;
+  }
+  
+  .login-header {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }
+
+  .SIAPE-header {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }
+  
+  .acoes-header {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .usuario-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .usuario-item:last-child {
+    border-bottom: none;
+  }
+  
+  .usuario-name {
+    flex: 3; /* Ajuste a largura conforme necessário */
+    text-align: left;
+    margin: 0% 1%;
+  }
+  
+  .usuario-login {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }
+
+  .usuario-SIAPE {
+    flex: 1; /* Ajuste a largura conforme necessário */
+    text-align: center;
+  }

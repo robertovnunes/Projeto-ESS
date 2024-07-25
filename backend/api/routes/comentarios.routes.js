@@ -11,7 +11,6 @@ const comentariosController = new ComentariosController(comentariosService);
 
 
 module.exports = app => {
-    console.log('entrou no router');
     app.use('/comentarios', router);
     router.get('/', comentariosController.getAllComentarios);
     router.get('/:id', comentariosController.getComentarioById);
