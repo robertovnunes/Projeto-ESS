@@ -86,6 +86,15 @@ defineFeature(feature, test => {
             console.log('Enviando requisição POST para', url, 'com o corpo', body);
             response = await request.post(url).send(body);
             console.log('Recebida resposta:', response.status, response.body);
+
+            //Certifique-se de que o ID está presente na resposta
+            if (response.body && response.body.id) {
+                console.log('Mensagem da resposta:', response.body.message);
+                console.log('ID da resposta:', response.body.id);
+            } else {
+                console.log('A resposta não contém body');
+            }
+            console.log('ENTRA AQUI ANTES DO FIM DE RESP. NAO-VALIDADO-///Comentário ID:', response.body.id);
         });
     };
 
@@ -150,10 +159,7 @@ defineFeature(feature, test => {
 
     test('Tenta responder um comentário que não existe', ({ given, when, then, and }) => {
         givenLoggedInAsAdmin(given);
-        when(/^eu envio uma requisição POST para "(.*)" com o corpo:$/, async (url, docString) => {
-            const body = JSON.parse(docString);
-            response = await request.post(url).send(body);
-        });
+        whenSendPostResposta(when);
         thenReceiveErrorMessage(then);
         andResponseStatusCode(and);
     });
