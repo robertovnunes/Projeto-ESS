@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "Fábio Pereira",
+    "login": "9472",
+    "senha": "$2b$10$9LADcZUrfOQ3Xd7auCaNMe.1nDfuRcAIIt4l9vGRqCON6MAuOCKnu"
+  },
+  {
+    "nome": "Eduardo Barbosa Lima",
+    "login": "1212",
+    "senha": "$2a$10$jDr75cVVbJatwz4TK.vZ0.EokK9eokNIhsFPfd4AtErb68DAvUT8G"
+  },
+  {
+    "nome": "Maria Santos",
+    "login": "9473",
+    "senha": "$2a$10$OizfUqwGD26qpMsYg8RRN.HxipPI6W7.uFnCmAP/wVoV8QgFwBuiu"
+  }
+]

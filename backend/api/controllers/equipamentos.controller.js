@@ -10,8 +10,7 @@ class EquipamentosController {
         this.getEquipmentById = this.getEquipmentById.bind(this);
         this.getEquipmentByPatrimonio = this.getEquipmentByPatrimonio.bind(this);
         this.getEquipmentBySN = this.getEquipmentBySN.bind(this);
-        this.createEquipmentPatrimonio = this.createEquipmentPatrimonio.bind(this);
-        this.createEquipmentSN = this.createEquipmentSN.bind(this);
+        this.createEquipment = this.createEquipment.bind(this);
         this.patchEquipment = this.patchEquipment.bind(this);
         this.deleteEquipment = this.deleteEquipment.bind(this);
     }
@@ -82,66 +81,41 @@ class EquipamentosController {
         }
     };
 
-    async createEquipmentPatrimonio(req, res) {
+    async createEquipment(req, res) {
         try{
-            const {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio} = req.body;
-            if (!nome || !descricao || !estado_conservacao || !data_aquisicao || !valor_estimado || !patrimonio) {
+            const newEquipment = req.body;
+            if (!newEquipment.nome || !newEquipment.descricao
+                || !newEquipment.estado_conservacao || !newEquipment.data_aquisicao
+                || !newEquipment.valor_estimado) {
                 console.log(`POST /equipamentos [400] BAD REQUEST`);
-                if (!nome) {
+                if (!newEquipment.nome) {
                     return res.status(400).send({message: 'Nome nao informado'});
-                } else if (!descricao) {
-                    return res.status(400).send({message: 'Descriçao nao informada'});
-                } else if (!estado_conservacao) {
-                    return res.status(400).send({message: 'Estado de conservaçao nao informado'});
-                } else if (!data_aquisicao) {
+                } else if (!newEquipment.descricao) {
+                    return res.status(400).send({message: 'Descricao nao informada'});
+                } else if (!newEquipment.estado_conservacao) {
+                    return res.status(400).send({message: 'Estado de conservacao nao informado'});
+                } else if (!newEquipment.data_aquisicao) {
                     return res.status(400).send({message: 'Data de aquisiçao nao informada'});
-                } else if (!valor_estimado ) {
+                } else if (!newEquipment.valor_estimado ) {
                     return res.status(400).send({message: 'Valor estimado nao informado'});
-                } else if (!patrimonio) {
+                } else if (newEquipment.numero_serie !== undefined && !newEquipment.numero_serie) {
+                    return res.status(400).send({message: 'Numero de serie nao informado'});
+                } else {
                     return res.status(400).send({message: 'Patrimonio nao informado'});
                 }
             } else {
-                const newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
-                let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
-                if(equipmentCreated === 'Patrimonio ja existe') {
-                    return res.status(400).send({message: 'Ja existe um equipamento com este patrimonio'});
+                let newEq = null;
+                if(newEquipment.numero_serie !== undefined) {
+                    newEq = new equipamentoSNModel(newEquipment);
+                } else {
+                    newEq = new equipamentoPatrimonioModel(newEquipment);
+                }
+                let equipmentCreated = await this.equipamentosService.createEquipment(newEq);
+                if(equipmentCreated.status === 'error') {
+                    return res.status(400).send({message: equipmentCreated.message});
                 } else {
                     console.log(`POST /equipamentos [201] CREATED`);
-                    return res.status(201).send(equipmentCreated);
-                }
-            }
-        } catch (error) {
-                console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR ${error.message}`);
-                return res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
-            }
-    };
-
-    async createEquipmentSN(req, res) {
-        try{
-            const {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie} = req.body;
-            if (!nome || !descricao || !estado_conservacao || !data_aquisicao || !valor_estimado || !numero_serie) {
-                console.log(`POST /equipamentos [400] BAD REQUEST`);
-                if (!nome) {
-                    return res.status(400).send({message: 'Nome nao informado'});
-                } else if (!descricao) {
-                    return res.status(400).send({message: 'Descricao nao informada'});
-                } else if (!estado_conservacao) {
-                    return res.status(400).send({message: 'Estado de conservacao nao informado'});
-                } else if (!data_aquisicao) {
-                    return res.status(400).send({message: 'Data de aquisiçao nao informada'});
-                } else if (!valor_estimado ) {
-                    return res.status(400).send({message: 'Valor estimado nao informado'});
-                } else if (!numero_serie) {
-                    return res.status(400).send({message: 'Numero de serie nao informado'});
-                }
-            } else {
-                const newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
-                let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
-                if(equipmentCreated === 'Numero de serie ja existe') {
-                    return res.status(400).send({message: 'Ja existe um equipamento com este numero de serie'});
-                } else {
-                    console.log(`POST /equipamentos [201] CREATED`);
-                    return res.status(201).send(equipmentCreated);
+                    return res.status(201).send({message: 'Equipamento criado com sucesso'});
                 }
             }
         } catch (error) {

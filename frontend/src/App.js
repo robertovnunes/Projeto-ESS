@@ -1,12 +1,18 @@
 import logo from './assets/logo.svg';
 import './App.css';
-import Navbar from "./components/navbar/navbar";
-import React from "react";
+import React from 'react';
+
+import axios from 'axios';
+import {ColorProvider} from "./context/userColorContext";
+import {RouterProvider} from "react-router-dom";
+import router from "./routes/routes";
 
 function App() {
     return (
         <div className="App">
-            <Navbar/>
+            <ColorProvider>
+                <RouterProvider router={router} />
+            </ColorProvider>
         </div>
     );
 }

@@ -63,10 +63,10 @@ class EquipamentosRepository {
         let exist;
         if(newEquipamento.hasOwnProperty('patrimonio')){
             exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
-            if(exist !== undefined) return 'Patrimonio ja existe';
+            if(exist !== undefined) return {status: 'error', message: 'Patrimonio ja existe'};
         } else if(newEquipamento.hasOwnProperty('numero_serie')){
             exist = await this.getEquipmentBySerie(newEquipamento.numero_serie);
-            if(exist !== undefined) return 'Numero de serie ja existe';
+            if(exist !== undefined) return {status: 'error', message: 'Numero de serie ja existe'};
         }
         if(exist === undefined){
             let equipamentos = await this.getAllEquipments();
@@ -77,9 +77,9 @@ class EquipamentosRepository {
             }
             this.db = equipamentos;
             await this._writeFile(this.db);
-            return newEquipamento;
+            return {status: 'ok', message: 'Equipamento criado com sucesso'};
         }
-        return undefined;
+        return {status: 'error', message: 'Erro ao criar equipamento'};
     }
 
     async updateEquipment(id, data) {

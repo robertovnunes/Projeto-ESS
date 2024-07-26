@@ -3,8 +3,8 @@ const app = require('../../../../../apptest');
 const supertest = require('supertest');
 const testsetup = require('../../testSetup');
 
-const equipamentosRepository = require('../../../../../api/repositories/equipamentos.repository.js');
-const reservamanutencaoRepository = require('../../../../../api/repositories/reservamanutencao.repository.js');
+const equipamentosRepository = require('../../../../../api/repositories/equipamentos.repository');
+const reservamanutencaoRepository = require('../../../../../api/repositories/reservaManutencao.repository');
 
 const feature = loadFeature('./tests/features/equipamentos/controllers/reservaequipamentos/criarReservaManutencao.feature');
 
