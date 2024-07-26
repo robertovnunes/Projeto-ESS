@@ -1,9 +1,9 @@
 const {loadFeature, defineFeature} = require('jest-cucumber');
-const app = require('../../../../../apptest');
+const app = require('../../../../apptest');
 const supertest = require('supertest');
-const testSetup = require('../../testSetup');
-const reservaRepository = require('../../../../../api/repositories/reservaEquipamentos.repository');
-const equipamentosRepository = require('../../../../../api/repositories/equipamentos.repository');
+const testSetup = require('../testSetup');
+const reservaRepository = require('../../../../api/repositories/reservaEquipamentos.repository');
+const equipamentosRepository = require('../../../../api/repositories/equipamentos.repository');
 
 const feature = loadFeature('./tests/features/equipamentos/controllers/reservaequipamentos/criarReserva.feature');
 

@@ -1,0 +1,14 @@
+[
+   {
+      "nome": "E426",
+      "numero": "426",
+      "bloco": "E",
+      "capacidade": "40",
+      "recursos": [
+         "projetor",
+         "computador",
+         "sistema de som"
+      ],
+      "reservas": []
+   }
+]

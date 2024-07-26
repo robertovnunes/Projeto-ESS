@@ -1,13 +1,13 @@
-const EquipamentosRepository = require('../../../../api/repositories/equipamentos.repository');
+const SalaRepository = require('../../../api/repositories/equipamentos.repository');
 const {defineFeature, loadFeature} = require('jest-cucumber');
-const app = require('../../../../apptest');
+const app = require('../../../apptest');
 const supertest = require('supertest');
-const setupTest = require('../testSetup');
+const setupTest = require('./testSetup');
 
-const feature = loadFeature('./tests/features/equipamentos/controllers/removerEquipamentos.feature');
+const feature = loadFeature('./tests/features/salas/removerSala.feature');
 
 defineFeature(feature, (test) => {
-    let request, response, mockEquipamentosRepository, server;
+    let request, response, mockSalaRepository, server;
     server = app.listen(3001, () => {
         console.log('Testando...');
     });
@@ -17,7 +17,7 @@ defineFeature(feature, (test) => {
     const setup = new setupTest();
 
     beforeAll( async () => {
-        mockEquipamentosRepository = new EquipamentosRepository();
+        mockSalaRepository = new SalaRepository();
         await setup.getDatabaseCopy();
     });
 
@@ -28,17 +28,17 @@ defineFeature(feature, (test) => {
 
 //STEPS TO REUSE
 //GIVEN
-    const givenEquipmentExist = async (given) => {
+    const givenSalaExist = async (given) => {
         given(/^que eu tenho o equipamento com id "(.*)" e json:$/, async (identificador, json) => {
             let eq = JSON.parse(json);
-            await mockEquipamentosRepository.createEquipment(eq);
+            await mockSalaRepository.createSala(eq);
         });
     };
-    const givenEquipmentNotExist = async (given) => {
+    const givenSalaNotExist = async (given) => {
         given(/^que eu nao tenho o equipamento com id "(.*)"$/, async (id) => {
-            const exist = await mockEquipamentosRepository.getEquipmentById(id);
+            const exist = await mockSalaRepository.getSalaById(id);
             if(exist !== undefined){
-                await mockEquipamentosRepository.deleteEquipment(id);
+                await mockSalaRepository.deleteSala(id);
             }
         });
     }
@@ -49,12 +49,12 @@ defineFeature(feature, (test) => {
         });
     };
 //THEN
-    const thenEquipmentRemoved = async (then) =>{
+    const thenSalaRemoved = async (then) =>{
         then(/^o equipamento com id (.*) deve ser removido do banco de dados$/, async (identificador) => {
             expect(response.status).toBe(200);
         });
     };
-    const thenEquipmentNotRemoved = async (then) => {
+    const thenSalaNotRemoved = async (then) => {
         then(/^eu envio uma resposta de erro com codigo "(.*)" e mensagem de "(.*)" para o id "(.*)"$/, async (code, message, id) => {
             expect(response.status).toBe(parseInt(code));
             expect(response.body.message).toBe(message);
@@ -62,13 +62,13 @@ defineFeature(feature, (test) => {
     };
 
     test('Remover um equipamento com sucesso', ({given, when, then}) => {
-        givenEquipmentExist(given);
+        givenSalaExist(given);
         whenRequest(when);
-        thenEquipmentRemoved(then);
+        thenSalaRemoved(then);
     });
     test('Remover um equipamento inexistente', ({given, when, then}) => {
-        givenEquipmentNotExist(given);
+        givenSalaNotExist(given);
         whenRequest(when);
-        thenEquipmentNotRemoved(then);
+        thenSalaNotRemoved(then);
     });
 });
