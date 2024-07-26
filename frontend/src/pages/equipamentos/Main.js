@@ -3,7 +3,9 @@ import Button from '../../components/common/Button';
 import BaseLayout from "../../components/common/BaseLayout";
 
 
-const mainEquipamentos = () => {
+const mainEquipamentos = (props) => {
+
+    console.log(props.role);
 
     const consultarEquipamentos = () => {
         console.log('Consultar equipamentos');
