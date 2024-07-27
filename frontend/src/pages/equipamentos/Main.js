@@ -1,42 +1,38 @@
-import React from 'react';
-import Button from '../../components/common/Button';
+import React, {useEffect} from 'react';
 import BaseLayout from "../../components/common/BaseLayout";
+import EquipmentAdmin from "../equipamentos/admins/EquipmentPage";
+import EquipmentAluno from "../equipamentos/alunos/EquipmentPage";
+import Cookie from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 
-const mainEquipamentos = (props) => {
 
-    console.log(props.role);
+const MainEquipment = () => {
+    const userType = Cookie.get('userType') || 'Desconhecido';
+    const navigate = useNavigate();
 
-    const consultarEquipamentos = () => {
-        console.log('Consultar equipamentos');
+    useEffect(() => {
+        if (userType === 'Desconhecido') {
+            navigate('/login');
+        }
+    }, [userType, navigate]);
+
+    let SpecificPage;
+    if (userType === 'aluno') {
+        SpecificPage = EquipmentAluno;
+    } else if (userType === 'admin') {
+        SpecificPage = EquipmentAdmin;
+    } else {
+        SpecificPage = null;
     }
-    const criarReserva = () => {
-        console.log('Criar reserva de equipamento');
-    };
-
-    const consultarReserva = () => {
-        console.log('Consultar reserva de equipamento');
-    };
 
     return (
         <BaseLayout>
-            <div className='container'>
-                <div className='menu-equipamentos'>
-                    <div className='btn-consultar'>
-                        <Button className='btn-consultar' onClick={consultarEquipamentos()}>
-                            Consultar equipamentos
-                        </Button>
-                        <Button className='btn-reservar' onClick={criarReserva()}>
-                            Criar uma reserva de equipamento
-                        </Button>
-                        <Button className='btn-reservar' onClick={consultarReserva()}>
-                            Consultar/cancelar reserva de equipamento
-                        </Button>
-                    </div>
-                </div>
+            <div className="main-content">
+                {SpecificPage && <SpecificPage />}
             </div>
         </BaseLayout>
     );
 };
 
-export default mainEquipamentos;
+export default MainEquipment;
