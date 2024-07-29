@@ -24,7 +24,7 @@ const daysOfWeekMap = {
   'SAB': 'SAT'
 };
 
-const DisciplineSignUpPage = () => {
+const CreateDisciplinePage = () => {
   const [nome, setNome] = useState('');
   const [disciplineID, setDisciplineID] = useState('');
   const [responsibleTeacher, setResponsibleTeacher] = useState('');
@@ -241,4 +241,4 @@ const DisciplineSignUpPage = () => {
   );
 };
 
-export default DisciplineSignUpPage;
+export default CreateDisciplinePage;

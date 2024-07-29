@@ -9,7 +9,6 @@ import { ColorProvider } from './context/userColorContext';
 import UsersPage from './pages/administrador/usuarios'; // Página para Usuários
 import RoomsPage from './pages/administrador/salas'; // Página para Salas
 import EquipmentPage from './pages/administrador/equipamentos'; // Página para Equipamentos
-import EventsPage from './pages/administrador/eventos'; // Página para Eventos
 
 import AlunosPage from './pages/administrador/alunosPage';
 import ProfessoresPage from './pages/administrador/professoresPage';
@@ -20,12 +19,14 @@ import AddProfessorPage from './pages/administrador/AddProfessorPage'
 import AddAdminPage from './pages/administrador/AddAdminPage'
 
 import DisciplinePage from './pages/disciplines/disciplinePage';
-import DisciplineSignUpPage from './pages/disciplines/disciplines.jsx';
-import DisciplineListPage from './pages/disciplines/disciplinesListPage.jsx';
-import DisciplineEditPage from './pages/disciplines/disciplinesEditPage.jsx';
-import DisciplineRoomsPage from './pages/disciplines/disciplineRoomsPage.jsx';
-import DisciplineViewPage from './pages/disciplines/disciplineViewPage.jsx';
+import CreateDisciplinePage from './pages/disciplines/CreateDisciplinePage.js';
+import DisciplineListPage from './pages/disciplines/disciplinesListPage.js';
+import DisciplineEditPage from './pages/disciplines/disciplinesEditPage.js';
+import DisciplineRoomsPage from './pages/disciplines/disciplineRoomsPage.js';
+import DisciplineViewPage from './pages/disciplines/disciplineViewPage.js';
 
+import EventsPage from './pages/events/eventsPage.js';
+import CreateEventPage from './pages/events/CreateEventPage.js';
 import axios from 'axios';
 
 // Defina a URL base para todas as requisições Axios
@@ -56,11 +57,14 @@ const App = () => {
         <Route path="/usuarios/admins/adicionar" element={<AddAdminPage />} />
 
         <Route path="/disciplines" element={<DisciplinePage />} />
-        <Route path="/create-discipline" element={<DisciplineSignUpPage />} />    
+        <Route path="/create-discipline" element={<CreateDisciplinePage />} />    
         <Route path="/disciplines-list" element={<DisciplineListPage />} />    
         <Route path="/edit-discipline/:id" element={<DisciplineEditPage />} />
         <Route path="/discipline-rooms/:id" element={<DisciplineRoomsPage />} />
         <Route path= "/discipline-view" element={<DisciplineViewPage />} />
+
+        <Route path="/events" element={<EventsPage />} />
+          <Route path="/create-event" element={<CreateEventPage />} />
 
         <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>
