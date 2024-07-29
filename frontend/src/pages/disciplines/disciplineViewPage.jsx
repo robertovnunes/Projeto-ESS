@@ -44,7 +44,7 @@ const DisciplineViewPage = () => {
             <button className="back-button" onClick={handleGoBack}>
                 <i className="fas fa-arrow-left"></i>
             </button>
-            <h1>Disciplinas</h1>
+            <h2>Visualizar Salas das Disciplinas</h2>
             <ul className="discipline-list">
                 {disciplines.map(discipline => (
                 <li key={discipline.disciplineID} className="discipline-item">

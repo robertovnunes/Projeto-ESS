@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 //import NavUserBar from '../../components/common/NavUserBar';
 //import '../../style/disciplines/disciplineRoomsPage.css';
-
+import BaseLayout from '../../components/common/BaseLayout';
 const DisciplineRoomsPage = () => {
 
   const { id } = useParams();
@@ -26,21 +26,24 @@ const DisciplineRoomsPage = () => {
   }, [id]);
 
   const handleGoBack = () => {
-    navigate('/disciplines-view'); // Navegar para a página anterior
+    navigate('/discipline-view'); // Navegar para a página anterior
   };
 
   return (
+    <BaseLayout>
+
+    
     <html>
     <head>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     </head>
-    <div className="discipline-rooms-page">
+    
 
-      <div className="discipline-room-container">
+      <div className="content-container">
       <button className="back-button" onClick={handleGoBack}>
             <i className="fas fa-arrow-left"></i>
         </button>
-        <h1>Salas Reservadas</h1>
+        <h2>Salas Reservadas</h2>
         {error ? (
           <p>{error}</p>
         ) : salas.length > 0 ? (
@@ -55,14 +58,18 @@ const DisciplineRoomsPage = () => {
 
           <div className="no-rooms">
             <div className = "icon-circle">
-            <i class="fa fa-times-circle" aria-hidden="true"></i>
+            <i class="fa fa-times-circle icon-color" aria-hidden="true"></i>
             </div>
             <p>Nenhuma sala reservada.</p>
           </div>
         )}
       </div>
-    </div>
+   
     </html>
+    
+    
+    </BaseLayout>
+    
 
   );
 };

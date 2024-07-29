@@ -11,6 +11,7 @@ import { MdDateRange } from "react-icons/md";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { MdOutlineEventNote } from "react-icons/md";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+import BaseLayout from '../../components/common/BaseLayout';
 
 const daysOfWeekMap = {
   'DOM': 'SUN',
@@ -118,20 +119,22 @@ const DisciplineEditPage = () => {
   };
 
   return (
+    <BaseLayout>
+    <div className="content-container">
     <html>
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
       </head>
       <body>
-        <div className="discipline-form-container">
+       
           <button className="back-button" onClick={handleGoBack}>
             <i className="fas fa-arrow-left"></i>
           </button>
-          <h1>Editar Disciplina</h1>
+          <h2>Editar Disciplina</h2>
           <form onSubmit={handleSubmit} className="discipline-form">
             <div className="form-group">
-              <MdOutlineEventNote className="form-icon" />
-              <label htmlFor="nome">Nome da Disciplina</label>
+              
+            <label htmlFor="nome"><MdOutlineEventNote className="form-icon icon-color" /> Nome da Disciplina</label>
               <input 
                 type="text"
                 id="nome"
@@ -141,8 +144,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <i className="fa fa-address-card icon-color" aria-hidden="true"></i>
-              <label htmlFor="disciplineID">ID da Disciplina</label>
+              
+              <label htmlFor="disciplineID"><i className="fa fa-address-card icon-color" aria-hidden="true"></i> ID da Disciplina</label>
               <input 
                 type="text"
                 id="disciplineID"
@@ -152,8 +155,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <FaChalkboardTeacher className="form-icon" />
-              <label htmlFor="responsibleTeacher">Professor Responsável</label>
+
+              <label htmlFor="responsibleTeacher"><i className="fa fa-chalkboard-teacher icon-color" aria-hidden="true"></i> Professor Responsável</label>
               <input 
                 type="text"
                 id="responsibleTeacher"
@@ -163,8 +166,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <MdDateRange className="form-icon" />
-              <label htmlFor="startDate">Data de Início</label>
+              
+              <label htmlFor="startDate"><i class="fa fa-calendar icon-color" aria-hidden="true"></i> Data de Início</label>
               <DatePicker
                 selected={startDate}
                 id="startDate"
@@ -174,8 +177,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <MdDateRange className="form-icon" />
-              <label htmlFor="endDate">Data de Término</label>
+
+              <label htmlFor="endDate"><i class="fa fa-calendar icon-color" aria-hidden="true"></i> Data de Término</label>
               <DatePicker
                 selected={endDate}
                 id="endDate"
@@ -185,8 +188,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <i className="fa fa-bell icon-color" aria-hidden="true"></i>
-              <label htmlFor="time">Hora</label>
+
+              <label htmlFor="time"><i className="fa fa-bell icon-color" aria-hidden="true"></i> Hora</label>
               <DatePicker
                 selected={time}
                 id="time"
@@ -200,8 +203,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <i className="fa fa-bell icon-color" aria-hidden="true"></i>
-              <label>Dias da Semana</label>
+              
+              <label><i className="fa fa-bell icon-color" aria-hidden="true"></i> Dias da Semana</label>
               <div className="days-checkboxes">
                 {Object.keys(daysOfWeekMap).map(day => (
                   <div key={day}>
@@ -218,8 +221,8 @@ const DisciplineEditPage = () => {
               </div>
             </div>
             <div className="form-group">
-              <MdDriveFileRenameOutline className="form-icon" />
-              <label htmlFor="description">Descrição</label>
+            
+              <label htmlFor="description"><i class="fa fa-pencil icon-color" aria-hidden="true"></i> Descrição</label>
               <input 
                 type="text"
                 id="description"
@@ -229,8 +232,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <i className="fa fa-graduation-cap icon-color" aria-hidden="true"></i>
-              <label htmlFor="disciplineCurso">Curso da Disciplina</label>
+
+              <label htmlFor="disciplineCurso"><i className="fa fa-graduation-cap icon-color" aria-hidden="true"></i>Curso da Disciplina</label>
               <input 
                 type="text"
                 id="disciplineCurso"
@@ -240,8 +243,8 @@ const DisciplineEditPage = () => {
               />
             </div>
             <div className="form-group">
-              <i className="fa fa-book icon-color" aria-hidden="true"></i>
-              <label htmlFor="disciplinePeriodo">Período da Disciplina</label>
+              
+            <label htmlFor="disciplinePeriodo"><i className="fa fa-book icon-color" aria-hidden="true"></i> Período da Disciplina</label>
               <input 
                 type="text"
                 id="disciplinePeriodo"
@@ -252,11 +255,13 @@ const DisciplineEditPage = () => {
             </div>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             {successMessage && <p className="success-message">{successMessage}</p>}
-            <button type="submit" className="submit-button-event">Salvar</button>
+            <button type="submit" className="add-usuario-button">Salvar</button>
           </form>
-        </div>
+        
       </body>
     </html>
+    </div>
+    </BaseLayout>
   );
 };
 
