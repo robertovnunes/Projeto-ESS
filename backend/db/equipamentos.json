@@ -85,5 +85,36 @@
          }
       ],
       "manutencao": []
+   },
+   {
+      "id": "04OboSmCHwNQ",
+      "status": "disponível",
+      "nome": {
+         "nome": "teste",
+         "descricao": "teste",
+         "estado_conservacao": "teste",
+         "data_aquisicao": "11/01/2011",
+         "valor_estimado": "100",
+         "patrimonio": null,
+         "numero_serie": null,
+         "Patrimonio": "12345678"
+      },
+      "reservas": [],
+      "manutencao": []
+   },
+   {
+      "id": "04LVvOUj61HV",
+      "status": "disponível",
+      "nome": {
+         "nome": "teste",
+         "descricao": "teste",
+         "estado_conservacao": "teste",
+         "data_aquisicao": "teste",
+         "valor_estimado": "100",
+         "patrimonio": null,
+         "numero_serie": null
+      },
+      "reservas": [],
+      "manutencao": []
    }
 ]
