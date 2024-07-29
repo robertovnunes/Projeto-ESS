@@ -1,15 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const dateRegex = /^\d{2}\/\d{2}\/\d{4} a \d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM)( (MON|TUE|WED|THU|FRI|SAT|SUN)){0,3}$/;
-
+const disciplinesPath = path.resolve("./db/disciplines.json");
 
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
 };
-
-const getDiscipline = (req,res) => {
+exports.getDiscipline = (req,res) => {
     try{ 
-        const data = JSON.parse(fs.readFileSync(path.resolve("./db/disciplines.json"),'utf-8'))
+        const data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'))
         if(!data){
             console.log("Empty");
             return res.status(200).json({})
@@ -21,12 +20,11 @@ const getDiscipline = (req,res) => {
             error: "Internal Server Error"
         })
     }
-};
-
-const getDisciplinebyID = (req,res) => {
+}
+exports.getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
-        const data = JSON.parse(fs.readFileSync(path.resolve("../models/disciplines.json"),'utf-8'));
+        const data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'));
         const discipline = data.find(element => element.disciplineID === id);
         if(!discipline){
             console.log("Discipline not found");
@@ -38,7 +36,7 @@ const getDisciplinebyID = (req,res) => {
         let length = discipline.salas.length;
         if(length === 0){
             console.log("Discipline has no salas");
-        return res.status(400).json({error: "Discipline has no salas"});
+        return res.status(200).json([]);
         }
         return res.status(200).json(discipline.salas);
     }catch(error){
@@ -50,7 +48,7 @@ const getDisciplinebyID = (req,res) => {
 }
 
 
-const disciplinesSignUpJson = async(req, res) => {
+exports.disciplinesSignUpJson = async(req, res) => {
     try{
         const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
         // Checks if any of the required fields are missing
@@ -62,7 +60,7 @@ const disciplinesSignUpJson = async(req, res) => {
                 error: "Informações obrigatórias não preenchidas"
             })
         }
-        let data = JSON.parse(fs.readFileSync(path.resolve("../models/disciplines.json"),'utf-8'));
+        let data = JSON.parse(fs.readFileSync(path.resolve(disciplinesPath),'utf-8'));
         // Checks if discipline exists with boolean variable
         const disciplineExists = data.some(element => 
             element.nome === nome && 
@@ -104,7 +102,7 @@ const disciplinesSignUpJson = async(req, res) => {
         data.push(newDiscipline);
         console.log("Disciplina cadastrada com sucesso");
         res.status(201).json(newDiscipline);
-        fs.writeFileSync(path.resolve("../models/disciplines.json"),JSON.stringify(data,null,2));
+        fs.writeFileSync(path.resolve(disciplinesPath),JSON.stringify(data,null,2));
     }catch(error){
         console.log("Error in signUp:",error.message);
         res.status(500).json({
@@ -114,8 +112,7 @@ const disciplinesSignUpJson = async(req, res) => {
 
 
 }
-const deleteDisciplineJson = (req, res) => {
-    const disciplinesPath = path.resolve("../models/disciplines.json");
+exports.deleteDisciplineJson = (req, res) => {
     try {
         const { id } = req.params;
         let data = JSON.parse(fs.readFileSync(disciplinesPath, 'utf-8'));
@@ -133,8 +130,7 @@ const deleteDisciplineJson = (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-const updateDisciplineJson = async (req, res) => {
-    const disciplinesPath = path.resolve("../models/disciplines.json");
+exports.updateDisciplineJson = async (req, res) => {
     try {
         const { id } = req.params;
         const {nome,disciplineID,responsibleTeacher,horario,description,disciplineCurso,disciplinePeriodo} = req.body;
@@ -170,5 +166,3 @@ const updateDisciplineJson = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
-
-module.exports = {getDiscipline, getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson,updateDisciplineJson};
