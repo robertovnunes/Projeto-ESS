@@ -1,0 +1,71 @@
+Feature: Adicionar equipamentos ao sistema
+  As a administrador
+  I want to adicionar equipamentos ao sistema
+  So that eu possa gerenciar os equipamentos
+
+  Scenario: Adicionar equipamento
+    Given que eu estou na página de "Gerenciar equipamentos"
+    When eu escolho "Adicionar equipamento"
+    Then eu devo ser redirecionado para a página de "Adicionar equipamento"
+    When eu preencho o campo "nome" com "Projetor"
+    And eu preencho o campo "descricao" com "Projetor Epson"
+    And eu preencho o campo "estado_conservacao" com "novo"
+    And eu preencho o campo "data_aquisicao" com "20/04/2024"
+    And eu preencho o campo "valor_estimado" com "2500.00"
+    And eu escolho "patrimonio" como identificador
+    And eu preencho o campo "patrimonio" com "364215672012"
+    And eu escolho "Adicionar"
+    Then eu vejo a mensagem "Equipamento adicionado com sucesso"
+
+#    Scenario: Adicionar equipamento com campos em branco
+#        Given que eu estou na página de "equipamentos"
+#        When eu escolho "Adicionar"
+#        Then eu devo ser redirecionado para a página de "Adicionar equipamento"
+#        When eu preencho o campo "Nome" com ""
+#        And eu preencho o campo "descricao" com ""
+#        And eu preencho o campo "estado_conservacao" com ""
+#        And eu preencho o campo "data_aquisicao" com ""
+#        And eu preencho o campo "valor_estimado" com ""
+#        And eu preencho o campo "patrimonio" com ""
+#        And eu preencho o campo "quantidade" com ""
+#        And eu escolho "Adicionar"
+#        Then eu vejo a mensagem "Erro ao adicionar recurso"
+#        And eu vejo a mensagem "Nome não pode ser vazio"
+#        And eu vejo a mensagem "Descrição não pode ser vazio"
+#        And eu vejo a mensagem "Estado de conservação não pode ser vazio"
+#        And eu vejo a mensagem "Data de aquisição não pode ser vazio"
+#        And eu vejo a mensagem "Valor estimado não pode ser vazio"
+#        And eu vejo a mensagem "Patrimônio não pode ser vazio"
+#        And eu vejo a mensagem "Quantidade não pode ser vazio"
+#        And eu vejo a mensagem "Quantidade deve ser um número"
+
+#    Scenario: Adicionar equipamento com campos inválidos
+#        Given que eu estou na página de "equipamentos"
+#        When eu escolho "Adicionar"
+#        Then eu devo ser redirecionado para a página de "Adicionar equipamento"
+#        When eu preencho o campo "Nome" com "Projetor"
+#        And eu preencho o campo "descricao" com "Projetor Epson"
+#        And eu preencho o campo "estado_conservacao" com "novo"
+#        And eu preencho o campo "data_aquisicao" com "20/04/2024"
+#        And eu preencho o campo "valor_estimado" com "2500.00"
+#        And eu preencho o campo "patrimonio" com "364215672012"
+#        And eu preencho o campo "quantidade" com "cinco"
+#        And eu escolho "Adicionar"
+#        Then eu vejo a mensagem "Erro ao adicionar recurso"
+#        And eu vejo a mensagem "Quantidade deve ser um número"
+
+#    Scenario: Adicionar equipamento com patrimônio já cadastrado
+#        Given que eu estou na página de "equipamentos"
+#        And eu tenho um equipamento com o patrimônio "364215672012"
+#        When eu escolho "Adicionar"
+#        Then eu devo ser redirecionado para a página de "Adicionar equipamento"
+#        When eu preencho o campo "Nome" com "Projetor"
+#        And eu preencho o campo "descricao" com "Projetor Epson"
+#        And eu preencho o campo "estado_conservacao" com "novo"
+#        And eu preencho o campo "data_aquisicao" com "20/04/2024"
+#        And eu preencho o campo "valor_estimado" com "2500.00"
+#        And eu preencho o campo "patrimonio" com "364215672012"
+#        And eu preencho o campo "quantidade" com "5"
+#        And eu escolho "Adicionar"
+#        Then eu vejo a mensagem "Erro ao adicionar recurso"
+#        And eu vejo a mensagem "Patrimônio já cadastrado"

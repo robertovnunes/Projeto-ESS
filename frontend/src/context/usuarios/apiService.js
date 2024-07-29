@@ -33,3 +33,14 @@ export const deleteUsuario = async (usuarios, login) => {
     throw error;
   }
 };
+
+//Função para adicionar um equipamento
+export const addEquipamento = async (equipamento) => {
+  try {
+    const response = await api.post('/equipamentos', equipamento);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao adicionar equipamento:', error);
+    throw error;
+  }
+};

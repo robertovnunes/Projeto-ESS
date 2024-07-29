@@ -15,6 +15,7 @@ const MainEquipment = () => {
         if (userType === 'Desconhecido') {
             navigate('/login');
         }
+
     }, [userType, navigate]);
 
     let SpecificPage;
@@ -29,7 +30,7 @@ const MainEquipment = () => {
     return (
         <BaseLayout>
             <div className="main-content">
-                {SpecificPage && <SpecificPage />}
+                {SpecificPage && <SpecificPage/>}
             </div>
         </BaseLayout>
     );

@@ -18,6 +18,9 @@ import AddAlunoPage from '../pages/administrador/AddAlunoPage'; // Importe a nov
 import AddProfessorPage from '../pages/administrador/AddProfessorPage'
 import AddAdminPage from '../pages/administrador/AddAdminPage'
 
+import ManageEquipamentos from "../pages/equipamentos/admins/manage";
+import AdicionarEquipamento from "../pages/equipamentos/admins/manage/adicionar";
+
 const isAuthenticated = true; // Simula estado de autenticação
 
 const router = createBrowserRouter([
@@ -31,6 +34,8 @@ const router = createBrowserRouter([
     {path: "/disciplinas", element: <SubjectsPage />},
     {path: "/eventos", element: <EventsPage />},
     {path: "/equipamentos", element: <Equipamentos />},
+    {path: "/equipamentos/manage", element: <ManageEquipamentos />},
+    {path: "/equipamentos/manage/adicionar", element: <AdicionarEquipamento />},
 
     {path: "/usuarios/alunos", element: <AlunosPage />},
     {path: "/usuarios/professores", element: <ProfessoresPage />},
@@ -39,6 +44,7 @@ const router = createBrowserRouter([
     {path: "/usuarios/alunos/adicionar", element: <AddAlunoPage />}, // Adicione a rota para a nova página
     {path: "/usuarios/professores/adicionar", element: <AddProfessorPage />},
     {path: "/usuarios/admins/adicionar", element: <AddAdminPage />},
+
 
     {path: "*", element: <Navigate to = "/mainpage" />},
 ]);
