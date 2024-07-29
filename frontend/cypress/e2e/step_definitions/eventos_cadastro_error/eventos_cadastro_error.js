@@ -27,12 +27,10 @@ When('Eu preencho o campo {string} com {string}', (campo, valor) => {
       break;
     case 'Horário':
       selector = '#eventDateAndTime';
-    case 'Descrição':
-        selector = '#description';
-      cy.get(selector).clear().type(valor, { force: true }).type('{esc}');
+    cy.get(selector).clear().type(valor, { force: true }).type('{esc}');
       return;
     default:
-      selector = `input[name="${campo}"]`;
+      selector = `input[name="${campo}"]`;  
   }
   cy.get(selector).clear().type(valor, { force: true });
 });
