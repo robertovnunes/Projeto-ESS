@@ -27,6 +27,9 @@ import DisciplineViewPage from './pages/disciplines/disciplineViewPage.js';
 
 import EventsPage from './pages/events/eventsPage.js';
 import CreateEventPage from './pages/events/CreateEventPage.js';
+import EventEditPage from './pages/events/eventsEditPage.js';
+import EventListPage from './pages/events/eventsListPage.js';
+import EventCalendarPage from './pages/events/eventsCalendarPage.js';
 import axios from 'axios';
 
 // Defina a URL base para todas as requisições Axios
@@ -65,6 +68,9 @@ const App = () => {
 
         <Route path="/events" element={<EventsPage />} />
           <Route path="/create-event" element={<CreateEventPage />} />
+          <Route path="/edit-event/:id" element={<EventEditPage />} />
+          <Route path="/events-list" element={<EventListPage />} />
+          <Route path="/calendar-events" element={<EventCalendarPage />} />
 
         <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>
