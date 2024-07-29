@@ -1,6 +1,7 @@
 .home-container {
     position: relative;
     min-height: 100vh;
+    min-width: 100vh;
     background-image: url('../assets/HomeImg2.png'); /* Ajuste o caminho conforme necessário */
     background-size: cover;
     background-position: center;
