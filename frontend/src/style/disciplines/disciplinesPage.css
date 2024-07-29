@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+body, html {
+  font-family:  "Inter", sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+
+.discipline-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+  width: 1000px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+  margin-top: 80px; 
+}
+
+.discipline-page-container h1 {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin-top: 60px;
+  font-family: "Inter", sans-serif;
+}
+
+.discipline-button {
+  background-color: #FF6347;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.discipline-button:hover {
+  background-color: #800000;
+}
+
+.discipline-button:active {
+  background-color: red;
+}
+
+.back-button-red {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #FF6347;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back-button-red i {
+  font-size: 20px;
+}
+
+.back-button-red:hover {
+  background-color: #e55347;
+}
+
+.back-button-red:active {
+  background-color: #c43f2b;
+}
