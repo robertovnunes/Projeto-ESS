@@ -41,4 +41,10 @@
     font-weight: 300;
     text-align: Left;
   }
+
+  h3 {
+    color: #DB1E2F; /* Define a cor do texto como branco */
+    font-size: 4rem; /* Ajuste o tamanho da fonte conforme necessário */
+    margin: 0; /* Remove a margem padrão */
+  }
   

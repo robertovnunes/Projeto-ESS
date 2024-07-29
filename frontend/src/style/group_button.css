@@ -1,0 +1,34 @@
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin-top: 60px;
+  font-family: "Inter", sans-serif;
+}
+
+.group-button {
+  background-color: #FF6347;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.group-button:hover {
+  background-color: #800000;
+}
+
+.group-button:active {
+  background-color: red;
+}

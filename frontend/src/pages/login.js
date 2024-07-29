@@ -66,7 +66,7 @@ const Login = () => {
       <div className="login-box">
         <h2>Entrar na sua conta</h2>
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
+          <div className="login-form-group">
             <label htmlFor="username">Login</label>
             <div className="input-container">
               <input 
@@ -82,7 +82,7 @@ const Login = () => {
             </div>
           </div>
           {isLoginAttempted && errorMessage && <p className="error-message">{errorMessage}</p>}
-          <div className="form-group">
+          <div className="login-form-group">
             <label htmlFor="password">Senha</label>
             <div className="input-container">
               <input 
@@ -97,7 +97,7 @@ const Login = () => {
               {isLoginAttempted && <i className={`fas fa-exclamation-circle input-icon ${passwordError ? 'show' : 'hide'}`}></i>}
             </div>
           </div>
-          <button type="submit" className="submit-button">Entrar</button>
+          <button type="submit" className="login-submit-button">Entrar</button>
         </form>
       </div>
     </div>

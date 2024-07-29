@@ -6,6 +6,23 @@ const dateRegex = /^\d{2}\/\d{2}\/\d{4} a \d{2}\/\d{2}\/\d{4} \d{2}:\d{2} (AM|PM
 const isValidDateFormat = (dateStr) => {
     return dateRegex.test(dateStr);
 };
+
+const getDiscipline = (req,res) => {
+    try{ 
+        const data = JSON.parse(fs.readFileSync(path.resolve("./db/disciplines.json"),'utf-8'))
+        if(!data){
+            console.log("Empty");
+            return res.status(200).json({})
+        }
+        return res.status(200).json(data);
+    }catch(error){
+        console.log("Error in getAll",error.message);
+        res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+};
+
 const getDisciplinebyID = (req,res) => {
     try{
         const id = req.params.id;
@@ -154,4 +171,4 @@ const updateDisciplineJson = async (req, res) => {
     }
 };
 
-module.exports = {getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson,updateDisciplineJson};
+module.exports = {getDiscipline, getDisciplinebyID,disciplinesSignUpJson,deleteDisciplineJson,updateDisciplineJson};

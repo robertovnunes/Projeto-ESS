@@ -37,7 +37,18 @@
   position: relative; /* Permite o posicionamento absoluto dos ícones dentro do grupo de formulário */
 }
 
+.login-form-group {
+  margin-bottom: 15px;
+  text-align: left;
+  position: relative; /* Permite o posicionamento absoluto dos ícones dentro do grupo de formulário */
+}
+
 .form-group label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.login-form-group label {
   margin-bottom: 5px;
   display: block;
 }
@@ -68,6 +79,16 @@ padding: 4px; /* Espaçamento ao redor do ícone dentro do círculo */
 }
 
 .submit-button {
+  padding: 10px;
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.login-submit-button {
   padding: 10px;
   background-color: #0066CC;
   color: white;

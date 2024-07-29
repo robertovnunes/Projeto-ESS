@@ -21,7 +21,7 @@ const AdminPage = () => {
         <button className="button" onClick={() => handleNavigation('/salas')}>
           Salas
         </button>
-        <button className="button" onClick={() => handleNavigation('/disciplinas')}>
+        <button className="button" onClick={() => handleNavigation('/disciplines')}>
           Disciplinas
         </button>
         <button className="button" onClick={() => handleNavigation('/equipamentos')}>

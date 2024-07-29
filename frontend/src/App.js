@@ -8,7 +8,6 @@ import { ColorProvider } from './context/userColorContext';
 
 import UsersPage from './pages/administrador/usuarios'; // Página para Usuários
 import RoomsPage from './pages/administrador/salas'; // Página para Salas
-import SubjectsPage from './pages/administrador/disciplinas'; // Página para Disciplinas
 import EquipmentPage from './pages/administrador/equipamentos'; // Página para Equipamentos
 import EventsPage from './pages/administrador/eventos'; // Página para Eventos
 
@@ -19,6 +18,13 @@ import AdministradoresPage from './pages/administrador/administradoresPage';
 import AddAlunoPage from './pages/administrador/AddAlunoPage'; // Importe a nova página
 import AddProfessorPage from './pages/administrador/AddProfessorPage'
 import AddAdminPage from './pages/administrador/AddAdminPage'
+
+import DisciplinePage from './pages/disciplines/disciplinePage';
+import DisciplineSignUpPage from './pages/disciplines/disciplines.jsx';
+import DisciplineListPage from './pages/disciplines/disciplinesListPage.jsx';
+import DisciplineEditPage from './pages/disciplines/disciplinesEditPage.jsx';
+import DisciplineRoomsPage from './pages/disciplines/disciplineRoomsPage.jsx';
+import DisciplineViewPage from './pages/disciplines/disciplineViewPage.jsx';
 
 import axios from 'axios';
 
@@ -38,7 +44,6 @@ const App = () => {
 
         <Route path="/usuarios" element={<UsersPage />} />
         <Route path="/salas" element={<RoomsPage />} />
-        <Route path="/disciplinas" element={<SubjectsPage />} />
         <Route path="/equipamentos" element={<EquipmentPage />} />
         <Route path="/eventos" element={<EventsPage />} />
 
@@ -49,6 +54,13 @@ const App = () => {
         <Route path="/usuarios/alunos/adicionar" element={<AddAlunoPage />} />
         <Route path="/usuarios/professores/adicionar" element={<AddProfessorPage />} />
         <Route path="/usuarios/admins/adicionar" element={<AddAdminPage />} />
+
+        <Route path="/disciplines" element={<DisciplinePage />} />
+        <Route path="/create-discipline" element={<DisciplineSignUpPage />} />    
+        <Route path="/disciplines-list" element={<DisciplineListPage />} />    
+        <Route path="/edit-discipline/:id" element={<DisciplineEditPage />} />
+        <Route path="/discipline-rooms/:id" element={<DisciplineRoomsPage />} />
+        <Route path= "/discipline-view" element={<DisciplineViewPage />} />
 
         <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>

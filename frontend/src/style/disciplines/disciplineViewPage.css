@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Adirek+Serif:wght@400;700&display=swap');
+
+.discipline-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 1000px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  position: relative;
+  margin-top: 80px; 
+}
+.discipline-list-container h1{
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+
+}
+
+
+.discipline-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.discipline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-family: 'Inter', sans-serif;
+}
+
+.discipline-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-time-button, .view-rooms-button{
+    background-color: #FF6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+.view-time-button:hover, .view-rooms-button:hover{
+    background-color: #FF4500;
+}
+.view-time-button:active, .view-rooms-button:active{
+    background-color: red;
+}

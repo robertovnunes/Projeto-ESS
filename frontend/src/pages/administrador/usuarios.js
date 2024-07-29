@@ -6,20 +6,21 @@ import BaseLayout from '../../components/common/BaseLayout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '../../style/container.css'
+import '../../style/group_button.css';
 
 const UsersPage = () => {
   const navigate = useNavigate();
 
   const handleAlunos = () => {
-    navigate('/usuarios/alunos'); // Substitua pelo caminho da página de adicionar usuário
+    navigate('/usuarios/alunos'); //caminho da página de adicionar usuário
   };
 
   const handleProfessores = () => {
-    navigate('/usuarios/professores'); // Substitua pelo caminho da página de edição de alunos
+    navigate('/usuarios/professores'); //caminho da página de edição de alunos
   };
 
   const handleAdministradores = () => {
-    navigate('/usuarios/admins'); // Substitua pelo caminho da página de edição de professores
+    navigate('/usuarios/admins'); //caminho da página de edição de professores
   };
 
   const handleGoBack = () => {
@@ -34,14 +35,13 @@ const UsersPage = () => {
         <button className="back-button" onClick={handleGoBack}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
-        <h2>Usuários</h2>
       </div>
-      <div className="button-container">
-        <button className="button" onClick={handleAlunos}>Alunos</button>
-        <button className="button" onClick={handleProfessores}>Professores</button>
-        <button className="button" onClick={handleAdministradores}>Administradores</button>
+      <h1>Usuários</h1>
+      <div className="button-group">
+        <button className="group-button" onClick={handleAlunos}>Alunos</button>
+        <button className="group-button" onClick={handleProfessores}>Professores</button>
+        <button className="group-button" onClick={handleAdministradores}>Administradores</button>
       </div>
-      {/* Adicione mais conteúdo e componentes específicos para usuários */}
     </div>
   </div>
 </BaseLayout>
