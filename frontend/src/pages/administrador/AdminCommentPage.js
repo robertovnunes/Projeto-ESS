@@ -13,7 +13,7 @@ const AdminCommentPage = () => {
   useEffect(() => {
     const fetchComentarios = async () => {
       try {
-        const response = await axios.get('/api/comentarios');
+        const response = await axios.get('/comentarios');
         setComentarios(response.data);
       } catch (error) {
         setError('Erro ao carregar comentários.');
@@ -25,7 +25,7 @@ const AdminCommentPage = () => {
 
   const handleValidate = async (id) => {
     try {
-      await axios.patch(`/api/comentarios/${id}/validar`);
+      await axios.patch(`/comentarios/${id}/validar`);
       setComentarios((prevComentarios) =>
         prevComentarios.map((comentario) =>
           comentario.id === id ? { ...comentario, validado: true } : comentario
@@ -37,7 +37,7 @@ const AdminCommentPage = () => {
     }
   };
 
-  const handleOpenResponse = (comentario) => {
+  const handleOpenResponse = (comentario) => {console.log('Comentário encontrado:', comentario);
     if (!comentario.validado) {
       setError('ERRO, o comentário não pode ser respondido antes de ser validado.');
     } else {
@@ -52,7 +52,7 @@ const AdminCommentPage = () => {
 
   const handleSendResponse = async () => {
     try {
-      await axios.post(`/api/comentarios/${selectedComment.id}/responder`, { resposta });
+      await axios.patch(`/comentarios/${selectedComment.id}/responder`, { resposta });
       setComentarios((prevComentarios) =>
         prevComentarios.map((comentario) =>
           comentario.id === selectedComment.id ? { ...comentario, resposta } : comentario

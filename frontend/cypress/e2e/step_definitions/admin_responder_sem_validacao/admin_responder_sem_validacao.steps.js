@@ -9,7 +9,7 @@ When('eu navego para a página {string}', (pagina) => {
 });
 
 When('eu clico no botão {string} no primeiro comentário não validado', (botao) => {
-  cy.get('table.comments-table tbody tr').first().within(() => {
+  cy.get('table.comments-table tbody tr').last().within(() => {
     cy.contains(botao).click();
   });
 });

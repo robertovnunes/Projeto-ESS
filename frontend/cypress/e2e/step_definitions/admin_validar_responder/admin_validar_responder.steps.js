@@ -18,7 +18,14 @@ When('eu clico no botão {string} no primeiro comentário', (botao) => {
   });
 });
 
+And('eu clico no botão {string} no primeiro comentário validado', (botao) => {
+  cy.get('table.comments-table tbody tr').first().within(() => {
+    cy.contains(botao).click();
+  });
+});
+
 Then('Eu devo ver a mensagem {string}', (mensagem) => {
+  cy.wait(4000); // Espera 4 segundos para a resposta ser validada
   cy.contains(mensagem).should('be.visible');
 });
 

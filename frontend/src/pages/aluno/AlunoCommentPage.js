@@ -65,7 +65,7 @@ const AlunoCommentPage = () => {
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await axios.post('/api/comentarios', {
+      const response = await axios.post('/comentarios', {
         autor: 'aluno',
         login: 'tns',
         comentario: comment,
@@ -73,7 +73,7 @@ const AlunoCommentPage = () => {
         sec_responsavel: secResponsavel
       });
       
-      if (response.status === 200) {
+      if (response.status === 201) {
         setSuccessMessage('Comentário adicionado com sucesso');
       } else {
         setSuccessMessage('Erro ao adicionar comentário');
