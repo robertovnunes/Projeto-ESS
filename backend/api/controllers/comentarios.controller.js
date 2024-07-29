@@ -64,6 +64,7 @@ class Comentarios {
         }
     }
 
+
     getMensagemEnvio(destinatario) {
         switch (destinatario) {
             case 'ADM':

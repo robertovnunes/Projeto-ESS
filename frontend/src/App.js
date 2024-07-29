@@ -20,6 +20,14 @@ import AddAlunoPage from './pages/administrador/AddAlunoPage'; // Importe a nova
 import AddProfessorPage from './pages/administrador/AddProfessorPage'
 import AddAdminPage from './pages/administrador/AddAdminPage'
 
+import AdminMainPage from './pages/administrador/AdminMainPage'; // Páginas principais
+import ProfessorMainPage from './pages/professor/ProfessorMainPage';
+import AlunoMainPage from './pages/aluno/AlunoMainPage';
+
+import AlunoCommentPage from './pages/aluno/AlunoCommentPage'; // Páginas de comentários
+import ProfessorCommentPage from './pages/professor/ProfessorCommentPage';
+import AdminCommentPage from './pages/administrador/AdminCommentPage';
+
 import axios from 'axios';
 
 // Defina a URL base para todas as requisições Axios
@@ -49,6 +57,15 @@ const App = () => {
         <Route path="/usuarios/alunos/adicionar" element={<AddAlunoPage />} />
         <Route path="/usuarios/professores/adicionar" element={<AddProfessorPage />} />
         <Route path="/usuarios/admins/adicionar" element={<AddAdminPage />} />
+
+        <Route path="/adm" element={<AdminMainPage />} />
+        <Route path="/professor" element={<ProfessorMainPage />} />
+        <Route path="/aluno" element={<AlunoMainPage />} />
+
+        <Route path="/aluno/comentario" element={<AlunoCommentPage />} />
+        <Route path="/professor/comentario" element={<ProfessorCommentPage />} />
+        <Route path="/comentarios" element={<AdminCommentPage />} />
+       
 
         <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>

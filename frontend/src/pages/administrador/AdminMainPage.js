@@ -10,29 +10,33 @@ const AdminPage = () => {
     navigate(path); // Redireciona para o caminho especificado
   };
 
+
   return (
     <div className="admin-page">
       <div className="content-container">
-      <h2>Bem-vindo, Administrador!</h2>
-      <div className="button-container">
-        <button className="button" onClick={() => handleNavigation('/usuarios')}>
-          Usuários
-        </button>
-        <button className="button" onClick={() => handleNavigation('/salas')}>
-          Salas
-        </button>
-        <button className="button" onClick={() => handleNavigation('/disciplinas')}>
-          Disciplinas
-        </button>
-        <button className="button" onClick={() => handleNavigation('/equipamentos')}>
-          Equipamentos
-        </button>
-        <button className="button" onClick={() => handleNavigation('/eventos')}>
-          Eventos
-        </button>
+        <h2>Bem-vindo, Administrador!</h2>
+        <div className="button-container">
+          <button className="button" onClick={() => handleNavigation('/usuarios')}>
+            Usuários
+          </button>
+          <button className="button" onClick={() => handleNavigation('/salas')}>
+            Salas
+          </button>
+          <button className="button" onClick={() => handleNavigation('/disciplinas')}>
+            Disciplinas
+          </button>
+          <button className="button" onClick={() => handleNavigation('/equipamentos')}>
+            Equipamentos
+          </button>
+          <button className="button" onClick={() => handleNavigation('/eventos')}>
+            Eventos
+          </button>
+          <button className="button" onClick={() => handleNavigation('/comentarios')}>
+            Comentários
+          </button>
+        </div>
       </div>
     </div>
-      </div>
   );
 };
 

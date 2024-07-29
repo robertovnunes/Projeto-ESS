@@ -33,3 +33,50 @@ export const deleteUsuario = async (usuarios, login) => {
     throw error;
   }
 };
+
+// Função para buscar comentarios
+export const fetchComentarios = async () => {
+  try {
+    const response = await api.get('/comentarios');
+    return response.data;
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    throw error;
+  }
+};
+
+// Função para adicionar um novo comentario
+
+export const addComentario = async (comentario) => {
+  try {
+    const response = await api.post('/comentarios', comentario);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao adicionar Comentario:', error);
+    throw error;
+  }
+};
+
+// Função para validar um comentario
+
+export const validateComentario = async (id) => {
+  try {
+    const response = await api.patch(`/comentarios/${id}`, { validado: true });
+    return response.data;
+  } catch (error) {
+    console.error('Erro na validação do comentário:', error);
+    throw error;
+  }
+};
+
+// Função para responder um comentario
+
+export const respondComentario = async (id, response) => {
+  try {
+    const res = await api.post(`/comentarios/${id}/respostas`, { resposta: response });
+    return res.data;
+  } catch (error) {
+    console.error('Erro ao responder comentário:', error);
+    throw error;
+  }
+};
