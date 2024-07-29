@@ -1,7 +1,7 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 
 Given('Eu estou logado como administrador', () => {
-  cy.login('admin', 'password'); // Supondo que você tenha um comando de login configurado
+  cy.login('admin', 'password'); 
 });
 
 When('eu navego para a página {string}', (pagina) => {

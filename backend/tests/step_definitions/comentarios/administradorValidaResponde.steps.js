@@ -27,7 +27,7 @@ defineFeature(feature, test => {
     // Steps to reuse
     const givenLoggedInAsAdmin = (given) => {
         given(/^que eu estou logado como "(.*)" com login "(.*)" e senha "(.*)"$/, (role, login, senha) => {
-            // Simulate login
+            
         });
     };
 
