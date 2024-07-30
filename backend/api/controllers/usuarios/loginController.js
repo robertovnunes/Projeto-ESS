@@ -22,10 +22,10 @@ class LoginController {
             }
 
             // Verificar se o usuário já está autenticado (verificando se há um token válido)
-            const existingToken = req.cookies.accessToken;
-            if (existingToken) {
-            return res.status(401).send({message: 'Usuário já está autenticado'});
-        }
+            //const existingToken = req.cookies.accessToken;
+            //if (existingToken) {
+            //return res.status(401).send({message: 'Usuário já está autenticado'});
+            //}
     
             // Verificar se o usuário existe no banco de dados
             const usuario = await this.authService.getUserByLogin(login);

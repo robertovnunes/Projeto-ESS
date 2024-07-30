@@ -30,6 +30,14 @@ import CreateEventPage from './pages/events/CreateEventPage.js';
 import EventEditPage from './pages/events/eventsEditPage.js';
 import EventListPage from './pages/events/eventsListPage.js';
 import EventCalendarPage from './pages/events/eventsCalendarPage.js';
+import AdminMainPage from './pages/administrador/AdminMainPage'; // Páginas principais
+import ProfessorMainPage from './pages/professor/ProfessorMainPage';
+import AlunoMainPage from './pages/aluno/AlunoMainPage';
+
+import AlunoCommentPage from './pages/aluno/AlunoCommentPage'; // Páginas de comentários
+import ProfessorCommentPage from './pages/professor/ProfessorCommentPage';
+import AdminCommentPage from './pages/administrador/AdminCommentPage';
+
 import axios from 'axios';
 
 // Defina a URL base para todas as requisições Axios
@@ -67,10 +75,18 @@ const App = () => {
         <Route path= "/discipline-view" element={<DisciplineViewPage />} />
 
         <Route path="/events" element={<EventsPage />} />
-          <Route path="/create-event" element={<CreateEventPage />} />
-          <Route path="/edit-event/:id" element={<EventEditPage />} />
-          <Route path="/events-list" element={<EventListPage />} />
-          <Route path="/calendar-events" element={<EventCalendarPage />} />
+        <Route path="/create-event" element={<CreateEventPage />} />
+        <Route path="/edit-event/:id" element={<EventEditPage />} />
+        <Route path="/events-list" element={<EventListPage />} />
+        <Route path="/calendar-events" element={<EventCalendarPage />} />
+        <Route path="/adm" element={<AdminMainPage />} />
+        <Route path="/professor" element={<ProfessorMainPage />} />
+        <Route path="/aluno" element={<AlunoMainPage />} />
+
+        <Route path="/aluno/comentario" element={<AlunoCommentPage />} />
+        <Route path="/professor/comentario" element={<ProfessorCommentPage />} />
+        <Route path="/comentarios" element={<AdminCommentPage />} />
+       
 
         <Route path="*" element={<Navigate to="/mainpage" />} /> {/* Redirecionamento para a Home se a rota não for encontrada */}
       </Routes>

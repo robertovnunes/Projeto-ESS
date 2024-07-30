@@ -14,7 +14,7 @@ beforeEach(() => {
     fs.writeFileSync(filePath, '[]');
 });
 
-describe('POST /api/comentarios', () => {
+describe('POST /comentarios', () => {
     it('should create a new comentario', async () => {
         const newComentario = {
             autor: 'Professor A',
@@ -23,7 +23,7 @@ describe('POST /api/comentarios', () => {
         };
 
         const res = await request(app)
-            .post('/api/comentarios')
+            .post('/comentarios')
             .send(newComentario);
 
         expect(res.statusCode).toEqual(201);
@@ -41,7 +41,7 @@ describe('POST /api/comentarios', () => {
         };
 
         const res = await request(app)
-            .post('/api/comentarios')
+            .post('/comentarios')
             .send(newComentario);
 
         expect(res.statusCode).toEqual(400);
