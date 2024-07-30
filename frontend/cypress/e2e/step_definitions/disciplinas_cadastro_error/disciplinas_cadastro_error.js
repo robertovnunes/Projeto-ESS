@@ -1,5 +1,19 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 
+afterEach(() => {
+  // Fazer logout
+   cy.get('.user-icon')
+    .should('be.visible') 
+    .click({ force: true }); 
+
+  cy.contains('button', 'Sair')
+    .should('be.visible') 
+    .click(); 
+  
+  cy.clearCookies();
+  cy.clearLocalStorage();
+});
+
 Given('Eu estou logado como {string}', (usuario) => {
   cy.setCookie('userType', usuario);
 });

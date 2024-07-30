@@ -32,5 +32,11 @@
       "id": 5,
       "responsibleTeacher": "João Pedro",
       "eventDateAndTime": "05-08-2024 04:00 PM"
+    },
+    {
+      "eventName": "Workshop IoT",
+      "id": 6,
+      "responsibleTeacher": "Mariana Almeida",
+      "eventDateAndTime": "04-08-2024 03:00 PM"
     }
   ]
