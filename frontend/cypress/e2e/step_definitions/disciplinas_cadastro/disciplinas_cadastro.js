@@ -1,5 +1,27 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+let discipline = null;
 
+afterEach(() => {
+  cy.visit('/disciplines-list')
+  cy.get('.discipline-list')
+  .should('contain', discipline)
+  .then(() => {
+    cy.contains(discipline)
+    .parent()
+    .find('.delete-button-event')
+    .click();
+  });
+   cy.get('.user-icon')
+    .should('be.visible') 
+    .click({ force: true }); 
+
+  cy.contains('button', 'Sair')
+    .should('be.visible') 
+    .click(); 
+  
+  cy.clearCookies();
+  cy.clearLocalStorage();
+});
 Given('Eu estou logado como {string}', (usuario) => {
   cy.setCookie('userType', usuario);
 });
@@ -21,6 +43,7 @@ When('Eu preencho o campo {string} com {string}', (campo, valor) => {
   switch (campo) {
     case 'Nome da Disciplina':
       selector = '#nome';
+      discipline = valor;
       break;
     case 'ID da Disciplina':
       selector = '#disciplineID';

@@ -1,4 +1,26 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+let evento = null;
+afterEach(() => {
+  cy.visit('/events-list')
+  cy.get('.discipline-list')
+  .should('contain', evento)
+  .then(() => {
+    cy.contains(evento)
+    .parent()
+    .find('.delete-button-event')
+    .click();
+  });
+   cy.get('.user-icon')
+    .should('be.visible') 
+    .click({ force: true }); 
+
+  cy.contains('button', 'Sair')
+    .should('be.visible') 
+    .click(); 
+  
+  cy.clearCookies();
+  cy.clearLocalStorage();
+});
 
 Given('Eu estou logado como {string}', (usuario) => {
   cy.setCookie('userType', usuario);
@@ -21,6 +43,7 @@ When('Eu preencho o campo {string} com {string}', (campo, valor) => {
   switch (campo) {
     case 'Nome do Evento':
       selector = '#eventName';
+      evento = valor;
       break;
     case 'Descrição':
       selector = '#description';
