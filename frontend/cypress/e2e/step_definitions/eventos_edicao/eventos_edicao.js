@@ -1,5 +1,33 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+let evento = '';
+afterEach(() => {
+  cy.visit('/events-list');
+  cy.get('.discipline-list')
+  .should('contain', evento)
+  .then(() => {
+    cy.contains(evento)
+    .parent()
+    .find('.edit-button-event')
+    .click();
+  });
+  
+    cy.get(`input[id="eventName"]`).type("Workshop Drones");
+    cy.get(`input[id="responsibleTeacher"]`).type("João Pedro");
+    cy.get(`input[id="eventDateAndTime"]`).clear().type("05/08/2024 04:00 PM");
+    cy.contains('button', 'Salvar').click();
+  
+   // Fazer logout
+   cy.get('.user-icon')
+    .should('be.visible') 
+    .click({ force: true }); 
 
+  cy.contains('button', 'Sair')
+    .should('be.visible') 
+    .click(); 
+  
+  cy.clearCookies();
+  cy.clearLocalStorage();
+});
 Given('Eu estou logado como {string}', (usuario) => {
   cy.setCookie('userType', usuario);
 });
@@ -28,6 +56,7 @@ When('Eu preencho o campo {string} com {string}', (campo, valor) => {
   switch (campo) {
     case 'Nome do Evento':
       selector = '#eventName';
+      evento = valor;
       break;
     case 'Professor Responsável':
       selector = '#responsibleTeacher';

@@ -26,5 +26,11 @@
       "description": "Um workshop sobre Machine Learning.",
       "responsibleTeacher": "Marcelo Vidal",
       "eventDateAndTime": "05-08-2024 04:00 PM"
+    },
+    {
+      "eventName": "Workshop Drones",
+      "id": 5,
+      "responsibleTeacher": "João Pedro",
+      "eventDateAndTime": "05-08-2024 04:00 PM"
     }
   ]
