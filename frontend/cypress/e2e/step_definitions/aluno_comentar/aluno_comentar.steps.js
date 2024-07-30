@@ -7,6 +7,7 @@ beforeEach(() => {
   cy.get(`input[name="username"]`).type('js3');
   cy.get(`input[name="password"]`).type('12345678');
   cy.get('button[type="submit"]').contains('Entrar').click();
+  cy.url().should('not.include', '/login');
 });
 
 // Limpeza após cada teste

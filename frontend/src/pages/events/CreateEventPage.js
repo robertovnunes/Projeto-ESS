@@ -104,7 +104,7 @@ const CreateEventPage = () => {
             <form onSubmit={handleSubmit} className="discipline-form">
               <div className="form-group">
                 
-              <label htmlFor="nome"><MdOutlineEventNote className="form-icon icon-color" /> Nome da Disciplina</label>
+              <label htmlFor="nome"><MdOutlineEventNote className="form-icon icon-color" /> Nome do Evento</label>
                 <input 
                   type="text" 
                   id="eventName"
