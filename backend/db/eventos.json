@@ -1,4 +1,5 @@
-[  {
+[
+  {
     "eventName": "Semana dos Calouros",
     "id": 1,
     "description": "Uma semana dedicada a workshops e palestras sobre as últimas tendências em tecnologia.",
@@ -19,24 +20,24 @@
     "responsibleTeacher": "Sérgio Soares",
     "eventDateAndTime": "22-07-2024 04:00 PM"
   },
-  
-    {
-      "eventName": "Workshop Machine Learning",
-      "id": 4,
-      "description": "Um workshop sobre Machine Learning.",
-      "responsibleTeacher": "Marcelo Vidal",
-      "eventDateAndTime": "05-08-2024 04:00 PM"
-    },
-    {
-      "eventName": "Workshop Drones",
-      "id": 5,
-      "responsibleTeacher": "João Pedro",
-      "eventDateAndTime": "05-08-2024 04:00 PM"
-    },
-    {
-      "eventName": "Workshop IoT",
-      "id": 6,
-      "responsibleTeacher": "Mariana Almeida",
-      "eventDateAndTime": "04-08-2024 03:00 PM"
-    }
-  ]
+  {
+    "eventName": "Workshop Machine Learning",
+    "id": 4,
+    "description": "Um workshop sobre Machine Learning.",
+    "responsibleTeacher": "Marcelo Vidal",
+    "eventDateAndTime": "05-08-2024 04:00 PM"
+  },
+  {
+    "eventName": "Workshop IoT",
+    "id": 5,
+    "responsibleTeacher": "Mariana Almeida",
+    "eventDateAndTime": "04-08-2024 03:00 PM"
+  },
+  {
+    "eventName": "Workshop Drones",
+    "id": 6,
+    "description": "",
+    "responsibleTeacher": "João Pedro",
+    "eventDateAndTime": "08-05-2024 04:00 PM"
+  }
+]
