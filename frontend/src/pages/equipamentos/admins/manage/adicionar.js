@@ -21,18 +21,6 @@ const AdicionarEquipamento = () => {
         setNewEquipamento({ ...newEquipamento, [name]: value });
     };
 
-    const handleInputIdentifierChange = (event) => {
-        const { name, value } = event.target;
-        setIdentificador({ campo: name, value: value });
-        setNewEquipamento({    
-            nome: '',
-            descricao: '',
-            estado_conservacao: '',
-            data_aquisicao: '',
-            valor_estimado: '',
-            [identificador.campo]: [identificador.value]
-        });
-    };
 
     const handleInputIdentifierChange = (event) => {
         const { name, value } = event.target;
