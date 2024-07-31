@@ -116,5 +116,19 @@
       },
       "reservas": [],
       "manutencao": []
+   },
+   {
+      "id": "04Q2Wo3sTQuD",
+      "status": "disponível",
+      "nome": {
+         "nome": "teste",
+         "descricao": "teste",
+         "estado_conservacao": "teste",
+         "data_aquisicao": "12/12/2012",
+         "valor_estimado": "100",
+         "patrimonio": "12345"
+      },
+      "reservas": [],
+      "manutencao": []
    }
 ]

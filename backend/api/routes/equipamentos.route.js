@@ -13,7 +13,7 @@ let injector = new di();
 injector.registerEquipmentRepository(EquipamentosRepository, new EquipamentosRepository());
 const repository = injector.getEquipmentRepository(EquipamentosRepository)
 injector.registerEquipmentService(EquipamentosService, new EquipamentosService(repository));
-equipamentosController = new EquipamentosController(injector.getEquipmentService(EquipamentosService));
+const equipamentosController = new EquipamentosController(injector.getEquipmentService(EquipamentosService));
 
 router.get('/', equipamentosController.getAllEquipments);
 router.get('/:id', equipamentosController.getEquipmentById);

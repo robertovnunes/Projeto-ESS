@@ -1,5 +1,6 @@
 const equipamentoSNModel = require('../models/equipamentos/SN.model');
 const equipamentoPatrimonioModel = require('../models/equipamentos/patrimonio.model');
+const tokensModel = require('../models/token.model');
 
 
 class EquipamentosController {
@@ -83,10 +84,16 @@ class EquipamentosController {
 
     async createEquipment(req, res) {
         try{
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                console.log(`POST /equipamentos [403] FORBIDDEN`);
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }
             const newEquipment = req.body;
             if (!newEquipment.nome || !newEquipment.descricao
                 || !newEquipment.estado_conservacao || !newEquipment.data_aquisicao
-                || !newEquipment.valor_estimado) {
+                || !newEquipment.valor_estimado || (newEquipment.numero_serie !== undefined && !newEquipment.numero_serie) 
+                || (newEquipment.patrimonio !== undefined && !newEquipment.patrimonio)) {
                 console.log(`POST /equipamentos [400] BAD REQUEST`);
                 if (!newEquipment.nome) {
                     return res.status(400).send({message: 'Nome nao informado'});
@@ -100,7 +107,7 @@ class EquipamentosController {
                     return res.status(400).send({message: 'Valor estimado nao informado'});
                 } else if (newEquipment.numero_serie !== undefined && !newEquipment.numero_serie) {
                     return res.status(400).send({message: 'Numero de serie nao informado'});
-                } else {
+                } else if (newEquipment.patrimonio !== undefined && !newEquipment.patrimonio){
                     return res.status(400).send({message: 'Patrimonio nao informado'});
                 }
             } else {
@@ -126,6 +133,10 @@ class EquipamentosController {
 
     async patchEquipment(req, res) {
         try{
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
             if(updated === undefined) {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
@@ -150,6 +161,10 @@ class EquipamentosController {
 
     async deleteEquipment(req, res) {
         try{
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
             if(deleted === undefined) {
                 console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);

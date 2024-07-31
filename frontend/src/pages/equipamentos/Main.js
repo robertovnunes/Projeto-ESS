@@ -4,6 +4,7 @@ import EquipmentAdmin from "../equipamentos/admins/EquipmentPage";
 import EquipmentAluno from "../equipamentos/alunos/EquipmentPage";
 import Cookie from "js-cookie";
 import {useNavigate} from "react-router-dom";
+import './styles/Main.css';
 
 
 

@@ -41,6 +41,11 @@ const ManageEquipamentos = () => {
                             Adicionar Equipamento
                         </Button>
                     </div>
+                    <div className='button-container'>
+                        <Button className="buscar" onClick={() => HandleNavigation('buscar')} >
+                            Buscar Equipamento
+                        </Button>
+                    </div>
                 </div>
             </div>
         </BaseLayout>

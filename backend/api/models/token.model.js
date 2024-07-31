@@ -9,7 +9,7 @@ const authenticateAdmin = (req) => {
         const accessToken = req.cookies.accessToken;
         const userTypeFromCookie = req.cookies.userType;
 
-        if (!accessToken || userTypeFromCookie !== 'admins') {
+        if (!accessToken || userTypeFromCookie !== 'admin') {
             return false;
         }
 

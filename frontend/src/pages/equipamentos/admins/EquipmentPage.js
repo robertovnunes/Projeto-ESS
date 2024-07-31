@@ -15,6 +15,9 @@ const MainEquipamentos = () => {
         if (userType === 'Desconhecido') {
             navigate('/login');
         }
+        if (userType !== 'admin') {
+            navigate('/mainpage');
+        }
 
     }, [userType, navigate]);
 
@@ -36,7 +39,7 @@ const MainEquipamentos = () => {
                     <h2>Equipamentos (Administrador)</h2>
                 </div>
                 <div className='button-container'>
-                    <Button className='btn-consultar' onClick={() => loadPage('/equipamentos/search')}>
+                    <Button className='btn-consultar' onClick={() => loadPage('/equipamentos/manage/buscar')}>
                         Consultar equipamentos
                     </Button>
                     <Button className='btn-manage' onClick={() => loadPage('/equipamentos/manage')}>

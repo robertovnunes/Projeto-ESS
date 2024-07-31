@@ -20,6 +20,7 @@ import AddAdminPage from '../pages/administrador/AddAdminPage'
 
 import ManageEquipamentos from "../pages/equipamentos/admins/manage";
 import AdicionarEquipamento from "../pages/equipamentos/admins/manage/adicionar";
+import BuscarEquipamento from "../pages/equipamentos/admins/manage/buscar";
 
 const isAuthenticated = true; // Simula estado de autenticação
 
@@ -33,9 +34,11 @@ const router = createBrowserRouter([
     {path: "/salas", element: <RoomsPage />},
     {path: "/disciplinas", element: <SubjectsPage />},
     {path: "/eventos", element: <EventsPage />},
+
     {path: "/equipamentos", element: <Equipamentos />},
     {path: "/equipamentos/manage", element: <ManageEquipamentos />},
     {path: "/equipamentos/manage/adicionar", element: <AdicionarEquipamento />},
+    {path: "/equipamentos/manage/buscar", element: <BuscarEquipamento />},
 
     {path: "/usuarios/alunos", element: <AlunosPage />},
     {path: "/usuarios/professores", element: <ProfessoresPage />},
