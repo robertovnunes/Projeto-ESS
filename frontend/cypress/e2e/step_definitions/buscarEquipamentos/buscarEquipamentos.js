@@ -80,7 +80,6 @@ Then('eu vejo a lista de equipamentos', (equipmentList) => {
     equipments.forEach(equipment => {
         cy.contains(equipment.nome).should('be.visible');
         cy.contains(equipment.descricao).should('be.visible');
-        cy.contains(equipment.estado_conservacao).should('be.visible');
     });
 });
 

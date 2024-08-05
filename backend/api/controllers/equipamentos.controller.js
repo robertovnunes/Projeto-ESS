@@ -39,6 +39,7 @@ class EquipamentosController {
 
     constructor(equipamentosService){
         this.equipamentosService = equipamentosService;
+        this._createEquipment = this._createEquipment.bind(this);
         this.getAllEquipments = this.getAllEquipments.bind(this);
         this.getEquipmentById = this.getEquipmentById.bind(this);
         this.getEquipmentByPatrimonio = this.getEquipmentByPatrimonio.bind(this);
@@ -47,6 +48,18 @@ class EquipamentosController {
         this.patchEquipment = this.patchEquipment.bind(this);
         this.deleteEquipment = this.deleteEquipment.bind(this);
     }
+
+    async _createEquipment (req, res) {
+        console.log('Creating mock equipment');
+        const response = await this.equipamentosService.createEquipment(req.body);
+        if(response.status === 'error'){
+            console.log(`Error creating mock equipment: ${response.message}`);
+            res.status(400).send({message: response.message});
+        } else {
+            console.log('Mock equipment created');
+            res.status(200).send({message: 'Mock equipment created'});
+        }
+    };
 
      async getAllEquipments(req, res) {
         try{

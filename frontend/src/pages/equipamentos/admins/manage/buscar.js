@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {deleteEquipamento, fetchEquipamentos} from "../../../../context/equipamentos/apiService";
+import { fetchEquipamentos} from "../../../../context/equipamentos/apiService";
 import {useLocation, useNavigate} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,6 @@ import BaseLayout from "../../../../components/common/BaseLayout";
 import EquipmentModal from "../../../../components/common/EquipmentModal";
 import '../../../../style/container.css';
 import Cookie from "js-cookie";
-import SimNaoModal from "../../../../components/common/simNao_Modal";
 
 const BuscarEquipamento = () => {
 
@@ -33,7 +32,6 @@ const BuscarEquipamento = () => {
     const [message, setMessage] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [filteredEquipamentos, setFilteredEquipamentos] = useState([]);
-    const [showModal, setShowModal] = useState(false);
     const [patrimonio, setPatrimonio] = useState('');
     const [numero_serie, setNumero_serie] = useState('');
 
@@ -92,27 +90,15 @@ const BuscarEquipamento = () => {
         setSelectedFieldText(selectedText);
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = async () => {
         setModalIsOpen(false);
-    };
-
-
-    const handleDelete = async (id) => {
-        setEquipamentoID(id);
-        setMessage('Deseja remover o equipamento?');
-        setShowModal(true);
-    };
-
-    const confirmDelete = async () => {
-        try {
-            await deleteEquipamento(equipamentoID);
-            setShowModal(false);
-        } catch (error) {
-            console.error('Erro ao deletar equipamento:', error);
+        let response = await fetchEquipamentos();
+        if (response) {
+            setEquipamentos(response);
         }
     };
 
-    const shouldShowRemoveButton = !location.state?.hideRemoveButton;
+
     const shouldShowActions = !location.state?.hideActions;
     return (
         <BaseLayout id="buscar">
@@ -147,8 +133,8 @@ const BuscarEquipamento = () => {
                                 <tr>
                                     <th>Nome</th>
                                     <th>Descrição</th>
-                                    <th>Estado de Conservação</th>
-                                    <th>Ações</th>
+                                    <th>Registro</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             {filteredEquipamentos.length === 0 && (
@@ -156,42 +142,26 @@ const BuscarEquipamento = () => {
                             )}
                             <tbody>
                                 {filteredEquipamentos.map((equipment) => (
-                                    <tr key={equipment.id} className="equipamento-item">
+                                    <tr key={equipment.id} className="equipamento-item" onClick={() => handleOpenModal(equipment.id)}>
                                         <td className="Nome">{equipment.nome}</td>
                                         <td className="descricao">{equipment.descricao}</td>
-                                        <td className="estado">{equipment.estado_conservacao}</td>
-                                        <td>
-                                            <button className="btn-editar" onClick={() => {
-                                                handleOpenModal(equipment.id);
-                                            }}>
-                                                Ver
-                                            </button>
-                                            {shouldShowRemoveButton && (
-                                                <button className="btn-remover" type="button" onClick={() => {
-                                                    handleDelete(equipment.id).then();
-                                                }}>
-                                                    Remover
-                                                </button>
-                                            )}
-                                        </td>
+                                        <td className="registro">{equipment.patrimonio !== undefined ? (
+                                            <>P: {equipment.patrimonio}</>
+                                            ) : (
+                                            <>SN: {equipment.numero_serie}</>
+                                        )}</td>
+                                        <td className="status">{equipment.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                         </div>
-                        {showModal && (
-                            <SimNaoModal
-                                message={message}
-                                onConfirm={confirmDelete}
-                                onCancel={() => setShowModal(false)}
-                            />
-                        )}
                         {modalIsOpen && (
                             <EquipmentModal
                                 isOpen={modalIsOpen}
                                 onRequestClose={handleCloseModal}
                                 equipmentID={equipamentoID}
-                                hideActions={shouldShowActions}
+                                showActions={shouldShowActions}
                             />
                         )}
                     </div>

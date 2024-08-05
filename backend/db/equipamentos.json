@@ -60,29 +60,5 @@
          }
       ],
       "manutencao": []
-   },
-   {
-      "id": "046tdXDTao-n",
-      "status": "disponível",
-      "nome": "teste",
-      "descricao": "teste",
-      "estado_conservacao": "teste",
-      "data_aquisicao": "12/12/12",
-      "valor_estimado": "10",
-      "patrimonio": "123456",
-      "reservas": [],
-      "manutencao": []
-   },
-   {
-      "id": "04io3v7c8ag6",
-      "status": "disponível",
-      "nome": "teste2",
-      "descricao": "teste2",
-      "estado_conservacao": "teste11",
-      "data_aquisicao": "12/12/12",
-      "valor_estimado": "12",
-      "numero_serie": "101010",
-      "reservas": [],
-      "manutencao": []
    }
 ]

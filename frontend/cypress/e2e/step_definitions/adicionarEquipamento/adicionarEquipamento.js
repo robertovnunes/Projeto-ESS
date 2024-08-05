@@ -85,11 +85,10 @@ And('eu tenho um equipamento com o {string} {string}', async(identificador, valo
     };
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3001/equipamentos/test/addmock',
+        url: 'http://localhost:3001/equipamentos/test',
         body: equipamento
     });
 });
-
 
 Then('eu vejo a mensagem {string}', (message) => {
     cy.contains(message).should('be.visible');

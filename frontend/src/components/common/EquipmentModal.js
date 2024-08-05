@@ -5,21 +5,31 @@ import Button from "./Button";
 import SimNaoModal from "./simNao_Modal";
 import {deleteEquipamento, fetchEquipamento, patchEquipamento} from "../../context/equipamentos/apiService";
 
-const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) => {
+const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, showActions }) => {
 
     const [isNotEditing, setIsNotEditing] = useState(true);
     const [equipamento, setEquipamento] = useState({});
     const [formData, setFormData] = useState({});
     const [message, setMessage] = useState('');
-    const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
+
+    const SubmitModal = SimNaoModal;
+    const DeleteModal = SimNaoModal;
+
+    const updateEquipment = (data) => {
+        setEquipamento(data);
+        setFormData(data);
+    };
 
     useEffect(() => {
         const getEquipamento = async () => {
             if (equipmentID) {
                 try {
                     const response = await fetchEquipamento(equipmentID);
-                    setEquipamento(response);
-                    setFormData(response); // Atualiza formData com os dados do equipamento
+                    if(response) {
+                        updateEquipment(response); // Atualiza formData com os dados do equipamento
+                    }
                 } catch (error) {
                     console.error('Erro ao buscar equipamento:', error);
                 }
@@ -33,12 +43,19 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = () => {
+        setMessage('Deseja salvar as alterações?');
+        setShowSubmitModal(true);
+    };
+
+    const confirmSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log('formData:', formData);
             await patchEquipamento(equipmentID, formData);
-            onRequestClose();
+            const response = await fetchEquipamento(equipmentID);
+            updateEquipment(response);
+            setShowSubmitModal(false);
+            setIsNotEditing(true);
         } catch (error) {
             console.error('Erro ao salvar equipamento:', error);
         }
@@ -46,13 +63,13 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
 
     const handleDelete = async () => {
         setMessage('Deseja remover o equipamento?');
-        setShowModal(true);
+        setShowDeleteModal(true);
     };
 
     const confirmDelete = async () => {
         try {
             await deleteEquipamento(equipmentID);
-            setShowModal(false);
+            setShowDeleteModal(false);
         } catch (error) {
             console.error('Erro ao deletar equipamento:', error);
         }
@@ -79,7 +96,7 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
                    }}
                    appElement={document.getElementById('#root')}>
                 <button className="close-button" onClick={onRequestClose}>&times;</button>
-                <h2>{`${equipamento.nome}`} Details</h2>
+                <h2>Detalhes do equipamento: {`${equipamento.nome}`}</h2>
                 <form className="form-adicionar">
                     <div className="form-group">
                         <label>
@@ -102,6 +119,18 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
                             name="descricao"
                             disabled={isNotEditing}
                             value={formData.descricao || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>
+                            Status:
+                        </label>
+                        <input
+                            type="text"
+                            name="status"
+                            disabled={isNotEditing}
+                            value={formData.status || ''}
                             onChange={handleChange}
                         />
                     </div>
@@ -152,7 +181,7 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
                             <p>{formData.numero_serie || ''}</p>
                         </div>
                     )}
-                    {hideActions && (
+                    {showActions && (
                         <>
                             <Button
                                 onClick={() => {setIsNotEditing(!isNotEditing)}}>
@@ -163,11 +192,18 @@ const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, hideActions }) =>
                         </>
                     )}
                 </form>
-                {showModal && (
-                    <SimNaoModal
+                {showDeleteModal && (
+                    <DeleteModal
                         message={message}
-                        onConfirm={confirmDelete}
-                        onCancel={() => setShowModal(false)}
+                        onConfirm={ confirmDelete }
+                        onCancel={() => setShowDeleteModal(false)}
+                    />
+                )}
+                {showSubmitModal && (
+                    <SubmitModal
+                        message={message}
+                        onConfirm={ confirmSubmit }
+                        onCancel={() => setShowSubmitModal(false)}
                     />
                 )}
             </Modal>

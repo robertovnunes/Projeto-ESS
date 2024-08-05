@@ -16,11 +16,17 @@ const equipamentosController = new EquipamentosController(injector.getEquipmentS
 
 const setup = new testSetup();
 
-const _getDatabaseCopy = async (req, res) => {
+const _getDatabaseBackup = async (req, res) => {
+    console.log('Getting database copy');
+    await setup.getDatabaseBackup();
+    return res.status(200).send({message: 'Database backup done!'});
+};
+
+const getDatabaseCopy = async (req, res) => {
     console.log('Getting database copy');
     await setup.getDatabaseCopy();
     return res.status(200).send({message: 'Database copied'});
-};
+}
 
 const _restoreDatabase = async (req, res) => {
     console.log('Restoring database');
@@ -28,12 +34,6 @@ const _restoreDatabase = async (req, res) => {
     return res.status(200).send({message: 'Database restored'});
 };
 
-const _createEquipment = async (req, res) => {
-    console.log('Creating mock equipment');
-    const equipment = req.body;
-    await repository.createEquipment(equipment);
-    return res.status(200).send({message: 'Equipment created'});
-};
 
 router.get('/', equipamentosController.getAllEquipments);
 router.get('/:id', equipamentosController.getEquipmentById);
@@ -42,9 +42,10 @@ router.get('/numero_serie/:numero_serie', equipamentosController.getEquipmentByS
 router.post('/', equipamentosController.createEquipment);
 router.patch('/:id', equipamentosController.patchEquipment);
 router.delete('/:id', equipamentosController.deleteEquipment);
-router.post('/test/getBackup', _getDatabaseCopy);
-router.post('/test/restoreBackup', _restoreDatabase);
-router.post('/test/addmock', _createEquipment);
+router.get('/test/getBackup', _getDatabaseBackup);
+router.get('/test/restoreBackup', _restoreDatabase);
+router.get('/test/getCopy', getDatabaseCopy);
+router.post('/test', equipamentosController._createEquipment);
 
 
 module.exports = app => {

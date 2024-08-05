@@ -39,13 +39,11 @@ Feature: Listar e buscar equipamentos
         [
             {
                 "nome": "Arduino",
-                "descricao": "Placa de prototipação",
-                "estado_conservacao": "reformado"
+                "descricao": "Placa de prototipação"
             },
             {
                 "nome": "Monitor Phillips",
-                "descricao": "Monitor de 19 polegadas",
-                "estado_conservacao": "bom"
+                "descricao": "Monitor de 19 polegadas"
             }
         ]
         """
@@ -73,8 +71,7 @@ Feature: Listar e buscar equipamentos
         [
             {
                 "nome": "Arduino",
-                "descricao": "Placa de prototipação",
-                "estado_conservacao": "reformado"
+                "descricao": "Placa de prototipação"
             }
         ]
         """
@@ -103,8 +100,7 @@ Feature: Listar e buscar equipamentos
         [
             {
                 "nome": "Monitor Phillips",
-                "descricao": "Monitor de 19 polegadas",
-                "estado_conservacao": "bom"
+                "descricao": "Monitor de 19 polegadas"
             }
         ]
         """
@@ -133,8 +129,7 @@ Feature: Listar e buscar equipamentos
         [
             {
                 "nome": "Arduino",
-                "descricao": "Placa de prototipação",
-                "estado_conservacao": "reformado"
+                "descricao": "Placa de prototipação"
             }
         ]
         """

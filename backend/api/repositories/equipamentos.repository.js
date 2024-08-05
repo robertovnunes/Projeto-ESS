@@ -77,7 +77,7 @@ class EquipamentosRepository {
             }
             this.db = equipamentos;
             await this._writeFile(this.db);
-            return {status: 'ok', message: 'Equipamento criado com sucesso', equipmentID: newEquipamento.id};
+            return {status: 'ok', message: 'Equipamento criado com sucesso', equipment: newEquipamento};
         }
         return {status: 'error', message: 'Erro ao criar equipamento'};
     }

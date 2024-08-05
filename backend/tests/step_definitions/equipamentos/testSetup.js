@@ -18,8 +18,15 @@ class TestSetup {
             }
         }
     }
-    
+
     async getDatabaseCopy(){
+        const data = await this.equipamentosRepository.getAllEquipments();
+        if(data.length > 0){
+            await file.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+        }
+    }
+
+    async getDatabaseBackup(){
         const data = await this.equipamentosRepository.getAllEquipments();
         if(data.length > 0){
             await file.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');

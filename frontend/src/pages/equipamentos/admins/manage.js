@@ -46,7 +46,7 @@ const ManageEquipamentos = () => {
                     </div>
                     <div className='button-container'>
                         <Button className="buscar" onClick={() => handleNavigateToSearch()} >
-                            Editar ou remover Equipamento
+                            Editar ou remover equipamento
                         </Button>
                     </div>
                 </div>
