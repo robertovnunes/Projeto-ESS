@@ -10,7 +10,7 @@ class TestSetup {
         this.equipamentosRepository = new equipamentosRepository();
     }
     
-    async clearDatabase(){
+    async _clearDatabase(){
         const data = await this.equipamentosRepository.getAllEquipments();
         if(data.length > 0){
             for(let i = 0; i < data.length; i++){
@@ -24,14 +24,14 @@ class TestSetup {
         if(data.length > 0){
             await file.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
         }
-        await this.clearDatabase();
+        await this._clearDatabase();
     }
 
     async restoreDatabase(){
         const json = await file.promises.readFile(filePath, 'utf-8');
         const data = JSON.parse(json);
         if(data.length > 0){
-            await this.clearDatabase();
+            await this._clearDatabase();
             for(let i = 0; i < data.length; i++){
                 await this.equipamentosRepository.createEquipment(data[i]);
             }

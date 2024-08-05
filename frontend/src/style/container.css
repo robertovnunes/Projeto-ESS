@@ -34,3 +34,20 @@ html, body {
     width: 95%;
     text-align: center;
   }
+
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .form-content {
+    width: 20%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+  }

@@ -25,6 +25,9 @@ const ManageEquipamentos = () => {
         navigate(url); // Redireciona para o caminho especificado
     };
 
+    const handleNavigateToSearch = () => {
+        navigate('/equipamentos/manage/buscar', { state: { hideRemoveButton: false } });
+    };
 
     return (
         <BaseLayout>
@@ -38,12 +41,12 @@ const ManageEquipamentos = () => {
                     </div>
                     <div className='button-container'>
                         <Button className="adicionar" onClick={() => HandleNavigation('adicionar')} >
-                            Adicionar Equipamento
+                            Adicionar equipamento
                         </Button>
                     </div>
                     <div className='button-container'>
-                        <Button className="buscar" onClick={() => HandleNavigation('buscar')} >
-                            Buscar Equipamento
+                        <Button className="buscar" onClick={() => handleNavigateToSearch()} >
+                            Editar ou remover Equipamento
                         </Button>
                     </div>
                 </div>

@@ -1,0 +1,22 @@
+/* EquipmentModal.css */
+.ReactModal__Overlay {
+    z-index: 1000; /* Certifique-se de que o modal tenha um z-index alto */
+    background-color: rgba(0, 0, 0, 0.75); /* Fundo escuro semi-transparente */
+}
+
+.ReactModal__Content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+}

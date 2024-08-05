@@ -3,6 +3,38 @@ const equipamentoPatrimonioModel = require('../models/equipamentos/patrimonio.mo
 const tokensModel = require('../models/token.model');
 
 
+const verifyEmptyFields = (equipamento = {}) => {
+    let emptyFields = [];
+    if (!equipamento.nome || !equipamento.descricao
+        || !equipamento.estado_conservacao || !equipamento.data_aquisicao
+        || !equipamento.valor_estimado || (equipamento.numero_serie !== undefined && !equipamento.numero_serie)
+        || (equipamento.patrimonio !== undefined && !equipamento.patrimonio)) {
+        console.log(`POST /equipamentos [400] BAD REQUEST`);
+        if (!equipamento.nome) {
+            emptyFields.push('Nome');
+        }
+        if (!equipamento.descricao) {
+            emptyFields.push('Descrição');
+        }
+        if (!equipamento.estado_conservacao) {
+            emptyFields.push('Estado de conservação');
+        }
+        if (!equipamento.data_aquisicao) {
+            emptyFields.push('Data de aquisição');
+        }
+        if (!equipamento.valor_estimado) {
+            emptyFields.push('Valor estimado');
+        }
+        if (equipamento.numero_serie !== undefined && !equipamento.numero_serie) {
+            emptyFields.push('Numero de série');
+        }
+        if (equipamento.patrimonio !== undefined && !equipamento.patrimonio) {
+            emptyFields.push('Patrimônio');
+        }
+    }
+    return emptyFields;
+};
+
 class EquipamentosController {
 
     constructor(equipamentosService){
@@ -89,41 +121,26 @@ class EquipamentosController {
                 console.log(`POST /equipamentos [403] FORBIDDEN`);
                 return res.status(403).send('Apenas administradores têm permissão para esta operação.');
             }
-            const newEquipment = req.body;
-            if (!newEquipment.nome || !newEquipment.descricao
-                || !newEquipment.estado_conservacao || !newEquipment.data_aquisicao
-                || !newEquipment.valor_estimado || (newEquipment.numero_serie !== undefined && !newEquipment.numero_serie) 
-                || (newEquipment.patrimonio !== undefined && !newEquipment.patrimonio)) {
-                console.log(`POST /equipamentos [400] BAD REQUEST`);
-                if (!newEquipment.nome) {
-                    return res.status(400).send({message: 'Nome nao informado'});
-                } else if (!newEquipment.descricao) {
-                    return res.status(400).send({message: 'Descricao nao informada'});
-                } else if (!newEquipment.estado_conservacao) {
-                    return res.status(400).send({message: 'Estado de conservacao nao informado'});
-                } else if (!newEquipment.data_aquisicao) {
-                    return res.status(400).send({message: 'Data de aquisiçao nao informada'});
-                } else if (!newEquipment.valor_estimado ) {
-                    return res.status(400).send({message: 'Valor estimado nao informado'});
-                } else if (newEquipment.numero_serie !== undefined && !newEquipment.numero_serie) {
-                    return res.status(400).send({message: 'Numero de serie nao informado'});
-                } else if (newEquipment.patrimonio !== undefined && !newEquipment.patrimonio){
-                    return res.status(400).send({message: 'Patrimonio nao informado'});
-                }
+            let newEquipment;
+            const emptyField = verifyEmptyFields(req.body);
+            if(emptyField.length > 0) {
+                const message = 'Campos vazios: '+ emptyField.join(', ');
+                return res.status(400).send({message: message});
             } else {
-                let newEq = null;
-                if(newEquipment.numero_serie !== undefined) {
-                    newEq = new equipamentoSNModel(newEquipment);
-                } else {
-                    newEq = new equipamentoPatrimonioModel(newEquipment);
+                if(req.body.patrimonio !== undefined){
+                    const {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio} = req.body;
+                    newEquipment = new equipamentoPatrimonioModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, patrimonio);
+                } else if (req.body.numero_serie !== undefined) {
+                    const {nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie} = req.body;
+                    newEquipment = new equipamentoSNModel(nome, descricao, estado_conservacao, data_aquisicao, valor_estimado, numero_serie);
                 }
-                let equipmentCreated = await this.equipamentosService.createEquipment(newEq);
-                if(equipmentCreated.status === 'error') {
-                    return res.status(400).send({message: equipmentCreated.message});
-                } else {
-                    console.log(`POST /equipamentos [201] CREATED`);
-                    return res.status(201).send({message: 'Equipamento criado com sucesso'});
-                }
+            }
+            let equipmentCreated = await this.equipamentosService.createEquipment(newEquipment);
+            if(equipmentCreated.status === 'error') {
+                return res.status(400).send({message: equipmentCreated.message});
+            } else {
+                console.log(`POST /equipamentos [201] CREATED`);
+                return res.status(201).send({message: 'Equipamento criado com sucesso', id: equipmentCreated.equipmentID});
             }
         } catch (error) {
                 console.log(`POST /equipamentos [500] INTERNAL SERVER ERROR ${error.message}`);
@@ -135,6 +152,7 @@ class EquipamentosController {
         try{
             const isAdmin = tokensModel.authenticateAdmin(req);
             if (!isAdmin) {
+                console.log(`POST /equipamentos [403] FORBIDDEN`);
                 return res.status(403).send('Apenas administradores têm permissão para esta operação.');
             }
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
@@ -163,6 +181,7 @@ class EquipamentosController {
         try{
             const isAdmin = tokensModel.authenticateAdmin(req);
             if (!isAdmin) {
+                console.log(`POST /equipamentos [403] FORBIDDEN`);
                 return res.status(403).send('Apenas administradores têm permissão para esta operação.');
             }
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
@@ -177,7 +196,8 @@ class EquipamentosController {
             console.log(`DELETE /equipamentos/${req.params.id} [500] INTERNAL SERVER ERROR\n ${error.message}`);
             return res.status(500).send({message: '[500] INTERNAL SERVER ERROR'});
         }
-    }
+    };
+
 }
 
 module.exports = EquipamentosController;

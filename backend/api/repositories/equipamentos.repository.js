@@ -63,10 +63,10 @@ class EquipamentosRepository {
         let exist;
         if(newEquipamento.hasOwnProperty('patrimonio')){
             exist = await this.getEquipmentByPatrimonio(newEquipamento.patrimonio);
-            if(exist !== undefined) return {status: 'error', message: 'Patrimonio ja existe'};
+            if(exist !== undefined) return {status: 'error', message: 'Erro ao criar equipamento: patrimônio já cadastrado'};
         } else if(newEquipamento.hasOwnProperty('numero_serie')){
             exist = await this.getEquipmentBySerie(newEquipamento.numero_serie);
-            if(exist !== undefined) return {status: 'error', message: 'Numero de serie ja existe'};
+            if(exist !== undefined) return {status: 'error', message: 'Erro ao criar equipamento: numero de série já cadastrado'};
         }
         if(exist === undefined){
             let equipamentos = await this.getAllEquipments();
@@ -77,7 +77,7 @@ class EquipamentosRepository {
             }
             this.db = equipamentos;
             await this._writeFile(this.db);
-            return {status: 'ok', message: 'Equipamento criado com sucesso'};
+            return {status: 'ok', message: 'Equipamento criado com sucesso', equipmentID: newEquipamento.id};
         }
         return {status: 'error', message: 'Erro ao criar equipamento'};
     }

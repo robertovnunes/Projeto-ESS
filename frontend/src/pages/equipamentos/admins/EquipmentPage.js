@@ -25,6 +25,10 @@ const MainEquipamentos = () => {
         navigate(page);
     };
 
+    const handleNavigateToSearch = () => {
+        navigate('/equipamentos/manage/buscar', { state: { hideRemoveButton: true, hideActions: true } });
+    };
+
     const handleHomeNavigation = () => {
         navigate('/mainpage'); // Redireciona para a página principal
     };
@@ -39,7 +43,7 @@ const MainEquipamentos = () => {
                     <h2>Equipamentos (Administrador)</h2>
                 </div>
                 <div className='button-container'>
-                    <Button className='btn-consultar' onClick={() => loadPage('/equipamentos/manage/buscar')}>
+                    <Button className='btn-consultar' onClick={() => handleNavigateToSearch()}>
                         Consultar equipamentos
                     </Button>
                     <Button className='btn-manage' onClick={() => loadPage('/equipamentos/manage')}>

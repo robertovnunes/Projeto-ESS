@@ -8,6 +8,7 @@ import Modal from '../../../../components/common/Modal'; // Importe o componente
 import '../../../../style/container.css'
 import '../../styles/form.css';
 import Cookie from "js-cookie";
+import Button from "../../../../components/common/Button";
 
 
 const AdicionarEquipamento = () => {
@@ -40,7 +41,8 @@ const AdicionarEquipamento = () => {
 
     const handleInputChange = (event) => {
         const {name, value} = event.target;
-        setNewEquipamento({...newEquipamento, [name]: value});
+        const copy = {...newEquipamento, [name]: value};
+        setNewEquipamento(copy);
     };
 
     const handleSelectChange = (event) => {
@@ -66,7 +68,7 @@ const AdicionarEquipamento = () => {
         event.preventDefault();
         try {
             await addEquipamento(newEquipamento);
-            setMessage('Cadastro realizado com sucesso');
+            setMessage('Equipamento adicionado com sucesso');
             setShowModal(true); // Mostrar o modal
         } catch (error) {
             // Verificar se o erro tem uma resposta e se contém uma mensagem
@@ -82,7 +84,13 @@ const AdicionarEquipamento = () => {
     };
 
     const handleCloseModal = () => {
-        setShowModal(false); // Fechar o modal
+        if (message === 'Equipamento adicionado com sucesso') {
+            setShowModal(false); // Fechar o modal
+            navigate('/equipamentos/manage/buscar'); // Navegar para a página de gerenciamento de equipamentos
+        } else {
+            setShowModal(false); // Fechar o modal
+            setMessage(''); // Limpar a mensagem
+        }
     };
 
     return (
@@ -146,7 +154,7 @@ const AdicionarEquipamento = () => {
                             <label>
                                 Identificador:
                             </label>    
-                            <select name="identificador" onChange={handleSelectChange}>
+                            <select id="identificador" name="identificador" onChange={handleSelectChange}>
                                 <option value="">Selecione</option>
                                 <option value="patrimonio">Patrimonio</option>
                                 <option value="numero_serie">Numero de série</option>
@@ -162,7 +170,7 @@ const AdicionarEquipamento = () => {
                             />
                         </div>
 
-                        <button type="submit" className="btn-adicionar" onClick={handleSubmit}>Adicionar</button>
+                        <Button className="salvar" onClick={handleSubmit}>Salvar</Button>
                     </form>
                     {showModal && (
                         <Modal
