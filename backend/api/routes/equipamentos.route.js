@@ -17,7 +17,7 @@ const equipamentosController = new EquipamentosController(injector.getEquipmentS
 const setup = new testSetup();
 
 const _getDatabaseBackup = async (req, res) => {
-    console.log('Getting database copy');
+    console.log('Getting database backup');
     await setup.getDatabaseBackup();
     return res.status(200).send({message: 'Database backup done!'});
 };

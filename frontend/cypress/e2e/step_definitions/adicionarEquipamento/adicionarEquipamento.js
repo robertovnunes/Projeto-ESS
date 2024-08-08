@@ -14,6 +14,7 @@ beforeEach(() => {
         method: 'POST',
         url:'http://localhost:3001/equipamentos/test/getBackup'
     });
+    cy.wait(1000);
 });
 
 // Limpeza após cada teste
@@ -39,18 +40,22 @@ afterEach(() => {
 });
 
 Given('que eu estou na página de {string}', (pagina) => {
+    cy.wait(1000);
     cy.visit(`/equipamentos/manage`);
 });
 
 When('eu escolho {string}', (opcao) => {
+    cy.wait(1000);
     cy.contains(opcao).click();
 });
 
 Then('eu devo ser redirecionado para a página de {string}', (pagina) => {
+    cy.wait(1000);
     cy.contains(pagina).should('be.visible');
 });
 
 When('eu preencho o campo {string} com {string}', (campo, valor) => {
+    cy.wait(1000);
     if(valor === ''){
         cy.get(`input[name="${campo}"]`).clear();
     } else {
@@ -60,6 +65,7 @@ When('eu preencho o campo {string} com {string}', (campo, valor) => {
 });
 
 And('eu preencho o campo {string} com {string}', async(campo, valor) => {
+    cy.wait(1000);
     if(valor === ''){
         cy.get(`input[name="${campo}"]`).clear();
     } else {
@@ -69,14 +75,17 @@ And('eu preencho o campo {string} com {string}', async(campo, valor) => {
 });
 
 And('eu escolho {string} como identificador', (valor) => {
+    cy.wait(1000);
     cy.get(`#identificador`).select(valor);
 });
 
 And('eu escolho {string}', async (opcao) => {
+    cy.wait(1000);
     cy.get(opcao).click();
 });
 
 And('eu tenho um equipamento com o {string} {string}', async(identificador, valor) => {
+    cy.wait(1000);
     const identifier = identificador === 'patrimônio' ? 'patrimonio' : 'numero_serie';
     let equipamento = {
         nome: 'Equipamento Teste',
@@ -94,6 +103,7 @@ And('eu tenho um equipamento com o {string} {string}', async(identificador, valo
 });
 
 Then('eu vejo a mensagem {string}', (message) => {
+    cy.wait(1000);
     cy.contains(message).should('be.visible');
 });
 
