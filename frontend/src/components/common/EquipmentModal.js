@@ -4,7 +4,6 @@
     import Button from "./Button";
     import SimNaoModal from "./simNao_Modal";
     import {deleteEquipamento, fetchEquipamento, patchEquipamento} from "../../context/equipamentos/apiService";
-    import { format, parseISO } from 'date-fns';
 
     const EquipmentModal = ({ isOpen, onRequestClose, equipmentID, showActions, onEquipmentAction }) => {
 
@@ -197,7 +196,7 @@
                                     {!isNotEditing ? 'Cancelar' : 'Editar'}
                                 </Button>
                                 {!isNotEditing && <Button onClick={handleSubmit}>Salvar</Button>}
-                                <Button onClick={handleDelete}>Delete</Button>
+                                <Button onClick={handleDelete}>Remover</Button>
                             </>
                         )}
                     </form>

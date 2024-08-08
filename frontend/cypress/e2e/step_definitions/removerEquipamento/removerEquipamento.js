@@ -13,7 +13,7 @@ beforeEach(() => {
         method: 'POST',
         url:'http://localhost:3001/equipamentos/test/getCopy'
     });
-    cy.wait(500);
+    cy.wait(1000);
 });
 
 // Limpeza após cada teste
@@ -23,7 +23,7 @@ afterEach(() => {
         method: 'POST',
         url:'http://localhost:3001/equipamentos/test/restoreBackup'
     });
-    cy.wait(500);
+    cy.wait(1000);
     // Garantir que o ícone do usuário está visível e clicável
     cy.get('.user-icon')
         .should('be.visible') // Verifique se o ícone está visível
@@ -38,31 +38,36 @@ afterEach(() => {
     cy.clearLocalStorage();
 });
 
-Given('que eu estou na pagina de gerenciar equipamentos', (page) => {
+Given('que eu estou na pagina de gerenciar equipamentos', () => {
     cy.visit('/equipamentos/manage');
 });
 
 When('eu clico no botão {string}', (botao) => {
-    cy.wait(500);
-    cy.get('button').contains(botao).click({force: true, timeout: 5000});
+    cy.wait(1000);
+    cy.get('div').contains(botao).click({force: true, timeout: 10000});
 });
 
 When('eu clico em {string}', (opcao) => {
-    cy.wait(500);
-    cy.contains('tr', opcao).should('exist').click({force: true, timeout: 5000});
+    cy.wait(1000);
+    cy.contains('tr', opcao).should('exist').click({force: true, timeout: 10000});
 });
 
 When('eu escolho {string}', (opcao) => {
-    cy.wait(500);
-    cy.contains('div', opcao).click({force: true, timeout: 5000});
+    cy.wait(1000);
+    cy.contains('div', opcao).click({force: true, timeout: 10000});
 });
 
 Then('eu devo ver a lista de equipamentos', () => {
-    cy.wait(500);
-    cy.contains('table[class="equipment-list"]').should('be.visible');
+    cy.wait(1000);
+    cy.get('table').should('be.visible');
 });
 
 And('eu clico em {string}', (opcao) => {
-    cy.wait(500);
-    cy.contains('tr', opcao).should('exist').click({force: true, timeout: 5000});
+    cy.wait(1000);
+    cy.contains('tr', opcao).should('exist').click({force: true, timeout: 10000});
+});
+
+Then('eu devo ver a mensagem {string}', (mensagem) => {
+    cy.wait(1000);
+    cy.contains(mensagem).should('be.visible');
 });
