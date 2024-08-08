@@ -49,6 +49,8 @@ class EquipamentosController {
         this.deleteEquipment = this.deleteEquipment.bind(this);
     }
 
+
+
     async _createEquipment (req, res) {
         console.log('Creating mock equipment');
         const response = await this.equipamentosService.createEquipment(req.body);
@@ -128,7 +130,11 @@ class EquipamentosController {
     };
 
     async createEquipment(req, res) {
-        try{
+        try{/*
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }*/
             let newEquipment;
             const emptyField = verifyEmptyFields(req.body);
             if(emptyField.length > 0) {
@@ -157,7 +163,11 @@ class EquipamentosController {
     };
 
     async patchEquipment(req, res) {
-        try{
+        try{/*
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }*/
             let updated = await this.equipamentosService.patchEquipment(req.params.id, req.body);
             if(updated === undefined) {
                 console.log(`PATCH /equipamentos/:${req.params.id} [404] NOT FOUND`);
@@ -181,7 +191,12 @@ class EquipamentosController {
     };
 
     async deleteEquipment(req, res) {
-        try{
+        try{/*
+            const isAdmin = tokensModel.authenticateAdmin(req);
+            if (!isAdmin) {
+                return res.status(403).send('Apenas administradores têm permissão para esta operação.');
+            }
+            */
             const deleted = await this.equipamentosService.deleteEquipment(req.params.id);
             if(deleted === undefined) {
                 console.log(`DELETE /equipamentos/${req.params.id} [404] NOT FOUND`);
