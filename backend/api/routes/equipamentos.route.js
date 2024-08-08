@@ -42,9 +42,9 @@ router.get('/numero_serie/:numero_serie', equipamentosController.getEquipmentByS
 router.post('/', equipamentosController.createEquipment);
 router.patch('/:id', equipamentosController.patchEquipment);
 router.delete('/:id', equipamentosController.deleteEquipment);
-router.get('/test/getBackup', _getDatabaseBackup);
-router.get('/test/restoreBackup', _restoreDatabase);
-router.get('/test/getCopy', getDatabaseCopy);
+router.post('/test/getBackup', _getDatabaseBackup);
+router.post('/test/restoreBackup', _restoreDatabase);
+router.post('/test/getCopy', getDatabaseCopy);
 router.post('/test', equipamentosController._createEquipment);
 
 

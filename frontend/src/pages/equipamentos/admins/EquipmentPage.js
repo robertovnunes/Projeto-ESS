@@ -33,6 +33,9 @@ const MainEquipamentos = () => {
         navigate('/mainpage'); // Redireciona para a página principal
     };
 
+
+
+
     return (
         <div className='admin-page'>
             <div className='content-container'>
@@ -43,7 +46,7 @@ const MainEquipamentos = () => {
                     <h2>Equipamentos (Administrador)</h2>
                 </div>
                 <div className='button-container'>
-                    <Button className='btn-consultar' onClick={() => handleNavigateToSearch()}>
+                    <Button className='btn-consultar' id="btn-consulta" onClick={() => handleNavigateToSearch()}>
                         Consultar equipamentos
                     </Button>
                     <Button className='btn-manage' onClick={() => loadPage('/equipamentos/manage')}>

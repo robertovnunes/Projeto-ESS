@@ -21,7 +21,7 @@ class EquipamentosRepository {
     }
 
     async getAllEquipments() {
-        this.db = await this._loadJson().then(data => data);
+        await this._loadJson().then(data => this.db = data);
         return this.db;
     }
 

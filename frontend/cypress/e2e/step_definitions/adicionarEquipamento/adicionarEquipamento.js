@@ -35,6 +35,7 @@ afterEach(() => {
     // Limpar cookies ou localStorage se necessário
     cy.clearCookies();
     cy.clearLocalStorage();
+    cy.wait(1000);
 });
 
 Given('que eu estou na página de {string}', (pagina) => {
@@ -55,6 +56,7 @@ When('eu preencho o campo {string} com {string}', (campo, valor) => {
     } else {
         cy.get(`input[name="${campo}"]`).type(valor);
     }
+    cy.get('h2').contains('Adicionar equipamento').click();
 });
 
 And('eu preencho o campo {string} com {string}', async(campo, valor) => {
@@ -63,6 +65,7 @@ And('eu preencho o campo {string} com {string}', async(campo, valor) => {
     } else {
         cy.get(`input[name="${campo}"]`).type(valor);
     }
+    cy.get('h2').contains('Adicionar equipamento').click();
 });
 
 And('eu escolho {string} como identificador', (valor) => {

@@ -9,6 +9,11 @@ import '../../../../style/container.css'
 import '../../styles/form.css';
 import Cookie from "js-cookie";
 import Button from "../../../../components/common/Button";
+import DatePicker, {registerLocale, setDefaultLocale} from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import ptBR from 'date-fns/locale/pt-BR';
+
+registerLocale('pt-BR', ptBR);
 
 
 const AdicionarEquipamento = () => {
@@ -33,15 +38,23 @@ const AdicionarEquipamento = () => {
         nome: '',
         descricao: '',
         estado_conservacao: '',
-        data_aquisicao: '',
+        data_aquisicao: null,
         valor_estimado: ''
     });
     const [message, setMessage] = useState('');
     const [showModal, setShowModal] = useState(false); // Estado para controlar a exibição do modal
 
-    const handleInputChange = (event) => {
-        const {name, value} = event.target;
-        const copy = {...newEquipamento, [name]: value};
+    const handleInputChange = (event, name) => {
+        let copy;
+        if (name === "data_aquisicao") {
+            // Para o DatePicker
+            const formatedData = event.toISOString().split('T')[0];
+            copy = {...newEquipamento, [name]: formatedData};
+        } else {
+            // Para outros inputs
+            const { name, value } = event.target;
+            copy = {...newEquipamento, [name]: value};
+        }
         setNewEquipamento(copy);
     };
 
@@ -70,6 +83,8 @@ const AdicionarEquipamento = () => {
             await addEquipamento(newEquipamento);
             setMessage('Equipamento adicionado com sucesso');
             setShowModal(true); // Mostrar o modal
+            // Armazenar a URL de origem em sessionStorage
+            sessionStorage.setItem('fromAddPage', 'true');
         } catch (error) {
             // Verificar se o erro tem uma resposta e se contém uma mensagem
             const errorMessage = error.response?.data?.message || 'Erro ao adicionar equipamento';
@@ -136,9 +151,16 @@ const AdicionarEquipamento = () => {
                             <label>
                                 Data de Aquisição:
                             </label>
-                            <input type="text" name="data_aquisicao"
-                                value={newEquipamento.data_aquisicao} 
-                                onChange={handleInputChange}
+                            <DatePicker
+                                selected={newEquipamento.data_aquisicao}
+                                onChange={(data) => handleInputChange(data, 'data_aquisicao')}
+                                name="data_aquisicao"
+                                dateFormat="dd/MM/yyyy"
+                                placeholderText="Selecione a data"
+                                isClearable
+                                showYearDropdown
+                                scrollableYearDropdown
+                                yearDropdownItemNumber={15}
                             />
                         </div>
                         <div className="form-group">
@@ -169,8 +191,7 @@ const AdicionarEquipamento = () => {
                                 id={`${selectedIdentifier}`} onChange={handleInputChange} 
                             />
                         </div>
-
-                        <Button className="salvar" onClick={handleSubmit}>Salvar</Button>
+                        <Button className="salvar" id="btn-salvar" onClick={handleSubmit}>Salvar</Button>
                     </form>
                     {showModal && (
                         <Modal

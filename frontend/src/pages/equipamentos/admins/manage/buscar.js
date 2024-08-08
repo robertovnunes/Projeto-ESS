@@ -7,6 +7,7 @@ import BaseLayout from "../../../../components/common/BaseLayout";
 import EquipmentModal from "../../../../components/common/EquipmentModal";
 import '../../../../style/container.css';
 import Cookie from "js-cookie";
+import Snackbar from "../../../../components/common/snackbar";
 
 const BuscarEquipamento = () => {
 
@@ -29,25 +30,27 @@ const BuscarEquipamento = () => {
     const [selectedFieldText, setSelectedFieldText] = useState('Nome');
     const [equipamentos, setEquipamentos] = useState([]);
     const [nome, setNome] = useState('');
-    const [message, setMessage] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [filteredEquipamentos, setFilteredEquipamentos] = useState([]);
     const [patrimonio, setPatrimonio] = useState('');
     const [numero_serie, setNumero_serie] = useState('');
+    const [snackbar, setSnackbar] = useState({
+        isOpen: false,
+        message: '',
+        type: ''
+    });
 
     useEffect(() => {
         const getEquipamentos = async () => {
             try {
-                const data = await fetchEquipamentos();
-                setEquipamentos(data);
+                const response = await fetchEquipamentos();
+                setEquipamentos(response);
             } catch (error) {
-                const errorMessage = error.response?.data?.message || 'Erro ao procurar equipamento';
-                setMessage(errorMessage);
-                console.error(message, error);
+                console.error('Erro ao buscar equipamentos:', error);
             }
         };
         getEquipamentos().then();
-    }, [message]);
+    }, []);
 
     useEffect(() => {
         let filtered;
@@ -98,14 +101,43 @@ const BuscarEquipamento = () => {
         }
     };
 
+    const openSnackbar = (message, type) => {
+        setSnackbar({ isOpen: true, message, type });
+    };
+
+    const closeSnackbar = () => {
+        setSnackbar(prev => ({ ...prev, isOpen: false }));
+    };
+
+    const handleEquipmentAction = (action, success) => {
+        let message, type;
+        if (action === 'delete') {
+            message = success ? 'Equipamento removido com sucesso!' : 'Erro ao deletar equipamento!';
+            type = success ? 'info' : 'error';
+        } else if (action === 'update') {
+            message = success ? 'Equipamento salvo com sucesso!' : 'Erro ao salvar equipamento!';
+            type = success ? 'success' : 'error';
+        }
+        openSnackbar(message, type);
+    };
+
+    const handleGoBack = () => {
+        if (sessionStorage.getItem('fromAddPage') === 'true') {
+            sessionStorage.removeItem('fromAddPage'); // Limpar a flag
+            navigate('/equipamentos/manage');
+        } else {
+            navigate(-1); // Voltar para a página anterior
+        }
+    };
 
     const shouldShowActions = !location.state?.hideActions;
+
     return (
         <BaseLayout id="buscar">
             <div className='admin-page'>
                 <div className='content-container'>
                     <div className='header-container'>
-                        <button className="back-button" onClick={() => navigate(-1)}>
+                        <button className="back-button" onClick={handleGoBack}>
                             <FontAwesomeIcon icon={faArrowLeft} />
                         </button>
                         <h2>Buscar Equipamento</h2>
@@ -128,7 +160,10 @@ const BuscarEquipamento = () => {
                         </div>
                         <div className="equipment-list">
                             <h3>Equipamentos</h3>
-                        <table>
+                            {filteredEquipamentos.length === 0 && (
+                                <p>Nenhum equipamento encontrado</p>
+                            )}
+                        <table className="equipment-list">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -137,9 +172,6 @@ const BuscarEquipamento = () => {
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            {filteredEquipamentos.length === 0 && (
-                                <p>Nenhum equipamento encontrado</p>
-                            )}
                             <tbody>
                                 {filteredEquipamentos.map((equipment) => (
                                     <tr key={equipment.id} className="equipamento-item" onClick={() => handleOpenModal(equipment.id)}>
@@ -162,8 +194,15 @@ const BuscarEquipamento = () => {
                                 onRequestClose={handleCloseModal}
                                 equipmentID={equipamentoID}
                                 showActions={shouldShowActions}
+                                onEquipmentAction={handleEquipmentAction}
                             />
                         )}
+                        <Snackbar
+                            message={snackbar.message}
+                            type={snackbar.type}
+                            isOpen={snackbar.isOpen}
+                            onClose={closeSnackbar}
+                        />
                     </div>
                 </div>
             </div>
