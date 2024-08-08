@@ -24,6 +24,7 @@ afterEach(() => {
         method: 'POST',
         url:'http://localhost:3001/equipamentos/test/restoreBackup'
     });
+    cy.wait(1000);
     // Garantir que o ícone do usuário está visível e clicável
     cy.get('.user-icon')
         .should('be.visible') // Verifique se o ícone está visível

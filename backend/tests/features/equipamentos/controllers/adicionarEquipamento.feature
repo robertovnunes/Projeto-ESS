@@ -47,7 +47,7 @@ Feature: As a usuario administrador
       "patrimonio": "1098644"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Nome nao informado"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Nome"
 
   Scenario: Adicionando equipamento com patrimonio vazio
     When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
@@ -61,7 +61,7 @@ Feature: As a usuario administrador
       "patrimonio": ""
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Patrimonio nao informado"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Patrimônio"
 
   Scenario: Adicionando equipamento com numero de serie vazio
     When eu recebo uma requisicao "/POST" do usuario "joao" logado como "admin" e json:
@@ -75,7 +75,7 @@ Feature: As a usuario administrador
       "numero_serie": ""
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Numero de serie nao informado"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Numero de série"
 
   Scenario: Adicionando equipamento com patrimonio duplicado
     Given existe o equipamento com "patrimonio" "1098645"
@@ -90,7 +90,7 @@ Feature: As a usuario administrador
       "patrimonio": "1098645"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Ja existe um equipamento com este patrimonio"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Erro ao criar equipamento: patrimônio já cadastrado"
 
   Scenario: Adicionando equipamento com numero de serie duplicado
     Given existe o equipamento com "numero_serie" "1098646"
@@ -105,7 +105,7 @@ Feature: As a usuario administrador
       "numero_serie": "1098646"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Ja existe um equipamento com este numero de serie"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Erro ao criar equipamento: numero de série já cadastrado"
 
   Scenario: Adicionando equipamento com descricao vazia
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583146"
@@ -120,7 +120,7 @@ Feature: As a usuario administrador
       "patrimonio": "5583146"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Descriçao nao informada"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Descrição"
 
   Scenario: Adicionando equipamento com estado de conservacao vazio
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583147"
@@ -135,7 +135,7 @@ Feature: As a usuario administrador
       "patrimonio": "5583147"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Estado de conservaçao nao informado"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Estado de conservação"
 
   Scenario: Adicionando equipamento com data de aquisicao vazia
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583148"
@@ -150,7 +150,7 @@ Feature: As a usuario administrador
       "patrimonio": "5583147"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Data de aquisiçao nao informada"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Data de aquisição"
 
 #adicionar scenario outline em todos os cenarios
   Scenario: Adicionando equipamento com valor estimado vazio
@@ -166,7 +166,7 @@ Feature: As a usuario administrador
       "patrimonio": "5583149"
     }
     """
-    Then eu envio uma resposta de erro com codigo "400" e mensagem "Valor estimado nao informado"
+    Then eu envio uma resposta de erro com codigo "400" e mensagem "Campos vazios: Valor estimado"
 
   Scenario: Adicionando equipamento com estado de conservação não funcional
     Given nao existe o equipamento "Monitor phillips" com "patrimonio" "5583159"

@@ -1,21 +1,5 @@
 [
    {
-      "nome": "Equipamento Teste",
-      "descricao": "Descrição do Equipamento Teste",
-      "estado_conservacao": "Bom",
-      "data_aquisicao": "2021-01-01",
-      "valor_estimado": "1000.00",
-      "patrimonio": "364215672012"
-   },
-   {
-      "nome": "Equipamento Teste",
-      "descricao": "Descrição do Equipamento Teste",
-      "estado_conservacao": "Bom",
-      "data_aquisicao": "2021-01-01",
-      "valor_estimado": "1000.00",
-      "numero_serie": "364215672012"
-   },
-   {
       "id": "1098646179",
       "nome": "Arduino",
       "descricao": "Placa de prototipação",

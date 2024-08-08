@@ -54,9 +54,9 @@ defineFeature(feature, (test) => {
         when(/^eu recebo uma requisicao "(.*)" do usuario "(.*)" logado como "(.*)" e json:$/, async (req, user, role, json) => {
             mockData = JSON.parse(json);
             if(mockData.hasOwnProperty('patrimonio')){
-                response = await request.post('/equipamentos/patrimonio').send(mockData);
+                response = await request.post('/equipamentos').send(mockData);
             } else if(mockData.hasOwnProperty('numero_serie')) {
-                response = await request.post('/equipamentos/numero_serie').send(mockData);
+                response = await request.post('/equipamentos').send(mockData);
             }
         });
     };
